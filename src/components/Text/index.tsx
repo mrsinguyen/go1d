@@ -47,13 +47,13 @@ const Text: React.SFC<IProps> = ({
               (acc, bpKey) => ({
                 ...acc,
                 [breakpoints[bpKey]]: {
-                  fontSize: type.scale[bpKey][fontSize]
-                }
+                  fontSize: type.scale[bpKey][fontSize],
+                },
               }),
               {}
-            )
+            ),
           },
-          css
+          css,
         ]}
         {...props}
       />

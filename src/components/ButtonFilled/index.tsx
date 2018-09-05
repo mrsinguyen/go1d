@@ -15,7 +15,7 @@ interface IProps {
 const textColor = {
   accent: "background",
   danger: "background",
-  background: "subtle"
+  background: "subtle",
 };
 
 const getTextColor = (color, colors) =>
@@ -44,17 +44,17 @@ const ButtonFilled: React.SFC<IProps> = ({
                 colors[color]
               }`,
               boxShadow: shadows.strong,
-              transform: "translateY(-1px)"
+              transform: "translateY(-1px)",
             },
             "&:active": {
               background: `${colors.gradients.darkWarmOverlay}, ${
                 colors[color]
               }`,
               boxShadow: shadows.crisp,
-              transform: "translateY(1px)"
-            }
+              transform: "translateY(1px)",
+            },
           },
-          css
+          css,
         ]}
         {...props}
       >

@@ -17,7 +17,7 @@ const styleReset: Interpolation = {
   textAlign: "inherit",
   fontWeight: "inherit",
   appearance: "none",
-  outline: 0
+  outline: 0,
 };
 
 const Base: React.SFC<IProps> = ({

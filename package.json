@@ -25,6 +25,10 @@
     "src/**/*.{ts, tsx}": [
       "tslint -c tslint.json --fix",
       "git add"
+    ],
+    "docs/_src/**/*.js": [
+      "standard --fix",
+      "git add"
     ]
   },
   "dependencies": {

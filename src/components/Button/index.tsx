@@ -7,7 +7,7 @@ import View from "../View";
 const sizes = {
   sm: 1,
   md: 2,
-  lg: 3
+  lg: 3,
 };
 
 interface IProps {
@@ -46,10 +46,10 @@ const Button: React.SFC<IProps> = ({
             cursor: "pointer",
             "&:disabled": {
               opacity: 0.5,
-              pointerEvents: "none"
-            }
+              pointerEvents: "none",
+            },
           },
-          css
+          css,
         ]}
         {...props}
       >

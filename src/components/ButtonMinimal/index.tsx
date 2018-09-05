@@ -28,14 +28,14 @@ const ButtonMinimal: React.SFC<IProps> = ({
           {
             "&:hover, &:focus": {
               backgroundColor: colors.faded,
-              color: darken(colors[color], 0.2)
+              color: darken(colors[color], 0.2),
             },
             "&:active": {
               backgroundColor: colors.muted,
-              color: darken(colors[color], 0.3)
-            }
+              color: darken(colors[color], 0.3),
+            },
           },
-          css
+          css,
         ]}
         {...props}
       >

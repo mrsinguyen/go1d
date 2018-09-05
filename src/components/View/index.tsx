@@ -1,7 +1,7 @@
 import {
   FlexDirectionProperty,
   FlexWrapProperty,
-  PositionProperty
+  PositionProperty,
 } from "csstype";
 import { Interpolation } from "emotion";
 import * as React from "react";
@@ -135,9 +135,9 @@ const View: React.SFC<IProps> = ({
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
             borderRadius: [borderRadius],
-            transition: transitions.subtle
+            transition: transitions.subtle,
           },
-          css
+          css,
         ]}
         {...props}
       />
