@@ -1,10 +1,5 @@
 {
-  "src/components/Actions/index.js": {
-    "description": "",
-    "displayName": "Actions",
-    "methods": []
-  },
-  "src/components/Base/index.js": {
+  "src/components/Base/index.tsx": {
     "description": "",
     "displayName": "Base",
     "methods": [],
@@ -44,7 +39,7 @@
       }
     }
   },
-  "src/components/Button/index.js": {
+  "src/components/Button/index.tsx": {
     "description": "",
     "displayName": "Button",
     "methods": [],
@@ -79,7 +74,7 @@
       }
     }
   },
-  "src/components/ButtonFilled/index.js": {
+  "src/components/ButtonFilled/index.tsx": {
     "description": "",
     "displayName": "ButtonFilled",
     "methods": [],
@@ -100,26 +95,7 @@
       }
     }
   },
-  "src/components/ButtonMinimal/index.js": {
-    "description": "",
-    "displayName": "ButtonMinimal",
-    "methods": [],
-    "props": {
-      "element": {
-        "defaultValue": {
-          "value": "'button'",
-          "computed": false
-        },
-        "required": false
-      }
-    }
-  },
-  "src/components/DarkMode/index.js": {
-    "description": "",
-    "displayName": "DarkMode",
-    "methods": []
-  },
-  "src/components/Pill/index.js": {
+  "src/components/Pill/index.tsx": {
     "description": "",
     "displayName": "Pill",
     "methods": [],
@@ -133,7 +109,7 @@
       }
     }
   },
-  "src/components/Text/index.js": {
+  "src/components/Text/index.tsx": {
     "description": "",
     "displayName": "Text",
     "methods": [],
@@ -154,12 +130,12 @@
       }
     }
   },
-  "src/components/Theme/index.js": {
+  "src/components/Theme/index.tsx": {
     "description": "",
     "displayName": "DarkMode",
     "methods": []
   },
-  "src/components/View/index.js": {
+  "src/components/View/index.tsx": {
     "description": "",
     "displayName": "View",
     "methods": [],

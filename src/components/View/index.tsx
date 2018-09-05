@@ -1,68 +1,75 @@
-import React from 'react'
-import isUndefined from 'lodash/isUndefined'
-import { opacify } from '../../foundations'
-import Base from '../Base'
-import Theme from '../Theme'
+import isUndefined from "lodash/isUndefined";
+import * as React from "react";
+import { opacify } from "../../foundations";
+import Base from "../Base";
+import Theme from "../Theme";
 
 interface IProps {
-  element? : string,
-  display? : string,
-  flexDirection? : string,
-  flexWrap? : string,
-  flex? : string,
-  alignItems? : string,
-  justifyContent? : string,
-  position? : string,
+  element?: string;
+  display?: string;
+  flexDirection?: string;
+  flexWrap?: string;
+  flex?: string;
+  alignItems?: string;
+  justifyContent?: string;
+  position?: string;
   // Reset margins by default
-  margin? : number,
-  marginX? : number,
-  marginY? : number,
-  marginTop? : number,
-  marginBottom? : number,
-  marginRight? : number,
-  marginLeft? : number,
-  padding? : number,
-  paddingX? : number,
-  paddingY? : number,
-  paddingTop? : number,
-  paddingBottom?: number,
-  paddingRight? : number,
-  paddingLeft? : number,
-  color? : string,
-  backgroundColor? : string,
-  backgroundOpacity? : number | string,
-  borderRadius?: number,
-  width?: number,
-  maxWidth?: number,
-  zIndex?: number,
-  css? : object,
+  margin?: number;
+  marginX?: number;
+  marginY?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginRight?: number;
+  marginLeft?: number;
+  padding?: number;
+  paddingX?: number;
+  paddingY?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
+  paddingRight?: number;
+  paddingLeft?: number;
+  color?: string;
+  backgroundColor?: string;
+  backgroundOpacity?: number | string;
+  borderRadius?: number;
+  width?: number;
+  maxWidth?: number;
+  zIndex?: number;
+  css?: object;
   // This allows any extra props to go through to ...props
-  [key: string]: any
+  [key: string]: any;
 }
 
-
-const applySpacing = (spacing = [], space : number) => {
+const applySpacing = (spacing = [], space: number) => {
   if (isUndefined(space)) {
-    return
+    return;
   }
   if (spacing[space]) {
-    return spacing[space]
+    return spacing[space];
   }
   if (spacing[Math.abs(space)]) {
-    return (spacing[Math.abs(space)] * -1)
+    return spacing[Math.abs(space)] * -1;
   }
-  if (space > spacing[spacing.length - 1] || Math.abs(space) > spacing[spacing.length - 1]) {
-    return space
+  if (
+    space > spacing[spacing.length - 1] ||
+    Math.abs(space) > spacing[spacing.length - 1]
+  ) {
+    return space;
   }
-  return console.error('Please use spacing scale for value smaller than ' + spacing[spacing.length - 1])
-}
 
-const View : React.SFC<IProps> = ({
+  // tslint:disable-next-line no-console
+  return console.error(
+    "Please use spacing scale for value smaller than " +
+      spacing[spacing.length - 1]
+  );
+};
+
+const View: React.SFC<IProps> = ({
   element = "div",
-  display  = 'flex',
-  flexDirection = 'column',
+  display = "flex",
+  flexDirection = "column",
   flexWrap,
-  flex = '0 0 auto',
+  flex = "0 0 auto",
   alignItems,
   justifyContent,
   position,
@@ -90,7 +97,7 @@ const View : React.SFC<IProps> = ({
   zIndex,
   css = {},
   ...props
-} : IProps) => (
+}: IProps) => (
   <Theme.Consumer>
     {({ spacing: s, colors, transitions, opacity }) => (
       <Base
@@ -131,8 +138,8 @@ const View : React.SFC<IProps> = ({
       />
     )}
   </Theme.Consumer>
-)
+);
 
-View.displayName = 'View'
+View.displayName = "View";
 
-export default View
+export default View;
