@@ -24,7 +24,7 @@ const Prop = ({
 export const ComponentDoc = ({ component = '' }) => {
   const {
     props = {}
-  } = getDocs(component)
+  } = (getDocs(component) || {})
   return (
     <View>
       <View marginY={3}>

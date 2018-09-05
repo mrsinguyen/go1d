@@ -15,10 +15,17 @@
     "deploy": "yarn docs:build && gh-pages -d dist",
     "format": "standard --fix",
     "lint": "standard --verbose | snazzy",
+    "precommit": "lint-staged",
     "size": "bundlesize",
     "test": "yarn lint && jest",
-    "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
-    "tsc": "tsc --jsx react --outDir ./build"
+    "tsc": "tsc --jsx react --outDir ./build",
+    "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx"
+  },
+  "lint-staged": {
+    "src/**/*.{ts, tsx}": [
+      "tslint -c tslint.json --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "color": "^3.0.0",
