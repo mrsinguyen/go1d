@@ -3,16 +3,18 @@ import * as React from "react";
 import { opacify } from "../../foundations";
 import Base from "../Base";
 import Theme from "../Theme";
+import { Interpolation } from "emotion";
+import { PositionProperty, FlexDirectionProperty, FlexWrapProperty } from "csstype";
 
 interface IProps {
   element?: string;
   display?: string;
-  flexDirection?: string;
-  flexWrap?: string;
+  flexDirection?: FlexDirectionProperty;
+  flexWrap?: FlexWrapProperty;
   flex?: string;
   alignItems?: string;
   justifyContent?: string;
-  position?: string;
+  position?: PositionProperty;
   // Reset margins by default
   margin?: number;
   marginX?: number;
@@ -35,7 +37,7 @@ interface IProps {
   width?: number;
   maxWidth?: number;
   zIndex?: number;
-  css?: object;
+  css?: Interpolation[];
   // This allows any extra props to go through to ...props
   [key: string]: any;
 }
@@ -95,7 +97,7 @@ const View: React.SFC<IProps> = ({
   width,
   maxWidth,
   zIndex,
-  css = {},
+  css,
   ...props
 }: IProps) => (
   <Theme.Consumer>
@@ -129,7 +131,7 @@ const View: React.SFC<IProps> = ({
             backgroundColor: opacity[backgroundOpacity]
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
-            borderRadius: s[borderRadius],
+            borderRadius: [borderRadius],
             transition: transitions.subtle
           },
           css

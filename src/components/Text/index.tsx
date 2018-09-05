@@ -2,6 +2,7 @@ import isUndefined from "lodash/isUndefined";
 import * as React from "react";
 import Base from "../Base";
 import Theme from "../Theme";
+import { Interpolation } from "emotion";
 
 interface IProps {
   element?: string;
@@ -11,7 +12,7 @@ interface IProps {
   lineHeight?: number | string;
   fontSize?: number;
   color?: string;
-  css?: object;
+  css?: Interpolation[];
   // This allows any extra props to go through to ...props
   [key: string]: any;
 }

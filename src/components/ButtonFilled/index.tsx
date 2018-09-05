@@ -2,12 +2,13 @@ import * as React from "react";
 import { isDark } from "../../foundations";
 import Button from "../Button";
 import Theme from "../Theme";
+import { Interpolation } from "emotion";
 
 interface IProps {
   children: JSX.Element[] | JSX.Element | string;
   color?: string;
   element?: string;
-  css?: object;
+  css?: Interpolation[];
   [key: string]: any;
 }
 

@@ -26,13 +26,19 @@ interface IColors {
   note: string,
   warning: string,
   danger: string,
-  black: string,
+  black?: string,
 
 }
 
 interface ITheme {
   colors: IColors,
-  type: IMap<string>,
+  type: {
+    scale: IMap<number[]>,
+    family: IMap<string>,
+    weight: IMap<number>,
+    leading: IMap<number>,
+    tracking: IMap<number | string>
+  },
   spacing: string[],
   shadows: IMap<string>,
   transitions: IMap<string>,

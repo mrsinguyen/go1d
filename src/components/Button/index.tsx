@@ -2,6 +2,7 @@ import * as React from "react";
 import Text from "../Text";
 import Theme from "../Theme";
 import View from "../View";
+import { Interpolation } from "emotion";
 
 const sizes = {
   sm: 1,
@@ -14,7 +15,7 @@ interface IProps {
   size?: string;
   color?: string;
   backgroundColor?: string;
-  css?: object;
+  css?: Interpolation;
   children: JSX.Element[] | JSX.Element | string;
   // This allows any extra props to go through to ...props
   [key: string]: any;

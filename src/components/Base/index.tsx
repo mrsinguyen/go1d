@@ -3,8 +3,8 @@ import * as React from "react";
 
 interface IProps {
   element?: string;
-  children: JSX.Element[] | JSX.Element | string;
-  css: Interpolation | Interpolation[];
+  children?: JSX.Element[] | JSX.Element | string;
+  css: Interpolation[];
   [key: string]: any;
 }
 
@@ -23,9 +23,9 @@ const styleReset: Interpolation = {
 const Base: React.SFC<IProps> = ({
   element: Element = "div",
   children = "",
-  css = {},
+  css = [],
   ...props
-}) => (
+} : IProps) => (
   <Element
     className={emotion(styleReset, css)}
     children={children}
