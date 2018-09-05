@@ -1,11 +1,45 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import isUndefined from 'lodash/isUndefined'
 import { opacify } from '../../foundations'
 import Base from '../Base'
 import Theme from '../Theme'
 
-const applySpacing = (spacing = [], space) => {
+interface IProps {
+  element : string,
+  display : string,
+  flexDirection : string,
+  flexWrap? : string,
+  flex? : string,
+  alignItems? : string,
+  justifyContent? : string,
+  position? : string,
+  // Reset margins by default
+  margin : number,
+  marginX : number,
+  marginY : number,
+  marginTop : number,
+  marginBottom : number,
+  marginRight : number,
+  marginLeft : number,
+  padding? : number,
+  paddingX : number,
+  paddingY : number,
+  paddingTop : number,
+  paddingBottom : number,
+  paddingRight : number,
+  paddingLeft : number,
+  color? : string,
+  backgroundColor? : string,
+  backgroundOpacity? : number,
+  borderRadius?: number,
+  width?: number,
+  maxWidth?: number,
+  zIndex?: number,
+  css : object,
+}
+
+
+const applySpacing = (spacing = [], space : number) => {
   if (isUndefined(space)) {
     return
   }
@@ -21,9 +55,9 @@ const applySpacing = (spacing = [], space) => {
   return console.error('Please use spacing scale for value smaller than ' + spacing[spacing.length - 1])
 }
 
-const View = ({
-  element = 'div',
-  display = 'flex',
+const View : React.SFC<IProps> = ({
+  element = "div",
+  display  = 'flex',
   flexDirection = 'column',
   flexWrap,
   flex = '0 0 auto',
@@ -32,19 +66,19 @@ const View = ({
   position,
   // Reset margins by default
   margin = 0,
-  marginX = margin,
-  marginY = margin,
-  marginTop = marginY,
-  marginBottom = marginY,
-  marginRight = marginX,
-  marginLeft = marginX,
+  marginX = this.margin,
+  marginY = this.margin,
+  marginTop = this.marginY,
+  marginBottom = this.marginY,
+  marginRight = this.marginX,
+  marginLeft = this.marginX,
   padding,
-  paddingX = padding,
-  paddingY = padding,
-  paddingTop = paddingY,
-  paddingBottom = paddingY,
-  paddingRight = paddingX,
-  paddingLeft = paddingX,
+  paddingX = this.padding,
+  paddingY = this.padding,
+  paddingTop = this.paddingY,
+  paddingBottom = this.paddingY,
+  paddingRight = this.paddingX,
+  paddingLeft = this.paddingX,
   color,
   backgroundColor,
   backgroundOpacity,
@@ -96,13 +130,6 @@ const View = ({
     )}
   </Theme.Consumer>
 )
-
-View.propTypes = {
-  /**
-   * Set the direction of flexbox for the view
-   */
-  flexDirection: PropTypes.string
-}
 
 View.displayName = 'View'
 

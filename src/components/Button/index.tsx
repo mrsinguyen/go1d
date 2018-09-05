@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import View from '../View'
 import Text from '../Text'
 import Theme from '../Theme'
