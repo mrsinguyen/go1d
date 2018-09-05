@@ -28,6 +28,7 @@
     "@compositor/kit": "^1.0.43",
     "@compositor/kit-snapshot": "^1.0.24",
     "@compositor/x0": "^6.0.0-4",
+    "@types/react": "^16.4.13",
     "babel-cli": "^6.26.0",
     "bundlesize": "^0.17.0",
     "gh-pages": "^1.2.0",

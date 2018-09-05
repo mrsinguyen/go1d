@@ -9,7 +9,18 @@ const sizes = {
   lg: 3
 }
 
-const Button = ({
+interface IProps {
+  element: string,
+  size: string,
+  color: string,
+  backgroundColor: string,
+  css: object,
+  children: JSX.Element[] | JSX.Element | string,
+  // This allows any extra props to go through to ...props
+  [key: string]: any
+}
+
+const Button : React.SFC<IProps> = ({
   element = 'button',
   size = 'md',
   color = 'subtle',
@@ -17,7 +28,7 @@ const Button = ({
   children,
   css,
   ...props
-}) => (
+} : IProps) => (
   <Theme.Consumer>
     {({ colors, type }) => (
       <View

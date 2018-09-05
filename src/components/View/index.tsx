@@ -5,37 +5,39 @@ import Base from '../Base'
 import Theme from '../Theme'
 
 interface IProps {
-  element : string,
-  display : string,
-  flexDirection : string,
+  element? : string,
+  display? : string,
+  flexDirection? : string,
   flexWrap? : string,
   flex? : string,
   alignItems? : string,
   justifyContent? : string,
   position? : string,
   // Reset margins by default
-  margin : number,
-  marginX : number,
-  marginY : number,
-  marginTop : number,
-  marginBottom : number,
-  marginRight : number,
-  marginLeft : number,
+  margin? : number,
+  marginX? : number,
+  marginY? : number,
+  marginTop? : number,
+  marginBottom? : number,
+  marginRight? : number,
+  marginLeft? : number,
   padding? : number,
-  paddingX : number,
-  paddingY : number,
-  paddingTop : number,
-  paddingBottom : number,
-  paddingRight : number,
-  paddingLeft : number,
+  paddingX? : number,
+  paddingY? : number,
+  paddingTop? : number,
+  paddingBottom?: number,
+  paddingRight? : number,
+  paddingLeft? : number,
   color? : string,
   backgroundColor? : string,
-  backgroundOpacity? : number,
+  backgroundOpacity? : number | string,
   borderRadius?: number,
   width?: number,
   maxWidth?: number,
   zIndex?: number,
-  css : object,
+  css? : object,
+  // This allows any extra props to go through to ...props
+  [key: string]: any
 }
 
 
@@ -66,19 +68,19 @@ const View : React.SFC<IProps> = ({
   position,
   // Reset margins by default
   margin = 0,
-  marginX = this.margin,
-  marginY = this.margin,
-  marginTop = this.marginY,
-  marginBottom = this.marginY,
-  marginRight = this.marginX,
-  marginLeft = this.marginX,
+  marginX = margin,
+  marginY = margin,
+  marginTop = marginY,
+  marginBottom = marginY,
+  marginRight = marginX,
+  marginLeft = marginX,
   padding,
-  paddingX = this.padding,
-  paddingY = this.padding,
-  paddingTop = this.paddingY,
-  paddingBottom = this.paddingY,
-  paddingRight = this.paddingX,
-  paddingLeft = this.paddingX,
+  paddingX = padding,
+  paddingY = padding,
+  paddingTop = paddingY,
+  paddingBottom = paddingY,
+  paddingRight = paddingX,
+  paddingLeft = paddingX,
   color,
   backgroundColor,
   backgroundOpacity,
@@ -88,7 +90,7 @@ const View : React.SFC<IProps> = ({
   zIndex,
   css = {},
   ...props
-}) => (
+} : IProps) => (
   <Theme.Consumer>
     {({ spacing: s, colors, transitions, opacity }) => (
       <Base
