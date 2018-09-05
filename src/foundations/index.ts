@@ -27,7 +27,8 @@ interface IColors {
   warning: string,
   danger: string,
   black?: string,
-
+  faded?: string,
+  muted?: string,
 }
 
 interface ITheme {

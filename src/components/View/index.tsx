@@ -1,10 +1,13 @@
-import isUndefined from "lodash/isUndefined";
+import {
+  FlexDirectionProperty,
+  FlexWrapProperty,
+  PositionProperty
+} from "csstype";
+import { Interpolation } from "emotion";
 import * as React from "react";
 import { opacify } from "../../foundations";
 import Base from "../Base";
 import Theme from "../Theme";
-import { Interpolation } from "emotion";
-import { PositionProperty, FlexDirectionProperty, FlexWrapProperty } from "csstype";
 
 interface IProps {
   element?: string;
@@ -43,7 +46,7 @@ interface IProps {
 }
 
 const applySpacing = (spacing = [], space: number) => {
-  if (isUndefined(space)) {
+  if (space === undefined) {
     return;
   }
   if (spacing[space]) {

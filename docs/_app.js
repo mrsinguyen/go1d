@@ -8,9 +8,9 @@ import {
   Provider as RebassProvider
 } from 'rebass'
 import groupBy from 'lodash/groupBy'
-import * as systemScope from '../src'
+import * as systemScope from '../build'
 import * as docsScope from './_src/components'
-import foundations from '../src/foundations'
+import foundations from '../build/foundations'
 import SidebarLayout from './_src/components/SidebarLayout'
 
 const navOrder = [

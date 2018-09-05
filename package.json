@@ -9,16 +9,16 @@
   "private": false,
   "scripts": {
     "prepare": "babel src -d dist",
-    "generate-proptypes": "react-docgen src/components -i ThemeContext -o ./docs/_src/proptypes.json --pretty",
-    "docs:build": "yarn generate-proptypes && x0 build docs",
-    "docs:dev": "yarn generate-proptypes && x0 docs -p 8008",
+    "generate-proptypes": "react-docgen build/components -i ThemeContext -o ./docs/_src/proptypes.json --pretty",
+    "docs:build": "yarn tsc && yarn generate-proptypes && x0 build docs",
+    "docs:dev": "yarn tsc && yarn generate-proptypes && x0 docs -p 8008",
     "deploy": "yarn docs:build && gh-pages -d dist",
     "format": "standard --fix",
     "lint": "standard --verbose | snazzy",
     "size": "bundlesize",
     "test": "yarn lint && jest",
     "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
-    "tsc": "tsc --jsx react"
+    "tsc": "tsc --jsx react --outDir ./build"
   },
   "dependencies": {
     "color": "^3.0.0",
@@ -36,6 +36,8 @@
     "babel-cli": "^6.26.0",
     "bundlesize": "^0.17.0",
     "gh-pages": "^1.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "react-docgen": "^2.21.0",
     "react-router-dom": "^4.3.1",

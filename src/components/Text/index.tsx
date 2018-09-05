@@ -1,8 +1,7 @@
-import isUndefined from "lodash/isUndefined";
+import { Interpolation } from "emotion";
 import * as React from "react";
 import Base from "../Base";
 import Theme from "../Theme";
-import { Interpolation } from "emotion";
 
 interface IProps {
   element?: string;
@@ -34,7 +33,7 @@ const Text: React.SFC<IProps> = ({
         element={element}
         css={[
           {
-            color: isUndefined(color) ? colors.black : colors[color] || color,
+            color: color === undefined ? colors.black : colors[color] || color,
             fontFamily: fontFamily
               ? type.family[fontFamily]
               : type.family.sansSerif,

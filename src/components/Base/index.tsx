@@ -25,7 +25,7 @@ const Base: React.SFC<IProps> = ({
   children = "",
   css = [],
   ...props
-} : IProps) => (
+}: IProps) => (
   <Element
     className={emotion(styleReset, css)}
     children={children}

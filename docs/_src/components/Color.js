@@ -1,10 +1,10 @@
 import React from 'react'
 import colorable from 'colorable'
 import head from 'lodash/head'
-import View from '../../../src/components/View'
-import Text from '../../../src/components/Text'
-import Theme from '../../../src/components/Theme'
-import { themedGreys, colors } from '../../../src/foundations'
+import View from '../../../build/components/View'
+import Text from '../../../build/components/Text'
+import Theme from '../../../build/components/Theme'
+import { themedGreys, colors } from '../../../build/foundations'
 
 export const Color = ({
   color,

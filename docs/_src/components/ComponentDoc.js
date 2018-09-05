@@ -1,7 +1,7 @@
 import React from 'react'
 import find from 'lodash/find'
 import components from '../proptypes.json'
-import { Base, View, Text } from '../../../src'
+import { Base, View, Text } from '../../../build'
 
 const getDocs = (displayName) => find(Object.values(components), (component) => component.displayName === displayName)
 

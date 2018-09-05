@@ -3,8 +3,10 @@ import foundations, { generateTheme } from "../../foundations";
 
 const Theme = React.createContext(foundations);
 
-export const DarkMode: React.SFC<object> = (props: object) => (
+const DarkMode: React.SFC<object> = props => (
   <Theme.Provider value={generateTheme({ darkMode: true })} {...props} />
 );
+
+export { DarkMode };
 
 export default Theme;

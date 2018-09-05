@@ -1,8 +1,8 @@
+import { Interpolation } from "emotion";
 import * as React from "react";
 import Text from "../Text";
 import Theme from "../Theme";
 import View from "../View";
-import { Interpolation } from "emotion";
 
 const sizes = {
   sm: 1,

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withReducer } from 'recompose'
 import { Link as RouterLink, NavLink as RouterNavLink } from 'react-router-dom'
-import { View, Text, Theme, DarkMode } from '../../../src/'
+import { View, Text, Theme } from '../../../build/'
 
 const unhyphenate = str => str.replace(/(\w)(-)(\w)/g, '$1 $3')
 const upperFirst = str => str.charAt(0).toUpperCase() + str.slice(1)
@@ -22,27 +22,25 @@ const Layout = (props) => (
 )
 
 const Sidebar = (props) => (
-  <DarkMode>
-    <Theme.Consumer>
-      {({ colors, breakpoints }) => (
-        <View
-          paddingY={4}
-          backgroundColor='background'
-          {...props}
-          css={{
-            minWidth: 280,
-            color: colors.subtle,
-            [breakpoints.md]: {
-              position: 'fixed',
-              height: '100vh',
-              overflow: 'auto',
-              overflowX: 'hidden'
-            }
-          }}
-        />
-      )}
-    </Theme.Consumer>
-  </DarkMode>
+  <Theme.Consumer>
+    {({ colors, breakpoints }) => (
+      <View
+        paddingY={4}
+        backgroundColor='background'
+        {...props}
+        css={{
+          minWidth: 280,
+          color: colors.subtle,
+          [breakpoints.md]: {
+            position: 'fixed',
+            height: '100vh',
+            overflow: 'auto',
+            overflowX: 'hidden'
+          }
+        }}
+      />
+    )}
+  </Theme.Consumer>
 )
 
 const Link = (props) => (
