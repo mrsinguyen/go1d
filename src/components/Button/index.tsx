@@ -10,11 +10,11 @@ const sizes = {
 }
 
 interface IProps {
-  element: string,
-  size: string,
-  color: string,
-  backgroundColor: string,
-  css: object,
+  element?: string,
+  size?: string,
+  color?: string,
+  backgroundColor?: string,
+  css?: object,
   children: JSX.Element[] | JSX.Element | string,
   // This allows any extra props to go through to ...props
   [key: string]: any
