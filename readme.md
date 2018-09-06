@@ -1,6 +1,22 @@
 # GO1D
 
-Still a WIP
+## Overview
+Go1 Design System 
 
-1. `yarn`
-2. `yarn docs:dev`
+## Maintainers
+* Luke Brooker (luke.brooker@go1.com)
+* Stephen Mudra (stephen.mudra@go1.com) 
+
+## INSTALLATION
+```sh
+brew install yarn
+yarn install
+```
+
+## BUILD / RUN
+```sh
+yarn docs:dev
+```
+
+## CONTRIBUTE
+Before any pull requests ensure all changed files are run though tslint which should automaticly correct most code styling errors
