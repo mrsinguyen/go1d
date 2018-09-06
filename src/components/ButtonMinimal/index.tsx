@@ -9,8 +9,6 @@ interface Props extends ButtonProps {
   color: string;
   css: Interpolation;
   children: JSX.Element | string;
-
-  [key: string]: any;
 }
 
 const ButtonMinimal: React.SFC<Props> = ({
