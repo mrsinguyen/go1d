@@ -4,7 +4,6 @@ import View from "../View";
 
 interface Props {
   color?: string;
-  children: JSX.Element[] | JSX.Element | string;
   [key: string]: any,
 }
 

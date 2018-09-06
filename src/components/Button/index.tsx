@@ -10,7 +10,7 @@ const sizes = {
   lg: 3,
 };
 
-interface Props {
+export interface Props {
   element?: string;
   size?: string;
   color?: string;

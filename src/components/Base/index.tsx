@@ -1,10 +1,10 @@
 import { css as emotion, Interpolation } from "emotion";
 import * as React from "react";
 
-interface Props {
+export interface Props {
   element?: string | React.ComponentType;
   children?: JSX.Element[] | JSX.Element | string;
-  css: Interpolation[];
+  css?: Interpolation[];
   [key: string]: any;
 }
 

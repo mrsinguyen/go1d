@@ -1,9 +1,9 @@
 import { Interpolation } from "emotion";
 import * as React from "react";
-import Base from "../Base";
+import Base, { Props as BaseProps}  from "../Base";
 import Theme from "../Theme";
 
-interface Props {
+interface Props extends BaseProps {
   element?: string;
   fontWeight?: number | string;
   fontFamily?: string;
@@ -12,8 +12,6 @@ interface Props {
   fontSize?: number;
   color?: string;
   css?: Interpolation[];
-  // This allows any extra props to go through to ...props
-  [key: string]: any;
 }
 
 const Text: React.SFC<Props> = ({

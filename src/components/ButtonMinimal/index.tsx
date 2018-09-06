@@ -1,10 +1,10 @@
 import { Interpolation } from "emotion";
 import * as React from "react";
 import { darken } from "../../foundations";
-import Button from "../Button";
+import Button, { Props as ButtonProps } from "../Button";
 import Theme from "../Theme";
 
-interface Props {
+interface Props extends ButtonProps {
   element: string;
   color: string;
   css: Interpolation;
