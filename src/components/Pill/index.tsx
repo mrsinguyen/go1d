@@ -4,10 +4,14 @@ import View from "../View";
 
 interface Props {
   color?: string;
-  [key: string]: any,
+  [key: string]: any;
 }
 
-const Pill: React.SFC<Props> = ({ color = "faded", children, ...props }: Props) => {
+const Pill: React.SFC<Props> = ({
+  color = "faded",
+  children,
+  ...props
+}: Props) => {
   return (
     <View
       display="inline-flex"

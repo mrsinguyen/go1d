@@ -1,6 +1,6 @@
 import { Interpolation } from "emotion";
 import * as React from "react";
-import Base, { Props as BaseProps}  from "../Base";
+import Base, { Props as BaseProps } from "../Base";
 import Theme from "../Theme";
 
 interface Props extends BaseProps {

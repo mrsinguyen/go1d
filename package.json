@@ -21,11 +21,11 @@
     "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx"
   },
   "lint-staged": {
-    "src/**/*.{ts, tsx}": [
+    "./src/**/*.{ts,tsx}": [
       "tslint -c tslint.json --fix",
       "git add"
     ],
-    "docs/_src/**/*.js": [
+    "./docs/_src/**/*.js": [
       "prettier --write",
       "git add"
     ]
