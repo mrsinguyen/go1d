@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withReducer } from "recompose";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
-import { View, Text } from "../../../build/";
+import { View, Text, Pill } from "../../../build/";
 import Theme, { DarkMode } from "../../../build/components/Theme";
 
 const unhyphenate = str => str.replace(/(\w)(-)(\w)/g, "$1 $3");
@@ -114,7 +114,18 @@ const Nav = ({ routes = [], handleMenuToggle, menuOpen, ...props }) => (
 
 const Main = props => <View {...props} paddingLeft={280} width="100%" />;
 
-const Hero = ({ title = "", lead = "", ...props }) => (
+const statuses = {
+  dev: {
+    title: "In development",
+    color: "note",
+  },
+  "not-started": {
+    title: "Not started",
+    color: "danger",
+  },
+};
+
+const Hero = ({ title = "", lead = "", status = "not-started", ...props }) => (
   <View backgroundColor="soft">
     <View
       paddingTop={8}
@@ -122,6 +133,7 @@ const Hero = ({ title = "", lead = "", ...props }) => (
       paddingX={4}
       marginX="auto"
       width="100%"
+      alignItems="flex-start"
       css={{
         maxWidth: 768,
       }}
@@ -137,6 +149,11 @@ const Hero = ({ title = "", lead = "", ...props }) => (
           {title}
         </Text>
       </View>
+      {status !== "ready" && (
+        <Pill marginBottom={3} color={statuses[status].color}>
+          {statuses[status].title}
+        </Pill>
+      )}
       <Text element="p" fontSize={3} color="subtle" lineHeight="prose">
         {lead}
       </Text>

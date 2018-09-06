@@ -1,6 +1,7 @@
 ---
 title: Pill
 lead: Pills are used for showing specific statuses
+status: ready
 ---
 
 ## Examples

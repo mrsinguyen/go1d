@@ -1,5 +1,6 @@
 ---
 title: Text
+status: dev
 ---
 
 This is a text component

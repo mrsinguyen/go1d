@@ -27,16 +27,7 @@
   "build/components/Pill/index.js": {
     "description": "",
     "displayName": "Pill",
-    "methods": [],
-    "props": {
-      "color": {
-        "defaultValue": {
-          "value": "\"faded\"",
-          "computed": false
-        },
-        "required": false
-      }
-    }
+    "methods": []
   },
   "build/components/Text/index.js": {
     "description": "",
