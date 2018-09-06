@@ -3,7 +3,7 @@ import * as React from "react";
 import Base from "../Base";
 import Theme from "../Theme";
 
-interface IProps {
+interface Props {
   element?: string;
   fontWeight?: number | string;
   fontFamily?: string;
@@ -16,7 +16,7 @@ interface IProps {
   [key: string]: any;
 }
 
-const Text: React.SFC<IProps> = ({
+const Text: React.SFC<Props> = ({
   element = "span",
   fontWeight,
   fontFamily,
@@ -26,7 +26,7 @@ const Text: React.SFC<IProps> = ({
   color,
   css,
   ...props
-}: IProps) => (
+}: Props) => (
   <Theme.Consumer>
     {({ colors, type, breakpoints, transitions }) => (
       <Base

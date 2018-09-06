@@ -9,8 +9,8 @@ import { opacify } from "../../foundations";
 import Base from "../Base";
 import Theme from "../Theme";
 
-interface IProps {
-  element?: string;
+interface Props {
+  element?: string | React.ComponentType;
   display?: string;
   flexDirection?: FlexDirectionProperty;
   flexWrap?: FlexWrapProperty;
@@ -38,9 +38,10 @@ interface IProps {
   backgroundOpacity?: number | string;
   borderRadius?: number;
   width?: number;
+  minHeight?: number;
   maxWidth?: number;
   zIndex?: number;
-  css?: Interpolation[];
+  css?: Interpolation[] | string;
   // This allows any extra props to go through to ...props
   [key: string]: any;
 }
@@ -69,7 +70,7 @@ const applySpacing = (spacing = [], space: number) => {
   );
 };
 
-const View: React.SFC<IProps> = ({
+const View: React.SFC<Props> = ({
   element = "div",
   display = "flex",
   flexDirection = "column",
@@ -98,11 +99,12 @@ const View: React.SFC<IProps> = ({
   backgroundOpacity,
   borderRadius,
   width,
+  minHeight,
   maxWidth,
   zIndex,
   css,
   ...props
-}: IProps) => (
+}: Props) => (
   <Theme.Consumer>
     {({ spacing: s, colors, transitions, opacity }) => (
       <Base

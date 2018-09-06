@@ -4,7 +4,7 @@ import { darken } from "../../foundations";
 import Button from "../Button";
 import Theme from "../Theme";
 
-interface IProps {
+interface Props {
   element: string;
   color: string;
   css: Interpolation;
@@ -13,13 +13,13 @@ interface IProps {
   [key: string]: any;
 }
 
-const ButtonMinimal: React.SFC<IProps> = ({
+const ButtonMinimal: React.SFC<Props> = ({
   element = "button",
   color,
   children,
   css,
   ...props
-}: IProps) => (
+}: Props) => (
   <Theme.Consumer>
     {({ colors = { faded: undefined, muted: undefined } }) => (
       <Button

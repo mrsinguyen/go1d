@@ -4,7 +4,7 @@ import { isDark } from "../../foundations";
 import Button from "../Button";
 import Theme from "../Theme";
 
-interface IProps {
+interface Props {
   children: JSX.Element[] | JSX.Element | string;
   color?: string;
   element?: string;
@@ -21,7 +21,7 @@ const textColor = {
 const getTextColor = (color, colors) =>
   textColor[color] || isDark(colors[color]);
 
-const ButtonFilled: React.SFC<IProps> = ({
+const ButtonFilled: React.SFC<Props> = ({
   element = "button",
   color = "background",
   children,

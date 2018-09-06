@@ -1,52 +1,15 @@
 import * as Color from "color";
-
-/**
- * interfaces
- */
-
-interface IMap<T> {
-  [key: string]: T;
-}
-
-interface IColorArguments {
-  accent?: string;
-  greys?: IMap<IMap<string>>;
-  darkMode?: boolean;
-  statuses?: IMap<string>;
-}
-
-interface IColors {
-  accent?: string;
-  gradients: IMap<string>;
-  darkMode?: boolean;
-  statuses?: object;
-  contrast?: string | number;
-  highlight: string;
-  success: string;
-  note: string;
-  warning: string;
-  danger: string;
-  black?: string;
-  faded?: string;
-  muted?: string;
-}
-
-interface ITheme {
-  colors: IColors;
-  type: {
-    scale: IMap<number[]>;
-    family: IMap<string>;
-    weight: IMap<number>;
-    leading: IMap<number>;
-    tracking: IMap<number | string>;
-  };
-  spacing: string[];
-  shadows: IMap<string>;
-  transitions: IMap<string>;
-  breakpoints: object;
-  opacity: object;
-  [key: string]: any;
-}
+import {
+  ColorArguments,
+  Colors,
+  Gradients,
+  Greys,
+  MappedKey,
+  Shadows,
+  Theme,
+  ThemedGreys,
+  ThemeType,
+} from "./foundation-types";
 
 /**
  * Color utilities
@@ -81,7 +44,7 @@ export const brandGreys = {
   grey: "#C7D5DB",
   light: "#E6EEF2",
   lighter: "#F1F6F9",
-  lightest: "#ffffff"
+  lightest: "#ffffff",
 };
 
 export const themedGreys = {
@@ -93,7 +56,7 @@ export const themedGreys = {
     divide: opacify(brandGreys.darker, 0.08),
     faded: brandGreys.light,
     soft: brandGreys.lighter,
-    background: brandGreys.lightest
+    background: brandGreys.lightest,
   },
   darkMode: {
     contrast: brandGreys.lightest,
@@ -103,41 +66,43 @@ export const themedGreys = {
     divide: opacify(brandGreys.lighter, 0.08),
     faded: brandGreys.dark,
     soft: brandGreys.darker,
-    background: brandGreys.darkest
-  }
+    background: brandGreys.darkest,
+  },
 };
 
-const getGreys = (greys: IMap<IMap<string>> = themedGreys, darkMode) =>
-  darkMode ? greys.darkMode : greys.lightMode;
+const getGreys = (
+  greys: MappedKey<ThemedGreys, MappedKey<Greys, string>> = themedGreys,
+  darkMode
+): MappedKey<Greys, string> => (darkMode ? greys.darkMode : greys.lightMode);
 
 const brandStatuses = {
   green: "#51C133",
   yellow: "#FFDE00",
   orange: "#F6941D",
-  red: "#DA3131"
+  red: "#DA3131",
 };
 
 export const opacity = {
   feedback: 0.1,
   pill: 0.3,
-  disabled: 0.5
+  disabled: 0.5,
 };
 
-export const gradients: IMap<string> = {
+export const gradients: MappedKey<Gradients, string> = {
   warmOverlay:
     "linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%),",
   lightWarmOverlay:
     "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)",
   darkWarmOverlay:
-    "linear-gradient(0deg, rgba(18, 31, 34, 0.05), rgba(18, 31, 34, 0.05)), linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%)"
+    "linear-gradient(0deg, rgba(18, 31, 34, 0.05), rgba(18, 31, 34, 0.05)), linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%)",
 };
 
 export const generateColors = ({
   accent = brandAccent,
   greys = themedGreys,
   darkMode = false,
-  statuses = brandStatuses
-}: IColorArguments = {}): IColors => ({
+  statuses = brandStatuses,
+}: ColorArguments = {}): Colors => ({
   accent,
   ...getGreys(greys, darkMode),
   highlight: opacify(accent, 0.15),
@@ -145,16 +110,16 @@ export const generateColors = ({
   note: statuses.yellow,
   warning: statuses.orange,
   danger: statuses.red,
-  gradients
+  gradients,
 });
 
-export const colors: IColors = generateColors();
+export const colors: Colors = generateColors();
 
 /**
  * Shadows
  */
 
-export const shadows: IMap<string> = {
+export const shadows: MappedKey<Shadows, string> = {
   crisp: `0px 1px 2px ${opacify(colors.contrast, 0.1)}, 1px 1px 35px ${opacify(
     colors.contrast,
     0.03
@@ -172,45 +137,45 @@ export const shadows: IMap<string> = {
     0.08
   )}, 2px 20px 38px ${opacify(colors.contrast, 0.1)}`,
   inner: `inset 1px 1px 5px ${opacify(colors.contrast, 0.1)}`,
-  text: `1px 1px 1px ${opacify(colors.contrast, 0.07)}`
+  text: `1px 1px 1px ${opacify(colors.contrast, 0.07)}`,
 };
 
 /**
  * Type
  */
 
-const defaultFontFamily =
+const defaultFontFamily: string =
   "-apple-system,BlinkMacSystemFont,helvetica,'helvetica neue',ubuntu,roboto,noto,'segoe ui',arial,sans-serif";
-const sansSerif = "'Open Sans', " + defaultFontFamily;
-const monospace = "'Source Code Pro', 'Menlo', monospace";
+const sansSerif: string = "'Open Sans', " + defaultFontFamily;
+const monospace: string = "'Source Code Pro', 'Menlo', monospace";
 
-export const type = {
+export const type: ThemeType = {
   scale: {
     sm: [0, 14, 16, 18, 21, 24, 28, 32, 37],
     md: [0, 13, 16, 19, 23, 28, 33, 40, 48],
-    lg: [0, 13, 16, 20, 25, 31, 39, 49, 61]
+    lg: [0, 13, 16, 20, 25, 31, 39, 49, 61],
   },
   family: {
     sansSerif,
     display: sansSerif,
     prose: sansSerif,
     ui: sansSerif,
-    mono: monospace
+    mono: monospace,
   },
   weight: {
     normal: 400,
-    bold: 600
+    bold: 600,
   },
   leading: {
     display: 1,
     ui: 1.25,
-    prose: 1.5
+    prose: 1.5,
   },
   tracking: {
     tightest: "-0.03em",
     tight: "-0.01em",
-    normal: 0
-  }
+    normal: 0,
+  },
 };
 
 /**
@@ -227,7 +192,7 @@ export const spacing = [
   "48",
   "64",
   "128",
-  "256"
+  "256",
 ];
 
 /**
@@ -235,7 +200,7 @@ export const spacing = [
  */
 
 const transitions = {
-  subtle: "all .15s ease"
+  subtle: "all .15s ease",
 };
 
 /**
@@ -245,7 +210,7 @@ const transitions = {
 export const breakpoints = {
   sm: "@media(max-width: 599px)",
   md: "@media(min-width: 600px)",
-  lg: "@media(min-width: 1100px)"
+  lg: "@media(min-width: 1100px)",
 };
 
 export const generateTheme = ({
@@ -253,8 +218,8 @@ export const generateTheme = ({
   greys = themedGreys,
   darkMode = false,
   statuses = brandStatuses,
-  theme = {}
-} = {}): ITheme => ({
+  theme = {},
+} = {}): Theme => ({
   colors: generateColors({ accent, greys, darkMode, statuses }),
   type,
   spacing,
@@ -262,9 +227,9 @@ export const generateTheme = ({
   transitions,
   breakpoints,
   opacity,
-  ...theme
+  ...theme,
 });
 
-const foundations: ITheme = generateTheme();
+const foundations: Theme = generateTheme();
 
 export default foundations;

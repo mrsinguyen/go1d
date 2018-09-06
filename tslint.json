@@ -10,6 +10,7 @@
     "rules": {
       "prettier": true,
       "object-literal-sort-keys": false,
+      "interface-name": [true, "never-prefix"],
       "trailing-comma": [
         true,
         {

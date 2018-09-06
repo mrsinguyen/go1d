@@ -2,12 +2,12 @@ import * as React from "react";
 import Text from "../Text";
 import View from "../View";
 
-interface IProps {
+interface Props {
   color?: string;
   children: JSX.Element[] | JSX.Element | string;
 }
 
-const Pill: React.SFC<IProps> = ({ color = "faded", children }: IProps) => {
+const Pill: React.SFC<Props> = ({ color = "faded", children }: Props) => {
   return (
     <View
       display="inline-flex"
