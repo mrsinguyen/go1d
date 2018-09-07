@@ -1,15 +1,14 @@
 import { Interpolation } from "emotion";
 import * as React from "react";
 import { isDark } from "../../foundations";
-import Button from "../Button";
+import Button, { Props as ButtonProps } from "../Button";
 import Theme from "../Theme";
 
-interface Props {
-  children: JSX.Element[] | JSX.Element | string;
+interface Props extends ButtonProps {
+  children: React.ReactNode;
   color?: string;
   element?: string;
   css?: Interpolation[];
-  [key: string]: any;
 }
 
 const textColor = {

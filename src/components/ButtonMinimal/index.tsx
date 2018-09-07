@@ -8,7 +8,7 @@ interface Props extends ButtonProps {
   element: string;
   color: string;
   css: Interpolation;
-  children: JSX.Element | string;
+  children: React.ReactNode;
 }
 
 const ButtonMinimal: React.SFC<Props> = ({
