@@ -1,10 +1,10 @@
 import * as React from "react";
 import Text from "../Text";
-import View from "../View";
+import View, { Props as ViewProps } from "../View";
 
-interface Props {
+interface Props extends ViewProps {
   color?: string;
-  [key: string]: any;
+  children: React.ReactNode;
 }
 
 const Pill: React.SFC<Props> = ({

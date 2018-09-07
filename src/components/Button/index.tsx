@@ -2,7 +2,7 @@ import { Interpolation } from "emotion";
 import * as React from "react";
 import Text from "../Text";
 import Theme from "../Theme";
-import View from "../View";
+import View, { Props as ViewProps } from "../View";
 
 const sizes = {
   sm: 1,
@@ -10,15 +10,13 @@ const sizes = {
   lg: 3,
 };
 
-export interface Props {
+export interface Props extends ViewProps {
   element?: string;
   size?: string;
   color?: string;
   backgroundColor?: string;
   css?: Interpolation;
-  children: JSX.Element[] | JSX.Element | string;
-  // This allows any extra props to go through to ...props
-  [key: string]: any;
+  children: React.ReactNode;
 }
 
 const Button: React.SFC<Props> = ({

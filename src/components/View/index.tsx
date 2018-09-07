@@ -6,10 +6,10 @@ import {
 import { Interpolation } from "emotion";
 import * as React from "react";
 import { opacify } from "../../foundations";
-import Base from "../Base";
+import Base, { Props as BaseProps } from "../Base";
 import Theme from "../Theme";
 
-interface Props {
+export interface Props extends BaseProps {
   element?: string | React.ComponentType;
   display?: string;
   flexDirection?: FlexDirectionProperty;
@@ -41,9 +41,7 @@ interface Props {
   minHeight?: number;
   maxWidth?: number;
   zIndex?: number;
-  css?: Interpolation[] | string;
-  // This allows any extra props to go through to ...props
-  [key: string]: any;
+  css?: Interpolation;
 }
 
 const applySpacing = (spacing = [], space: number) => {

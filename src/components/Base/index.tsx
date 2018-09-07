@@ -3,8 +3,8 @@ import * as React from "react";
 
 export interface Props {
   element?: string | React.ComponentType;
-  children?: JSX.Element[] | JSX.Element | string;
-  css?: Interpolation[];
+  children?: React.ReactNode;
+  css?: Interpolation;
   [key: string]: any;
 }
 
