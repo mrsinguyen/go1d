@@ -1,5 +1,6 @@
 ---
 title: View
+status: ready
 ---
 
 This is a view component

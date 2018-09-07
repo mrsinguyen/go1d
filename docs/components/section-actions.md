@@ -1,6 +1,7 @@
 ---
 title: Section actions
 lead: Section actions are actions specific to a particular section on a page. They live with section headers.
+status: not-started
 ---
 
 ## Examples

@@ -1,6 +1,7 @@
 ---
 title: Button
 lead: Buttons indicate what actions are possible to users. They are important affordances to let users know when they can execute an action, typically immediately. Their associated actions are labelled and defined by verbs. 
+status: ready
 ---
 
 Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
