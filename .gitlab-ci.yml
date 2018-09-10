@@ -7,7 +7,7 @@ cache:
 stages:
   - build
   - test
-  - deploy
+  - release
 
 build:
   stage: build
@@ -18,7 +18,7 @@ build:
   script:
     - yarn install
     - yarn tsc
-    - yarn generate-proptypes 
+    - yarn generate-proptypes
     - yarn x0 build docs
   artifacts:
     paths:
@@ -34,8 +34,8 @@ test:linting:
   script: yarn tslint
 
 
-pages:
-  stage: deploy
+release:pages:
+  stage: release
   tags: ["aws"]
   script:
     - mkdir public
@@ -43,6 +43,8 @@ pages:
   artifacts:
     paths:
       - public # mandatory, other folder won't work
+  except:
+    - $CI_COMMIT_MESSAGE =~ /npm release/
   # only:
   #   - master # or dev, the branch you want to publish
     - node_modules/
@@ -58,3 +60,15 @@ test:unit:
     expire_in: 1h
   except:
     - "tags"
+
+
+release:npm:
+  stage: release
+  tags: ["aws"]
+  script:
+    - npm version patch
+    - git add package.json
+    - git commit -m "[npm release] Bumping package version"
+    - git push origin head
+  except:
+    - $CI_COMMIT_MESSAGE =~ /npm release/
