@@ -2,11 +2,43 @@ image: go1com/ci-nodejs:node8
 
 cache:
   paths:
-    - node_modules/
+  - node_modules/
 
 stages:
+  - build
   - test
+  - deploy
 
+build:
+  stage: build
+  tags: ["aws"]
+  cache:
+    paths: [node_modules]
+    key: "$CI_PROJECT_ID"
+  script:
+    - yarn install
+    - yarn tsc
+    - docs:build
+  artifacts:
+    paths:
+      - node_modules
+      - build
+      - dist
+    expire_in: 6h
+  only: ["branches"]
+
+
+
+pages:
+  stage: deploy
+  script:
+    - cp -r build/* public/
+  artifacts:
+    paths:
+      - public # mandatory, other folder won't work
+  # only:
+  #   - master # or dev, the branch you want to publish
+    - node_modules/
 test:unit:
   stage: test
   tags: ["aws"]
