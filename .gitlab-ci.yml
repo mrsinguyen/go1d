@@ -66,6 +66,8 @@ release:npm:
   stage: release
   tags: ["aws"]
   script:
+    - git config user.name "$GITLAB_USER_NAME"
+    - git config user.email "$GITLAB_USER_EMAIL"
     - npm version patch -m :"[npm release] $CI_COMMIT_MESSAGE"
     - git push origin head
   except:
