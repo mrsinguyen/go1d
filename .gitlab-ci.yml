@@ -68,9 +68,10 @@ release:npm:
   script:
     - git config user.name "$GITLAB_USER_NAME"
     - git config user.email "$GITLAB_USER_EMAIL"
+    - git checkout origin/$CI_COMMIT_REF_NAME
+    - git branch --set-upstream-to origin/$CI_COMMIT_REF_NAME
     - npm version patch -m "[npm release] $CI_COMMIT_MESSAGE"
-    - git show-ref
-    - git push origin
+    - git push
   except:
     - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
 # only:
