@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "GO1 Design System",
   "main": "dist/index.js",
-  "repository": "https://github.com/lukebrooker/go1d",
+  "homepage": "https://apps.pages.go1.co/GO1D",
   "author": "Luke Brooker <mail@lukebrooker.com> (https://lukebrooker.com/)",
   "license": "MIT",
   "private": false,
