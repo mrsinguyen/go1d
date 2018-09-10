@@ -44,7 +44,7 @@ release:pages:
     paths:
       - public # mandatory, other folder won't work
   except:
-    - $CI_COMMIT_MESSAGE =~ /npm release/
+    - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
   # only:
   #   - master # or dev, the branch you want to publish
     - node_modules/
@@ -68,7 +68,10 @@ release:npm:
   script:
     - git config user.name "$GITLAB_USER_NAME"
     - git config user.email "$GITLAB_USER_EMAIL"
-    - npm version patch -m :"[npm release] $CI_COMMIT_MESSAGE"
-    - git push origin head
+    - npm version patch -m "[npm release] $CI_COMMIT_MESSAGE"
+    - git show-ref
+    - git push origin
   except:
-    - $CI_COMMIT_MESSAGE =~ /npm release/
+    - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
+# only:
+  #   - master # or dev, the branch you want to publish
