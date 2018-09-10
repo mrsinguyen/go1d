@@ -19,11 +19,6 @@
     "displayName": "ButtonMinimal",
     "methods": []
   },
-  "build/components/Feedback/index.js": {
-    "description": "",
-    "displayName": "Feedback",
-    "methods": []
-  },
   "build/components/Pill/index.js": {
     "description": "",
     "displayName": "Pill",

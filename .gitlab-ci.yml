@@ -19,7 +19,7 @@ build:
     - yarn install
     - yarn tsc
     - yarn generate-proptypes 
-    - x0 build docs
+    - yarn x0 build docs
   artifacts:
     paths:
       - node_modules
