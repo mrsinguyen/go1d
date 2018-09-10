@@ -1,6 +1,6 @@
 {
   "name": "go1d",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "GO1 Design System",
   "main": "dist/index.js",
   "repository": "https://github.com/lukebrooker/go1d",
