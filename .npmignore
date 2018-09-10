@@ -1,0 +1,7 @@
+# files we don't want to go to npm
+
+dist/
+docs/
+src/
+tsconfig.json
+tslint.json
