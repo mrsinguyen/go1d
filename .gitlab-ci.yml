@@ -65,7 +65,17 @@ test:unit:
 release:npm:
   stage: release
   tags: ["aws"]
+  before_script:
+    - 'which ssh-agent || ( apk add -uUv openssh-client)'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan code.go1.com.au >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
+    - git clone git@code.go1.com.au:apps/${CI_PROJECT_PATH}.git
+    - cd ${CI_PROJECT_NAME}
     - git config user.name "$GITLAB_USER_NAME"
     - git config user.email "$GITLAB_USER_EMAIL"
     - git checkout origin/$CI_COMMIT_REF_NAME
