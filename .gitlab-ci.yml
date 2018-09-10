@@ -18,7 +18,8 @@ build:
   script:
     - yarn install
     - yarn tsc
-    - yarn tsc && yarn generate-proptypes && x0 build docs
+    - yarn generate-proptypes 
+    - x0 build docs
   artifacts:
     paths:
       - node_modules
