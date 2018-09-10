@@ -38,7 +38,8 @@ pages:
   stage: deploy
   tags: ["aws"]
   script:
-    - cp -r dist/* public
+    - mkdir public
+    - cp -r dist/* public/
   artifacts:
     paths:
       - public # mandatory, other folder won't work
