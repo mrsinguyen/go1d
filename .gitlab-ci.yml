@@ -66,8 +66,8 @@ release:npm:
   stage: release
   tags: ["aws"]
   variables:
-    - SSH_ASKPASS: echo ""
-    - DISPLAY: "true"
+    SSH_ASKPASS: "echo "
+    DISPLAY: "true"
   before_script:
     - 'which ssh-agent || ( apk add -uUv openssh-client)'
     - eval $(ssh-agent -s)
