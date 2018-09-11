@@ -5,15 +5,13 @@ import Button, { Props as ButtonProps } from "../Button";
 import Theme from "../Theme";
 
 interface Props extends ButtonProps {
-  element: string;
-  color: string;
-  css: Interpolation;
+  color?: string;
+  css?: Interpolation;
   children: React.ReactNode;
 }
 
 const ButtonMinimal: React.SFC<Props> = ({
-  element = "button",
-  color,
+  color = "subtle",
   children,
   css,
   ...props

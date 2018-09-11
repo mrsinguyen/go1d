@@ -7,8 +7,7 @@ import Theme from "../Theme";
 interface Props extends ButtonProps {
   children: React.ReactNode;
   color?: string;
-  element?: string;
-  css?: Interpolation[];
+  css?: Interpolation;
 }
 
 const textColor = {
@@ -21,7 +20,6 @@ const getTextColor = (color, colors) =>
   textColor[color] || isDark(colors[color]);
 
 const ButtonFilled: React.SFC<Props> = ({
-  element = "button",
   color = "background",
   children,
   css,

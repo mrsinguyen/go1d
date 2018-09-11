@@ -11,7 +11,7 @@ interface Props extends BaseProps {
   lineHeight?: number | string;
   fontSize?: number;
   color?: string;
-  css?: Interpolation[];
+  css?: Interpolation;
 }
 
 const Text: React.SFC<Props> = ({
