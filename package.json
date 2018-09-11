@@ -1,5 +1,5 @@
 {
-  "name": "go1d",
+  "name": "@go1d/go1d",
   "version": "0.0.1",
   "description": "GO1 Design System",
   "main": "build/index.js",
