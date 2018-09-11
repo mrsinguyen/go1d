@@ -16,7 +16,6 @@ build:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
-    - echo "$CI_COMMIT_MESSAGE"
     - yarn install
     - yarn tsc
     - yarn generate-proptypes
@@ -46,7 +45,7 @@ release:pages:
       - public # mandatory, other folder won't work
   except:
     variables:
-      - $CI_COMMIT_MESSAGE =~ /[npm release]/
+      - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
   # only:
   #   - master # or dev, the branch you want to publish
     - node_modules/
@@ -86,6 +85,6 @@ release:npm:
     - git push origin
   except:
     variables:
-      - $CI_COMMIT_MESSAGE =~ /[npm release]/
+      - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
 # only:
   #   - master # or dev, the branch you want to publish
