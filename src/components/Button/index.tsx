@@ -11,7 +11,6 @@ const sizes = {
 };
 
 export interface Props extends ViewProps {
-  element?: string;
   size?: string;
   color?: string;
   backgroundColor?: string;
@@ -20,7 +19,6 @@ export interface Props extends ViewProps {
 }
 
 const Button: React.SFC<Props> = ({
-  element = "button",
   size = "md",
   color = "subtle",
   backgroundColor = "lightest",
@@ -31,7 +29,7 @@ const Button: React.SFC<Props> = ({
   <Theme.Consumer>
     {({ colors, type }) => (
       <View
-        element={element}
+        element="button"
         flexDirection="row"
         alignItems="center"
         paddingY={size === "lg" ? 3 : 2}

@@ -78,7 +78,7 @@ export interface ThemeType {
 export interface Theme {
   colors: Colors;
   type: ThemeType;
-  spacing: string[];
+  spacing: number[];
   shadows: MappedKey<Shadows, string>;
   transitions: MappedKey<"subtle", string>;
   breakpoints: object;

@@ -48,7 +48,7 @@ const applySpacing = (spacing = [], space: number) => {
   if (space === undefined) {
     return;
   }
-  if (spacing[space]) {
+  if (space !== undefined) {
     return spacing[space];
   }
   if (spacing[Math.abs(space)]) {
