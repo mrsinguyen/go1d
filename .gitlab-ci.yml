@@ -16,6 +16,7 @@ build:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
+    - echo "$CI_COMMIT_MESSAGE"
     - yarn install
     - yarn tsc
     - yarn generate-proptypes
