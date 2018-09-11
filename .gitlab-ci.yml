@@ -33,22 +33,6 @@ test:linting:
   tags: ["aws"]
   script: yarn tslint
 
-
-release:pages:
-  stage: release
-  tags: ["aws"]
-  script:
-    - mkdir public
-    - cp -r dist/* public/
-  artifacts:
-    paths:
-      - public # mandatory, other folder won't work
-  except:
-    variables:
-      - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
-  # only:
-  #   - master # or dev, the branch you want to publish
-    - node_modules/
 test:unit:
   stage: test
   tags: ["aws"]
@@ -62,29 +46,48 @@ test:unit:
   except:
     - "tags"
 
-
-release:npm:
+release:pages:
   stage: release
   tags: ["aws"]
-  before_script:
-    - 'which ssh-agent || ( apk add -uUv openssh-client)'
-    - eval $(ssh-agent -s)
-    - echo "$GO1D_PRIVATE_SSH_KEY" |  base64 --decode | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan code.go1.com.au >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
   script:
-    - git clone git@code.go1.com.au:${CI_PROJECT_PATH}.git
-    - cd ${CI_PROJECT_NAME}
-    - git config user.name "$GITLAB_USER_NAME"
-    - git config user.email "$GITLAB_USER_EMAIL"
-    - git checkout $CI_COMMIT_REF_NAME
-    - git branch --set-upstream-to origin/$CI_COMMIT_REF_NAME
-    - npm version patch -m "[npm release] $CI_COMMIT_MESSAGE"
-    - git push origin
+    - mkdir public
+    - cp -r dist/* public/
+  artifacts:
+    paths:
+      - public # mandatory, other folder won't work
   except:
+    refs:
+      - "tags"
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
-# only:
-  #   - master # or dev, the branch you want to publish
+  only:
+    - master 
+
+# This is awaiting an npm package, so will not be used before then
+# release:npm:
+#   stage: release
+#   tags: ["aws"]
+#   before_script:
+#     - 'which ssh-agent || ( apk add -uUv openssh-client)'
+#     - eval $(ssh-agent -s)
+#     - echo "$GO1D_PRIVATE_SSH_KEY" |  base64 --decode | tr -d '\r' | ssh-add - > /dev/null
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - ssh-keyscan code.go1.com.au >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - git clone git@code.go1.com.au:${CI_PROJECT_PATH}.git
+#     - cd ${CI_PROJECT_NAME}
+#     - git config user.name "$GITLAB_USER_NAME"
+#     - git config user.email "$GITLAB_USER_EMAIL"
+#     - git checkout $CI_COMMIT_REF_NAME
+#     - git branch --set-upstream-to origin/$CI_COMMIT_REF_NAME
+#     - npm version patch -m "[npm release] $CI_COMMIT_MESSAGE"
+#     - git push origin
+#   except:
+#     refs:
+#       - "tags"
+#     variables:
+#       - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
+#   only:
+#     - master
