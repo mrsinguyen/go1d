@@ -8,6 +8,7 @@ stages:
   - build
   - test
   - release
+  - npm-release
 
 build:
   stage: build
@@ -60,11 +61,12 @@ release:pages:
       - "tags"
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
-  only:
-    - master 
+  # only:
+  #   - master
+  when: manual
 
 release:npm:
-  stage: release
+  stage: npm-release
   tags: ["aws"]
   before_script:
     - 'which ssh-agent || ( apk add -uUv openssh-client)'
@@ -89,5 +91,6 @@ release:npm:
     - npm publish --access public
   except:
     - "tags"
-  only:
-    - master
+  # only:
+  #   - master
+  when: manual
