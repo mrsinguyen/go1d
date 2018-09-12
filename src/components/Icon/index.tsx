@@ -2,7 +2,7 @@ import * as React from "react";
 import Theme from "../Theme";
 import View from "../View";
 
-import * as Icons from "../../icons";
+import * as Icons from "../Icons";
 
 interface Props {
   name: string;
