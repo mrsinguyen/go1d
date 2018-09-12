@@ -63,7 +63,7 @@ release:pages:
   # only:
   #   - master 
 
-release:npm-prepare:
+release:npm:
   stage: release
   tags: ["aws"]
   before_script:
@@ -74,8 +74,6 @@ release:npm-prepare:
     - chmod 700 ~/.ssh
     - ssh-keyscan code.go1.com.au >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - npm config set scope go1d --global
-    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
   script:
     - git clone git@code.go1.com.au:${CI_PROJECT_PATH}.git
     - cd ${CI_PROJECT_NAME}
@@ -84,9 +82,11 @@ release:npm-prepare:
     - git checkout $CI_COMMIT_REF_NAME
     - git branch --set-upstream-to origin/$CI_COMMIT_REF_NAME
     - PACKAGE_VERSION=$(npm version patch -m "[NPM-CI] Publishing Version %s to NPM [skip ci]") 
-    - npm publish --access public
     - git push origin
-    - git push origin $PACKAGE_VEERSION
+    - git push origin $PACKAGE_VERSION
+    - npm config set scope go1d --global
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    - npm publish --access public
   except:
     - "tags"
   # only:
