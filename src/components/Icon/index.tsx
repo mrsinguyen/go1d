@@ -1,4 +1,6 @@
 import * as React from "react";
+import Theme from "../Theme";
+import View from "../View";
 
 import * as Icons from "../../icons";
 
@@ -13,7 +15,10 @@ const Icon: React.SFC<Props> = ({ name, ...props }: Props) => {
   if (!Component) {
     return null;
   }
-  return <Component {...props} />;
+
+  const renderComponent = componentProps => <Component {...componentProps} />;
+
+  return <View element={renderComponent} {...props} />;
 };
 
 Icon.displayName = "Icon";
