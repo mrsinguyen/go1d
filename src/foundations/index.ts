@@ -43,7 +43,7 @@ export const brandGreys = {
   dark: "#798A8F",
   grey: "#C7D5DB",
   light: "#E6EEF2",
-  lighter: "#F1F6F9",
+  lighter: "#EDF7FA",
   lightest: "#ffffff",
 };
 
