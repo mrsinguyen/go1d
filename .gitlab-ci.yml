@@ -77,6 +77,9 @@ release:npm:
     - ssh-keyscan code.go1.com.au >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
+    - git clone git@code.go1.com.au:${CI_PROJECT_PATH}.git
+    - cp -r build ${CI_PROJECT_NAME}/
+    - cd ${CI_PROJECT_NAME}
     - git config user.name "$GITLAB_USER_NAME"
     - git config user.email "$GITLAB_USER_EMAIL"
     - git checkout $CI_COMMIT_REF_NAME
