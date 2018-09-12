@@ -9,18 +9,18 @@
   "private": false,
   "scripts": {
     "prepare": "babel src -d dist",
-    "generate-proptypes": "react-docgen build/components -i ThemeContext -o ./docs/_src/proptypes.json --pretty",
-    "docs:build": "rm -rf ./build/ && yarn tsc && yarn pixo && yarn generate-proptypes && x0 build docs",
-    "docs:dev": "rm -rf ./build/ && yarn tsc && yarn pixo && yarn generate-proptypes && x0 docs -p 8008",
+    "generate-proptypes": "react-docgen build/components -i ThemeContext -i Icons -o ./docs/_src/proptypes.json --pretty",
+    "docs:build": "rm -rf build && yarn pixo && yarn tsc && yarn tsc:icons && yarn generate-proptypes && x0 build docs",
+    "docs:dev": "rm -rf build && yarn pixo && yarn tsc && yarn generate-proptypes && x0 docs -p 8008",
     "deploy": "yarn docs:build && gh-pages -d dist",
     "lint": "prettier --write ./docs/**/*.js",
-    "precommit": "lint-staged",
+    "precommit": "yarn pixo-staged && lint-staged",
     "size": "bundlesize",
     "test": "yarn lint && jest",
     "tsc": "tsc --jsx react --outDir ./build",
-    "tsc:icons": "tsc --jsx react --outDir ./build/icons --rootDir ./build/icons --project ./tsconfig.icons.json && rm -rf build/icons/*.tsx",
     "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
-    "pixo": "pixo src/icons --outDir build/icons --template pixo-template.js && for x in build/icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done"
+    "pixo-staged": "yarn pixo && git add src/components/Icons",
+    "pixo": "rm -rf src/components/Icons && pixo src/icons --outDir src/components/Icons --template pixo-template.js && for x in src/components/Icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done && yarn tslint"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
