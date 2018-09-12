@@ -60,8 +60,8 @@ release:pages:
       - "tags"
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
-  only:
-    - master 
+  # only:
+  #   - master 
 
 release:npm-prepare:
   stage: release
@@ -89,5 +89,5 @@ release:npm-prepare:
     - git push origin $PACKAGE_VEERSION
   except:
     - "tags"
-  only:
-    - master
+  # only:
+  #   - master
