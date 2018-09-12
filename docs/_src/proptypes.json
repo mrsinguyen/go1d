@@ -19,9 +19,9 @@
     "displayName": "ButtonMinimal",
     "methods": []
   },
-  "build/components/Feedback/index.js": {
+  "build/components/PageBody/index.js": {
     "description": "",
-    "displayName": "Feedback",
+    "displayName": "PageBody",
     "methods": []
   },
   "build/components/Pill/index.js": {

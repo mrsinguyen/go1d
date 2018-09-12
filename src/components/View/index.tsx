@@ -37,14 +37,14 @@ export interface Props extends BaseProps {
   backgroundColor?: string;
   backgroundOpacity?: number | string;
   borderRadius?: number;
-  width?: number;
+  width?: number | string;
   minHeight?: number;
   maxWidth?: number;
   zIndex?: number;
   css?: Interpolation;
 }
 
-const applySpacing = (spacing = [], space: number) => {
+const applySpacing = (spacing: number[] = [], space: number) => {
   if (space === undefined) {
     return;
   }
@@ -62,10 +62,12 @@ const applySpacing = (spacing = [], space: number) => {
   }
 
   // tslint:disable-next-line no-console
-  return console.error(
+  console.error(
     "Please use spacing scale for value smaller than " +
       spacing[spacing.length - 1]
   );
+
+  return 0;
 };
 
 const View: React.SFC<Props> = ({
@@ -134,7 +136,7 @@ const View: React.SFC<Props> = ({
             backgroundColor: opacity[backgroundOpacity]
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
-            borderRadius: [borderRadius],
+            borderRadius,
             transition: transitions.subtle,
           },
           css,
