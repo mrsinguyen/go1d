@@ -60,8 +60,8 @@ release:pages:
       - "tags"
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
-  # only:
-  #   - master 
+  only:
+    - master 
 
 release:npm:
   stage: release
@@ -89,5 +89,5 @@ release:npm:
     - npm publish --access public
   except:
     - "tags"
-  # only:
-  #   - master
+  only:
+    - master
