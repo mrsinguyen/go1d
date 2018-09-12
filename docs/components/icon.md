@@ -7,12 +7,19 @@ status: dev
 <Icon name="Cross" />
 ```
 
-```!jsx
-<ComponentDoc component='Icon' />
-```
+### Icon Types
 
-```.jsx
-{ 
-    Object.keys(AllIcons).map(x => <div><Icon name={x}/></div>)
-}
+```!jsx
+<table style={{ width: "100%"}}>
+    <tr>
+        <th style={{ "text-align": "left"}}>Name</th>
+        <th style={{ "text-align": "left"}}>Icon</th>
+    </tr>
+    { 
+        Object.keys(AllIcons).map(name => <tr>
+            <td>{name}</td>
+            <td><Icon name={name}/></td>
+        </tr>)
+    }
+</table>
 ```
