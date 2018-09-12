@@ -18,8 +18,9 @@
     "size": "bundlesize",
     "test": "yarn lint && jest",
     "tsc": "tsc --jsx react --outDir ./build",
+    "tsc:icons": "tsc --jsx react --outDir ./build/icons --rootDir ./build/icons --project ./tsconfig.icons.json && rm -rf build/icons/*.tsx",
     "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
-    "pixo": "pixo src/icons --outDir build/icons"
+    "pixo": "pixo src/icons --outDir build/icons --template pixo-template.js && for x in build/icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
