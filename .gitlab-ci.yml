@@ -83,9 +83,10 @@ release:npm-prepare:
     - git config user.email "$GITLAB_USER_EMAIL"
     - git checkout $CI_COMMIT_REF_NAME
     - git branch --set-upstream-to origin/$CI_COMMIT_REF_NAME
-    - npm version patch -m "[NPM-CI] Publishing Version %s to NPM [skip ci]" 
+    - PACKAGE_VERSION=$(npm version patch -m "[NPM-CI] Publishing Version %s to NPM [skip ci]") 
     - npm publish --access public
     - git push origin
+    - git push origin $PACKAGE_VEERSION
   except:
     - "tags"
   only:
