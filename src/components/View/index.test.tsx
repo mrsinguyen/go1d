@@ -1,7 +1,9 @@
 import { css } from "emotion";
 import * as React from "react";
-import { render } from "react-testing-library";
+import { cleanup, render } from "react-testing-library";
 import View from "./index";
+
+afterEach(cleanup);
 
 it("renders without crashing without any optional props", () => {
   render(<View />);
@@ -41,4 +43,22 @@ it("renders without crashing with all props passed to it", () => {
       css={styles}
     />
   );
+});
+
+it("renders with negative margins", () => {
+  render(<View margin={-1} />);
+});
+
+it("renders with margins larger than spacing", () => {
+  render(<View margin={5000} />);
+});
+
+it("renders a margin of 0 if a key smaller than the max spacing is used", () => {
+  const originalWarn = global.console.error;
+  global.console.error = jest.fn();
+  const wrapper = render(<View margin={20} />);
+  expect(global.console.error).toHaveBeenCalledWith(
+    "Please use spacing scale for value smaller than 256"
+  );
+  global.console.error = originalWarn;
 });

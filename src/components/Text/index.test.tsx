@@ -1,7 +1,9 @@
 import { css } from "emotion";
 import * as React from "react";
-import { render } from "react-testing-library";
+import { cleanup, render } from "react-testing-library";
 import Text from "./index";
+
+afterEach(cleanup);
 
 it("renders without crashing without any optional props", () => {
   render(<Text>here</Text>);

@@ -32,13 +32,13 @@ This is an exhaustive list of all icons currently in the system
 ```!jsx
 <table style={{ width: "100%"}}>
     <tr>
-        <th style={{ "text-align": "left"}}>Name</th>
-        <th style={{ "text-align": "left"}}>Icon</th>
+        <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Name</th>
+        <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Icon</th>
     </tr>
     { 
-        Object.keys(AllIcons).map((name, index) => <tr key={index} style={{ background: `${index % 2 ==0 ? 'rgba(54,70,75,0.08)': "white"}` }}>
-            <td>{name}</td>
-            <td><Icon name={name}/></td>
+        Object.keys(AllIcons).map((name, index) => <tr key={index}>
+            <td style={{ padding: "0 0 1rem 0"}}>{name}</td>
+            <td style={{ padding: "0 0 1rem 0"}}><Icon name={name}/></td>
         </tr>)
     }
 </table>
