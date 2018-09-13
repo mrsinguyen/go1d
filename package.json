@@ -20,7 +20,7 @@
     "tsc": "tsc --jsx react --outDir ./build",
     "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
     "pixo-staged": "yarn pixo && git add src/components/Icons/*",
-    "pixo": "rm -rf src/components/Icons && pixo src/icons --outDir src/components/Icons --template pixo-template.js && for x in src/components/Icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done && yarn tslint"
+    "pixo": "rm -rf src/components/Icons && pixo src/icons --outDir src/components/Icons --template pixo-template.js && for x in src/components/Icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
