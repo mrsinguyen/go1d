@@ -106,7 +106,6 @@
     ]
   },
   "pixo": {
-    "outDir": "dist/icons",
     "index": true,
     "recursive": true
   }
