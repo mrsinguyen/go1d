@@ -1,17 +1,17 @@
 {
-  "name": "go1d",
-  "version": "1.0.0",
+  "name": "@go1d/go1d",
+  "version": "0.0.7",
   "description": "GO1 Design System",
-  "main": "dist/index.js",
-  "repository": "https://github.com/lukebrooker/go1d",
+  "main": "build/index.js",
+  "homepage": "https://apps.pages.go1.co/GO1D",
   "author": "Luke Brooker <mail@lukebrooker.com> (https://lukebrooker.com/)",
   "license": "MIT",
   "private": false,
   "scripts": {
     "prepare": "babel src -d dist",
     "generate-proptypes": "react-docgen build/components -i ThemeContext -o ./docs/_src/proptypes.json --pretty",
-    "docs:build": "yarn tsc && yarn generate-proptypes && x0 build docs",
-    "docs:dev": "yarn tsc && yarn generate-proptypes && x0 docs -p 8008",
+    "docs:build": "rm -rf ./build/ && yarn tsc && yarn generate-proptypes && x0 build docs",
+    "docs:dev": "rm -rf ./build/ && yarn tsc && yarn generate-proptypes && x0 docs -p 8008",
     "deploy": "yarn docs:build && gh-pages -d dist",
     "lint": "prettier --write ./docs/**/*.js",
     "precommit": "lint-staged",
@@ -71,7 +71,7 @@
   ],
   "x0": {
     "title": "GO1D - GO1 Design System",
-    "basename": "/go1d",
+    "basename": "/GO1D",
     "meta": [
       {
         "name": "twitter:card",

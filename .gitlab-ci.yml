@@ -5,7 +5,34 @@ cache:
     - node_modules/
 
 stages:
+  - build
   - test
+  - release
+  - npm-release
+
+build:
+  stage: build
+  tags: ["aws"]
+  cache:
+    paths: [node_modules]
+    key: "$CI_PROJECT_ID"
+  script:
+    - yarn install
+    - yarn tsc
+    - yarn generate-proptypes
+    - yarn x0 build docs
+  artifacts:
+    paths:
+      - node_modules
+      - build
+      - dist
+    expire_in: 6h
+  only: ["branches"]
+
+test:linting:
+  stage: test
+  tags: ["aws"]
+  script: yarn tslint
 
 test:unit:
   stage: test
@@ -19,3 +46,52 @@ test:unit:
     expire_in: 1h
   except:
     - "tags"
+
+release:pages:
+  stage: release
+  tags: ["aws"]
+  script:
+    - mkdir public
+    - cp -r dist/* public/
+  artifacts:
+    paths:
+      - public # mandatory, other folder won't work
+  except:
+    refs:
+      - "tags"
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[npm release\]/
+  only:
+    - master
+  when: manual
+
+release:npm:
+  stage: npm-release
+  tags: ["aws"]
+  before_script:
+    - 'which ssh-agent || ( apk add -uUv openssh-client)'
+    - eval $(ssh-agent -s)
+    - echo "$GO1D_PRIVATE_SSH_KEY" |  base64 --decode | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan code.go1.com.au >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - git clone git@code.go1.com.au:${CI_PROJECT_PATH}.git
+    - cp -r build ${CI_PROJECT_NAME}/
+    - cd ${CI_PROJECT_NAME}
+    - git config user.name "$GITLAB_USER_NAME"
+    - git config user.email "$GITLAB_USER_EMAIL"
+    - git checkout $CI_COMMIT_REF_NAME
+    - git branch --set-upstream-to origin/$CI_COMMIT_REF_NAME
+    - PACKAGE_VERSION=$(npm version patch -m "[NPM-CI] Publishing Version %s to NPM [skip ci]") 
+    - git push origin
+    - git push origin $PACKAGE_VERSION
+    - npm config set scope go1d --global
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    - npm publish --access public
+  except:
+    - "tags"
+  only:
+    - master
+  when: manual
