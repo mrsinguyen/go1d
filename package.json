@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "babel src -d dist",
     "generate-proptypes": "react-docgen build/components -i ThemeContext -i Icons -o ./docs/_src/proptypes.json --pretty",
-    "docs:build": "rm -rf build && yarn pixo && yarn tsc && yarn tsc:icons && yarn generate-proptypes && x0 build docs",
+    "docs:build": "rm -rf build && yarn pixo && yarn tsc && yarn generate-proptypes && x0 build docs",
     "docs:dev": "rm -rf build && yarn pixo && yarn tsc && yarn generate-proptypes && x0 docs -p 8008",
     "deploy": "yarn docs:build && gh-pages -d dist",
     "lint": "prettier --write ./docs/**/*.js",
