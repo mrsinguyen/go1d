@@ -17,12 +17,12 @@ Supply a color by the color prop. The available colors can be found in the Color
 
 ### Size
 
-Define size with the size prop. If a number is supplied, the size will be that number of pixels. Size takes most css expressions such as 1rem or 50%
+Define size with the size prop. This uses font sizing to determine the size, so the value is the index on the font size array that you require.
 
 ```.jsx
-<Icon name="Cross" size={12}/> <br />
-<Icon name="Cross" size="2rem"/> <br />
-<Icon name="Cross" size="20%"/> <br />
+<Icon name="Cross" size={1}/> <br />
+<Icon name="Cross" size={4}/> <br />
+<Icon name="Cross" size={7}/> <br />
 ```
 
 ### Icon Types
