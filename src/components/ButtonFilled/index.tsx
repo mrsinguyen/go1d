@@ -1,6 +1,7 @@
 import { Interpolation } from "emotion";
 import * as React from "react";
 import { isDark } from "../../foundations";
+import { Colors } from "../../foundations/foundation-types";
 import Button, { Props as ButtonProps } from "../Button";
 import Theme from "../Theme";
 
@@ -16,7 +17,7 @@ const textColor = {
   background: "subtle",
 };
 
-const getTextColor = (color, colors) =>
+const getTextColor = (color: string, colors: Colors) =>
   textColor[color] || isDark(colors[color]);
 
 const ButtonFilled: React.SFC<Props> = ({

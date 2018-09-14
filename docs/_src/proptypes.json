@@ -19,6 +19,11 @@
     "displayName": "ButtonMinimal",
     "methods": []
   },
+  "build/components/Icon/index.js": {
+    "description": "",
+    "displayName": "Icon",
+    "methods": []
+  },
   "build/components/PageBody/index.js": {
     "description": "",
     "displayName": "PageBody",

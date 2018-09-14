@@ -54,6 +54,8 @@ This repository deploys to npm and gitlab pages. This is a MANUAL part of the pi
 ## CONTRIBUTE
 Before any pull requests ensure all changed files are run though tslint which should automaticly correct most code styling errors
 
+### ADDING SVG ICONS
+Add the svg to src/icons and then run `yarn pixo`. Make sure to include any created files in the commit (although this handled by a precommit hook, check to be safe).
 
 ## Documentation
 The current components and styles can be viewed at [https://apps.pages.go1.co/GO1D]

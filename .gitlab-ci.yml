@@ -18,6 +18,7 @@ build:
     key: "$CI_PROJECT_ID"
   script:
     - yarn install
+    - yarn pixo
     - yarn tsc
     - yarn generate-proptypes
     - yarn x0 build docs

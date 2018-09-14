@@ -18,3 +18,11 @@ it("renders without crashing with all props", () => {
     </ButtonFilled>
   );
 });
+
+it("renders boxshadow correctly", () => {
+  render(
+    <ButtonFilled color="accent" backgroundColor="lightest">
+      Button text
+    </ButtonFilled>
+  );
+});

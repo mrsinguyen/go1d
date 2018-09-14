@@ -1,7 +1,9 @@
 import * as React from "react";
-import { render } from "react-testing-library";
+import { cleanup, render } from "react-testing-library";
 import Theme from "./index";
 import { DarkMode } from "./index";
+
+afterEach(cleanup);
 
 it("renders lightmode without crashing", () => {
   render(
