@@ -7,10 +7,10 @@ import * as Icons from "../Icons";
 interface Props {
   name: string;
   color?: string;
-  size?: string | number;
+  size?: number;
 }
 
-const Icon: React.SFC<Props> = ({ name, ...props }: Props) => {
+const Icon: React.SFC<Props> = ({ name, size, ...props }: Props) => {
   const Component = Icons[name];
   if (!Component) {
     return null;
@@ -18,7 +18,30 @@ const Icon: React.SFC<Props> = ({ name, ...props }: Props) => {
 
   const renderComponent = componentProps => <Component {...componentProps} />;
 
-  return <View element={renderComponent} {...props} />;
+  return (
+    <Theme.Consumer>
+      {({ type, breakpoints }) => (
+        <View
+          element={renderComponent}
+          {...props}
+          css={[
+            {
+              ...Object.keys(breakpoints).reduce(
+                (acc, bpKey) => ({
+                  ...acc,
+                  [breakpoints[bpKey]]: {
+                    width: type.scale[bpKey][size] || "1em",
+                    height: type.scale[bpKey][size] || "1em",
+                  },
+                }),
+                {}
+              ),
+            },
+          ]}
+        />
+      )}
+    </Theme.Consumer>
+  );
 };
 
 Icon.displayName = "Icon";

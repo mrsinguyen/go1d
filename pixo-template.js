@@ -4,6 +4,7 @@ module.exports = ({
     viewBox,
     pathData
   }) => `import * as React from "react";
+import Theme from "../Theme";
 
 interface Props {
   size: number;
@@ -11,11 +12,15 @@ interface Props {
 }
 
 const ${name}: React.SFC<Props> = ({
-  size = 24,
+  size,
   color = "currentcolor",
   ...props
 }: Props) => (
-  <svg {...props} viewBox="${viewBox}" width={size} height={size} fill={color}>
+  <svg 
+    {...props}
+    viewBox="${viewBox}"
+    fill={color}
+  >
     <path d="${pathData}" />
   </svg>
 );
