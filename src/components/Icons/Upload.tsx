@@ -4,6 +4,7 @@ import Theme from "../Theme";
 interface Props {
   size: number;
   color: string;
+  css: Interpolation;
 }
 
 const Upload: React.SFC<Props> = ({

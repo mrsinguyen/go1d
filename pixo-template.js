@@ -9,6 +9,7 @@ import Theme from "../Theme";
 interface Props {
   size: number;
   color: string;
+  css: Interpolation
 }
 
 const ${name}: React.SFC<Props> = ({

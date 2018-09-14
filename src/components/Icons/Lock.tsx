@@ -4,6 +4,7 @@ import Theme from "../Theme";
 interface Props {
   size: number;
   color: string;
+  css: Interpolation;
 }
 
 const Lock: React.SFC<Props> = ({
