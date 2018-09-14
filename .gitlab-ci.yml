@@ -95,6 +95,8 @@ release:npm:
     - git push origin $PACKAGE_VERSION
     - npm config set scope go1d --global
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    - rm readme.md
+    - mv npm-readme.md readme.md
     - npm publish --access public
   except:
     - "tags"
