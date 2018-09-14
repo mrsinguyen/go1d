@@ -31,7 +31,7 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 ```
 
 ```!jsx
-<ComponentDoc component='ButtonFilled' />
+<ComponentDoc component={ButtonFilled} />
 ```
 
 ### Minimal button subtle colour

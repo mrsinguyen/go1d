@@ -10,5 +10,5 @@ This is a view component
 ```
 
 ```!jsx
-<ComponentDoc component='View' />
+<ComponentDoc component={View} />
 ```

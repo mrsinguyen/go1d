@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withReducer } from "recompose";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
-import { View, Text, Pill } from "../../../build/";
-import Theme, { DarkMode } from "../../../build/components/Theme";
+import { View, Text, Pill } from "../../../src/";
+import Theme, { DarkMode } from "../../../src/components/Theme";
 
 const unhyphenate = str => str.replace(/(\w)(-)(\w)/g, "$1 $3");
 const upperFirst = str => str.charAt(0).toUpperCase() + str.slice(1);

@@ -1,6 +1,6 @@
 import React from "react";
 import Color from "./Color";
-import { foundations } from "../../../build/";
+import { foundations } from "../../../src/";
 
 export const Colors = () => (
   <div>

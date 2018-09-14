@@ -1,32 +1,25 @@
 import React from "react";
 import find from "lodash/find";
-import components from "../proptypes.json";
-import { Base, View, Text } from "../../../build";
-
-const getDocs = displayName =>
-  find(
-    Object.values(components),
-    component => component.displayName === displayName
-  );
+import { Base, View, Text } from "../../../src";
 
 const Prop = ({
   name = "",
-  type = "N/A",
+  type = {},
   required = false,
   defaultValue = {},
   description = "N/A",
 }) => (
   <Text element="tr" fontFamily="mono">
     <Base element="td">{name}</Base>
-    <Base element="td">{type}</Base>
+    <Base element="td">{type.name || "N/A"}</Base>
     <Base element="td">{required ? "true" : "false"}</Base>
-    <Base element="td">{defaultValue.value || "none"}</Base>
+    <Base element="td">{defaultValue ? defaultValue.value : "none"}</Base>
     <Base element="td">{description}</Base>
   </Text>
 );
 
 export const ComponentDoc = ({ component = "" }) => {
-  const { props = {} } = getDocs(component) || {};
+  const { props = {} } = component.__docgenInfo || {};
   return (
     <View>
       <View marginY={3}>
