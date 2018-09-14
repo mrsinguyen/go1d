@@ -3,7 +3,8 @@ module.exports = ({
     name,
     viewBox,
     pathData
-  }) => `import * as React from "react";
+  }) => `import { Interpolation } from "emotion";
+import * as React from "react";
 import Theme from "../Theme";
 
 interface Props {
