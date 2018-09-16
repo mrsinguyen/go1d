@@ -25,6 +25,10 @@ Define size with the size prop. This uses font sizing to determine the size, so 
 <Icon name="Go1Logo" size={7}/> <br />
 ```
 
+```!jsx
+<ComponentDoc component={Icon} />
+```
+
 ### Icon Types
 
 This is an exhaustive list of all icons currently in the system

@@ -8,13 +8,13 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "npm:build": "tsc --jsx react --outDir ./build",
     "docs:build": "x0 build docs",
     "docs:dev": "x0 docs -p 8008",
     "lint": "prettier --write ./docs/**/*.js",
     "precommit": "yarn pixo-staged && lint-staged",
     "size": "bundlesize",
     "test": "yarn lint && jest",
-    "tsc": "tsc --jsx react --outDir ./build",
     "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
     "pixo-staged": "yarn pixo && git add src/components/Icons/*",
     "pixo": "rm -rf src/components/Icons && pixo src/icons --outDir src/components/Icons --template pixo-template.js && for x in src/components/Icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done"
