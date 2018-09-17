@@ -32,11 +32,11 @@ const Button: React.SFC<Props> = ({
         element="button"
         flexDirection="row"
         alignItems="center"
-        paddingY={size === "lg" ? 3 : 2}
-        paddingX={size === "lg" ? 4 : 3}
+        paddingY={size === "lg" ? 4 : 3}
+        paddingX={size === "lg" ? 5 : 4}
         backgroundColor={backgroundColor}
         color={color}
-        borderRadius={1}
+        borderRadius={2}
         css={[
           {
             cursor: "pointer",
@@ -50,6 +50,7 @@ const Button: React.SFC<Props> = ({
         {...props}
       >
         <Text
+          display="inline-block"
           lineHeight="ui"
           fontWeight="bold"
           fontSize={sizes[size]}

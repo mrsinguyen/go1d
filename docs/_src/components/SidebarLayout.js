@@ -69,10 +69,10 @@ const Link = props => (
           "&::before": {
             content: '""',
             position: "absolute",
-            height: spacing[2],
-            width: spacing[2],
-            borderRadius: spacing[1],
-            marginLeft: `-${spacing[3]}`,
+            height: spacing[3],
+            width: spacing[3],
+            borderRadius: spacing[2],
+            marginLeft: `-${spacing[4]}`,
             backgroundColor: "transparent",
           },
           "&:hover": {
@@ -128,9 +128,9 @@ const statuses = {
 const Hero = ({ title = "", lead = "", status = "not-started", ...props }) => (
   <View backgroundColor="soft">
     <View
-      paddingTop={8}
-      paddingBottom={7}
-      paddingX={4}
+      paddingTop={9}
+      paddingBottom={8}
+      paddingX={5}
       marginX="auto"
       width="100%"
       alignItems="flex-start"
@@ -138,7 +138,7 @@ const Hero = ({ title = "", lead = "", status = "not-started", ...props }) => (
         maxWidth: 768,
       }}
     >
-      <View marginBottom={3}>
+      <View marginBottom={4}>
         <Text
           element="h1"
           fontSize={6}
@@ -150,7 +150,7 @@ const Hero = ({ title = "", lead = "", status = "not-started", ...props }) => (
         </Text>
       </View>
       {status !== "ready" && (
-        <Pill marginBottom={3} color={statuses[status].color}>
+        <Pill marginBottom={4} color={statuses[status].color}>
           {statuses[status].title}
         </Pill>
       )}
@@ -166,8 +166,8 @@ const MaxWidth = props => (
     {...props}
     width="100%"
     marginX="auto"
-    paddingX={4}
-    paddingBottom={5}
+    paddingX={5}
+    paddingBottom={6}
     css={{
       maxWidth: 768,
     }}
@@ -175,11 +175,11 @@ const MaxWidth = props => (
 );
 
 const SidebarTitles = props => (
-  <View {...props} paddingX={5} paddingTop={3} paddingBottom={5} />
+  <View {...props} paddingX={6} paddingTop={4} paddingBottom={6} />
 );
 
 const SidebarTitle = props => (
-  <View marginBottom={2}>
+  <View marginBottom={3}>
     <Text
       element="h2"
       fontSize={3}
@@ -196,7 +196,7 @@ const Content = props => (
   <Theme.Consumer>
     {({ colors, type }) => (
       <View
-        paddingY={6}
+        paddingY={7}
         css={{
           color: colors.default,
           fontSize: type.scale[3],
@@ -212,7 +212,7 @@ const PrevNextLink = ({ title, path, name = "" }) => (
     <Text color="subtle" fontSize={2}>
       {title}
     </Text>
-    <View marginTop={2}>
+    <View marginTop={3}>
       <Text fontSize={3} fontWeight="bold">
         {format(name)}
       </Text>
