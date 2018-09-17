@@ -59,6 +59,8 @@ pages: # NEVER rename this. I must apparently be exactly this to work
   artifacts:
     paths:
       - public # mandatory, other folder won't work
+  except:
+    - "tags"
   only:
     - master
   when: manual
