@@ -16,5 +16,5 @@ This is a text component
 ```
 
 ```!jsx
-<ComponentDoc component='Text' />
+<ComponentDoc component={Text} />
 ```

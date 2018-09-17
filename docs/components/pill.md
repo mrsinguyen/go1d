@@ -41,3 +41,7 @@ status: ready
 ```.jsx
 <Pill color='danger'>Danger</Pill>
 ```
+
+```!jsx
+<ComponentDoc component={Pill} />
+```

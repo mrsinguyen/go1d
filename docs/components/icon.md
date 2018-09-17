@@ -4,7 +4,7 @@ status: dev
 ---
 
 ```.jsx
-<Icon name="Cross" />
+<Icon name="Go1Logo" />
 ```
 
 
@@ -12,7 +12,7 @@ status: dev
 
 Supply a color by the color prop. The available colors can be found in the Colors section.
 ```.jsx
-<Icon name="Cross" color="accent"/>
+<Icon name="Go1Logo" color="accent"/>
 ```
 
 ### Size
@@ -20,9 +20,13 @@ Supply a color by the color prop. The available colors can be found in the Color
 Define size with the size prop. This uses font sizing to determine the size, so the value is the index on the font size array that you require.
 
 ```.jsx
-<Icon name="Cross" size={1}/> <br />
-<Icon name="Cross" size={4}/> <br />
-<Icon name="Cross" size={7}/> <br />
+<Icon name="Go1Logo" size={1}/> <br />
+<Icon name="Go1Logo" size={4}/> <br />
+<Icon name="Go1Logo" size={7}/> <br />
+```
+
+```!jsx
+<ComponentDoc component={Icon} />
 ```
 
 ### Icon Types
