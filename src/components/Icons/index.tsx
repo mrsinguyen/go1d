@@ -1,6 +1,6 @@
 export { default as Activity } from "./Activity";
-export { default as Assignment } from "./Assignment";
 export { default as AddUser } from "./AddUser";
+export { default as Assignment } from "./Assignment";
 export { default as Award } from "./Award";
 export { default as Billing } from "./Billing";
 export { default as Briefcase } from "./Briefcase";
