@@ -22,7 +22,7 @@ export const ComponentDoc = ({ component = "" }) => {
   const { props = {} } = component.__docgenInfo || {};
   return (
     <View>
-      <View marginY={3}>
+      <View marginY={4}>
         <Text element="h3" fontSize={3} fontWeight="bold">
           Props & methods
         </Text>

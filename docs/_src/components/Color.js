@@ -19,10 +19,8 @@ export const Color = ({ color, background = "light", ...props }) => {
         <View
           css={{
             backgroundColor: color,
-            padding: spacing[4],
-            marginBottom: spacing[6],
-            minHeight: spacing[9],
-            width: spacing[11],
+            padding: spacing[5],
+            marginBottom: spacing[7],
             maxWidth: "100%",
             borderRadius: 4,
           }}

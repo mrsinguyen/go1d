@@ -182,7 +182,7 @@ export const type: ThemeType = {
  * Spacing
  */
 
-export const spacing = [0, 4, 8, 16, 24, 32, 48, 64, 128, 256];
+export const spacing = [0, 2, 4, 8, 16, 24, 32, 48, 64, 128, 256];
 
 /**
  * Transitions

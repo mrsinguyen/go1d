@@ -19,20 +19,20 @@ export interface Props extends BaseProps {
   justifyContent?: string;
   position?: PositionProperty;
   // Reset margins by default
-  margin?: number;
-  marginX?: number;
-  marginY?: number;
-  marginTop?: number;
-  marginBottom?: number;
-  marginRight?: number;
-  marginLeft?: number;
-  padding?: number;
-  paddingX?: number;
-  paddingY?: number;
-  paddingTop?: number;
-  paddingBottom?: number;
-  paddingRight?: number;
-  paddingLeft?: number;
+  margin?: number | string;
+  marginX?: number | string;
+  marginY?: number | string;
+  marginTop?: number | string;
+  marginBottom?: number | string;
+  marginRight?: number | string;
+  marginLeft?: number | string;
+  padding?: number | string;
+  paddingX?: number | string;
+  paddingY?: number | string;
+  paddingTop?: number | string;
+  paddingBottom?: number | string;
+  paddingRight?: number | string;
+  paddingLeft?: number | string;
   color?: string;
   backgroundColor?: string;
   backgroundOpacity?: number | string;
@@ -44,9 +44,12 @@ export interface Props extends BaseProps {
   css?: Interpolation;
 }
 
-const applySpacing = (spacing: number[] = [], space: number) => {
+const applySpacing = (spacing: number[] = [], space: number | string) => {
   if (space === undefined) {
     return;
+  }
+  if (typeof space === "string") {
+    return space;
   }
   if (spacing[space] !== undefined) {
     return spacing[space];
@@ -136,7 +139,7 @@ const View: React.SFC<Props> = ({
             backgroundColor: opacity[backgroundOpacity]
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
-            borderRadius,
+            borderRadius: s[borderRadius],
             transition: transitions.subtle,
           },
           css,

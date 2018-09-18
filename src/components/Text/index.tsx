@@ -5,6 +5,7 @@ import Theme from "../Theme";
 
 interface Props extends BaseProps {
   element?: string;
+  display?: string;
   fontWeight?: number | string;
   fontFamily?: string;
   fontStyle?: string;
@@ -16,6 +17,7 @@ interface Props extends BaseProps {
 
 const Text: React.SFC<Props> = ({
   element = "span",
+  display,
   fontWeight,
   fontFamily,
   fontStyle,
@@ -36,6 +38,7 @@ const Text: React.SFC<Props> = ({
               ? type.family[fontFamily]
               : type.family.sansSerif,
             fontStyle,
+            display,
             fontWeight: fontWeight && type.weight[fontWeight],
             lineHeight: lineHeight && type.leading[lineHeight],
             transition: transitions.subtle,

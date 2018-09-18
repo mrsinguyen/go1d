@@ -13,16 +13,12 @@ interface Props extends ViewProps {
 
 const PageBody: React.SFC<Props> = ({
   children,
-  padding,
-  paddingX = padding || 7,
-  paddingY = padding || 5,
   backgroundColor = "soft",
   ...props
 }: Props) => (
   <View
-    padding={padding}
-    paddingX={paddingX}
-    paddingY={paddingY}
+    paddingX={8}
+    paddingY={6}
     backgroundColor={backgroundColor}
     maxWidth={900}
     width="100%"
