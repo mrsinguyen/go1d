@@ -192,6 +192,8 @@ const transitions = {
   subtle: "all .15s ease",
 };
 
+const menuAnimationTime = 150;
+
 /**
  * Breakpoints
  */
@@ -216,6 +218,7 @@ export const generateTheme = ({
   transitions,
   breakpoints,
   opacity,
+  menuAnimationTime,
   ...theme,
 });
 

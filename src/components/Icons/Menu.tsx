@@ -8,16 +8,16 @@ interface Props {
   css: Interpolation;
 }
 
-const Drag: React.SFC<Props> = ({
+const Menu: React.SFC<Props> = ({
   size,
   color = "currentcolor",
   ...props
 }: Props) => (
-  <svg {...props} viewBox="0 0 16 16" fill={color}>
-    <path d="M 4 2 H 22 V 4 H 4 z M 4 7 H 22 V 9 H 4 z M 4 12 H 22 V 14 H 4 z" />
+  <svg {...props} viewBox="0 0 24 24" fill={color}>
+    <path d="M21 18.5H3v-1h18v1zm0-6H3v-1h18v1zm0-6H3v-1h18v1z" />
   </svg>
 );
 
-Drag.displayName = "Drag";
+Menu.displayName = "Menu";
 
-export default Drag;
+export default Menu;

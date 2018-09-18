@@ -1,21 +1,17 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { render } from "react-testing-library";
 import PageBody from "./index";
 
 it("renders without crashing without any optional props", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(
+  render(
     <PageBody>
       <div>stuff</div>
-    </PageBody>,
-    div
+    </PageBody>
   );
-  ReactDOM.unmountComponentAtNode(div);
 });
 
 it("renders without crashing with all props", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(
+  render(
     <PageBody
       marginTop={4}
       marginBottom={4}
@@ -28,8 +24,6 @@ it("renders without crashing with all props", () => {
       backgroundColor="dark"
     >
       <div>stuff</div>
-    </PageBody>,
-    div
+    </PageBody>
   );
-  ReactDOM.unmountComponentAtNode(div);
 });
