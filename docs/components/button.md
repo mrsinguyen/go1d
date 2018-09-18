@@ -1,10 +1,14 @@
 ---
 title: Button
-lead: Buttons indicate what actions are possible to users. They are important affordances to let users know when they can execute an action, typically immediately. Their associated actions are labelled and defined by verbs. 
+lead: Buttons indicate what actions are possible to users. They are important affordances to let users know when they can execute an action, typically immediately. Their associated actions are labelled and defined by verbs.
 status: ready
 ---
 
 Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
+
+```!jsx
+<ComponentDoc component={Button} />
+```
 
 ## Examples
 
@@ -60,7 +64,7 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 
 ## Best practice
 
-- Only one accent or button may be prominent 
+- Only one accent or button may be prominent
 - Up to a maximum of two actions outside a more menu can be made visible
 - Always use style of CTA button (call to action) when primary action is enabled
 - Buttons for destructive actions should be signified by red

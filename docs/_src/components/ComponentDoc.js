@@ -1,6 +1,7 @@
+import { css } from "emotion";
 import React from "react";
 import find from "lodash/find";
-import { Base, View, Text } from "../../../src";
+import { Base, View, Text, Theme } from "../../../src";
 
 const Prop = ({
   name = "",
@@ -21,27 +22,43 @@ const Prop = ({
 export const ComponentDoc = ({ component = "" }) => {
   const { props = {} } = component.__docgenInfo || {};
   return (
-    <View>
-      <View marginY={4}>
-        <Text element="h3" fontSize={3} fontWeight="bold">
-          Props & methods
-        </Text>
-      </View>
-      <Base element="table" display="table">
-        <Base element="tbody">
-          <Base element="tr">
-            <Base element="th">Name</Base>
-            <Base element="th">Type</Base>
-            <Base element="th">Required</Base>
-            <Base element="th">Default</Base>
-            <Base element="th">Description</Base>
-          </Base>
-          {Object.keys(props).map(key => (
-            <Prop key={key} name={key} {...props[key]} />
-          ))}
-        </Base>
-      </Base>
-    </View>
+    <Theme.Consumer>
+      {({ colors, spacing }) => (
+        <View>
+          <View marginY={3}>
+            <Text element="h3" fontSize={3} fontWeight="bold">
+              Props & methods
+            </Text>
+          </View>
+          <View
+            element="table"
+            display="table"
+            css={{
+              borderCollapse: "collapse",
+              "th, td": {
+                border: `1px solid ${colors.subtle}`,
+                padding: `${spacing[2]}px`,
+              },
+            }}
+          >
+            <Base element="thead">
+              <Base element="tr">
+                <Base element="th">Name</Base>
+                <Base element="th">Type</Base>
+                <Base element="th">Required</Base>
+                <Base element="th">Default</Base>
+                <Base element="th">Description</Base>
+              </Base>
+            </Base>
+            <Base element="tbody">
+              {Object.keys(props).map(key => (
+                <Prop key={key} name={key} {...props[key]} />
+              ))}
+            </Base>
+          </View>
+        </View>
+      )}
+    </Theme.Consumer>
   );
 };
 

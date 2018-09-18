@@ -1,4 +1,23 @@
 ---
 title: Page header
-status: not-started
+status: ready
 ---
+
+A container for the header of a page, it contains the menu open button and then displays the children passed in
+
+## Examples
+
+### Lightmode page header with menu button
+```.jsx
+<PageHeader showNav={false} title="Overview" />
+```
+
+
+### Lightmode page header without menu button
+```.jsx
+<PageHeader showNav={true} title="Overview" />
+```
+
+```!jsx
+<ComponentDoc component={PageHeader} />
+```

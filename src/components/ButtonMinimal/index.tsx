@@ -1,4 +1,3 @@
-import { Interpolation } from "emotion";
 import * as React from "react";
 import { darken } from "../../foundations";
 import Button, { Props as ButtonProps } from "../Button";
@@ -6,7 +5,6 @@ import Theme from "../Theme";
 
 interface Props extends ButtonProps {
   color?: string;
-  css?: Interpolation;
   children: React.ReactNode;
 }
 

@@ -83,4 +83,5 @@ export interface Theme {
   transitions: MappedKey<"subtle", string>;
   breakpoints: object;
   opacity: object;
+  menuAnimationTime: number;
 }

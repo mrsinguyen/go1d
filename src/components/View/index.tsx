@@ -39,8 +39,10 @@ export interface Props extends BaseProps {
   borderRadius?: number;
   width?: number | string;
   minHeight?: number;
+  height?: number | string;
   maxWidth?: number;
   zIndex?: number;
+  boxShadow?: string;
   css?: Interpolation;
 }
 
@@ -48,9 +50,11 @@ const applySpacing = (spacing: number[] = [], space: number | string) => {
   if (space === undefined) {
     return;
   }
+
   if (typeof space === "string") {
     return space;
   }
+
   if (spacing[space] !== undefined) {
     return spacing[space];
   }
@@ -105,11 +109,13 @@ const View: React.SFC<Props> = ({
   minHeight,
   maxWidth,
   zIndex,
+  boxShadow,
+  height,
   css,
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing: s, colors, transitions, opacity }) => (
+    {({ spacing: s, colors, shadows, transitions, opacity }) => (
       <Base
         element={element}
         css={[
@@ -121,6 +127,7 @@ const View: React.SFC<Props> = ({
             flexWrap,
             flex,
             position,
+            height,
             width,
             maxWidth,
             zIndex,
@@ -140,6 +147,7 @@ const View: React.SFC<Props> = ({
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
             borderRadius: s[borderRadius],
+            boxShadow: shadows[boxShadow],
             transition: transitions.subtle,
           },
           css,

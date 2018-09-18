@@ -16,6 +16,7 @@ export interface Props extends ViewProps {
   backgroundColor?: string;
   css?: Interpolation;
   children: React.ReactNode;
+  onClick: ((evt: React.SyntheticEvent) => void);
 }
 
 const Button: React.SFC<Props> = ({
@@ -24,6 +25,7 @@ const Button: React.SFC<Props> = ({
   backgroundColor = "lightest",
   children,
   css,
+  onClick,
   ...props
 }: Props) => (
   <Theme.Consumer>
@@ -37,6 +39,7 @@ const Button: React.SFC<Props> = ({
         backgroundColor={backgroundColor}
         color={color}
         borderRadius={2}
+        onClick={onClick}
         css={[
           {
             cursor: "pointer",
