@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "npm:build": "tsc --jsx react --outDir ./build",
-    "docs:build": "x0 build docs",
+    "docs:build": "x0 build docs -d ./dist",
     "docs:dev": "x0 docs -p 8008",
     "lint": "prettier --write ./docs/**/*.js",
     "precommit": "yarn pixo-staged && lint-staged",
@@ -71,6 +71,7 @@
   "x0": {
     "title": "GO1D - GO1 Design System",
     "basename": "/GO1D",
+    "outDir": "./dist",
     "meta": [
       {
         "name": "twitter:card",
