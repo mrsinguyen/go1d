@@ -18,7 +18,6 @@ build:
     key: "$CI_PROJECT_ID"
   script:
     - yarn install
-    - yarn pixo
     - yarn "npm:build"
     - yarn "docs:build"
   artifacts:
