@@ -10,21 +10,21 @@ import View, { Props as ViewProps } from "../View";
 interface Props extends ViewProps {
   title: string;
   backgroundColor?: string;
-  showNav: boolean;
-  menuButtonClickAction: ((evt: React.SyntheticEvent) => void);
+  showMenuButton?: boolean;
+  onMenuButtonClick?: ((evt: React.SyntheticEvent) => void);
 }
 
 const PageHeader: React.SFC<Props> = ({
   children,
   padding,
   backgroundColor = "background",
-  showNav,
-  menuButtonClickAction,
+  showMenuButton,
+  onMenuButtonClick,
   title,
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, menuAnimationTime }) => (
+    {({ spacing, animation }) => (
       <View
         backgroundColor={backgroundColor}
         padding={padding}
@@ -36,6 +36,11 @@ const PageHeader: React.SFC<Props> = ({
         display="flex"
         flexDirection="row"
         alignItems="center"
+        css={[
+          {
+            flexGrow: 1,
+          },
+        ]}
         {...props}
       >
         <View
@@ -47,18 +52,18 @@ const PageHeader: React.SFC<Props> = ({
           }}
         >
           <Transition
-            in={!showNav}
-            timeout={menuAnimationTime}
+            in={showMenuButton}
+            timeout={animation.subtle}
             unmountOnExit={true}
             mountOnEnter={true}
           >
             <ButtonMinimal
               css={[
                 {
-                  opacity: !showNav ? 1 : 0,
+                  opacity: showMenuButton ? 1 : 0,
                 },
               ]}
-              onClick={menuButtonClickAction}
+              onClick={onMenuButtonClick}
             >
               <Icon name="Menu" size={5} color="subtle" />
             </ButtonMinimal>

@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "npm:build": "tsc --jsx react --outDir ./build",
     "docs:build": "x0 build docs -d ./dist",
+    "npm:build": "rm -rf ./build && tsc --jsx react --outDir ./build",
     "docs:dev": "x0 docs -p 8008",
     "lint": "prettier --write ./docs/**/*.js",
     "precommit": "yarn pixo-staged && lint-staged",
@@ -44,6 +44,7 @@
     "@types/color": "^3.0.0",
     "@types/jest": "^23.3.2",
     "@types/react": "^16.4.13",
+    "@types/react-transition-group": "^2.0.14",
     "babel-cli": "^6.26.0",
     "bundlesize": "^0.17.0",
     "husky": "^0.14.3",

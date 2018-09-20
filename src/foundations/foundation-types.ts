@@ -29,11 +29,15 @@ export type Shadows =
   | "inner"
   | "text";
 
+export type MenuTransition = "closedMenu" | "openedMenu";
+
 export type Statuses = "green" | "yellow" | "orange" | "red";
 
 export type ThemedGreys = "lightMode" | "darkMode";
 
 export type Tracking = "tightest" | "tight" | "normal";
+
+export type Animation = "subtle";
 
 // This creates a map type where all keys are required.
 // e.g. MappedKeys<Scale, string> is a mapping of all things in Scale to a string
@@ -83,5 +87,5 @@ export interface Theme {
   transitions: MappedKey<"subtle", string>;
   breakpoints: object;
   opacity: object;
-  menuAnimationTime: number;
+  animation: MappedKey<Animation, number>;
 }

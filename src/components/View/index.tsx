@@ -1,6 +1,7 @@
 import {
   FlexDirectionProperty,
   FlexWrapProperty,
+  Globals,
   PositionProperty,
 } from "csstype";
 import { Interpolation } from "emotion";
@@ -8,6 +9,9 @@ import * as React from "react";
 import { opacify } from "../../foundations";
 import Base, { Props as BaseProps } from "../Base";
 import Theme from "../Theme";
+
+type MarginProperty = Globals | "auto" | number;
+type PaddingProperty = Globals | number;
 
 export interface Props extends BaseProps {
   element?: string | React.ComponentType;
@@ -19,26 +23,26 @@ export interface Props extends BaseProps {
   justifyContent?: string;
   position?: PositionProperty;
   // Reset margins by default
-  margin?: number | string;
-  marginX?: number | string;
-  marginY?: number | string;
-  marginTop?: number | string;
-  marginBottom?: number | string;
-  marginRight?: number | string;
-  marginLeft?: number | string;
-  padding?: number | string;
-  paddingX?: number | string;
-  paddingY?: number | string;
-  paddingTop?: number | string;
-  paddingBottom?: number | string;
-  paddingRight?: number | string;
-  paddingLeft?: number | string;
+  margin?: MarginProperty;
+  marginX?: MarginProperty;
+  marginY?: MarginProperty;
+  marginTop?: MarginProperty;
+  marginBottom?: MarginProperty;
+  marginRight?: MarginProperty;
+  marginLeft?: MarginProperty;
+  padding?: PaddingProperty;
+  paddingX?: PaddingProperty;
+  paddingY?: PaddingProperty;
+  paddingTop?: PaddingProperty;
+  paddingBottom?: PaddingProperty;
+  paddingRight?: PaddingProperty;
+  paddingLeft?: PaddingProperty;
   color?: string;
   backgroundColor?: string;
   backgroundOpacity?: number | string;
   borderRadius?: number;
   width?: number | string;
-  minHeight?: number;
+  minHeight?: number | string;
   height?: number | string;
   maxWidth?: number;
   zIndex?: number;
@@ -106,11 +110,11 @@ const View: React.SFC<Props> = ({
   backgroundOpacity,
   borderRadius,
   width,
-  minHeight,
+  minHeight = 0,
+  height,
   maxWidth,
   zIndex,
   boxShadow,
-  height,
   css,
   ...props
 }: Props) => (
@@ -140,7 +144,7 @@ const View: React.SFC<Props> = ({
             paddingRight: applySpacing(s, paddingRight),
             paddingLeft: applySpacing(s, paddingLeft),
             // fix flexbox bugs
-            minHeight: 0,
+            minHeight,
             minWidth: 0,
             color: colors[color],
             backgroundColor: opacity[backgroundOpacity]
