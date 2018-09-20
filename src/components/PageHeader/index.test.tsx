@@ -6,7 +6,7 @@ const mock = jest.fn();
 
 it("renders without crashing without any optional props", () => {
   render(
-    <PageHeader title="Test" showNav={false} menuButtonClickAction={mock}>
+    <PageHeader title="Test">
       <div>header</div>
     </PageHeader>
   );
@@ -16,8 +16,8 @@ it("renders without crashing with all props", () => {
   render(
     <PageHeader
       title="Test"
-      showNav={false}
-      menuButtonClickAction={mock}
+      showMenuButton={false}
+      onMenuButtonClick={mock}
       background="dark"
     >
       <div>header</div>

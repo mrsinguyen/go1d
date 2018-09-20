@@ -1,5 +1,6 @@
 import * as Color from "color";
 import {
+  Animation,
   ColorArguments,
   Colors,
   Gradients,
@@ -188,11 +189,13 @@ export const spacing = [0, 2, 4, 8, 16, 24, 32, 48, 64, 128, 256];
  * Transitions
  */
 
-const transitions = {
-  subtle: "all .15s ease",
+const animation: MappedKey<Animation, number> = {
+  subtle: 150,
 };
 
-const menuAnimationTime = 150;
+const transitions = {
+  subtle: `all ${animation.subtle}ms ease`,
+};
 
 /**
  * Breakpoints
@@ -218,7 +221,7 @@ export const generateTheme = ({
   transitions,
   breakpoints,
   opacity,
-  menuAnimationTime,
+  animation,
   ...theme,
 });
 

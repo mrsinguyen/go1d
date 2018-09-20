@@ -12,6 +12,7 @@ interface Props extends BaseProps {
   lineHeight?: number | string;
   fontSize?: number;
   color?: string;
+  letterSpacing?: string;
   css?: Interpolation;
 }
 
@@ -23,6 +24,7 @@ const Text: React.SFC<Props> = ({
   fontStyle,
   lineHeight,
   fontSize = 2,
+  letterSpacing = "normal",
   color,
   css,
   ...props
@@ -42,6 +44,7 @@ const Text: React.SFC<Props> = ({
             fontWeight: fontWeight && type.weight[fontWeight],
             lineHeight: lineHeight && type.leading[lineHeight],
             transition: transitions.subtle,
+            letterSpacing: type.tracking[letterSpacing],
             whiteSpace: "pre-wrap",
             wordWrap: "break-word",
             ...Object.keys(breakpoints).reduce(
