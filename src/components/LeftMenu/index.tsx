@@ -44,12 +44,7 @@ const LeftMenu: React.SFC<Props> = ({
         }}
         {...props}
       >
-        <View
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          marginBottom={4}
-        >
+        <View flexDirection="row" alignItems="center" marginBottom={4}>
           <View marginX={5}>
             <Icon name="Go1Logo" size={5} />
           </View>
