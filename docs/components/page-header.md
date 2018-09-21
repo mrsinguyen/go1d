@@ -9,13 +9,13 @@ A container for the header of a page, it contains the menu open button and then 
 
 ### Lightmode page header with menu button
 ```.jsx
-<PageHeader showNav={false} title="Overview" />
+<PageHeader showMenuButton={false} title="Overview" />
 ```
 
 
 ### Lightmode page header without menu button
 ```.jsx
-<PageHeader showNav={true} title="Overview" />
+<PageHeader showMenuButton={true} title="Overview" />
 ```
 
 ```!jsx
