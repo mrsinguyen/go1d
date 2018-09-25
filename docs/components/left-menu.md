@@ -9,15 +9,15 @@ A collapsible menu for navigation
 
 ```.jsx
 <LeftMenu title="Content" showMenuButton={true}>
-      <MenuItem title="Overview" iconName="Home" href="#testing" collapsed={true}></MenuItem>
-      <MenuItem title="Partners" iconName="Briefcase" href="#testing" collapsed={true}></MenuItem>
+      <MenuItem iconName="Home" href="#testing" collapsed={true}>Overview</MenuItem>
+      <MenuItem iconName="Briefcase" href="#testing" collapsed={true}>Partners</MenuItem>
 </LeftMenu>
 ```
 
 ```.jsx
 <LeftMenu title="Content">
-      <MenuItem title="Overview" iconName="Home" href="#testing"></MenuItem>
-      <MenuItem title="Partners" iconName="Briefcase" href="#testing"></MenuItem>
+      <MenuItem iconName="Home" href="#testing">Overview</MenuItem>
+      <MenuItem iconName="Briefcase" href="#testing">Partners</MenuItem>
 </LeftMenu>
 ```
 
