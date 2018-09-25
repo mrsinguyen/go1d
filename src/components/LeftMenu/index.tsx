@@ -9,7 +9,7 @@ import View, { Props as ViewProps } from "../View";
 export interface Props extends ViewProps {
   showMenuButton?: boolean;
   onMenuButtonClick?: () => void;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   title: string;
 }
 
@@ -54,7 +54,7 @@ const LeftMenu: React.SFC<Props> = ({
             unmountOnExit={true}
             mountOnEnter={true}
           >
-            <View marginLeft={-1} marginBottom={1}>
+            <View marginLeft={-2} marginBottom={1}>
               <Text
                 css={{
                   opacity: showMenuButton ? 1 : 0,
@@ -97,7 +97,6 @@ const LeftMenu: React.SFC<Props> = ({
             </ButtonMinimal>
           </Transition>
         </View>
-
         {children}
       </View>
     )}

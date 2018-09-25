@@ -8,17 +8,15 @@ import View, { Props as ViewProps } from "../View";
 interface Props extends ViewProps {
   collapsed?: boolean;
   active?: boolean;
-  title: string;
   iconName: string;
   href: string;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 }
 
 const MenuItem: React.SFC<Props> = ({
   collapsed = false,
   active = false,
   children,
-  title,
   iconName,
   href,
   ...props
@@ -69,12 +67,10 @@ const MenuItem: React.SFC<Props> = ({
                 opacity: collapsed ? 1 : 0,
               }}
             >
-              {title}
+              {children}
             </Text>
           </View>
         </Transition>
-
-        {children}
       </View>
     )}
   </Theme.Consumer>
