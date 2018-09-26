@@ -1,10 +1,10 @@
 import * as React from "react";
 import Theme from "../Theme";
-import View from "../View";
+import View, { Props as ViewProps } from "../View";
 
 import * as Icons from "../Icons";
 
-interface Props {
+interface Props extends ViewProps {
   name: string;
   color?: string;
   size?: number;
