@@ -10,6 +10,7 @@
   "scripts": {
     "docs:build": "x0 build docs -d ./dist",
     "npm:build": "rm -rf ./build && tsc --jsx react --outDir ./build",
+    "npm:dev": "rm -rf ./build && mkdir build && cp package.json build/ && tsc -w --jsx react --outDir ./build",
     "docs:dev": "x0 docs -p 8008",
     "lint": "prettier --write ./docs/**/*.js",
     "precommit": "yarn pixo-staged && lint-staged",
