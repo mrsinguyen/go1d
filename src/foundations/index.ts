@@ -177,6 +177,12 @@ export const type: ThemeType = {
     tight: "-0.01em",
     normal: 0,
   },
+  measure: {
+    narrow: "600px",
+    normal: "900px",
+    wide: "1200px",
+    full: "100%",
+  },
 };
 
 /**

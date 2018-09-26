@@ -29,24 +29,21 @@ const PageHeader: React.SFC<Props> = ({
         backgroundColor={backgroundColor}
         padding={padding}
         paddingRight={7}
-        paddingLeft={3}
         paddingY={5}
         height="104px"
         boxShadow="strong"
         display="flex"
         flexDirection="row"
         alignItems="center"
-        css={[
-          {
-            flexGrow: 1,
-          },
-        ]}
+        css={{
+          flexGrow: 1,
+          zIndex: 1,
+        }}
         {...props}
       >
         <View
           display="flex"
           justifyContent="center"
-          marginRight={3}
           css={{
             minWidth: spacing[8],
           }}
@@ -58,14 +55,24 @@ const PageHeader: React.SFC<Props> = ({
             mountOnEnter={true}
           >
             <ButtonMinimal
+              marginX="auto"
+              justifyContent="center"
+              width={spacing[7]}
               css={[
                 {
                   opacity: showMenuButton ? 1 : 0,
                 },
               ]}
+              paddingX={2}
               onClick={onMenuButtonClick}
             >
-              <Icon name="Menu" size={5} color="subtle" />
+              <Icon
+                name="Menu"
+                size={5}
+                color="subtle"
+                marginX="auto"
+                marginY={0}
+              />
             </ButtonMinimal>
           </Transition>
         </View>

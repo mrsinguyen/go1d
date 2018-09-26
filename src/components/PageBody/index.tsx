@@ -1,6 +1,7 @@
 import { css } from "emotion";
 import * as React from "react";
 
+import Container from "../Container";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
@@ -16,16 +17,15 @@ const PageBody: React.SFC<Props> = ({
   backgroundColor = "soft",
   ...props
 }: Props) => (
-  <View
+  <Container
+    contain="full"
+    backgroundColor={backgroundColor}
     paddingX={8}
     paddingY={6}
-    backgroundColor={backgroundColor}
-    maxWidth={900}
-    width="100%"
     {...props}
   >
     {children}
-  </View>
+  </Container>
 );
 
 export default PageBody;

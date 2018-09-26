@@ -37,6 +37,8 @@ export type ThemedGreys = "lightMode" | "darkMode";
 
 export type Tracking = "tightest" | "tight" | "normal";
 
+export type Measure = "narrow" | "normal" | "wide" | "full";
+
 export type Animation = "subtle";
 
 // This creates a map type where all keys are required.
@@ -77,6 +79,7 @@ export interface ThemeType {
   weight: MappedKey<FontWeight, number>;
   leading: MappedKey<Leading, number>;
   tracking: MappedKey<Tracking, string | 0>;
+  measure: MappedKey<Measure, string>;
 }
 
 export interface Theme {
