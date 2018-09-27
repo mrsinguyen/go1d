@@ -14,3 +14,5 @@ export { default as PageHeader } from "./components/PageHeader";
 export { default as MenuItem } from "./components/MenuItem";
 export { default as LeftMenu } from "./components/LeftMenu";
 export { default as Container } from "./components/Container";
+export { default as Avatar } from "./components/Avatar";
+export { DarkMode } from "./components/Theme";

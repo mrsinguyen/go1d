@@ -3,7 +3,8 @@
       "target": "es6",
       "jsx": "react",
       "module": "commonjs",
-      "declaration": true
+      "declaration": true,
+      "outDir": "./build"
     },
     "exclude": [
       "node_modules",
