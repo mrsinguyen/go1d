@@ -21,15 +21,10 @@
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
-      "tslint -c tslint.json --fix",
-      "git add"
-    ],
-    "./src/icons/*.svg": [
-      "yarn pixo && git add src/components/Icons/*"
+      "tslint -c tslint.json"
     ],
     "./docs/_src/**/*.js": [
-      "prettier --write",
-      "git add"
+      "prettier"
     ]
   },
   "dependencies": {

@@ -18,9 +18,11 @@ export interface Props extends BaseProps {
   display?: string;
   flexDirection?: FlexDirectionProperty;
   flexWrap?: FlexWrapProperty;
-  flex?: string;
   alignItems?: string;
   justifyContent?: string;
+  flexGrow?: number;
+  flexShrink?: number;
+  flexBasis?: number | string;
   position?: PositionProperty;
   // Reset margins by default
   margin?: MarginProperty;
@@ -86,9 +88,11 @@ const View: React.SFC<Props> = ({
   display = "flex",
   flexDirection = "column",
   flexWrap,
-  flex = "0 0 auto",
   alignItems,
   justifyContent,
+  flexGrow = 0,
+  flexShrink = 0,
+  flexBasis = "auto",
   position,
   // Reset margins by default
   margin = 0,
@@ -129,7 +133,9 @@ const View: React.SFC<Props> = ({
             justifyContent,
             flexDirection,
             flexWrap,
-            flex,
+            flexGrow,
+            flexShrink,
+            flexBasis,
             position,
             height,
             width,

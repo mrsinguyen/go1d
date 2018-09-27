@@ -31,12 +31,11 @@ const PageHeader: React.SFC<Props> = ({
         paddingRight={7}
         paddingY={5}
         height="104px"
-        boxShadow="strong"
+        boxShadow="crisp"
         display="flex"
         flexDirection="row"
         alignItems="center"
         css={{
-          flexGrow: 1,
           zIndex: 1,
         }}
         {...props}
