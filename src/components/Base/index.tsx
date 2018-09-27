@@ -17,6 +17,7 @@ const styleReset: Interpolation = {
   textAlign: "inherit",
   fontWeight: "inherit",
   appearance: "none",
+  boxSizing: "border-box",
   outline: 0,
 };
 
