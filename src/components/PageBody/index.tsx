@@ -22,6 +22,7 @@ const PageBody: React.SFC<Props> = ({
     backgroundColor={backgroundColor}
     paddingX={8}
     paddingY={6}
+    flexGrow={1}
     {...props}
   >
     {children}
