@@ -1,0 +1,41 @@
+---
+title: Provider
+lead: An extension of the Theme component that allows for custom links to be passed in as well as setting the color mode
+status: ready
+---
+
+## Examples
+
+### Default props with light mode
+```.jsx
+<Provider>
+  <PageBody>
+    <View marginBottom={5}>
+      <Text element="h2" fontSize={4} fontWeight="bold">Reports</Text>
+    </View>
+    <View backgroundColor="background" padding={5} borderRadius={2}>
+      Market place dashboard
+      <Link href="/components/provider">Link to open reports</Link>
+    </View>
+  </PageBody>
+</Provider>
+```
+
+### Custom link and dark mode specified
+```.jsx
+<Provider darkMode={true} LinkComponent={() => <div>custom link</div>}>
+  <PageBody>
+    <View marginBottom={5}>
+      <Text element="h2" fontSize={4} fontWeight="bold">Reports</Text>
+    </View>
+    <View backgroundColor="background" padding={5} borderRadius={2}>
+      Market place dashboard
+      <Link href="/components/provider">Open reports</Link>
+    </View>
+  </PageBody>
+</Provider>
+```
+
+```!jsx
+<ComponentDoc component={Provider} />
+```
