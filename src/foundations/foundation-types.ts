@@ -92,3 +92,11 @@ export interface Theme {
   opacity: object;
   animation: MappedKey<Animation, number>;
 }
+
+export interface GenerateThemeInput {
+  accent?: string;
+  greys?: MappedKey<ThemedGreys, MappedKey<Greys, string>>;
+  darkMode?: boolean;
+  statuses?: MappedKey<Statuses, string>;
+  theme?: Theme;
+}

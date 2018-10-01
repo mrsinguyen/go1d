@@ -4,6 +4,8 @@ lead: An extension of the Theme component that allows for custom links to be pas
 status: ready
 ---
 
+Provider is a component that allows for the specification of whether the child components are either light or dark mode and custom LinkComponent attributes. It should be used when you do not just want to return an anchor tags when using Link components, such as use with ReactRouter
+
 ## Examples
 
 ### Default props with light mode
