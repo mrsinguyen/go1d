@@ -11,8 +11,6 @@ it("renders without crashing without any optional props", () => {
 });
 
 it("renders without crashing with all props", () => {
-  const mock = jest.fn();
-
   render(
     <MenuItem iconName="Home" href="test" collapsed={false}>
       Button text
