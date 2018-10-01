@@ -1,4 +1,4 @@
-export { default as foundations } from "./foundations";
+export { default as foundations, generateTheme } from "./foundations";
 
 export { default as Theme } from "./components/Theme";
 export { default as Base } from "./components/Base";
@@ -16,3 +16,4 @@ export { default as LeftMenu } from "./components/LeftMenu";
 export { default as Container } from "./components/Container";
 export { default as Avatar } from "./components/Avatar";
 export { DarkMode } from "./components/Theme";
+export { default as Provider } from "./components/Provider";
