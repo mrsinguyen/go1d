@@ -10,11 +10,19 @@ interface Props extends ViewProps {
   src?: string;
 }
 
-const Avatar: React.SFC<Props> = ({ src, fullName, size = 8, ...props }) => {
+const Avatar: React.SFC<Props> = ({ src, fullName, size = 6, ...props }) => {
   const names = `${fullName}`.split(" ");
   const displayName = `${names[0].charAt(0)}${
     names.length > 1 ? names[names.length - 1].charAt(0) : ""
   }`;
+
+  let constrainedSize = Math.abs(Math.trunc(size)) || 6;
+
+  constrainedSize = constrainedSize;
+  if (constrainedSize > 6) {
+    constrainedSize = 6;
+  }
+  const logoSize = constrainedSize + 2;
 
   return (
     <Theme.Consumer>
@@ -28,8 +36,8 @@ const Avatar: React.SFC<Props> = ({ src, fullName, size = 8, ...props }) => {
               (acc, bpKey) => ({
                 ...acc,
                 [breakpoints[bpKey]]: {
-                  width: type.scale[bpKey][size] || "1em",
-                  height: type.scale[bpKey][size] || "1em",
+                  width: type.scale[bpKey][logoSize] || type.scale[bpKey][1],
+                  height: type.scale[bpKey][logoSize] || type.scale[bpKey][1],
                 },
               }),
               {}
@@ -42,9 +50,9 @@ const Avatar: React.SFC<Props> = ({ src, fullName, size = 8, ...props }) => {
         >
           {fullName ? (
             <Text
-              color="subtle"
+              color={props.color || "subtle"}
               css={{ textTransform: "uppercase" }}
-              fontSize={size <= 3 ? 1 : size - 3}
+              fontSize={constrainedSize <= 3 ? 1 : constrainedSize - 1}
             >
               {displayName}
             </Text>
@@ -52,7 +60,7 @@ const Avatar: React.SFC<Props> = ({ src, fullName, size = 8, ...props }) => {
             <View alignItems="center">
               <Icon
                 name="User"
-                size={size <= 3 ? 1 : size - 3}
+                size={constrainedSize <= 3 ? 1 : constrainedSize - 1}
                 color="subtle"
               />
             </View>
@@ -71,8 +79,10 @@ const Avatar: React.SFC<Props> = ({ src, fullName, size = 8, ...props }) => {
                   (acc, bpKey) => ({
                     ...acc,
                     [breakpoints[bpKey]]: {
-                      width: type.scale[bpKey][size] || "1em",
-                      height: type.scale[bpKey][size] || "1em",
+                      width:
+                        type.scale[bpKey][logoSize] || type.scale[bpKey][1],
+                      height:
+                        type.scale[bpKey][logoSize] || type.scale[bpKey][1],
                     },
                   }),
                   {}
