@@ -9,11 +9,12 @@ it("renders without crashing without any optional props", () => {
 });
 
 it("renders without crashing with all props passed to it", () => {
+  const ActionMock = () => null;
   render(
     <EmptyState
       title="title"
       description="Description"
-      action={() => null}
+      action={ActionMock}
       actionText="Test"
     />
   );

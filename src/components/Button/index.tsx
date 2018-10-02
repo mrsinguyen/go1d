@@ -62,7 +62,7 @@ const Button: React.SFC<Props> = ({
           color="inherit"
           css={{
             display: "block",
-            width: "100%"
+            width: "100%",
           }}
         >
           {children}
