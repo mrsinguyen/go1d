@@ -25,6 +25,7 @@ const Button: React.SFC<Props> = ({
   backgroundColor = "lightest",
   children,
   css,
+  textAlign,
   onClick,
   ...props
 }: Props) => (
@@ -37,6 +38,7 @@ const Button: React.SFC<Props> = ({
         paddingY={size === "lg" ? 4 : 3}
         paddingX={size === "lg" ? 5 : 4}
         backgroundColor={backgroundColor}
+        textAlign={textAlign}
         color={color}
         borderRadius={2}
         onClick={onClick}
@@ -58,6 +60,10 @@ const Button: React.SFC<Props> = ({
           fontWeight="bold"
           fontSize={sizes[size]}
           color="inherit"
+          css={{
+            display: "block",
+            width: "100%",
+          }}
         >
           {children}
         </Text>

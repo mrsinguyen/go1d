@@ -119,6 +119,7 @@ const View: React.SFC<Props> = ({
   maxWidth,
   zIndex,
   boxShadow,
+  textAlign = "inherit",
   css,
   ...props
 }: Props) => (
@@ -159,6 +160,7 @@ const View: React.SFC<Props> = ({
             borderRadius: s[borderRadius],
             boxShadow: shadows[boxShadow],
             transition: transitions.subtle,
+            textAlign,
           },
           css,
         ]}
