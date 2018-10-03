@@ -1,19 +1,12 @@
 import * as React from "react";
 import { Transition } from "react-transition-group";
 
-import Button from "../Button";
+import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
 import Link from "../Link";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
-
-const duration = 600;
-
-const defaultStyle = {
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 0,
-}
 
 const transitionStyles = {
   entering: { opacity: 0, marginTop: '-100px' },
@@ -32,19 +25,23 @@ const AbsoluteStyling = {
 
 interface Props extends ViewProps {
   type: "success" | "warning" | "danger";
-  description?: string;
+  strongDescription: string;
+  weakDescription?: string;
   linkText?: string;
   link?: string;
   lifetime: number;
   isOpen: boolean;
-  onRequestClose?: ((evt: React.SyntheticEvent) => void);
+  onClose?: ((evt: React.SyntheticEvent) => void);
+  onLive?: ((evt: React.SyntheticEvent) => void);
 }
 
 class Notification extends React.Component<Props, any> {
   constructor(props) {
     super(props);
+
     this.state = {
       alive: this.props.isOpen,
+      timerId: null,
     };
   }
 
@@ -64,22 +61,35 @@ class Notification extends React.Component<Props, any> {
     }
   }
 
-  public onClose() {
-    this.setState({alive: false}, () => {
-      console.log('announce close');
+  public trigger() {
+    this.setState({alive: true}, () => {
+
+      this.props.onLive(null);
+
+      let timerId = setTimeout(() => {
+        // this.setState({alive: false})
+      }, this.props.lifetime);
+      this.setState({ timerId });
     });
   }
 
-  public trigger() {
-    this.setState({alive: true}, () => {
-      setTimeout(() => {
-        this.setState({alive: false})
-      }, this.props.lifetime);
+  public close() {
+    this.setState({alive: false}, () => {
+      clearTimeout(this.state.timerId);
+
+      this.props.onClose(null);
     });
   }
 
   public render() {
-    const { isOpen, link, linkText, description, onRequestClose, type } = this.props;
+    const { 
+      link, 
+      linkText, 
+      strongDescription,
+      weakDescription, 
+      onClose, 
+      type,
+    } = this.props;
     return (
       <Theme.Consumer>
         {({ colors, animation }) => (
@@ -92,27 +102,59 @@ class Notification extends React.Component<Props, any> {
                 <View
                   backgroundColor="background"
                   alignItems="center"
-                  padding={1} 
+                  padding={4} 
                   margin={2}
                   borderRadius={2}
                   boxShadow="distant"
+                  width="90%"
+                  justifyContent="space-between"
                   css={{
                     ...AbsoluteStyling,
                     ...transitionStyles[state],
                     maxWidth: '550px',
-                    maxHeight: '100px',
                     overflow: 'hidden',
-                    width: '90%',
                     borderLeft: `4px solid ${colors[type]}`,
-                    display: 'inline-flex',
+                    flexDirection: 'row',
+                    justifyContent: 'justify'
                   }}
                 >
-                  <Icon name="Check" color={type} />
-                  <Text fontWeight="600">{description}</Text>
-                  {linkText && link && <Link href={link}>{linkText}</Link>}
-
-                  {onRequestClose &&
-                    <Icon name="Close" onClick={onRequestClose} color={type} />
+                  <Icon 
+                    name="Check" 
+                    color={type} 
+                    marginRight={4}
+                    />
+                  <View
+                    flexDirection="row"
+                    flexWrap="wrap"
+                    css={{
+                      maxWidth:"80%",
+                    }}
+                  >
+                    <Text fontWeight="bold">
+                      {strongDescription}&nbsp;
+                    </Text>
+                    <Text>
+                      {weakDescription} 
+                    </Text>
+                    {linkText && link && <Text><Link 
+                        href={link}
+                        css={{
+                          textDecoration: 'underline',
+                          fontWeight: 600,
+                        }}
+                      >{linkText}</Link></Text>}
+                  </View>
+                  {onClose &&
+                    <ButtonMinimal
+                      borderRadius={10}
+                      boxShadow="crisp"
+                      onClick={() => this.close()} 
+                    >
+                      <Icon 
+                        name="Cross" 
+                        color={type} 
+                      />
+                    </ButtonMinimal>
                   }
                 </View>
               )}
