@@ -10,7 +10,7 @@ interface Props extends ViewProps {
   size?: number;
 }
 
-const Icon: React.SFC<Props> = ({ name, size, css, ...props }: Props) => {
+const Icon: React.SFC<Props> = ({ name, size, ...props }: Props) => {
   const Component = Icons[name];
   if (!Component) {
     return null;
@@ -25,7 +25,6 @@ const Icon: React.SFC<Props> = ({ name, size, css, ...props }: Props) => {
           element={renderComponent}
           {...props}
           css={[
-            css,
             {
               ...Object.keys(breakpoints).reduce(
                 (acc, bpKey) => ({
