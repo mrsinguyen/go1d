@@ -38,7 +38,6 @@ yarn docs:dev
 ```
 
 ## HOW TO TEST
-
 ```sh
 yarn test
 ```
@@ -52,10 +51,23 @@ This repository deploys to npm and gitlab pages. This is a MANUAL part of the pi
 4. To release to npm, run the release:npm task
 
 ## CONTRIBUTE
-Before any pull requests ensure all changed files are run though tslint which should automaticly correct most code styling errors
+Before starting work on any new GO1D component check if one is already exists or is in development (See: [Confulence Component Plan](https://go1web.atlassian.net/wiki/spaces/GO1D/pages/449970545/GO1D+Component+Implementation+Plan)). Asking in #topic-front-end is a good way to find out, as well as get input on the component you are about to kick off. (Someone might have worked on something that could be turned into a component in GO1D)
+When starting a new component be sure to update the Confluence documentation so others will know what you are working on.
+
+Components should be fully tested, if being used in a specific use case consider adding tests for that to ensure future contributions wont break the usage of the component.
+
+Components should be documented in docs/components with at least:
+* A one or two line description of the component with it’s use case
+* An in-line example of the component
+* A listing of all the props the component accepts
+* It’s current development status & release version
+
+All commits should be run through `yarn tslint` to ensure coding standards. This will also automatically format code if possible.
+
+When releasing a new component or making significant changes post the MR link into the #topic-front-end channel to inform the team that a new component is ready and gives everyone a chance to give it a once over.
 
 ### ADDING SVG ICONS
-Add the svg to src/icons and then run `yarn pixo`. Make sure to include any created files in the commit (although this handled by a precommit hook, check to be safe).
+Add the svg to src/icons and then run `yarn pixo`. Make sure to include any created files in the commit.
 
 ## Documentation
 The current components and styles can be viewed at [https://apps.pages.go1.co/GO1D]
