@@ -81,6 +81,7 @@ class Modal extends React.Component<Props, any> {
                     minHeight: "100vh",
                     width: "100%",
                   }}
+                  data-testid="backgroundOverlay"
                   onClick={this.handleBackgroundClick}
                 />
                 <View
