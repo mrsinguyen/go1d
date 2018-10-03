@@ -10,7 +10,7 @@ import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   title?: string;
-  children?: (ModalInstance) => React.ReactChild;
+  children?: React.ReactChild;
 }
 
 const AbsoluteStyling = {
