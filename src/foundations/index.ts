@@ -196,11 +196,13 @@ export const spacing = [0, 2, 4, 8, 16, 24, 32, 48, 64, 128, 256];
  */
 
 const animation: MappedKey<Animation, number> = {
-  subtle: 150,
+  subtle: 300,
+  small: 300,
 };
 
 const transitions = {
   subtle: `all ${animation.subtle}ms ease`,
+  small: `all ${animation.small}ms ease`,
 };
 
 /**
