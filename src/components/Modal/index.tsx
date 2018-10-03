@@ -11,6 +11,10 @@ import View, { Props as ViewProps } from "../View";
 interface Props extends ViewProps {
   title?: string;
   children?: React.ReactChild;
+  isOpen?: boolean;
+  onRequestClose?: () => void;
+  disableKeyBindings?: boolean;
+  disableBackgroundClose?: boolean;
 }
 
 const AbsoluteStyling = {
@@ -91,6 +95,7 @@ class Modal extends React.Component<Props, any> {
                   minHeight={300}
                   borderRadius={2}
                   backgroundColor="background"
+                  boxShadow="distant"
                   css={{
                     ...AbsoluteStyling,
                     top: "5rem",
