@@ -5,7 +5,7 @@ status: ready
 
 A component
 
-```.
+```
 <Modal
   isOpen={false} 
   onRequestClose={this.closeModal}
