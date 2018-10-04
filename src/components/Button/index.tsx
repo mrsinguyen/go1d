@@ -35,8 +35,8 @@ const Button: React.SFC<Props> = ({
         element="button"
         flexDirection="row"
         alignItems="center"
-        paddingY={size === "lg" ? 4 : 3}
-        paddingX={size === "lg" ? 5 : 4}
+        paddingY={size === "lg" ? 4 : size === "sm" ? 1 : 3}
+        paddingX={size === "lg" ? 5 : size === "sm" ? 1 : 3}
         backgroundColor={backgroundColor}
         textAlign={textAlign}
         color={color}
