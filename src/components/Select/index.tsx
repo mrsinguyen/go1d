@@ -74,6 +74,10 @@ class Select extends React.Component<Props, any> {
 
   // Mouse Handlers
   public onMenuMouseDown = (event: React.SyntheticEvent<HTMLElement>) => {
+    const { disabled } = this.props;
+    if (disabled) {
+      return;
+    }
     event.stopPropagation();
     event.preventDefault();
     this.focusInput();
@@ -181,12 +185,27 @@ class Select extends React.Component<Props, any> {
   };
 
   public render() {
-    const { options, name, onChange, css, children, ...props } = this.props;
+    const {
+      options,
+      disabled,
+      name,
+      onChange,
+      css,
+      children,
+      ...props
+    } = this.props;
 
     return (
       <Theme.Consumer>
-        {({ colors, spacing }) => (
-          <View css={{ position: "relative" }}>
+        {({ colors, spacing, opacity }) => (
+          <View
+            css={{
+              position: "relative",
+              opacity: disabled ? opacity.disabled : 1,
+              pointerEvents: disabled ? "none" : "all",
+              cursor: disabled ? "initial" : "pointer",
+            }}
+          >
             <View
               borderRadius={2}
               paddingX={4}
