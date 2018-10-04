@@ -40,19 +40,15 @@ class Select extends React.Component<Props, any> {
 
   // Focus State Handlers
   public focusInput() {
-    if (!this.inputRef) {
-      return;
+    if (this.inputRef) {
+      this.inputRef.focus();
     }
-
-    this.inputRef.focus();
   }
 
   public blurInput() {
-    if (!this.inputRef) {
-      return;
+    if (this.inputRef) {
+      this.inputRef.blur();
     }
-
-    this.inputRef.blur();
   }
 
   public handleOnBlur = () =>
@@ -94,7 +90,7 @@ class Select extends React.Component<Props, any> {
       return;
     }
 
-    if (!options.length) {
+    if (!options.length || options.length === 0) {
       return;
     }
     let nextFocus = 0; // handles 'first'
@@ -126,56 +122,57 @@ class Select extends React.Component<Props, any> {
   };
 
   public onKeyDown = (event: KeyboardEvent) => {
-    const { isDisabled } = this.props;
+    const { disabled } = this.props;
 
-    const { focusedValue, closeOverride } = this.state;
+    const { isFocused, focusedValue, closeOverride } = this.state;
 
-    if (isDisabled) {
+    if (disabled) {
       return;
     }
 
-    switch (event.key) {
-      case "Tab":
-        if (event.shiftKey || !focusedValue) {
+    if (isFocused) {
+      switch (event.key) {
+        case "Tab":
+          if (!event.shiftKey && focusedValue) {
+            this.selectOption(focusedValue);
+          }
+          break;
+        case "Enter":
+          if (focusedValue) {
+            this.selectOption(focusedValue);
+          }
+          break;
+        case "Escape":
+          this.blurInput();
+          break;
+        case " ": // space
+          if (focusedValue) {
+            this.selectOption(focusedValue);
+          }
+          break;
+        case "ArrowUp":
+          if (closeOverride) {
+            this.focusOption("open");
+            break;
+          }
+          this.focusOption("up");
+          break;
+        case "ArrowDown":
+          if (closeOverride) {
+            this.focusOption("open");
+            break;
+          }
+          this.focusOption("down");
+          break;
+        case "Home":
+          this.focusOption("first");
+          break;
+        case "End":
+          this.focusOption("last");
+          break;
+        default:
           return;
-        }
-        this.selectOption(focusedValue);
-        break;
-      case "Enter":
-        if (focusedValue) {
-          this.selectOption(focusedValue);
-        }
-        break;
-      case "Escape":
-        this.blurInput();
-        break;
-      case " ": // space
-        if (focusedValue) {
-          this.selectOption(focusedValue);
-        }
-        break;
-      case "ArrowUp":
-        if (closeOverride) {
-          this.focusOption("open");
-          break;
-        }
-        this.focusOption("up");
-        break;
-      case "ArrowDown":
-        if (closeOverride) {
-          this.focusOption("open");
-          break;
-        }
-        this.focusOption("down");
-        break;
-      case "Home":
-        this.focusOption("first");
-        break;
-      case "End":
-        this.focusOption("last");
-        break;
-      default:
-        return;
+      }
     }
     event.preventDefault();
   };
@@ -194,6 +191,7 @@ class Select extends React.Component<Props, any> {
               backgroundColor="background"
               onClick={this.onMenuMouseDown}
               onKeyDown={this.onKeyDown}
+              data-testid="primarySection"
               {...props}
               css={{
                 border: "1px solid",
@@ -248,6 +246,7 @@ class Select extends React.Component<Props, any> {
                     ? "none"
                     : "block",
               }}
+              data-testid="dropDown"
               borderRadius={2}
               width="100%"
               boxShadow="distant"
