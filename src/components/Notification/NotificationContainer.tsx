@@ -21,13 +21,18 @@ class NotificationContainer extends React.Component {
     });
   };
 
-  public handleRequestHide = notification => {
+  public handleRemove = notification => {
     NotificationManager.remove(notification);
   };
 
   public render() {
     const { notifications } = this.state;
-    return <Notifications notifications={notifications} />;
+    return (
+      <Notifications
+        notifications={notifications}
+        removeFromQueue={this.handleRemove}
+      />
+    );
   }
 }
 

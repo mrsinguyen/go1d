@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Transition } from "react-transition-group";
+import { animated, Transition } from "react-spring";
 
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
@@ -14,6 +14,7 @@ const AbsoluteStyling = {
   left: 0,
   right: 0,
   margin: "0 auto",
+  maxWidth: "560px",
 };
 
 interface Props extends ViewProps {
@@ -40,7 +41,7 @@ class Notification extends React.Component<Props, any> {
     super(props);
 
     this.state = {
-      alive: this.props.isOpen,
+      alive: false,
       timerId: null,
     };
 
@@ -52,16 +53,16 @@ class Notification extends React.Component<Props, any> {
     //   this.props.onRef(this);
     // }
     this.setState({ alive: true }, () => {
-      // if (this.props.onLive) {
-      //   this.props.onLive(null);
-      // }
-      // const timerId = setTimeout(() => {
-      //   this.setState({ alive: false });
-      //   if (this.props.onDie) {
-      //     this.props.onDie(null);
-      //   }
-      // }, this.props.lifetime);
-      // this.setState({ timerId });
+      if (this.props.onLive) {
+        this.props.onLive(null);
+      }
+      const timerId = setTimeout(() => {
+        this.setState({ alive: false });
+        if (this.props.onDie) {
+          this.props.onDie(null);
+        }
+      }, this.props.lifetime);
+      this.setState({ timerId });
     });
   }
 
@@ -122,69 +123,75 @@ class Notification extends React.Component<Props, any> {
       <Theme.Consumer>
         {({ colors, animation }) => (
           <React.Fragment>
-            <Transition in={this.state.alive} timeout={animation.small}>
-              {state => (
-                <View
-                  backgroundColor="background"
-                  alignItems="center"
-                  padding={4}
-                  margin={2}
-                  borderRadius={2}
-                  boxShadow="distant"
-                  width="90%"
-                  justifyContent="space-between"
-                  css={{
-                    ...AbsoluteStyling,
-                    ...transitionStyles[state],
-                    maxWidth: "550px",
-                    overflow: "hidden",
-                    borderLeft: `4px solid ${colors[type]}`,
-                    flexDirection: "row",
-                    justifyContent: "justify",
-                  }}
-                >
-                  <Icon name={iconType} color={type} marginRight={4} />
-                  <View
-                    flexDirection="row"
-                    flexWrap="wrap"
-                    css={{
-                      maxWidth: "80%",
-                    }}
-                  >
-                    <Text fontWeight="bold">
-                      {strongDescription}
-                      &nbsp;
-                    </Text>
+            {/* <Transition 
+              from={{ opacity: 0, transform: 'translate(0,-100px)' }} 
+              enter={{ opacity: 1, transform: `translate(0,${67 + 74 * offset}px)` }} 
+            >
+              {(styles => (
+                <animated.div
+                  style={{...styles, ...AbsoluteStyling}}> */}
+            <View
+              backgroundColor="background"
+              alignItems="center"
+              padding={4}
+              margin={2}
+              borderRadius={2}
+              boxShadow="distant"
+              width="90%"
+              justifyContent="space-between"
+              css={{
+                ...AbsoluteStyling,
+                ...transitionStyles.entered,
+                maxWidth: "550px",
+                overflow: "hidden",
+                borderLeft: `4px solid ${colors[type]}`,
+                flexDirection: "row",
+                justifyContent: "justify",
+              }}
+            >
+              <Icon name={iconType} color={type} marginRight={4} />
+              <View
+                flexDirection="row"
+                flexWrap="wrap"
+                css={{
+                  maxWidth: "80%",
+                }}
+              >
+                <Text fontWeight="bold">
+                  {strongDescription}
+                  &nbsp;
+                </Text>
+                <Text>
+                  {weakDescription}
+                  &nbsp;
+                </Text>
+                {linkText &&
+                  link && (
                     <Text>
-                      {weakDescription}
-                      &nbsp;
+                      <Link
+                        href={link}
+                        css={{
+                          textDecoration: "underline",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {linkText}
+                      </Link>
                     </Text>
-                    {linkText &&
-                      link && (
-                        <Text>
-                          <Link
-                            href={link}
-                            css={{
-                              textDecoration: "underline",
-                              fontWeight: 600,
-                            }}
-                          >
-                            {linkText}
-                          </Link>
-                        </Text>
-                      )}
-                  </View>
-                  <ButtonMinimal
-                    borderRadius={10}
-                    boxShadow="crisp"
-                    size="sm"
-                    onClick={this.close}
-                  >
-                    <Icon name="Cross" color={type} />
-                  </ButtonMinimal>
-                </View>
-              )}
-            </Transition>
+                  )}
+              </View>
+              <ButtonMinimal
+                borderRadius={10}
+                boxShadow="crisp"
+                size="sm"
+                onClick={this.close}
+              >
+                <Icon name="Cross" color={type} />
+              </ButtonMinimal>
+            </View>
+            {/* </animated.div>
+              ))}
+            </Transition> */}
           </React.Fragment>
         )}
       </Theme.Consumer>

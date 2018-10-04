@@ -3,11 +3,19 @@ import Notification from "./Notification";
 
 interface Props {
   notifications: any[];
+  removeFromQueue?: ((evt: React.SyntheticEvent) => void);
 }
 
 class Notifications extends React.Component<Props, any> {
   public static defaultProps = {
     notifications: [],
+  };
+
+  public handleRemove = notification => () => {
+    const { removeFromQueue } = this.props;
+    if (removeFromQueue) {
+      removeFromQueue(notification);
+    }
   };
 
   public render() {
@@ -34,8 +42,8 @@ class Notifications extends React.Component<Props, any> {
               strongDescription={strongDescription}
               weakDescription={weakDescription}
               type={type}
-              onClose={onClose}
-              onDie={onDie}
+              onClose={this.handleRemove(notification)}
+              onDie={this.handleRemove(notification)}
               onLive={onLive}
               link={link}
               linkText={linkText}
