@@ -1,5 +1,5 @@
 import * as React from "react";
-import { animated, Transition } from "react-spring";
+// import { animated, Transition } from "react-spring";
 
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
@@ -7,15 +7,6 @@ import Link from "../Link";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
-
-const AbsoluteStyling = {
-  position: "absolute" as "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  margin: "0 auto",
-  maxWidth: "560px",
-};
 
 interface Props extends ViewProps {
   id: string;
@@ -57,7 +48,6 @@ class Notification extends React.Component<Props, any> {
         this.props.onLive(null);
       }
       const timerId = setTimeout(() => {
-        this.setState({ alive: false });
         if (this.props.onDie) {
           this.props.onDie(null);
         }
@@ -134,14 +124,12 @@ class Notification extends React.Component<Props, any> {
               backgroundColor="background"
               alignItems="center"
               padding={4}
-              margin={2}
+              margin={3}
               borderRadius={2}
               boxShadow="distant"
-              width="90%"
               justifyContent="space-between"
               css={{
-                ...AbsoluteStyling,
-                ...transitionStyles.entered,
+                opacity: 1,
                 maxWidth: "550px",
                 overflow: "hidden",
                 borderLeft: `4px solid ${colors[type]}`,

@@ -1,6 +1,17 @@
 import * as React from "react";
+import View from "../View";
 import NotificationManager from "./NotificationManager";
 import Notifications from "./Notifications";
+
+const AbsoluteStyling = {
+  position: "absolute" as "absolute",
+  top: "87px",
+  left: 0,
+  right: 0,
+  margin: "0 auto",
+  maxWidth: "560px",
+  width: "100%",
+};
 
 class NotificationContainer extends React.Component {
   public state = {
@@ -28,10 +39,16 @@ class NotificationContainer extends React.Component {
   public render() {
     const { notifications } = this.state;
     return (
-      <Notifications
-        notifications={notifications}
-        removeFromQueue={this.handleRemove}
-      />
+      <View
+        css={{
+          ...AbsoluteStyling,
+        }}
+      >
+        <Notifications
+          notifications={notifications}
+          removeFromQueue={this.handleRemove}
+        />
+      </View>
     );
   }
 }
