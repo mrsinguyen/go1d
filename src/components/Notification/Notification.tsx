@@ -1,5 +1,5 @@
 import * as React from "react";
-// import { animated, Transition } from "react-spring";
+import posed from "react-pose";
 
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
@@ -23,6 +23,11 @@ interface Props extends ViewProps {
   offset: number;
 }
 
+const Trans = posed.div({
+  dead: { opacity: 0, marginTop: "-58px", transition: { duration: 300 } },
+  alive: { opacity: 1, marginTop: "10px", transition: { duration: 300 } },
+});
+
 class Notification extends React.Component<Props, any> {
   public static defaultProps = {
     lifetime: 3000,
@@ -40,17 +45,18 @@ class Notification extends React.Component<Props, any> {
   }
 
   public componentDidMount() {
-    // if (Object.prototype.hasOwnProperty.call(this.props, "onRef")) {
-    //   this.props.onRef(this);
-    // }
     this.setState({ alive: true }, () => {
       if (this.props.onLive) {
         this.props.onLive(null);
       }
       const timerId = setTimeout(() => {
-        if (this.props.onDie) {
-          this.props.onDie(null);
-        }
+        this.setState({ alive: false }, () => {
+          if (this.props.onDie) {
+            setTimeout(() => {
+              this.props.onDie(null);
+            }, 300);
+          }
+        });
       }, this.props.lifetime);
       this.setState({ timerId });
     });
@@ -59,22 +65,6 @@ class Notification extends React.Component<Props, any> {
   public componentWillUnmount() {
     clearTimeout(this.state.timerId);
   }
-
-  // public trigger() {
-  //   this.setState({ alive: true }, () => {
-  //     if (this.props.onLive) {
-  //       this.props.onLive(null);
-  //     }
-
-  //     const timerId = setTimeout(() => {
-  //       this.setState({ alive: false });
-  //       if (this.props.onDie) {
-  //         this.props.onDie(null);
-  //       }
-  //     }, this.props.lifetime);
-  //     this.setState({ timerId });
-  //   });
-  // }
 
   public close() {
     this.setState({ alive: false }, () => {
@@ -92,15 +82,7 @@ class Notification extends React.Component<Props, any> {
       strongDescription,
       weakDescription,
       type,
-      offset,
     } = this.props;
-
-    const transitionStyles = {
-      entering: { opacity: 0, marginTop: "-100px" },
-      entered: { opacity: 1, marginTop: `${67 + (20 + 54) * offset}px` },
-      exiting: { opacity: 1, marginTop: `${67 + (20 + 54) * offset}px` },
-      exited: { opacity: 0, marginTop: "-100px" },
-    };
 
     const iconType =
       type === "success"
@@ -111,75 +93,67 @@ class Notification extends React.Component<Props, any> {
 
     return (
       <Theme.Consumer>
-        {({ colors, animation }) => (
+        {({ colors }) => (
           <React.Fragment>
-            {/* <Transition 
-              from={{ opacity: 0, transform: 'translate(0,-100px)' }} 
-              enter={{ opacity: 1, transform: `translate(0,${67 + 74 * offset}px)` }} 
-            >
-              {(styles => (
-                <animated.div
-                  style={{...styles, ...AbsoluteStyling}}> */}
-            <View
-              backgroundColor="background"
-              alignItems="center"
-              padding={4}
-              margin={3}
-              borderRadius={2}
-              boxShadow="distant"
-              justifyContent="space-between"
-              css={{
-                opacity: 1,
-                maxWidth: "550px",
-                overflow: "hidden",
-                borderLeft: `4px solid ${colors[type]}`,
-                flexDirection: "row",
-                justifyContent: "justify",
-              }}
-            >
-              <Icon name={iconType} color={type} marginRight={4} />
+            <Trans pose={this.state.alive ? "alive" : "dead"}>
               <View
-                flexDirection="row"
-                flexWrap="wrap"
+                backgroundColor="background"
+                alignItems="center"
+                padding={4}
+                margin={3}
+                borderRadius={2}
+                boxShadow="distant"
+                justifyContent="space-between"
                 css={{
-                  maxWidth: "80%",
+                  maxWidth: "550px",
+                  overflow: "hidden",
+                  borderLeft: `4px solid ${colors[type]}`,
+                  flexDirection: "row",
+                  justifyContent: "justify",
+                  transition: "all 0.2s linear",
                 }}
               >
-                <Text fontWeight="bold">
-                  {strongDescription}
-                  &nbsp;
-                </Text>
-                <Text>
-                  {weakDescription}
-                  &nbsp;
-                </Text>
-                {linkText &&
-                  link && (
-                    <Text>
-                      <Link
-                        href={link}
-                        css={{
-                          textDecoration: "underline",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {linkText}
-                      </Link>
-                    </Text>
-                  )}
+                <Icon name={iconType} color={type} marginRight={4} />
+                <View
+                  flexDirection="row"
+                  flexWrap="wrap"
+                  css={{
+                    maxWidth: "80%",
+                  }}
+                >
+                  <Text fontWeight="bold">
+                    {strongDescription}
+                    &nbsp;
+                  </Text>
+                  <Text>
+                    {weakDescription}
+                    &nbsp;
+                  </Text>
+                  {linkText &&
+                    link && (
+                      <Text>
+                        <Link
+                          href={link}
+                          css={{
+                            textDecoration: "underline",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {linkText}
+                        </Link>
+                      </Text>
+                    )}
+                </View>
+                <ButtonMinimal
+                  borderRadius={10}
+                  boxShadow="crisp"
+                  size="sm"
+                  onClick={this.close}
+                >
+                  <Icon name="Cross" color={type} />
+                </ButtonMinimal>
               </View>
-              <ButtonMinimal
-                borderRadius={10}
-                boxShadow="crisp"
-                size="sm"
-                onClick={this.close}
-              >
-                <Icon name="Cross" color={type} />
-              </ButtonMinimal>
-            </View>
-            {/* </animated.div>
-              ))}
-            </Transition> */}
+            </Trans>
           </React.Fragment>
         )}
       </Theme.Consumer>

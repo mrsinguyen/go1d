@@ -33,6 +33,7 @@
     "emotion": "^9.2.4",
     "events": "^3.0.0",
     "react": "^16.4.1",
+    "react-pose": "^3.3.6",
     "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.4.0",
     "recompose": "^0.27.1"
