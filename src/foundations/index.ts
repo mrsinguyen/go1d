@@ -87,6 +87,7 @@ export const opacity = {
   feedback: 0.1,
   pill: 0.3,
   disabled: 0.5,
+  modal: 0.7,
 };
 
 export const gradients: MappedKey<Gradients, string> = {
