@@ -8,6 +8,9 @@ import Input from "./internals/Input";
 
 interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
+  disabled?: boolean;
+  onChange?: ({ target: HTMLElement }) => void;
+  name?: string;
 }
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
