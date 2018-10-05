@@ -6,6 +6,7 @@ import {
   Gradients,
   Greys,
   MappedKey,
+  Opacities,
   Shadows,
   Theme,
   ThemedGreys,
@@ -83,10 +84,11 @@ const brandStatuses = {
   red: "#DA3131",
 };
 
-export const opacity = {
+export const opacity: MappedKey<Opacities, number> = {
   feedback: 0.1,
   pill: 0.3,
   disabled: 0.5,
+  modal: 0.7,
 };
 
 export const gradients: MappedKey<Gradients, string> = {

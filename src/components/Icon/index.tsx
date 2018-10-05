@@ -11,18 +11,16 @@ interface Props extends ViewProps {
 }
 
 const Icon: React.SFC<Props> = ({ name, size, ...props }: Props) => {
-  const Component = Icons[name];
-  if (!Component) {
+  const IconComponent = Icons[name];
+  if (!IconComponent) {
     return null;
   }
-
-  const renderComponent = componentProps => <Component {...componentProps} />;
 
   return (
     <Theme.Consumer>
       {({ type, breakpoints }) => (
         <View
-          element={renderComponent}
+          element={IconComponent}
           {...props}
           css={[
             {

@@ -1,6 +1,6 @@
 {
   "name": "@go1d/go1d",
-  "version": "0.0.22",
+  "version": "0.0.25",
   "description": "GO1 Design System",
   "main": "build/index.js",
   "homepage": "https://apps.pages.go1.co/GO1D",
@@ -12,12 +12,12 @@
     "npm:build": "rm -rf ./build && tsc --jsx react --outDir ./build",
     "npm:dev": "rm -rf ./build && mkdir build && cp package.json build/ && tsc -w --jsx react --outDir ./build",
     "docs:dev": "x0 docs -p 8008",
+    "icons": "rm -rf src/components/Icons && svgr --config-file svgr.config.js --ext tsx -d src/components/Icons src/icons/svgs && node scripts/build-Icons.index.js",
     "lint": "prettier --write ./docs/**/*.js",
     "precommit": "lint-staged",
     "size": "bundlesize",
     "test": "yarn lint && jest",
-    "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx",
-    "pixo": "rm -rf src/components/Icons && pixo src/icons --outDir src/components/Icons --template pixo-template.js && for x in src/components/Icons/*.js; do mv \"$x\" \"${x%.js}.tsx\"; done; yarn tslint"
+    "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
@@ -31,7 +31,7 @@
     "@types/events": "^1.2.0",
     "color": "^3.0.0",
     "emotion": "^9.2.4",
-    "events": "^3.0.0",
+    "libreact": "^2.1.0",
     "react": "^16.4.1",
     "react-pose": "^3.3.6",
     "react-router-dom": "^4.3.1",
@@ -42,16 +42,17 @@
     "@compositor/kit": "^1.0.43",
     "@compositor/kit-snapshot": "^1.0.24",
     "@compositor/x0": "^6.0.0-4",
+    "@svgr/cli": "^3.0.0",
+    "@svgr/core": "^3.0.0",
     "@types/color": "^3.0.0",
     "@types/jest": "^23.3.2",
     "@types/react": "^16.4.13",
     "@types/react-transition-group": "^2.0.14",
     "babel-cli": "^6.26.0",
     "bundlesize": "^0.17.0",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0",
     "jest-cli": "^23.5.0",
     "lint-staged": "^7.2.2",
-    "pixo": "^1.1.0",
     "prettier": "^1.14.2",
     "react-docgen-typescript": "^1.8.0",
     "react-docgen-typescript-loader": "^2.2.0",
@@ -70,6 +71,11 @@
       "maxSize": "3 kB"
     }
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "x0": {
     "title": "GO1D - GO1 Design System",
     "basename": "/GO1D",
@@ -106,9 +112,5 @@
       "json",
       "node"
     ]
-  },
-  "pixo": {
-    "index": true,
-    "recursive": true
   }
 }

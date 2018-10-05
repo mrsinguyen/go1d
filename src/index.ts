@@ -24,3 +24,5 @@ export {
   NotificationContainer,
   NotificationManager,
 } from "./components/Notification";
+export { default as Select } from "./components/Select";
+export { default as Modal } from "./components/Modal";

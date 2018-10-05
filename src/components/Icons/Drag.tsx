@@ -1,23 +1,18 @@
-import { Interpolation } from "emotion";
 import * as React from "react";
-import Theme from "../Theme";
+import { Props as ViewProps } from "../View";
 
-interface Props {
-  size: number;
-  color: string;
-  css: Interpolation;
+interface Props extends ViewProps {
+  name: string;
+  color?: string;
+  size?: number;
 }
 
-const Drag: React.SFC<Props> = ({
-  size,
-  color = "currentcolor",
-  ...props
-}: Props) => (
-  <svg {...props} viewBox="0 0 16 16" fill={color}>
-    <path d="M 4 2 H 22 V 4 H 4 z M 4 7 H 22 V 9 H 4 z M 4 12 H 22 V 14 H 4 z" />
+const Drag: React.SFC<Props> = (props: Props) => (
+  <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
+    <path d="M4 3a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z" />
   </svg>
 );
 
-Drag.displayName = "Drag";
+Drag.displayName = "IconDrag";
 
 export default Drag;

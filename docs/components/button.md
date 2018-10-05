@@ -6,10 +6,6 @@ status: ready
 
 Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 
-```!jsx
-<ComponentDoc component={Button} />
-```
-
 ## Examples
 
 ### Filled button in subtle colour
@@ -34,9 +30,6 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonFilled color='danger'>Danger zone</ButtonFilled>
 ```
 
-```!jsx
-<ComponentDoc component={ButtonFilled} />
-```
 
 ### Minimal button subtle colour
 
@@ -47,13 +40,13 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 ### Minimal button in accent colour (Icon only)
 
 ```.jsx
-<ButtonMinimal color='accent'>(Icon)</ButtonMinimal>
+<ButtonMinimal color='accent' iconName='Plus' />
 ```
 
 ### Minimal button in danger colour (Icon and label)
 
 ```.jsx
-<ButtonMinimal color='accent'>(Icon) Call to action</ButtonMinimal>
+<ButtonMinimal color='accent' iconName='Plus'>Call to action</ButtonMinimal>
 ```
 
 ### Minimal button in danger colour
@@ -88,3 +81,8 @@ For *floating buttons on a page or section*, always use default buttons with ico
 ## Content guidelines
 
 Copy for buttons should follow general action content guidelines.
+
+
+```!jsx
+<ComponentDoc component={ButtonFilled} />
+```

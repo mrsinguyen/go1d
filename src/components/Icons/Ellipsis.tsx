@@ -1,23 +1,18 @@
-import { Interpolation } from "emotion";
 import * as React from "react";
-import Theme from "../Theme";
+import { Props as ViewProps } from "../View";
 
-interface Props {
-  size: number;
-  color: string;
-  css: Interpolation;
+interface Props extends ViewProps {
+  name: string;
+  color?: string;
+  size?: number;
 }
 
-const Ellipsis: React.SFC<Props> = ({
-  size,
-  color = "currentcolor",
-  ...props
-}: Props) => (
-  <svg {...props} viewBox="0 0 16 16" fill={color}>
-    <path d="M9.80645 7.80645C9.80645 8.80502 8.99857 9.6129 8 9.6129C7.00143 9.6129 6.19355 8.80502 6.19355 7.80645C6.19355 6.80789 7.00143 6 8 6C8.99857 6 9.80645 6.80789 9.80645 7.80645ZM13.1935 6C12.195 6 11.3871 6.80789 11.3871 7.80645C11.3871 8.80502 12.195 9.6129 13.1935 9.6129C14.1921 9.6129 15 8.80502 15 7.80645C15 6.80789 14.1921 6 13.1935 6ZM2.80645 6C1.80789 6 1 6.80789 1 7.80645C1 8.80502 1.80789 9.6129 2.80645 9.6129C3.80502 9.6129 4.6129 8.80502 4.6129 7.80645C4.6129 6.80789 3.80502 6 2.80645 6Z M9.80645 7.80645C9.80645 8.80502 8.99857 9.6129 8 9.6129C7.00143 9.6129 6.19355 8.80502 6.19355 7.80645C6.19355 6.80789 7.00143 6 8 6C8.99857 6 9.80645 6.80789 9.80645 7.80645ZM13.1935 6C12.195 6 11.3871 6.80789 11.3871 7.80645C11.3871 8.80502 12.195 9.6129 13.1935 9.6129C14.1921 9.6129 15 8.80502 15 7.80645C15 6.80789 14.1921 6 13.1935 6ZM2.80645 6C1.80789 6 1 6.80789 1 7.80645C1 8.80502 1.80789 9.6129 2.80645 9.6129C3.80502 9.6129 4.6129 8.80502 4.6129 7.80645C4.6129 6.80789 3.80502 6 2.80645 6Z" />
+const Ellipsis: React.SFC<Props> = (props: Props) => (
+  <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
+    <path d="M9.806 7.806a1.805 1.805 0 1 1-3.612 0 1.805 1.805 0 1 1 3.612 0zM13.194 6a1.805 1.805 0 1 0 0 3.613 1.805 1.805 0 1 0 0-3.613zM2.806 6a1.805 1.805 0 1 0 0 3.613 1.805 1.805 0 1 0 0-3.613z" />
   </svg>
 );
 
-Ellipsis.displayName = "Ellipsis";
+Ellipsis.displayName = "IconEllipsis";
 
 export default Ellipsis;

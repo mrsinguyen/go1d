@@ -23,13 +23,15 @@ const styleReset: Interpolation = {
 
 const Base: React.SFC<Props> = ({
   element: Element = "div",
-  children = "",
+  children,
+  innerRef,
   css = [],
   ...props
 }: Props) => (
   <Element
     className={emotion(styleReset, css)}
     children={children}
+    ref={innerRef}
     {...props}
   />
 );

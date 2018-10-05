@@ -1,23 +1,24 @@
-import { Interpolation } from "emotion";
 import * as React from "react";
-import Theme from "../Theme";
+import { Props as ViewProps } from "../View";
 
-interface Props {
-  size: number;
-  color: string;
-  css: Interpolation;
+interface Props extends ViewProps {
+  name: string;
+  color?: string;
+  size?: number;
 }
 
-const InProgress: React.SFC<Props> = ({
-  size,
-  color = "currentcolor",
-  ...props
-}: Props) => (
-  <svg {...props} viewBox="0 0 16 16" fill={color}>
-    <path d="M 8 1 A 7 7 0 0 1 8 15 A 7 7 0 0 1 8 1 M 8 1 A 7 7 0 0 1 8 15 A 7 7 0 0 1 8 1 M8 0H16V16H8V0Z" />
+const InProgress: React.SFC<Props> = (props: Props) => (
+  <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
+    <path
+      fillRule="evenodd"
+      d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zm0 2A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+      clipRule="evenodd"
+      opacity={0.3}
+    />
+    <path d="M14 8a6 6 0 0 1-6 6v2A8 8 0 1 0 8 0v2a6 6 0 0 1 6 6z" />
   </svg>
 );
 
-InProgress.displayName = "InProgress";
+InProgress.displayName = "IconInProgress";
 
 export default InProgress;
