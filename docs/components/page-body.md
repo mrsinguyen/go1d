@@ -1,6 +1,7 @@
 ---
 title: Page Body
 status: ready
+releaseVersion: 0.0.12
 ---
 
 A container for the main content of a page with a background pulled in either via specifying the background colour or defaulting the the colors.background value

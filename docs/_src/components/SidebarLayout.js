@@ -96,36 +96,47 @@ const Link = props => (
 
 const Nav = ({ routes = [], handleMenuToggle, menuOpen, ...props }) => (
   <View element="ul" {...props}>
-    {routes.map(route => (
-      <View element="li" key={route.key}>
-        {/^https?:\/\//.test(route.path) ? (
-          <RouterNavLink pl={3} href={route.path}>
-            {route.name}
-          </RouterNavLink>
-        ) : (
-          <Link to={route.path} exact>
-            {format(route.name)}
-          </Link>
-        )}
-      </View>
-    ))}
+    {routes
+      .filter(
+        route =>
+          route.dirname !== "/components" ||
+          (route.dirname === "/components" && route.props.status === "ready")
+      )
+      .map(route => (
+        <View element="li" key={route.key}>
+          {/^https?:\/\//.test(route.path) ? (
+            <RouterNavLink pl={3} href={route.path}>
+              {route.name}
+            </RouterNavLink>
+          ) : (
+            <Link to={route.path} exact>
+              {format(route.name)}
+            </Link>
+          )}
+        </View>
+      ))}
   </View>
 );
 
 const Main = props => <View {...props} paddingLeft={280} width="100%" />;
 
-const statuses = {
+export const statuses = {
   dev: {
     title: "In development",
     color: "note",
   },
-  "not-started": {
-    title: "Not started",
+  "not-currently-planned": {
+    title: "Not Currently Planned",
     color: "danger",
   },
 };
 
-const Hero = ({ title = "", lead = "", status = "not-started", ...props }) => (
+const Hero = ({
+  title = "",
+  lead = "",
+  status = "not-currently-planned",
+  ...props
+}) => (
   <View backgroundColor="soft">
     <View
       paddingTop={9}
@@ -135,7 +146,7 @@ const Hero = ({ title = "", lead = "", status = "not-started", ...props }) => (
       width="100%"
       alignItems="flex-start"
       css={{
-        maxWidth: 768,
+        maxWidth: 900,
       }}
     >
       <View marginBottom={4}>
@@ -169,7 +180,7 @@ const MaxWidth = props => (
     paddingX={5}
     paddingBottom={6}
     css={{
-      maxWidth: 768,
+      maxWidth: 900,
     }}
   />
 );

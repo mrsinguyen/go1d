@@ -2,6 +2,7 @@
 title: Provider
 lead: An extension of the Theme component that allows for custom links to be passed in as well as setting the color mode
 status: ready
+releaseVersion: 0.0.21
 ---
 
 Provider is a component that allows for the specification of whether the child components are either light or dark mode and custom LinkComponent attributes. It should be used when you do not just want to return an anchor tags when using Link components, such as use with ReactRouter

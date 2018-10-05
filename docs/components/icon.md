@@ -1,6 +1,7 @@
 ---
 title: Icon
-status: dev
+status: ready
+releaseVersion: 0.0.11
 ---
 
 ```.jsx
@@ -39,7 +40,7 @@ This is an exhaustive list of all icons currently in the system
         <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Name</th>
         <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Icon</th>
     </tr>
-    { 
+    {
         Object.keys(AllIcons).map((name, index) => <tr key={index}>
             <td style={{ padding: "0 0 1rem 0"}}>{name}</td>
             <td style={{ padding: "0 0 1rem 0"}}><Icon name={name}/></td>
