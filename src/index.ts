@@ -19,4 +19,5 @@ export { DarkMode } from "./components/Theme";
 export { default as Provider } from "./components/Provider";
 export { default as Link } from "./components/Link";
 export { default as EmptyState } from "./components/EmptyState";
+export { default as Select } from "./components/Select";
 export { default as Modal } from "./components/Modal";

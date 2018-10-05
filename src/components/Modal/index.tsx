@@ -118,6 +118,7 @@ class Modal extends React.Component<Props, any> {
                           margin: "auto 0",
                           bottom: 0,
                           cursor: "pointer",
+                          background: "transparent",
                         }}
                         onClick={this.props.onRequestClose}
                       >
