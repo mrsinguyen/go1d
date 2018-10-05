@@ -15,6 +15,41 @@ interface Props extends ViewProps {
   name?: string;
 }
 
+const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
+  // Pill Shown Above Multi Select
+  <View
+    display="inline-flex"
+    backgroundColor="accent"
+    backgroundOpacity="pill"
+    borderRadius={2}
+    flexDirection="row"
+    css={{ overflow: "hidden" }}
+    marginLeft={3}
+    marginBottom={3}
+  >
+    <View backgroundColor="accent" paddingX={3} paddingY={2}>
+      <Text color="background" fontSize={1}>
+        {LabelMap[SelectedElement]}
+      </Text>
+    </View>
+    <View
+      paddingX={2}
+      color="subtle"
+      justifyContent="center"
+      height="100%"
+      onClick={toggleEntry(SelectedElement)}
+      css={{
+        "&:hover": {
+          color: colors.default,
+          cursor: "pointer",
+        },
+      }}
+    >
+      <Icon name="Cross" size={1} />
+    </View>
+  </View>
+);
+
 class MultiSelect extends React.Component<Props, any> {
   public Selected = new Set();
 
@@ -25,7 +60,9 @@ class MultiSelect extends React.Component<Props, any> {
 
     if (onChange) {
       onChange({
-        target: this.Selected,
+        target: {
+          value: [...this.Selected],
+        },
       });
     }
   };
@@ -34,6 +71,7 @@ class MultiSelect extends React.Component<Props, any> {
     const { onChange, options, label, ...props } = this.props;
 
     const LabelMap = options.reduce(
+      // Map of Values -> Labels
       (Sum, Entry) => ({
         ...Sum,
         [Entry.value]: Entry.label,
@@ -41,7 +79,7 @@ class MultiSelect extends React.Component<Props, any> {
       {}
     );
 
-    const ActiveStyles =
+    const SelectActiveProps =
       this.Selected.size > 0
         ? {
             backgroundColor: "accent",
@@ -74,42 +112,16 @@ class MultiSelect extends React.Component<Props, any> {
             flexWrap="wrap"
           >
             {[...this.Selected].map(SelectedElement => (
-              <View
-                display="inline-flex"
-                backgroundColor="accent"
-                backgroundOpacity="pill"
-                borderRadius={2}
-                flexDirection="row"
-                css={{ overflow: "hidden" }}
-                marginLeft={3}
-                marginBottom={3}
-              >
-                <View backgroundColor="accent" paddingX={3} paddingY={2}>
-                  <Text color="background" fontSize={1}>
-                    {LabelMap[SelectedElement]}
-                  </Text>
-                </View>
-                <View
-                  paddingX={2}
-                  color="subtle"
-                  justifyContent="center"
-                  height="100%"
-                  onClick={this.toggleEntry(SelectedElement)}
-                  css={{
-                    "&:hover": {
-                      color: colors.default,
-                      cursor: "pointer",
-                    },
-                  }}
-                >
-                  <Icon name="Cross" size={1} />
-                </View>
-              </View>
+              <Pill
+                toggleEntry={this.toggleEntry}
+                LabelMap={LabelMap}
+                SelectedElement={SelectedElement}
+              />
             ))}
           </View>
         </View>
         <Select
-          {...ActiveStyles}
+          {...SelectActiveProps}
           activeOptions={[...this.Selected]}
           textOverride={getTextOverride()}
           onChange={this.handleChange}
