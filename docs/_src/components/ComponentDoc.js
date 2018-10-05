@@ -1,7 +1,5 @@
-import { css } from "emotion";
 import React from "react";
-import find from "lodash/find";
-import { Base, View, Text, Theme } from "../../../src";
+import { View, Text, Table, TR, TH, TD, Theme } from "../../../src";
 
 const Prop = ({
   name = "",
@@ -10,56 +8,57 @@ const Prop = ({
   defaultValue = {},
   description = "N/A",
 }) => (
-  <Text element="tr" fontFamily="mono">
-    <Base element="td">{name}</Base>
-    <Base element="td">{type.name || "N/A"}</Base>
-    <Base element="td">{required ? "true" : "false"}</Base>
-    <Base element="td">{defaultValue ? defaultValue.value : "none"}</Base>
-    <Base element="td">{description}</Base>
-  </Text>
+  <TR>
+    <TD>
+      <Text>{name}</Text>
+    </TD>
+    <TD>
+      <Text>{type.name || "N/A"}</Text>
+    </TD>
+    <TD>
+      <Text>{required ? "true" : "false"}</Text>
+    </TD>
+    <TD>
+      <Text>{defaultValue ? defaultValue.value : "none"}</Text>
+    </TD>
+    <TD>
+      <Text>{description}</Text>
+    </TD>
+  </TR>
 );
 
 export const ComponentDoc = ({ component = "" }) => {
   const { props = {} } = component.__docgenInfo || {};
-  return (
+  return Object.keys(props).length > 0 ? (
     <Theme.Consumer>
-      {({ colors, spacing }) => (
+      {({ type }) => (
         <View>
           <View marginY={3}>
-            <Text element="h3" fontSize={3} fontWeight="bold">
-              Props & methods
+            <Text element="h2" fontSize={3} fontWeight="bold">
+              Props &amp; methods
             </Text>
           </View>
-          <View
-            element="table"
-            display="table"
+          <Table
             css={{
-              borderCollapse: "collapse",
-              "th, td": {
-                border: `1px solid ${colors.subtle}`,
-                padding: `${spacing[2]}px`,
+              span: {
+                fontFamily: type.family.mono,
               },
             }}
-          >
-            <Base element="thead">
-              <Base element="tr">
-                <Base element="th">Name</Base>
-                <Base element="th">Type</Base>
-                <Base element="th">Required</Base>
-                <Base element="th">Default</Base>
-                <Base element="th">Description</Base>
-              </Base>
-            </Base>
-            <Base element="tbody">
-              {Object.keys(props).map(key => (
-                <Prop key={key} name={key} {...props[key]} />
-              ))}
-            </Base>
-          </View>
+            header={[
+              <TH key="name" text="Name" />,
+              <TH key="type" text="Type" />,
+              <TH key="required" text="Required" />,
+              <TH key="default" text="Default" />,
+              <TH key="description" text="Description" />,
+            ]}
+            rows={Object.keys(props).map(key => (
+              <Prop key={key} name={key} {...props[key]} />
+            ))}
+          />
         </View>
       )}
     </Theme.Consumer>
-  );
+  ) : null;
 };
 
 export default ComponentDoc;
