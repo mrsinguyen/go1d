@@ -4,6 +4,7 @@ import {
   // SidebarLayout,
   ScopeProvider,
 } from "@compositor/x0/components";
+import { Flipflop } from "libreact/lib/Flipflop";
 import { Provider as RebassProvider } from "rebass";
 import groupBy from "lodash/groupBy";
 import * as systemScope from "../src";
@@ -14,6 +15,7 @@ import SidebarLayout from "./_src/components/SidebarLayout";
 const navOrder = ["", "/foundations", "/components", "/patterns"];
 
 const scope = {
+  Flipflop,
   ...systemScope,
   ...docsScope,
 };
