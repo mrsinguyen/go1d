@@ -108,8 +108,10 @@ class MultiSelect extends React.Component<Props, any> {
           <View
             flexDirection="row-reverse"
             flexGrow={2}
-            flexShrink="initial"
             flexWrap="wrap"
+            css={{
+              flexShrink: "initial",
+            }}
           >
             {[...this.Selected].map(SelectedElement => (
               <Pill

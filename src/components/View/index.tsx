@@ -21,7 +21,7 @@ export interface Props extends BaseProps {
   alignItems?: string;
   justifyContent?: string;
   flexGrow?: number;
-  flexShrink?: number | string;
+  flexShrink?: number;
   flexBasis?: number | string;
   position?: PositionProperty;
   // Reset margins by default
