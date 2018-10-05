@@ -67,7 +67,7 @@ All commits should be run through `yarn tslint` to ensure coding standards. This
 When releasing a new component or making significant changes post the MR link into the #topic-front-end channel to inform the team that a new component is ready and gives everyone a chance to give it a once over.
 
 ### ADDING SVG ICONS
-Add the svg to src/icons and then run `yarn pixo`. Make sure to include any created files in the commit.
+Add the svg to src/icons and then run `yarn icons`. Make sure to include any created files in the commit.
 
 ## Documentation
 The current components and styles can be viewed at [https://apps.pages.go1.co/GO1D]
