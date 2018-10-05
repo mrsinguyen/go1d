@@ -9,7 +9,7 @@ A component that displays an avatar.
 
 ### Avatar with an image
 ```.jsx
-<Avatar src="/static/knope.jpg" fullName="Leslie Knope" />
+<Avatar src="https://i.imgur.com/Ee55uvc.jpg" fullName="Leslie Knope" />
 ```
 
 

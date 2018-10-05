@@ -6,7 +6,7 @@ import Button, { Props as ButtonProps } from "../Button";
 import Theme from "../Theme";
 
 interface Props extends ButtonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   color?: string;
   css?: Interpolation;
 }
