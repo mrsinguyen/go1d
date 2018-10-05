@@ -83,10 +83,10 @@ class Notification extends React.Component<Props, any> {
     // these icons are placeholders
     const iconType =
       type === "success"
-        ? "Check"
+        ? "Success"
         : type === "warning"
-          ? "Incomplete"
-          : "NotPassed";
+          ? "Warning"
+          : "Danger";
 
     return (
       <Theme.Consumer>
