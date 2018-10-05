@@ -1,23 +1,18 @@
-import { Interpolation } from "emotion";
 import * as React from "react";
-import Theme from "../Theme";
+import { Props as ViewProps } from "../View";
 
-interface Props {
-  size: number;
-  color: string;
-  css: Interpolation;
+interface Props extends ViewProps {
+  name: string;
+  color?: string;
+  size?: number;
 }
 
-const Retry: React.SFC<Props> = ({
-  size,
-  color = "currentcolor",
-  ...props
-}: Props) => (
-  <svg {...props} viewBox="0 0 16 16" fill={color}>
-    <path d="M 8 0 A 8 8 0 0 1 8 16 A 8 8 0 0 1 8 0 M12.3843 8.36624L11.4773 7.8917C11.576 7.84254 11.6673 7.77664 11.7469 7.69517C11.8297 7.61033 11.8953 7.51308 11.9426 7.40851C12.096 7.5427 12.2901 7.62984 12.502 7.65092C12.59 7.65967 12.6774 7.65663 12.762 7.64282L12.3843 8.36624ZM12.2917 8.54361C12.2918 8.54346 12.2919 8.54332 12.292 8.54317L12.2918 8.54348L12.2917 8.54361Z" />
+const Retry: React.SFC<Props> = (props: Props) => (
+  <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM8 4.8a3.2 3.2 0 0 0 0 6.4.8.8 0 0 1 0 1.6 4.8 4.8 0 1 1 4.6-6.1v-.1a.8.8 0 1 1 1.5.7L13 9a.8.8 0 0 1-1 .3l-1.7-.8A.8.8 0 0 1 11 7a3.2 3.2 0 0 0-3-2.2z" />
   </svg>
 );
 
-Retry.displayName = "Retry";
+Retry.displayName = "IconRetry";
 
 export default Retry;
