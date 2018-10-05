@@ -9,6 +9,10 @@ import Input from "./internals/Input";
 interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
+  backgroundColor?: string;
+  color?: string;
+  activeOptions?: string[];
+  textOverride?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
 }
@@ -28,17 +32,20 @@ class Select extends React.Component<Props, any> {
   public inputRef: HTMLElement = null;
 
   public handleValueSelect = (label, value) => () => {
-    this.setState({
-      value,
-      label,
-      closeOverride: true,
-    });
-
-    if (this.props.onChange) {
-      this.props.onChange({
-        target: this.inputRef,
-      });
-    }
+    this.setState(
+      {
+        value,
+        label,
+        closeOverride: true,
+      },
+      () => {
+        if (this.props.onChange) {
+          this.props.onChange({
+            target: this.inputRef,
+          });
+        }
+      }
+    );
   };
 
   // Focus State Handlers
@@ -186,14 +193,44 @@ class Select extends React.Component<Props, any> {
 
   public render() {
     const {
-      options,
+      options = [],
       disabled,
       name,
       onChange,
       css,
+      backgroundColor = "background",
+      color = "default",
+      activeOptions = [],
+      textOverride,
+      defaultText = "Please Select",
       children,
       ...props
     } = this.props;
+
+    const { value: SelectedValue, focusedOptionIndex } = this.state;
+
+    const getOptionBackground = (Index, Option) => {
+      let ActiveValues = [SelectedValue];
+
+      if (activeOptions) {
+        ActiveValues = activeOptions;
+      }
+
+      if (Index === focusedOptionIndex) {
+        return "highlight";
+      }
+
+      if (
+        Array.prototype.find.call(
+          ActiveValues,
+          Element => Element === Option.value
+        )
+      ) {
+        return "accent";
+      }
+
+      return null;
+    };
 
     return (
       <Theme.Consumer>
@@ -210,7 +247,7 @@ class Select extends React.Component<Props, any> {
               borderRadius={2}
               paddingX={4}
               boxShadow={this.state.isFocused ? "strong" : "soft"}
-              backgroundColor="background"
+              backgroundColor={backgroundColor}
               onClick={this.onMenuMouseDown}
               onKeyDown={this.onKeyDown}
               data-testid="primarySection"
@@ -230,11 +267,12 @@ class Select extends React.Component<Props, any> {
                 }}
               >
                 <Text
+                  color={color}
                   css={{
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {this.state.label || "Please Select"}
+                  {textOverride || this.state.label || defaultText}
                 </Text>
               </View>
               <View
@@ -246,9 +284,13 @@ class Select extends React.Component<Props, any> {
                 }}
                 height="calc(100% - 2px)"
                 paddingX={3}
-                backgroundColor="background"
+                backgroundColor={backgroundColor}
               >
-                <Icon name="ChevronDown" color="muted" size={2} />
+                <Icon
+                  name="ChevronDown"
+                  color={color === "default" ? "muted" : color}
+                  size={2}
+                />
               </View>
               <Input
                 onBlur={this.handleOnBlur}
@@ -274,6 +316,7 @@ class Select extends React.Component<Props, any> {
               boxShadow="distant"
               backgroundColor="background"
               paddingY={3}
+              zIndex={5}
             >
               {options.map((Option, Index) => (
                 <View
@@ -285,17 +328,23 @@ class Select extends React.Component<Props, any> {
                     Option.label,
                     Option.value
                   )}
-                  css={{
-                    "&:hover": {
-                      background: colors.highlight,
-                      cursor: "pointer",
-                    },
-                    ...(Index === this.state.focusedOptionIndex
+                  backgroundColor={getOptionBackground(Index, Option)}
+                  color={
+                    getOptionBackground(Index, Option) === "accent"
+                      ? "background"
+                      : "default"
+                  }
+                  css={
+                    getOptionBackground(Index, Option) !== "accent"
                       ? {
-                          background: colors.highlight,
+                          "&:hover": {
+                            background: colors.highlight,
+                            color: colors.default,
+                            cursor: "pointer",
+                          },
                         }
-                      : {}),
-                  }}
+                      : {}
+                  }
                 >
                   <Text>{Option.label}</Text>
                 </View>
