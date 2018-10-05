@@ -18,8 +18,7 @@ interface Props extends ViewProps {
   lifetime: number;
   isOpen: boolean;
   onClose?: ((evt: React.SyntheticEvent) => void);
-  onDie?: ((evt: React.SyntheticEvent) => void);
-  onLive?: ((evt: React.SyntheticEvent) => void);
+  onDie?: (() => void);
   offset: number;
 }
 
@@ -46,14 +45,11 @@ class Notification extends React.Component<Props, any> {
 
   public componentDidMount() {
     this.setState({ alive: true }, () => {
-      if (this.props.onLive) {
-        this.props.onLive(null);
-      }
       const timerId = setTimeout(() => {
         this.setState({ alive: false }, () => {
           if (this.props.onDie) {
             setTimeout(() => {
-              this.props.onDie(null);
+              this.props.onDie();
             }, 300);
           }
         });
@@ -66,14 +62,14 @@ class Notification extends React.Component<Props, any> {
     clearTimeout(this.state.timerId);
   }
 
-  public close() {
+  public close = e => {
     this.setState({ alive: false }, () => {
       clearTimeout(this.state.timerId);
       if (this.props.onClose) {
-        this.props.onClose(null);
+        this.props.onClose(e);
       }
     });
-  }
+  };
 
   public render() {
     const {

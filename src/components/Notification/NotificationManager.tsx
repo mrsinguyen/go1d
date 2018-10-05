@@ -48,10 +48,7 @@ class NotificationManager extends EventEmitter {
     linkText,
     link,
     lifetime,
-    isOpen,
-    onClose,
-    onDie,
-    onLive
+    isOpen
   ) {
     this.create({
       type: Constants.SUCCESS,
@@ -61,9 +58,6 @@ class NotificationManager extends EventEmitter {
       link,
       lifetime,
       isOpen,
-      onClose,
-      onDie,
-      onLive,
     });
   }
 
@@ -73,10 +67,7 @@ class NotificationManager extends EventEmitter {
     linkText,
     link,
     lifetime,
-    isOpen,
-    onClose,
-    onDie,
-    onLive
+    isOpen
   ) {
     this.create({
       type: Constants.WARNING,
@@ -86,9 +77,6 @@ class NotificationManager extends EventEmitter {
       link,
       lifetime,
       isOpen,
-      onClose,
-      onDie,
-      onLive,
     });
   }
 
@@ -98,10 +86,7 @@ class NotificationManager extends EventEmitter {
     linkText,
     link,
     lifetime,
-    isOpen,
-    onClose,
-    onDie,
-    onLive
+    isOpen
   ) {
     this.create({
       type: Constants.DANGER,
@@ -111,9 +96,6 @@ class NotificationManager extends EventEmitter {
       link,
       lifetime,
       isOpen,
-      onClose,
-      onDie,
-      onLive,
     });
   }
 
