@@ -255,7 +255,11 @@ class Select extends React.Component<Props, any> {
       ...props
     } = this.props;
 
-    const { value: SelectedValue, focusedOptionIndex } = this.state;
+    const {
+      value: SelectedValue,
+      focusedOptionIndex,
+      searchValue,
+    } = this.state;
 
     const getOptionBackground = (Index, Option) => {
       let ActiveValues = [SelectedValue];
@@ -279,6 +283,16 @@ class Select extends React.Component<Props, any> {
 
       return null;
     };
+
+    let FilteredOptions = options;
+
+    if (this.props.searchable) {
+      if (searchValue !== "") {
+        FilteredOptions = options.filter(Option =>
+          Option.label.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      }
+    }
 
     return (
       <Theme.Consumer>
@@ -372,7 +386,7 @@ class Select extends React.Component<Props, any> {
                     element="input"
                     type="text"
                     placeholder="Search"
-                    value={this.state.searchValue}
+                    value={searchValue}
                     css={{
                       border: `1px solid ${colors.divide}`,
                       padding: "8px",
@@ -382,7 +396,7 @@ class Select extends React.Component<Props, any> {
                 </View>
               )}
               <View>
-                {options.map((Option, Index) => (
+                {FilteredOptions.map((Option, Index) => (
                   <View
                     width={"100%"}
                     paddingY={4}
