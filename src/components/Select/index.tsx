@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import Base from "../Base";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -27,6 +28,7 @@ class Select extends React.Component<Props, any> {
     isFocused: false,
     focusedOptionIndex: null,
     focusedValue: null,
+    searchValue: "",
   };
 
   public inputRef: HTMLElement = null;
@@ -67,6 +69,7 @@ class Select extends React.Component<Props, any> {
       closeOverride: false,
       focusedOptionIndex: null,
       focusedValue: null,
+      searchValue: "",
     });
 
   public handleOnFocus = () =>
@@ -145,7 +148,8 @@ class Select extends React.Component<Props, any> {
     }
 
     if (isFocused) {
-      switch (event.key) {
+      const Key = event.key;
+      switch (Key) {
         case "Tab":
           if (!event.shiftKey && focusedValue) {
             this.selectOption(focusedValue);
@@ -184,7 +188,51 @@ class Select extends React.Component<Props, any> {
         case "End":
           this.focusOption("last");
           break;
+        case "Backspace":
+          if (this.props.searchable) {
+            this.setState(OldState => ({
+              searchValue: OldState.searchValue.slice(0, -1),
+            }));
+          }
+          break;
+        case "Delete":
+          if (this.props.searchable) {
+            this.setState(OldState => ({
+              searchValue: OldState.searchValue.slice(0, -1),
+            }));
+          }
+          break;
+        case "Clear":
+          if (this.props.searchable) {
+            this.setState({
+              searchValue: "",
+            });
+          }
+          break;
         default:
+          const BannedKeys = [
+            "Shift",
+            "CapsLock",
+            "Control",
+            "Alt",
+            "Meta",
+            "PageUp",
+            "PageDown",
+            "ArrowLeft",
+            "ArrowRight",
+          ];
+
+          if (
+            Array.prototype.find.call(BannedKeys, KeyCode => KeyCode === Key)
+          ) {
+            return;
+          }
+
+          if (this.props.searchable) {
+            this.setState(OldState => ({
+              searchValue: OldState.searchValue + Key,
+            }));
+          }
           return;
       }
     }
@@ -318,37 +366,54 @@ class Select extends React.Component<Props, any> {
               paddingY={3}
               zIndex={5}
             >
-              {options.map((Option, Index) => (
-                <View
-                  width={"100%"}
-                  paddingY={4}
-                  paddingX={4}
-                  key={Option.label + "_" + Option.value + "_" + Index}
-                  onMouseDown={this.handleValueSelect(
-                    Option.label,
-                    Option.value
-                  )}
-                  backgroundColor={getOptionBackground(Index, Option)}
-                  color={
-                    getOptionBackground(Index, Option) === "accent"
-                      ? "background"
-                      : "default"
-                  }
-                  css={
-                    getOptionBackground(Index, Option) !== "accent"
-                      ? {
-                          "&:hover": {
-                            background: colors.highlight,
-                            color: colors.default,
-                            cursor: "pointer",
-                          },
-                        }
-                      : {}
-                  }
-                >
-                  <Text>{Option.label}</Text>
+              {this.props.searchable && (
+                <View paddingX={4}>
+                  <Base
+                    element="input"
+                    type="text"
+                    placeholder="Search"
+                    value={this.state.searchValue}
+                    css={{
+                      border: `1px solid ${colors.divide}`,
+                      padding: "8px",
+                      borderRadius: "4px",
+                    }}
+                  />
                 </View>
-              ))}
+              )}
+              <View>
+                {options.map((Option, Index) => (
+                  <View
+                    width={"100%"}
+                    paddingY={4}
+                    paddingX={4}
+                    key={Option.label + "_" + Option.value + "_" + Index}
+                    onMouseDown={this.handleValueSelect(
+                      Option.label,
+                      Option.value
+                    )}
+                    backgroundColor={getOptionBackground(Index, Option)}
+                    color={
+                      getOptionBackground(Index, Option) === "accent"
+                        ? "background"
+                        : "default"
+                    }
+                    css={
+                      getOptionBackground(Index, Option) !== "accent"
+                        ? {
+                            "&:hover": {
+                              background: colors.highlight,
+                              color: colors.default,
+                              cursor: "pointer",
+                            },
+                          }
+                        : {}
+                    }
+                  >
+                    <Text>{Option.label}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
         )}
