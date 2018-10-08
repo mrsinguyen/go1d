@@ -1,6 +1,7 @@
 ---
 title: MultiSelect
 status: ready
+releaseVersion: 0.0.27
 ---
 
 A custom Multi Select component
