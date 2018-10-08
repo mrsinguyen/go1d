@@ -13,7 +13,7 @@ interface Props extends ViewProps {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
-  lable?: string;
+  label?: string;
 }
 
 const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
