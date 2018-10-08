@@ -4,7 +4,6 @@ import { colors } from "../../foundations";
 import Icon from "../Icon";
 import Select from "../Select";
 import Text from "../Text";
-import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
@@ -13,6 +12,7 @@ interface Props extends ViewProps {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
+  lable?: string;
 }
 
 const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (

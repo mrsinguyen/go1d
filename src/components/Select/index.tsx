@@ -95,19 +95,19 @@ class Select extends React.Component<Props, any> {
 
   // Keyboard Handler
   public focusOption(direction: FocusDirection = "first") {
-    const { options } = this.props;
+    const FilteredOptions = this.getFilteredOptions();
     let { focusedOptionIndex } = this.state;
 
     if (direction === "open") {
       this.setState({
         focusedOptionIndex,
-        focusedValue: options[focusedOptionIndex],
+        focusedValue: FilteredOptions[focusedOptionIndex],
         closeOverride: false,
       });
       return;
     }
 
-    if (!options.length || options.length === 0) {
+    if (!FilteredOptions.length || FilteredOptions.length === 0) {
       return;
     }
     let nextFocus = 0; // handles 'first'
@@ -118,16 +118,18 @@ class Select extends React.Component<Props, any> {
 
     if (direction === "up") {
       nextFocus =
-        focusedOptionIndex > 0 ? focusedOptionIndex - 1 : options.length - 1;
+        focusedOptionIndex > 0
+          ? focusedOptionIndex - 1
+          : FilteredOptions.length - 1;
     } else if (direction === "down") {
-      nextFocus = (focusedOptionIndex + 1) % options.length;
+      nextFocus = (focusedOptionIndex + 1) % FilteredOptions.length;
     } else if (direction === "last") {
-      nextFocus = options.length - 1;
+      nextFocus = FilteredOptions.length - 1;
     }
 
     this.setState({
       focusedOptionIndex: nextFocus,
-      focusedValue: options[nextFocus],
+      focusedValue: FilteredOptions[nextFocus],
       closeOverride: false,
     });
   }
@@ -239,6 +241,21 @@ class Select extends React.Component<Props, any> {
     event.preventDefault();
   };
 
+  public getFilteredOptions = () => {
+    const { searchValue } = this.state;
+    const { searchable, options } = this.props;
+
+    if (searchable) {
+      if (searchValue !== "") {
+        return options.filter(Option =>
+          Option.label.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      }
+    }
+
+    return options;
+  };
+
   public render() {
     const {
       options = [],
@@ -252,6 +269,7 @@ class Select extends React.Component<Props, any> {
       textOverride,
       defaultText = "Please Select",
       children,
+      searchable,
       ...props
     } = this.props;
 
@@ -284,15 +302,7 @@ class Select extends React.Component<Props, any> {
       return null;
     };
 
-    let FilteredOptions = options;
-
-    if (this.props.searchable) {
-      if (searchValue !== "") {
-        FilteredOptions = options.filter(Option =>
-          Option.label.toLowerCase().includes(searchValue.toLowerCase())
-        );
-      }
-    }
+    const FilteredOptions = this.getFilteredOptions();
 
     return (
       <Theme.Consumer>
@@ -367,6 +377,8 @@ class Select extends React.Component<Props, any> {
               css={{
                 position: "absolute",
                 top: `calc(100% + ${spacing[2]}px)`,
+                maxHeight: "300px",
+                overflowY: "auto",
                 display:
                   this.state.isFocused === false || this.state.closeOverride
                     ? "none"
