@@ -41,6 +41,8 @@ const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
       height="100%"
       onClick={toggleEntry(SelectedElement)}
       borderRadius={3}
+      iconName="Cross"
+      size="sm"
       css={{
         backgroundColor: "transparent",
         "&:hover": {
@@ -48,9 +50,7 @@ const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
           cursor: "pointer",
         },
       }}
-    >
-      <Icon name="Cross" size={1} />
-    </Button>
+    />
   </View>
 );
 
