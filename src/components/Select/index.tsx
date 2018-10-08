@@ -399,6 +399,7 @@ class Select extends React.Component<Props, any> {
                     type="text"
                     placeholder="Search"
                     value={searchValue}
+                    readOnly={true}
                     css={{
                       border: `1px solid ${colors.divide}`,
                       padding: "8px",

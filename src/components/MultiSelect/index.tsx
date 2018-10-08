@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { colors } from "../../foundations";
+import Button from "../Button";
 import Icon from "../Icon";
 import Select from "../Select";
 import Text from "../Text";
@@ -32,13 +33,16 @@ const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
         {LabelMap[SelectedElement]}
       </Text>
     </View>
-    <View
+    <Button
       paddingX={2}
+      paddingY={0}
       color="subtle"
       justifyContent="center"
       height="100%"
       onClick={toggleEntry(SelectedElement)}
+      borderRadius={3}
       css={{
+        backgroundColor: "transparent",
         "&:hover": {
           color: colors.default,
           cursor: "pointer",
@@ -46,22 +50,24 @@ const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
       }}
     >
       <Icon name="Cross" size={1} />
-    </View>
+    </Button>
   </View>
 );
 
 class MultiSelect extends React.Component<Props, any> {
-  public Selected = new Set();
+  public state = {
+    Selected: [],
+  };
 
   public handleChange = event => {
     const { onChange } = this.props;
 
-    this.toggleEntry(event.target.value)();
+    const NewArray = this.toggleEntry(event.target.value)();
 
     if (onChange) {
       onChange({
         target: {
-          value: [...this.Selected],
+          value: NewArray,
         },
       });
     }
@@ -80,7 +86,7 @@ class MultiSelect extends React.Component<Props, any> {
     );
 
     const SelectActiveProps =
-      this.Selected.size > 0
+      this.state.Selected.length > 0
         ? {
             backgroundColor: "accent",
             color: "background",
@@ -88,10 +94,10 @@ class MultiSelect extends React.Component<Props, any> {
         : {};
 
     const getTextOverride = () => {
-      if (this.Selected.size > 0) {
-        return [...this.Selected]
-          .map(ValueKey => LabelMap[ValueKey])
-          .join(", ");
+      if (this.state.Selected.length > 0) {
+        return this.state.Selected.map(ValueKey => LabelMap[ValueKey]).join(
+          ", "
+        );
       }
 
       return "Please Select";
@@ -113,18 +119,19 @@ class MultiSelect extends React.Component<Props, any> {
               flexShrink: "initial",
             }}
           >
-            {[...this.Selected].map(SelectedElement => (
+            {this.state.Selected.map(SelectedElement => (
               <Pill
                 toggleEntry={this.toggleEntry}
                 LabelMap={LabelMap}
                 SelectedElement={SelectedElement}
+                key={SelectedElement}
               />
             ))}
           </View>
         </View>
         <Select
           {...SelectActiveProps}
-          activeOptions={[...this.Selected]}
+          activeOptions={this.state.Selected}
           textOverride={getTextOverride()}
           onChange={this.handleChange}
           options={options}
@@ -135,13 +142,18 @@ class MultiSelect extends React.Component<Props, any> {
   }
 
   protected toggleEntry = Entry => () => {
-    if (this.Selected.has(Entry)) {
-      this.Selected.delete(Entry);
+    let NewSelection = [];
+    if (this.state.Selected.indexOf(Entry) >= 0) {
+      NewSelection = this.state.Selected.filter(Key => Key !== Entry);
     } else {
-      this.Selected.add(Entry);
+      NewSelection = [...this.state.Selected, Entry];
     }
 
-    this.forceUpdate();
+    this.setState({
+      Selected: NewSelection,
+    });
+
+    return NewSelection;
   };
 }
 
