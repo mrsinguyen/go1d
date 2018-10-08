@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import Base from "../Base";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -9,6 +10,10 @@ import Input from "./internals/Input";
 interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
+  backgroundColor?: string;
+  color?: string;
+  activeOptions?: string[];
+  textOverride?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
 }
@@ -23,22 +28,26 @@ class Select extends React.Component<Props, any> {
     isFocused: false,
     focusedOptionIndex: null,
     focusedValue: null,
+    searchValue: "",
   };
 
   public inputRef: HTMLElement = null;
 
   public handleValueSelect = (label, value) => () => {
-    this.setState({
-      value,
-      label,
-      closeOverride: true,
-    });
-
-    if (this.props.onChange) {
-      this.props.onChange({
-        target: this.inputRef,
-      });
-    }
+    this.setState(
+      {
+        value,
+        label,
+        closeOverride: true,
+      },
+      () => {
+        if (this.props.onChange) {
+          this.props.onChange({
+            target: this.inputRef,
+          });
+        }
+      }
+    );
   };
 
   // Focus State Handlers
@@ -60,6 +69,7 @@ class Select extends React.Component<Props, any> {
       closeOverride: false,
       focusedOptionIndex: null,
       focusedValue: null,
+      searchValue: "",
     });
 
   public handleOnFocus = () =>
@@ -85,19 +95,19 @@ class Select extends React.Component<Props, any> {
 
   // Keyboard Handler
   public focusOption(direction: FocusDirection = "first") {
-    const { options } = this.props;
+    const FilteredOptions = this.getFilteredOptions();
     let { focusedOptionIndex } = this.state;
 
     if (direction === "open") {
       this.setState({
         focusedOptionIndex,
-        focusedValue: options[focusedOptionIndex],
+        focusedValue: FilteredOptions[focusedOptionIndex],
         closeOverride: false,
       });
       return;
     }
 
-    if (!options.length || options.length === 0) {
+    if (!FilteredOptions.length || FilteredOptions.length === 0) {
       return;
     }
     let nextFocus = 0; // handles 'first'
@@ -108,16 +118,18 @@ class Select extends React.Component<Props, any> {
 
     if (direction === "up") {
       nextFocus =
-        focusedOptionIndex > 0 ? focusedOptionIndex - 1 : options.length - 1;
+        focusedOptionIndex > 0
+          ? focusedOptionIndex - 1
+          : FilteredOptions.length - 1;
     } else if (direction === "down") {
-      nextFocus = (focusedOptionIndex + 1) % options.length;
+      nextFocus = (focusedOptionIndex + 1) % FilteredOptions.length;
     } else if (direction === "last") {
-      nextFocus = options.length - 1;
+      nextFocus = FilteredOptions.length - 1;
     }
 
     this.setState({
       focusedOptionIndex: nextFocus,
-      focusedValue: options[nextFocus],
+      focusedValue: FilteredOptions[nextFocus],
       closeOverride: false,
     });
   }
@@ -138,7 +150,8 @@ class Select extends React.Component<Props, any> {
     }
 
     if (isFocused) {
-      switch (event.key) {
+      const Key = event.key;
+      switch (Key) {
         case "Tab":
           if (!event.shiftKey && focusedValue) {
             this.selectOption(focusedValue);
@@ -177,23 +190,119 @@ class Select extends React.Component<Props, any> {
         case "End":
           this.focusOption("last");
           break;
+        case "Backspace":
+          if (this.props.searchable) {
+            this.setState(OldState => ({
+              searchValue: OldState.searchValue.slice(0, -1),
+            }));
+          }
+          break;
+        case "Delete":
+          if (this.props.searchable) {
+            this.setState(OldState => ({
+              searchValue: OldState.searchValue.slice(0, -1),
+            }));
+          }
+          break;
+        case "Clear":
+          if (this.props.searchable) {
+            this.setState({
+              searchValue: "",
+            });
+          }
+          break;
         default:
+          const BannedKeys = [
+            "Shift",
+            "CapsLock",
+            "Control",
+            "Alt",
+            "Meta",
+            "PageUp",
+            "PageDown",
+            "ArrowLeft",
+            "ArrowRight",
+          ];
+
+          if (
+            Array.prototype.find.call(BannedKeys, KeyCode => KeyCode === Key)
+          ) {
+            return;
+          }
+
+          if (this.props.searchable) {
+            this.setState(OldState => ({
+              searchValue: OldState.searchValue + Key,
+            }));
+          }
           return;
       }
     }
     event.preventDefault();
   };
 
+  public getFilteredOptions = () => {
+    const { searchValue } = this.state;
+    const { searchable, options } = this.props;
+
+    if (searchable) {
+      if (searchValue !== "") {
+        return options.filter(Option =>
+          Option.label.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      }
+    }
+
+    return options;
+  };
+
   public render() {
     const {
-      options,
+      options = [],
       disabled,
       name,
       onChange,
       css,
+      backgroundColor = "background",
+      color = "default",
+      activeOptions = [],
+      textOverride,
+      defaultText = "Please Select",
       children,
+      searchable,
       ...props
     } = this.props;
+
+    const {
+      value: SelectedValue,
+      focusedOptionIndex,
+      searchValue,
+    } = this.state;
+
+    const getOptionBackground = (Index, Option) => {
+      let ActiveValues = [SelectedValue];
+
+      if (activeOptions) {
+        ActiveValues = activeOptions;
+      }
+
+      if (Index === focusedOptionIndex) {
+        return "highlight";
+      }
+
+      if (
+        Array.prototype.find.call(
+          ActiveValues,
+          Element => Element === Option.value
+        )
+      ) {
+        return "accent";
+      }
+
+      return null;
+    };
+
+    const FilteredOptions = this.getFilteredOptions();
 
     return (
       <Theme.Consumer>
@@ -210,7 +319,7 @@ class Select extends React.Component<Props, any> {
               borderRadius={2}
               paddingX={4}
               boxShadow={this.state.isFocused ? "strong" : "soft"}
-              backgroundColor="background"
+              backgroundColor={backgroundColor}
               onClick={this.onMenuMouseDown}
               onKeyDown={this.onKeyDown}
               data-testid="primarySection"
@@ -230,11 +339,12 @@ class Select extends React.Component<Props, any> {
                 }}
               >
                 <Text
+                  color={color}
                   css={{
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {this.state.label || "Please Select"}
+                  {textOverride || this.state.label || defaultText}
                 </Text>
               </View>
               <View
@@ -246,9 +356,13 @@ class Select extends React.Component<Props, any> {
                 }}
                 height="calc(100% - 2px)"
                 paddingX={3}
-                backgroundColor="background"
+                backgroundColor={backgroundColor}
               >
-                <Icon name="ChevronDown" color="muted" size={2} />
+                <Icon
+                  name="ChevronDown"
+                  color={color === "default" ? "muted" : color}
+                  size={2}
+                />
               </View>
               <Input
                 onBlur={this.handleOnBlur}
@@ -263,6 +377,8 @@ class Select extends React.Component<Props, any> {
               css={{
                 position: "absolute",
                 top: `calc(100% + ${spacing[2]}px)`,
+                maxHeight: "300px",
+                overflowY: "auto",
                 display:
                   this.state.isFocused === false || this.state.closeOverride
                     ? "none"
@@ -274,32 +390,57 @@ class Select extends React.Component<Props, any> {
               boxShadow="distant"
               backgroundColor="background"
               paddingY={3}
+              zIndex={5}
             >
-              {options.map((Option, Index) => (
-                <View
-                  width={"100%"}
-                  paddingY={4}
-                  paddingX={4}
-                  key={Option.label + "_" + Option.value + "_" + Index}
-                  onMouseDown={this.handleValueSelect(
-                    Option.label,
-                    Option.value
-                  )}
-                  css={{
-                    "&:hover": {
-                      background: colors.highlight,
-                      cursor: "pointer",
-                    },
-                    ...(Index === this.state.focusedOptionIndex
-                      ? {
-                          background: colors.highlight,
-                        }
-                      : {}),
-                  }}
-                >
-                  <Text>{Option.label}</Text>
+              {this.props.searchable && (
+                <View paddingX={4}>
+                  <Base
+                    element="input"
+                    type="text"
+                    placeholder="Search"
+                    value={searchValue}
+                    readOnly={true}
+                    css={{
+                      border: `1px solid ${colors.divide}`,
+                      padding: "8px",
+                      borderRadius: "4px",
+                    }}
+                  />
                 </View>
-              ))}
+              )}
+              <View>
+                {FilteredOptions.map((Option, Index) => (
+                  <View
+                    width={"100%"}
+                    paddingY={4}
+                    paddingX={4}
+                    key={Option.label + "_" + Option.value + "_" + Index}
+                    onMouseDown={this.handleValueSelect(
+                      Option.label,
+                      Option.value
+                    )}
+                    backgroundColor={getOptionBackground(Index, Option)}
+                    color={
+                      getOptionBackground(Index, Option) === "accent"
+                        ? "background"
+                        : "default"
+                    }
+                    css={
+                      getOptionBackground(Index, Option) !== "accent"
+                        ? {
+                            "&:hover": {
+                              background: colors.highlight,
+                              color: colors.default,
+                              cursor: "pointer",
+                            },
+                          }
+                        : {}
+                    }
+                  >
+                    <Text>{Option.label}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
         )}

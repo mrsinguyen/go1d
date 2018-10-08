@@ -1,6 +1,7 @@
 ---
 title: Avatar
 status: ready
+releaseVersion: 0.0.17
 ---
 
 A component that displays an avatar.

@@ -1,31 +1,33 @@
 ---
-title: Select
+title: MultiSelect
 status: ready
-releaseVersion: 0.0.24
+releaseVersion: 0.0.27
 ---
 
-A custom select component
+A custom Multi Select component
 
 ```.tsx
-<Select options={[
+<MultiSelect options={[
   { "value": "chocolate", label: "Chocolate" },
   { "value": "stawberry", label: "Strawberry" },
   { "value": "vanilla", label: "Vanilla" }
 ]} />
 ```
 
-Disabled Select Field
+
+Disabled Multi Select Field
 ```.tsx
-<Select options={[
+<MultiSelect label="Disabled" options={[
   { "value": "chocolate", label: "Chocolate" },
   { "value": "stawberry", label: "Strawberry" },
   { "value": "vanilla", label: "Vanilla" }
 ]} disabled={true} />
 ```
 
-Searchable Select Field
+
+Searchable Multi Select Field
 ```.tsx
-<Select options={[
+<MultiSelect label="Favourite" options={[
   { "value": "chocolate", label: "Chocolate" },
   { "value": "stawberry", label: "Strawberry" },
   { "value": "vanilla", label: "Vanilla" }
@@ -33,5 +35,5 @@ Searchable Select Field
 ```
 
 ```!jsx
-<ComponentDoc component={Select} />
+<ComponentDoc component={MultiSelect} />
 ```

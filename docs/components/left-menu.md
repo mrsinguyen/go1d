@@ -1,6 +1,7 @@
 ---
 title: Left Menu
 status: ready
+releaseVersion: 0.0.13
 ---
 
 A collapsible menu for navigation

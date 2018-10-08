@@ -1,7 +1,7 @@
 ---
 title: Section actions
 lead: Section actions are actions specific to a particular section on a page. They live with section headers.
-status: not-started
+status: not-currently-planned
 ---
 
 ## Examples
@@ -26,7 +26,7 @@ status: not-started
 
 ## Best practice
 
-Section actions follow general page actions best practices: 
+Section actions follow general page actions best practices:
 
 - Always align actions with section titles to allow maximum action context
 - Always align actions away from the title to the right to keep the section header from looking busy

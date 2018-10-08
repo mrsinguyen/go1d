@@ -2,6 +2,7 @@
 title: Button
 lead: Buttons indicate what actions are possible to users. They are important affordances to let users know when they can execute an action, typically immediately. Their associated actions are labelled and defined by verbs.
 status: ready
+releaseVersion: 0.0.1
 ---
 
 Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
@@ -82,6 +83,7 @@ For *floating buttons on a page or section*, always use default buttons with ico
 
 Copy for buttons should follow general action content guidelines.
 
+<<<<<<< HEAD
 
 ```!jsx
 <ComponentDoc component={ButtonFilled} />

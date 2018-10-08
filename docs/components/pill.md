@@ -2,6 +2,7 @@
 title: Pill
 lead: Pills are used for showing specific statuses
 status: ready
+releaseVersion: 0.0.1
 ---
 
 ## Examples
