@@ -5,7 +5,7 @@ import Theme from "../Theme";
 
 interface Props extends ButtonProps {
   color?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const ButtonMinimal: React.SFC<Props> = ({

@@ -1,6 +1,7 @@
 ---
 title: Avatar
 status: ready
+releaseVersion: 0.0.17
 ---
 
 A component that displays an avatar.
@@ -9,7 +10,7 @@ A component that displays an avatar.
 
 ### Avatar with an image
 ```.jsx
-<Avatar src="/static/knope.jpg" fullName="Leslie Knope" />
+<Avatar src="https://i.imgur.com/Ee55uvc.jpg" fullName="Leslie Knope" />
 ```
 
 

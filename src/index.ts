@@ -22,3 +22,7 @@ export { default as EmptyState } from "./components/EmptyState";
 export { default as Select } from "./components/Select";
 export { default as MultiSelect } from "./components/MultiSelect";
 export { default as Modal } from "./components/Modal";
+export { default as Table } from "./components/Table";
+export { default as TR } from "./components/Table/TR";
+export { default as TH } from "./components/Table/TH";
+export { default as TD } from "./components/Table/TD";

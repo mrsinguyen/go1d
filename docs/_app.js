@@ -4,16 +4,23 @@ import {
   // SidebarLayout,
   ScopeProvider,
 } from "@compositor/x0/components";
+import { Flipflop } from "libreact/lib/Flipflop";
+import { css } from "emotion";
 import { Provider as RebassProvider } from "rebass";
+import { Link } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 import * as systemScope from "../src";
 import * as docsScope from "./_src/components";
 import foundations from "../src/foundations";
 import SidebarLayout from "./_src/components/SidebarLayout";
+import RoutesContext from "./_src/components/RoutesProvider";
+import Provider from "../src/components/Provider";
+import Theme from "../src/components/Theme";
 
 const navOrder = ["", "/foundations", "/components", "/patterns"];
 
 const scope = {
+  Flipflop,
   ...systemScope,
   ...docsScope,
 };
@@ -33,27 +40,47 @@ const createNav = routes => {
   );
 };
 
+const LinkComponent = ({ href, children, ...props }) => (
+  <Theme.Consumer>
+    {({ colors }) => (
+      <Link
+        to={href}
+        className={css`
+          color: ${colors.accent};
+        `}
+        {...props}
+      >
+        {children}
+      </Link>
+    )}
+  </Theme.Consumer>
+);
+
 const App = ({ routes, ...props }) => (
-  <ScopeProvider scope={scope}>
-    <RebassProvider
-      theme={{
-        fonts: {
-          sans: foundations.type.family.sansSerif,
-          mono: foundations.type.family.code,
-        },
-        fontSizes: foundations.type.scale.lg,
-        fontWeights: foundations.type.weight,
-        space: foundations.spacing.map(s => s + "px"),
-        colors: {
-          black: foundations.colors.default,
-          blue: foundations.colors.accent,
-          gray: foundations.colors.soft,
-        },
-      }}
-    >
-      <SidebarLayout routes={createNav(routes)} {...props} title="GO1D" />
-    </RebassProvider>
-  </ScopeProvider>
+  <Provider LinkComponent={LinkComponent}>
+    <RoutesContext.Provider value={routes}>
+      <ScopeProvider scope={scope}>
+        <RebassProvider
+          theme={{
+            fonts: {
+              sans: foundations.type.family.sansSerif,
+              mono: foundations.type.family.code,
+            },
+            fontSizes: foundations.type.scale.lg,
+            fontWeights: foundations.type.weight,
+            space: foundations.spacing.map(s => s + "px"),
+            colors: {
+              black: foundations.colors.default,
+              blue: foundations.colors.accent,
+              gray: foundations.colors.soft,
+            },
+          }}
+        >
+          <SidebarLayout routes={createNav(routes)} {...props} title="GO1D" />
+        </RebassProvider>
+      </ScopeProvider>
+    </RoutesContext.Provider>
+  </Provider>
 );
 
 export default App;

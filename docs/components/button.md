@@ -2,13 +2,10 @@
 title: Button
 lead: Buttons indicate what actions are possible to users. They are important affordances to let users know when they can execute an action, typically immediately. Their associated actions are labelled and defined by verbs.
 status: ready
+releaseVersion: 0.0.1
 ---
 
 Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
-
-```!jsx
-<ComponentDoc component={Button} />
-```
 
 ## Examples
 
@@ -34,9 +31,6 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonFilled color='danger'>Danger zone</ButtonFilled>
 ```
 
-```!jsx
-<ComponentDoc component={ButtonFilled} />
-```
 
 ### Minimal button subtle colour
 
@@ -47,13 +41,13 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 ### Minimal button in accent colour (Icon only)
 
 ```.jsx
-<ButtonMinimal color='accent'>(Icon)</ButtonMinimal>
+<ButtonMinimal color='accent' iconName='Plus' />
 ```
 
 ### Minimal button in danger colour (Icon and label)
 
 ```.jsx
-<ButtonMinimal color='accent'>(Icon) Call to action</ButtonMinimal>
+<ButtonMinimal color='accent' iconName='Plus'>Call to action</ButtonMinimal>
 ```
 
 ### Minimal button in danger colour
@@ -88,3 +82,9 @@ For *floating buttons on a page or section*, always use default buttons with ico
 ## Content guidelines
 
 Copy for buttons should follow general action content guidelines.
+
+<<<<<<< HEAD
+
+```!jsx
+<ComponentDoc component={ButtonFilled} />
+```

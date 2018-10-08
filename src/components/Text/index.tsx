@@ -3,7 +3,7 @@ import * as React from "react";
 import Base, { Props as BaseProps } from "../Base";
 import Theme from "../Theme";
 
-interface Props extends BaseProps {
+export interface Props extends BaseProps {
   element?: string;
   display?: string;
   fontWeight?: number | string;

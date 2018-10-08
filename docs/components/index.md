@@ -1,6 +1,8 @@
 ---
 title: Components
-status: dev
+status: ready
 ---
 
-Add list of components with current version and status here.
+```!jsx
+<ComponentList />
+```
