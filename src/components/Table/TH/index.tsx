@@ -8,7 +8,7 @@ interface Props extends ViewProps {
   text: string;
 }
 
-const TableHeaderCell = ({ text, ...props }: Props) => (
+const TableHeaderCell = ({ text, css, ...props }: Props) => (
   <Theme.Consumer>
     {({ colors }) => (
       <View
@@ -22,9 +22,12 @@ const TableHeaderCell = ({ text, ...props }: Props) => (
         {...props}
       >
         <Text
-          css={{
-            textTransform: "uppercase",
-          }}
+          css={[
+            {
+              textTransform: "uppercase",
+            },
+            css,
+          ]}
           color="subtle"
         >
           {text}

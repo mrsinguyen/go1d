@@ -1,12 +1,13 @@
 ---
 title: Empty State
 status: ready
+releaseVersion: 0.0.26
 ---
 
 ## Examples
 
 ```.jsx
-<EmptyState 
+<EmptyState
   title="No Content"
   actionText="Add Some Content"
   action={() => {}}
