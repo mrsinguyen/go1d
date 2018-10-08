@@ -146,6 +146,7 @@ class Notification extends React.Component<Props, any> {
                   boxShadow="crisp"
                   size="sm"
                   onClick={this.close}
+                  data-testid="closeNotification"
                 >
                   <Icon name="Cross" color={type} />
                 </ButtonMinimal>

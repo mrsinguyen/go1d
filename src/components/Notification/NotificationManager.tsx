@@ -34,11 +34,7 @@ class NotificationManager extends EventEmitter {
       isOpen: true,
       offset: 0,
     };
-    if (notify.priority) {
-      this.listNotify.unshift(Object.assign(defaultNotify, notify));
-    } else {
-      this.listNotify.push(Object.assign(defaultNotify, notify));
-    }
+    this.listNotify.push(Object.assign(defaultNotify, notify));
     this.emitChange();
   }
 
