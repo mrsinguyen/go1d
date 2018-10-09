@@ -27,14 +27,14 @@ class NotificationManager extends EventEmitter {
   }
 
   public create(notify) {
-    const defaultNotify = {
+    this.listNotify.push({
       id: createUUID(),
       type: "success",
       lifetime: 300,
       isOpen: true,
       offset: 0,
-    };
-    this.listNotify.push(Object.assign(defaultNotify, notify));
+      ...notify,
+    });
     this.emitChange();
   }
 
