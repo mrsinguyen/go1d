@@ -134,6 +134,7 @@ class Notification extends React.Component<Props, any> {
                           css={{
                             textDecoration: "underline",
                             fontWeight: 600,
+                            border: "none",
                           }}
                         >
                           {linkText}
