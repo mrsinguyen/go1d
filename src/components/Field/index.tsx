@@ -44,20 +44,12 @@ const Field: React.SFC<Props> = ({
       {({ field, form }) => {
         let node = null;
         if (typeof component === "string") {
-          const { innerRef, ...rest } = props;
-          node = React.createElement(component as any, {
-            ref: innerRef,
-            ...field,
-            id: id || field.name,
-            ...rest,
-            children,
-          });
+          // test
         } else {
           node = React.createElement(component as any, {
             field,
             form,
             id: id || field.name,
-            ...props,
             children,
           });
         }
@@ -68,7 +60,7 @@ const Field: React.SFC<Props> = ({
               flexDirection="row"
               justifyContent="space-between"
               alignItems="flex-end"
-              paddingY={2}
+              paddingBottom={2}
             >
               <Text
                 element="label"

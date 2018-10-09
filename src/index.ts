@@ -34,3 +34,4 @@ export { default as TD } from "./components/Table/TD";
 export { default as CourseSlat } from "./components/CourseSlat";
 export { default as Field } from "./components/Field";
 export { default as Form } from "./components/Form";
+export { default as TextInput } from "./components/TextInput";

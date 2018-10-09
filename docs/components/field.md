@@ -7,10 +7,11 @@ status: ready
 ## Examples
 
 ### Lightmode page body
+
 ```.jsx
 <Form onSubmit={(values, actions) => console.log(values, actions)}>
-<Field 
- component="input"
+<Field
+ component={TextInput}
  name="email"
  />
   <ButtonFilled type="submit" color="accent">Submit</ButtonFilled>
