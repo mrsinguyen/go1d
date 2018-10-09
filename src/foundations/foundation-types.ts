@@ -40,7 +40,7 @@ export type Tracking = "tightest" | "tight" | "normal";
 
 export type Measure = "narrow" | "normal" | "wide" | "full";
 
-export type Animation = "subtle";
+export type Animation = "subtle" | "small";
 
 // This creates a map type where all keys are required.
 // e.g. MappedKeys<Scale, string> is a mapping of all things in Scale to a string
