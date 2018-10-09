@@ -89,7 +89,7 @@ export interface Theme {
   spacing: number[];
   shadows: MappedKey<Shadows, string>;
   transitions: MappedKey<"subtle", string>;
-  breakpoints: object;
+  breakpoints: MappedKey<Scale, string>;
   opacity: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
 }
