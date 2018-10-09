@@ -9,39 +9,48 @@ releaseVersion: 0.0.29
 
   <Button 
     color='success' 
-    onClick={() => NotificationManager.success(
-        '1 course sent for import.',
-        'You now have',
-        '81 imports',
-        'https://foo.com',
-        3000,
-        true
+    onClick={() => NotificationManager.success({
+          strong: '1 course sent for import.',
+          weak: 'You now have',
+          options: {
+            linkText: '81 imports',
+            link: 'https://foo.com',
+            lifetime: 100000,
+            isOpen: true
+          }
+        }
       )}
     >
     Push Notification
   </Button>
   <Button
     color='warning' 
-    onClick={() => NotificationManager.warning(
-        'Careful,',
-        'read more',
-        'here.',
-        'https://foo.com',
-        3000,
-        true
+    onClick={() => NotificationManager.warning({
+          strong: 'Careful,',
+          weak: 'read more',
+          options: {
+            linkText: 'here.',
+            link: 'https://foo.com',
+            lifetime: 3000,
+            isOpen: true
+          }
+        }
       )}
     >
     Push Notification
   </Button>
   <Button 
     color='danger' 
-    onClick={() => NotificationManager.danger(
-        'There was an error.',
-        'Read more',
-        'here.',
-        'https://foo.com',
-        3000,
-        true
+    onClick={() => NotificationManager.danger({
+          strong: 'There was an error.',
+          weak: 'Read more',
+          options: {
+            linkText: 'here.',
+            link: 'https://foo.com',
+            lifetime: 3000,
+            isOpen: true
+          }
+        }
       )}
     >
     Push Notification

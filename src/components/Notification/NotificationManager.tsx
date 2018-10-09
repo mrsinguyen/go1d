@@ -38,14 +38,11 @@ class NotificationManager extends EventEmitter {
     this.emitChange();
   }
 
-  public success(
-    strongDescription,
-    weakDescription,
-    linkText,
-    link,
-    lifetime,
-    isOpen
-  ) {
+  public success({
+    strong: strongDescription,
+    weak: weakDescription,
+    options: { linkText, link, lifetime, isOpen },
+  }) {
     this.create({
       type: Constants.SUCCESS,
       strongDescription,
@@ -57,14 +54,11 @@ class NotificationManager extends EventEmitter {
     });
   }
 
-  public warning(
-    strongDescription,
-    weakDescription,
-    linkText,
-    link,
-    lifetime,
-    isOpen
-  ) {
+  public warning({
+    strong: strongDescription,
+    weak: weakDescription,
+    options: { linkText, link, lifetime, isOpen },
+  }) {
     this.create({
       type: Constants.WARNING,
       strongDescription,
@@ -76,14 +70,11 @@ class NotificationManager extends EventEmitter {
     });
   }
 
-  public danger(
-    strongDescription,
-    weakDescription,
-    linkText,
-    link,
-    lifetime,
-    isOpen
-  ) {
+  public danger({
+    strong: strongDescription,
+    weak: weakDescription,
+    options: { linkText, link, lifetime, isOpen },
+  }) {
     this.create({
       type: Constants.DANGER,
       strongDescription,

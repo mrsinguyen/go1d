@@ -44,40 +44,46 @@ it("renders without crashing without any optional props", () => {
 it("renders and accepts notification push - success", () => {
   render(<NotificationContainer />);
 
-  NotificationManager.success(
-    "1 course sent for import.",
-    "You now have",
-    "81 imports",
-    "https://foo.com",
-    3000,
-    true
-  );
+  NotificationManager.success({
+    strong: "1 course sent for import.",
+    weak: "You now have",
+    options: {
+      linkText: "81 imports",
+      link: "https://foo.com",
+      lifetime: 3000,
+      isOpen: true,
+    },
+  });
 });
 
 it("renders and accepts notification push - warning", () => {
   render(<NotificationContainer />);
 
-  NotificationManager.warning(
-    "Careful,",
-    "read more",
-    "here.",
-    "https://foo.com",
-    3000,
-    true
-  );
+  NotificationManager.warning({
+    strong: "Careful,",
+    weak: "read more",
+    options: {
+      linkText: "here.",
+      link: "https://foo.com",
+      lifetime: 3000,
+      isOpen: true,
+    },
+  });
 });
 
 it("renders and accepts notification push - danger", () => {
   render(<NotificationContainer />);
 
-  NotificationManager.danger(
-    "There was an error.",
-    "Read more",
-    "here.",
-    "https://foo.com",
-    3000,
-    true
-  );
+  NotificationManager.danger({
+    strong: "There was an error.",
+    weak: "Read more",
+    options: {
+      linkText: "here.",
+      link: "https://foo.com",
+      lifetime: 3000,
+      isOpen: true,
+    },
+  });
 });
 
 it("renders and removes from queue", () => {

@@ -18,13 +18,13 @@ class NotificationContainer extends React.Component {
     notifications: [],
   };
 
-  public componentWillMount = () => {
+  public componentDidMount() {
     NotificationManager.addChangeListener(this.handleStoreChange);
-  };
+  }
 
-  public componentWillUnmount = () => {
+  public componentWillUnmount() {
     NotificationManager.removeChangeListener(this.handleStoreChange);
-  };
+  }
 
   public handleStoreChange = notifications => {
     this.setState({
