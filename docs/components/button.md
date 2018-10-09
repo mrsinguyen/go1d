@@ -83,8 +83,6 @@ For *floating buttons on a page or section*, always use default buttons with ico
 
 Copy for buttons should follow general action content guidelines.
 
-<<<<<<< HEAD
-
 ```!jsx
 <ComponentDoc component={ButtonFilled} />
 ```
