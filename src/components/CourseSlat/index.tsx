@@ -1,10 +1,6 @@
 import * as React from "react";
 
 import { Interpolation } from "emotion";
-import { url } from "inspector";
-import Base from "../Base";
-import ButtonFilled from "../ButtonFilled";
-import Container from "../Container";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
