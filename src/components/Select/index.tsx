@@ -35,11 +35,11 @@ class Select extends React.Component<Props, any> {
 
   public inputRef: HTMLElement = null;
 
-  public componentDidUpdate(prevProps: Props) {
-    const { isDisabled } = this.props;
+  public componentDidUpdate(prevProps: Props, prevState) {
+    const { disabled, value } = this.props;
     const { isFocused } = this.state;
 
-    if (isFocused && !isDisabled) {
+    if (isFocused && !disabled && prevState.value !== value) {
       this.focusInput();
     }
   }
@@ -49,6 +49,11 @@ class Select extends React.Component<Props, any> {
       {
         value,
         label,
+        closeOverride:
+          typeof this.props.closeOnSelect === "undefined" ||
+          this.props.closeOnSelect === false
+            ? true
+            : this.props.closeOnSelect,
         overrideFocusClose: !this.props.closeOnSelect || false,
       },
       () => {
