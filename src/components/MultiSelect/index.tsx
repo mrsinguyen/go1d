@@ -35,10 +35,21 @@ class MultiSelect extends React.Component<Props, any> {
     }
   };
 
-  public clearSelection = () =>
+  public clearSelection = () => {
+    const { onChange } = this.props;
+
     this.setState({
       Selected: [],
     });
+
+    if (onChange) {
+      onChange({
+        target: {
+          value: [],
+        },
+      });
+    }
+  };
 
   public render() {
     const { onChange, options, label, ...props } = this.props;
@@ -109,6 +120,7 @@ class MultiSelect extends React.Component<Props, any> {
                   justifyContent="center"
                   height="100%"
                   onClick={this.clearSelection}
+                  data-testid="clearSelectionButton"
                   borderRadius={3}
                   iconName="Cross"
                   size="sm"
