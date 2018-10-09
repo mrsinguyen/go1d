@@ -7,6 +7,7 @@ import ButtonFilled from "../ButtonFilled";
 import Container from "../Container";
 import Icon from "../Icon";
 import Text from "../Text";
+import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
@@ -17,6 +18,9 @@ interface Props extends ViewProps {
   author?: string;
   time?: string;
   actionRender?: () => React.ReactChild;
+  contentRender?: () => React.ReactChild;
+  type?: string;
+  typeIcon?: string;
 }
 
 const CourseSlat: React.SFC<Props> = ({
@@ -27,95 +31,130 @@ const CourseSlat: React.SFC<Props> = ({
   author,
   time,
   actionRender,
+  contentRender,
+  type,
+  typeIcon,
   ...props
 }: Props) => (
-  <View
-    backgroundColor="background"
-    borderRadius={2}
-    boxShadow="crisp"
-    flexDirection="row"
-    marginBottom={4}
-    css={{
-      ...((css as object) || {}),
-      overflow: "hidden",
-    }}
-    {...props}
-  >
-    {courseImage && (
+  <Theme.Consumer>
+    {({ spacing, breakpoints }) => (
       <View
-        height={111}
-        width={212}
-        padding={3}
-        alignItems="start"
+        backgroundColor="background"
+        borderRadius={2}
+        boxShadow="crisp"
+        flexDirection="row"
+        marginBottom={4}
         css={{
+          ...((css as object) || {}),
           overflow: "hidden",
-          backgroundImage: `url(${courseImage})`,
-          backgroundSize: "cover",
         }}
+        {...props}
       >
-        <View
-          flexDirection="row"
-          padding={2}
-          borderRadius={1}
-          color="background"
-          backgroundColor="contrast"
-        >
-          <Icon paddingRight={1} name="Course" />
-          <Text fontSize={1}>COURSE</Text>
-        </View>
-      </View>
-    )}
-    <View paddingY={4} paddingX={5} flexShrink={1}>
-      {title && (
-        <Text fontSize={3} css={{ marginBottom: "8px" }}>
-          {title}
-        </Text>
-      )}
-      {description && (
-        <Text
-          color="subtle"
-          css={{
-            marginBottom: 12,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-          }}
-        >
-          {description}
-        </Text>
-      )}
-      {(time || author) && (
-        <View flexDirection="row">
-          {author && (
-            <View paddingRight={5}>
-              <Text color="subtle" fontSize={1}>
-                {author}
-              </Text>
+        {courseImage && (
+          <View
+            padding={3}
+            alignItems="start"
+            css={{
+              overflow: "hidden",
+              backgroundImage: `url(${courseImage})`,
+              backgroundSize: "cover",
+              position: "relative",
+              height: 142,
+              width: 221,
+              [breakpoints.sm]: {
+                height: 130,
+                width: 130,
+              },
+            }}
+          >
+            {(type || typeIcon) && (
+              <View
+                flexDirection="row"
+                padding={2}
+                borderRadius={1}
+                color="background"
+                backgroundColor="contrast"
+                css={{
+                  position: "absolute",
+                  bottom: 10,
+                  left: 10,
+                }}
+              >
+                {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
+                {type && <Text fontSize={1}>{type.toUpperCase()}</Text>}
+              </View>
+            )}
+          </View>
+        )}
+        <View paddingY={4} paddingX={5} flexShrink={1}>
+          {title && (
+            <Text
+              fontSize={3}
+              css={{
+                marginBottom: 8,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {title}
+            </Text>
+          )}
+          {(time || author) && (
+            <View flexDirection="row" marginBottom={3}>
+              {author && (
+                <View paddingRight={5}>
+                  <Text color="subtle" fontSize={1}>
+                    {author}
+                  </Text>
+                </View>
+              )}
+              {time && (
+                <View flexDirection="row">
+                  <Icon
+                    name="Clock"
+                    size={1}
+                    color="subtle"
+                    marginRight={2}
+                    marginTop={1}
+                  />
+                  <Text color="subtle" fontSize={1}>
+                    {time}
+                  </Text>
+                </View>
+              )}
             </View>
           )}
-          {time && (
-            <View flexDirection="row">
-              <Icon
-                name="Clock"
-                size={1}
-                color="subtle"
-                marginRight={2}
-                marginTop={1}
-              />
-              <Text color="subtle" fontSize={1}>
-                {time}
-              </Text>
-            </View>
+          {contentRender && contentRender()}
+          {description && (
+            <Text
+              color="subtle"
+              css={{
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {description}
+            </Text>
           )}
         </View>
-      )}
-    </View>
-    {actionRender && (
-      <View padding={5} paddingLeft={7}>
-        {actionRender()}
+        {actionRender && (
+          <View
+            css={{
+              padding: spacing[5],
+              paddingLeft: spacing[7],
+              [breakpoints.sm]: {
+                padding: spacing[4],
+              },
+            }}
+          >
+            {actionRender()}
+          </View>
+        )}
       </View>
     )}
-  </View>
+  </Theme.Consumer>
 );
 
 export default CourseSlat;
