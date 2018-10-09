@@ -16,6 +16,7 @@ interface Props extends ViewProps {
   textOverride?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
+  closeOnSelect?: boolean;
 }
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
@@ -29,16 +30,26 @@ class Select extends React.Component<Props, any> {
     focusedOptionIndex: null,
     focusedValue: null,
     searchValue: "",
+    overrideFocusClose: false,
   };
 
   public inputRef: HTMLElement = null;
+
+  public componentDidUpdate(prevProps: Props) {
+    const { isDisabled } = this.props;
+    const { isFocused } = this.state;
+
+    if (isFocused && !isDisabled) {
+      this.focusInput();
+    }
+  }
 
   public handleValueSelect = (label, value) => () => {
     this.setState(
       {
         value,
         label,
-        closeOverride: true,
+        overrideFocusClose: !this.props.closeOnSelect || false,
       },
       () => {
         if (this.props.onChange) {
@@ -64,13 +75,14 @@ class Select extends React.Component<Props, any> {
   }
 
   public handleOnBlur = () =>
-    this.setState({
-      isFocused: false,
+    this.setState(OldState => ({
+      isFocused: OldState.overrideFocusClose ? true : false,
       closeOverride: false,
       focusedOptionIndex: null,
       focusedValue: null,
       searchValue: "",
-    });
+      overrideFocusClose: false,
+    }));
 
   public handleOnFocus = () =>
     this.setState({
@@ -140,8 +152,20 @@ class Select extends React.Component<Props, any> {
     }
   };
 
+  public onKeyUp = (event: KeyboardEvent) => {
+    const { disabled, onKeyUp } = this.props;
+
+    if (disabled) {
+      return;
+    }
+
+    if (onKeyUp) {
+      onKeyUp(event);
+    }
+  };
+
   public onKeyDown = (event: KeyboardEvent) => {
-    const { disabled } = this.props;
+    const { disabled, onKeyDown } = this.props;
 
     const { isFocused, focusedValue, closeOverride } = this.state;
 
@@ -149,8 +173,13 @@ class Select extends React.Component<Props, any> {
       return;
     }
 
+    if (onKeyDown) {
+      onKeyDown(event);
+    }
+
     if (isFocused) {
       const Key = event.key;
+
       switch (Key) {
         case "Tab":
           if (!event.shiftKey && focusedValue) {
@@ -270,6 +299,9 @@ class Select extends React.Component<Props, any> {
       defaultText = "Please Select",
       children,
       searchable,
+      onKeyDown,
+      onKeyUp,
+      closeOnSelect,
       ...props
     } = this.props;
 
@@ -322,6 +354,7 @@ class Select extends React.Component<Props, any> {
               backgroundColor={backgroundColor}
               onClick={this.onMenuMouseDown}
               onKeyDown={this.onKeyDown}
+              onKeyUp={this.onKeyUp}
               data-testid="primarySection"
               {...props}
               css={{
@@ -419,6 +452,7 @@ class Select extends React.Component<Props, any> {
                       Option.label,
                       Option.value
                     )}
+                    onMouseUp={this.handleRefocus}
                     backgroundColor={getOptionBackground(Index, Option)}
                     color={
                       getOptionBackground(Index, Option) === "accent"
