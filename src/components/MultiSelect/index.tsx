@@ -16,44 +16,6 @@ interface Props extends ViewProps {
   label?: string;
 }
 
-const Pill = ({ LabelMap, SelectedElement, toggleEntry }) => (
-  // Pill Shown Above Multi Select
-  <View
-    display="inline-flex"
-    backgroundColor="accent"
-    backgroundOpacity="pill"
-    borderRadius={2}
-    flexDirection="row"
-    css={{ overflow: "hidden" }}
-    marginLeft={3}
-    marginBottom={3}
-  >
-    <View backgroundColor="accent" paddingX={3} paddingY={2}>
-      <Text color="background" fontSize={1}>
-        {LabelMap[SelectedElement]}
-      </Text>
-    </View>
-    <Button
-      paddingX={2}
-      paddingY={0}
-      color="subtle"
-      justifyContent="center"
-      height="100%"
-      onClick={toggleEntry(SelectedElement)}
-      borderRadius={3}
-      iconName="Cross"
-      size="sm"
-      css={{
-        backgroundColor: "transparent",
-        "&:hover": {
-          color: colors.default,
-          cursor: "pointer",
-        },
-      }}
-    />
-  </View>
-);
-
 class MultiSelect extends React.Component<Props, any> {
   public state = {
     Selected: [],
@@ -68,6 +30,22 @@ class MultiSelect extends React.Component<Props, any> {
       onChange({
         target: {
           value: NewArray,
+        },
+      });
+    }
+  };
+
+  public clearSelection = () => {
+    const { onChange } = this.props;
+
+    this.setState({
+      Selected: [],
+    });
+
+    if (onChange) {
+      onChange({
+        target: {
+          value: [],
         },
       });
     }
@@ -119,14 +97,43 @@ class MultiSelect extends React.Component<Props, any> {
               flexShrink: "initial",
             }}
           >
-            {this.state.Selected.map(SelectedElement => (
-              <Pill
-                toggleEntry={this.toggleEntry}
-                LabelMap={LabelMap}
-                SelectedElement={SelectedElement}
-                key={SelectedElement}
-              />
-            ))}
+            {this.state.Selected.length > 0 && (
+              <View
+                display="inline-flex"
+                backgroundColor="accent"
+                backgroundOpacity="pill"
+                borderRadius={2}
+                flexDirection="row"
+                css={{ overflow: "hidden" }}
+                marginLeft={3}
+                marginBottom={3}
+              >
+                <View backgroundColor="accent" paddingX={3} paddingY={2}>
+                  <Text color="background" fontSize={1}>
+                    {this.state.Selected.length}
+                  </Text>
+                </View>
+                <Button
+                  paddingX={2}
+                  paddingY={0}
+                  color="subtle"
+                  justifyContent="center"
+                  height="100%"
+                  onClick={this.clearSelection}
+                  data-testid="clearSelectionButton"
+                  borderRadius={3}
+                  iconName="Cross"
+                  size="sm"
+                  css={{
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      color: colors.default,
+                      cursor: "pointer",
+                    },
+                  }}
+                />
+              </View>
+            )}
           </View>
         </View>
         <Select

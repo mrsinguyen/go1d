@@ -117,3 +117,38 @@ it("Can deselect items in the dropdown", () => {
   expect(ChangeMock.mock.calls[2][0].target.value.length).toBe(1);
   expect(ChangeMock.mock.calls[2][0].target.value[0]).toBe("test 1");
 });
+
+it("Can clear selection", () => {
+  const ChangeMock = jest.fn();
+  const { getByTestId } = render(
+    <MultiSelect options={Options} onChange={ChangeMock} />
+  );
+
+  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Enter",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Enter",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Enter",
+  });
+
+  fireEvent.click(getByTestId("clearSelectionButton"));
+
+  expect(ChangeMock.mock.calls.length).toBe(4);
+  expect(ChangeMock.mock.calls[3][0].target.value.length).toBe(0);
+});
