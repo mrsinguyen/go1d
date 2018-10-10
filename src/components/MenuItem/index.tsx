@@ -1,3 +1,4 @@
+import { css } from "emotion";
 import * as React from "react";
 import { Transition } from "react-transition-group";
 import Icon from "../Icon";
@@ -24,7 +25,7 @@ const MenuItem: React.SFC<Props> = ({
 }: Props) => (
   <Theme.Consumer>
     {({ colors, animation }) => (
-      <Link href={href} css={{ textDecoration: "none" }}>
+      <Link href={href} hoverFocusColor="faded">
         <View
           flexDirection="row"
           alignItems="center"
