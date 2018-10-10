@@ -9,24 +9,23 @@ it("renders without crashing without any optional props", () => {
 });
 
 it("renders without crashing with an icon", () => {
-    render(<TextInput id="crashing" iconName="Search" />);
+  render(<TextInput id="crashing" iconName="Search" />);
 });
 
 it("test focus", () => {
-    const onFocus = jest.fn();
+  const onFocus = jest.fn();
 
-    const { getByTestId } = render(<TextInput id="crashing" onFocus={onFocus} />);
+  const { getByTestId } = render(<TextInput id="crashing" onFocus={onFocus} />);
 
-    fireEvent.focus(getByTestId("inputElement"));
-    expect(onFocus.mock.calls.length).toBe(1);
+  fireEvent.focus(getByTestId("inputElement"));
+  expect(onFocus.mock.calls.length).toBe(1);
 });
 
-
 it("test blur", () => {
-    const onBlur = jest.fn();
+  const onBlur = jest.fn();
 
-    const { getByTestId } = render(<TextInput id="crashing" onBlur={onBlur} />);
+  const { getByTestId } = render(<TextInput id="crashing" onBlur={onBlur} />);
 
-    fireEvent.blur(getByTestId("inputElement"));
-    expect(onBlur.mock.calls.length).toBe(1);
+  fireEvent.blur(getByTestId("inputElement"));
+  expect(onBlur.mock.calls.length).toBe(1);
 });

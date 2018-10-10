@@ -1,3 +1,3 @@
-import {memoize} from 'lodash-decorators';
+import { memoize } from "lodash-decorators";
 
 export default memoize;

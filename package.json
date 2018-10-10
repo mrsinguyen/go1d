@@ -17,7 +17,7 @@
     "precommit": "lint-staged",
     "size": "bundlesize",
     "test": "yarn lint && jest",
-    "tslint": "tslint -c tslint.json --fix ./src/**/*.tsx"
+    "tslint": "tslint -c tslint.json --fix ./src/**/**/*.{ts,tsx}"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [

@@ -31,7 +31,7 @@ const Field: React.SFC<Props> = ({
   value,
   inputRef,
   ...props
-}: Props & FieldProps) => {
+}: Props) => {
   const validate = val => required && !val && "required";
 
   const formikProps = {
