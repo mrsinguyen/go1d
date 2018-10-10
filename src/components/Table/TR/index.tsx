@@ -7,14 +7,16 @@ const TR = ({ children }) => (
   <Theme.Consumer>
     {({ spacing }) => (
       <View
-        element="tr"
-        display="table-row"
+        element="div"
+        display="flex"
+        flexWrap="nowrap"
+        flexDirection="row"
         width="100%"
         css={{
-          "th:first-child, td:first-child": {
+          "& > div:first-child": {
             paddingLeft: `${spacing[6]}px`,
           },
-          "th:last-child, td:last-child": {
+          "& > div:last-child": {
             paddingRight: `${spacing[6]}px`,
           },
         }}
