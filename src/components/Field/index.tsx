@@ -43,9 +43,7 @@ const Field: React.SFC<Props> = ({
     <FormikField validate={validate} {...formikProps}>
       {({ field, form }) => {
         let node = null;
-        if (typeof component === "string") {
-          // test
-        } else {
+        if (component) {
           node = React.createElement(component as any, {
             ref: inputRef,
             field,
@@ -75,14 +73,18 @@ const Field: React.SFC<Props> = ({
                 <Text
                   fontSize={1}
                   fontWeight="bold"
-                  color="red"
+                  color="danger"
                   css={{ textTransform: "uppercase" }}
                 >
                   {form.errors[field.name]}
                 </Text>
               ) : (
                 !required && (
-                  <Text fontSize={1} color="subtle">
+                  <Text
+                    fontSize={1}
+                    color="subtle"
+                    css={{ textTransform: "uppercase" }}
+                  >
                     Optional
                   </Text>
                 )
