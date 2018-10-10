@@ -31,3 +31,4 @@ export { default as Table } from "./components/Table";
 export { default as TR } from "./components/Table/TR";
 export { default as TH } from "./components/Table/TH";
 export { default as TD } from "./components/Table/TD";
+export { default as CourseSlat } from "./components/CourseSlat";
