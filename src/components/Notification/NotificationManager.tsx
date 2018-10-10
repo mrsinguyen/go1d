@@ -41,14 +41,14 @@ class NotificationManager extends EventEmitter {
   public success({
     strong: strongDescription,
     weak: weakDescription,
-    options: { linkText, link, lifetime, isOpen },
+    options: { linkText, onClick, lifetime, isOpen },
   }) {
     this.create({
       type: Constants.SUCCESS,
       strongDescription,
       weakDescription,
       linkText,
-      link,
+      onClick,
       lifetime,
       isOpen,
     });
@@ -57,14 +57,14 @@ class NotificationManager extends EventEmitter {
   public warning({
     strong: strongDescription,
     weak: weakDescription,
-    options: { linkText, link, lifetime, isOpen },
+    options: { linkText, onClick, lifetime, isOpen },
   }) {
     this.create({
       type: Constants.WARNING,
       strongDescription,
       weakDescription,
       linkText,
-      link,
+      onClick,
       lifetime,
       isOpen,
     });
@@ -73,14 +73,14 @@ class NotificationManager extends EventEmitter {
   public danger({
     strong: strongDescription,
     weak: weakDescription,
-    options: { linkText, link, lifetime, isOpen },
+    options: { linkText, onClick, lifetime, isOpen },
   }) {
     this.create({
       type: Constants.DANGER,
       strongDescription,
       weakDescription,
       linkText,
-      link,
+      onClick,
       lifetime,
       isOpen,
     });

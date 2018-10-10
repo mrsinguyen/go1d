@@ -28,7 +28,7 @@ class Notifications extends React.Component<Props, any> {
             strongDescription,
             weakDescription,
             type,
-            link,
+            onClick,
             linkText,
             lifetime,
           } = notification;
@@ -41,7 +41,7 @@ class Notifications extends React.Component<Props, any> {
               type={type}
               onClose={this.handleRemove(notification)}
               onDie={this.handleRemove(notification)}
-              link={link}
+              onClick={onClick}
               linkText={linkText}
               lifetime={lifetime}
               isOpen={true}

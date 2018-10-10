@@ -14,7 +14,7 @@ interface Props extends ViewProps {
   strongDescription: string;
   weakDescription?: string;
   linkText?: string;
-  link?: string;
+  onClick?: ((evt: React.SyntheticEvent) => void);
   lifetime: number;
   isOpen: boolean;
   onClose?: ((evt: React.SyntheticEvent) => void);
@@ -73,7 +73,7 @@ class Notification extends React.Component<Props, any> {
 
   public render() {
     const {
-      link,
+      onClick,
       linkText,
       strongDescription,
       weakDescription,
@@ -101,6 +101,7 @@ class Notification extends React.Component<Props, any> {
                 borderRadius={2}
                 boxShadow="distant"
                 justifyContent="space-between"
+                data-testid="notification"
                 css={{
                   maxWidth: "550px",
                   overflow: "hidden",
@@ -127,13 +128,16 @@ class Notification extends React.Component<Props, any> {
                     &nbsp;
                   </Text>
                   {linkText &&
-                    link && (
+                    onClick && (
                       <Text>
                         <Link
-                          href={link}
+                          onClick={onClick}
+                          data-testid="link"
                           css={{
                             fontWeight: 600,
                             outline: "none",
+                            textDecoration: "underline",
+                            cursor: "pointer",
                           }}
                         >
                           {linkText}

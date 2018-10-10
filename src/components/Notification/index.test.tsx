@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cleanup, fireEvent, render } from "react-testing-library";
+import { cleanup, fireEvent, render, wait } from "react-testing-library";
 import {
   NotificationContainer,
   NotificationManager,
@@ -8,10 +8,14 @@ import {
 
 afterEach(cleanup);
 
+const ClickMock = jest.fn();
+const CloseMock = jest.fn();
+const DieMock = jest.fn();
+
 const notificationsMock = [
   {
     isOpen: true,
-    link: "https://foo.com",
+    onClick: ClickMock,
     linkText: "81 imports",
     strongDescription: "1 course sent for import.",
     type: "success",
@@ -20,7 +24,7 @@ const notificationsMock = [
   {
     id: "8.470bf1a2c763d",
     isOpen: true,
-    link: "https://foo.com",
+    onClick: ClickMock,
     linkText: "here.",
     strongDescription: "Careful,",
     type: "warning",
@@ -29,7 +33,7 @@ const notificationsMock = [
   {
     id: "3.f8287d3dc6f20",
     isOpen: true,
-    link: "https://foo.com",
+    onClick: ClickMock,
     linkText: "here.",
     strongDescription: "There was an error.",
     type: "danger",
@@ -49,7 +53,7 @@ it("renders and accepts notification push - success", () => {
     weak: "You now have",
     options: {
       linkText: "81 imports",
-      link: "https://foo.com",
+      onClick: ClickMock,
       lifetime: 3000,
       isOpen: true,
     },
@@ -64,7 +68,7 @@ it("renders and accepts notification push - warning", () => {
     weak: "read more",
     options: {
       linkText: "here.",
-      link: "https://foo.com",
+      onClick: ClickMock,
       lifetime: 3000,
       isOpen: true,
     },
@@ -79,7 +83,7 @@ it("renders and accepts notification push - danger", () => {
     weak: "Read more",
     options: {
       linkText: "here.",
-      link: "https://foo.com",
+      onClick: ClickMock,
       lifetime: 3000,
       isOpen: true,
     },
@@ -102,8 +106,6 @@ it("renders and removes from queue", () => {
 });
 
 it("can close and remove from queue", () => {
-  const CloseMock = jest.fn();
-
   const { getByTestId } = render(
     <Notifications
       notifications={notificationsMock}
@@ -114,4 +116,34 @@ it("can close and remove from queue", () => {
   fireEvent.click(getByTestId("closeNotification"));
 
   expect(CloseMock.mock.calls.length).toBe(1);
+});
+
+it("can die and remove from queue", async () => {
+  const { getByTestId } = render(<NotificationContainer />);
+
+  NotificationManager.warning({
+    strong: "Careful,",
+    weak: "read more",
+    options: {
+      linkText: "here.",
+      onClick: ClickMock,
+      lifetime: 10,
+      isOpen: true,
+    },
+  });
+
+  await wait(() => expect(getByTestId("notification")).toBeFalsy);
+});
+
+it("can fire onclick events", () => {
+  const { getByTestId } = render(
+    <Notifications
+      notifications={notificationsMock}
+      removeFromQueue={CloseMock}
+    />
+  );
+
+  fireEvent.click(getByTestId("link"));
+
+  expect(ClickMock.mock.calls.length).toBe(1);
 });
