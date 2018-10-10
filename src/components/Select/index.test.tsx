@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cleanup, fireEvent, render } from "react-testing-library";
+import { cleanup, fireEvent, render, wait } from "react-testing-library";
 import Select from "./index";
 
 afterEach(cleanup);
@@ -153,57 +153,6 @@ it("Can blur with escape key", () => {
   });
 
   expect(ChangeMock.mock.calls.length).toBe(0);
-});
-
-it("Can open dropdown on focused input - ArrowDown", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.click(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "End",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Derp",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(2);
-  expect(ChangeMock.mock.calls[1][0].target.value).toBe("test 2");
-});
-
-it("Can open dropdown on focused input - ArrowUp", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.click(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Home",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowUp",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(2);
-  expect(ChangeMock.mock.calls[1][0].target.value).toBe("test");
 });
 
 it("if you go all the way down it should overflow to the top", () => {

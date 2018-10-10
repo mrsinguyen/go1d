@@ -14,8 +14,9 @@ interface Props extends ViewProps {
   color?: string;
   activeOptions?: string[];
   textOverride?: string;
-  onChange?: ({ target: HTMLElement }) => void;
+  onChange?: ({ target }) => void;
   name?: string;
+  closeOnSelect?: boolean;
 }
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
@@ -29,21 +30,52 @@ class Select extends React.Component<Props, any> {
     focusedOptionIndex: null,
     focusedValue: null,
     searchValue: "",
+    overrideFocusClose: false,
   };
+
+  public mounted;
 
   public inputRef: HTMLElement = null;
 
+  public componentDidUpdate(prevProps: Props, prevState) {
+    const { disabled } = this.props;
+    const { isFocused, value } = this.state;
+
+    if (isFocused && !disabled && prevState.value !== value) {
+      this.focusInput();
+    }
+  }
+
+  public componentDidMount() {
+    this.mounted = true;
+  }
+
+  public componentWillUnmount() {
+    this.blurInput();
+    this.mounted = false;
+  }
+
   public handleValueSelect = (label, value) => () => {
+    const CloseOnSelect =
+      typeof this.props.closeOnSelect !== "undefined"
+        ? this.props.closeOnSelect
+        : true;
+
     this.setState(
       {
         value,
         label,
-        closeOverride: true,
+        closeOverride: CloseOnSelect,
+        overrideFocusClose: !CloseOnSelect,
       },
       () => {
         if (this.props.onChange) {
           this.props.onChange({
-            target: this.inputRef,
+            target: {
+              value,
+              label,
+              name: this.props.name,
+            },
           });
         }
       }
@@ -54,32 +86,49 @@ class Select extends React.Component<Props, any> {
   public focusInput() {
     if (this.inputRef) {
       this.inputRef.focus();
+      this.onMenuOpen();
     }
   }
 
   public blurInput() {
     if (this.inputRef) {
       this.inputRef.blur();
+      this.onMenuClose();
     }
   }
 
-  public handleOnBlur = () =>
-    this.setState({
-      isFocused: false,
-      closeOverride: false,
+  public handleOnBlur = () => {
+    this.setState(OldState => ({
+      isFocused: OldState.overrideFocusClose ? true : false,
       focusedOptionIndex: null,
       focusedValue: null,
       searchValue: "",
-    });
+      overrideFocusClose: false,
+      closeOverride: false,
+    }));
+  };
 
   public handleOnFocus = () =>
     this.setState({
       isFocused: true,
-      closeOverride: false,
     });
 
   public getInputRef = (ref: HTMLElement) => {
     this.inputRef = ref;
+  };
+
+  public onMenuOpen = () => {
+    if (document) {
+      document.addEventListener("keydown", this.onKeyDown);
+      document.addEventListener("keyup", this.onKeyUp);
+    }
+  };
+
+  public onMenuClose = () => {
+    if (document) {
+      document.body.removeEventListener("onKeyDown", this.onKeyDown);
+      document.body.removeEventListener("onKeyUp", this.onKeyUp);
+    }
   };
 
   // Mouse Handlers
@@ -140,17 +189,34 @@ class Select extends React.Component<Props, any> {
     }
   };
 
-  public onKeyDown = (event: KeyboardEvent) => {
-    const { disabled } = this.props;
-
-    const { isFocused, focusedValue, closeOverride } = this.state;
+  public onKeyUp = (event: KeyboardEvent) => {
+    const { disabled, onKeyUp } = this.props;
 
     if (disabled) {
       return;
     }
 
+    if (onKeyUp) {
+      onKeyUp(event);
+    }
+  };
+
+  public onKeyDown = (event: KeyboardEvent) => {
+    const { disabled, onKeyDown } = this.props;
+
+    const { isFocused, focusedValue, closeOverride } = this.state;
+
+    if (disabled || this.mounted === false) {
+      return;
+    }
+
+    if (onKeyDown) {
+      onKeyDown(event);
+    }
+
     if (isFocused) {
       const Key = event.key;
+
       switch (Key) {
         case "Tab":
           if (!event.shiftKey && focusedValue) {
@@ -270,6 +336,9 @@ class Select extends React.Component<Props, any> {
       defaultText = "Please Select",
       children,
       searchable,
+      onKeyDown,
+      onKeyUp,
+      closeOnSelect,
       ...props
     } = this.props;
 
@@ -321,8 +390,6 @@ class Select extends React.Component<Props, any> {
               boxShadow={this.state.isFocused ? "strong" : "soft"}
               backgroundColor={backgroundColor}
               onClick={this.onMenuMouseDown}
-              onKeyDown={this.onKeyDown}
-              data-testid="primarySection"
               {...props}
               css={{
                 border: "1px solid",
@@ -350,11 +417,12 @@ class Select extends React.Component<Props, any> {
               <View
                 css={{
                   position: "absolute",
-                  right: "8px",
+                  right: 8,
+                  top: 1,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                height="calc(100% - 2px)"
+                height="calc(100% - 3px)"
                 paddingX={3}
                 backgroundColor={backgroundColor}
               >
@@ -369,6 +437,7 @@ class Select extends React.Component<Props, any> {
                 onFocus={this.handleOnFocus}
                 innerRef={this.getInputRef}
                 readOnly={true}
+                data-testid="primarySection"
                 value={this.state.value || ""}
                 name={name}
               />
@@ -386,6 +455,9 @@ class Select extends React.Component<Props, any> {
               }}
               data-testid="dropDown"
               borderRadius={2}
+              data-ishidden={
+                this.state.isFocused === false || this.state.closeOverride
+              }
               width="100%"
               boxShadow="distant"
               backgroundColor="background"
