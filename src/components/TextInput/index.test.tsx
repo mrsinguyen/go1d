@@ -1,21 +1,32 @@
 import * as React from "react";
-import { cleanup, render } from "react-testing-library";
-import EmptyState from "./index";
+import { cleanup, fireEvent, render } from "react-testing-library";
+import TextInput from "./index";
 
 afterEach(cleanup);
 
 it("renders without crashing without any optional props", () => {
-  render(<EmptyState />);
+  render(<TextInput id="crashing" />);
 });
 
-it("renders without crashing with all props passed to it", () => {
-  const ActionMock = () => null;
-  render(
-    <EmptyState
-      title="title"
-      description="Description"
-      action={ActionMock}
-      actionText="Test"
-    />
-  );
+it("renders without crashing with an icon", () => {
+    render(<TextInput id="crashing" iconName="Search" />);
+});
+
+it("test focus", () => {
+    const onFocus = jest.fn();
+
+    const { getByTestId } = render(<TextInput id="crashing" onFocus={onFocus} />);
+
+    fireEvent.focus(getByTestId("inputElement"));
+    expect(onFocus.mock.calls.length).toBe(1);
+});
+
+
+it("test blur", () => {
+    const onBlur = jest.fn();
+
+    const { getByTestId } = render(<TextInput id="crashing" onBlur={onBlur} />);
+
+    fireEvent.blur(getByTestId("inputElement"));
+    expect(onBlur.mock.calls.length).toBe(1);
 });

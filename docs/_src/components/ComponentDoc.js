@@ -1,18 +1,12 @@
 import React from "react";
 import { View, Text, Table, TR, TH, TD, Theme, Icon } from "../../../src";
 
-const Prop = ({
-  name = "",
-  type = {},
-  required = false,
-}) => (
+const Prop = ({ name = "", type = {}, required = false }) => (
   <TR>
     <TD>
       <Text>{name}</Text>
     </TD>
-      <TD>
-          {required && <Icon name="Check" marginX="auto" />}
-      </TD>
+    <TD>{required && <Icon name="Check" marginX="auto" />}</TD>
     <TD>
       <Text>{type.name || "N/A"}</Text>
     </TD>
@@ -38,7 +32,7 @@ export const ComponentDoc = ({ component = "" }) => {
             }}
             header={[
               <TH key="name" text="Name" />,
-                <TH key="required" text="Required" />,
+              <TH key="required" text="Required" />,
               <TH key="type" text="Type" />,
             ]}
             rows={Object.keys(props).map(key => (

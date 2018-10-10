@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { colors } from "../../foundations";
 import Button from "../Button";
-import Icon from "../Icon";
 import Select from "../Select";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";

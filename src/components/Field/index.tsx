@@ -5,38 +5,38 @@ import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
+  label: string;
+  id?: string;
   name: string;
-  type?: string;
   value?: any;
+  required?: boolean;
+  description?: React.ReactNode;
   inputRef?: (instance: any) => void;
 
-  id?: string;
   component?:
     | string
     | React.ComponentType<FieldProps<any>>
     | React.ComponentType<void>;
   children?: React.ReactNode;
-  required?: boolean;
 }
 
 const Field: React.SFC<Props> = ({
   component,
   children,
+  description,
+  label,
   id,
   required,
   name,
-  type,
   value,
   inputRef,
   ...props
 }: Props & FieldProps) => {
-  const validate = val => !val && "required";
+  const validate = val => required && !val && "required";
 
   const formikProps = {
     name,
-    type,
     value,
-    innerRef: inputRef,
   };
 
   return (
@@ -47,15 +47,17 @@ const Field: React.SFC<Props> = ({
           // test
         } else {
           node = React.createElement(component as any, {
+            ref: inputRef,
             field,
             form,
             id: id || field.name,
             children,
+            ...props,
           });
         }
 
         return (
-          <View {...props}>
+          <View paddingBottom={2}>
             <View
               flexDirection="row"
               justifyContent="space-between"
@@ -67,7 +69,7 @@ const Field: React.SFC<Props> = ({
                 fontWeight="bold"
                 htmlFor={id || field.name}
               >
-                Label
+                {label}
               </Text>
               {form.errors[field.name] ? (
                 <Text
@@ -86,10 +88,12 @@ const Field: React.SFC<Props> = ({
                 )
               )}
             </View>
-            {node}
-            <View paddingY={2}>
-              <Text color="subtle">Description</Text>
-            </View>
+            <View paddingBottom={2}>{node}</View>
+            {description && (
+              <View paddingBottom={2}>
+                <Text color="subtle">{description}</Text>
+              </View>
+            )}
           </View>
         );
       }}

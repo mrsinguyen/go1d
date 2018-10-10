@@ -4,7 +4,7 @@ import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
-  contain?: string;
+  contain?: "narrow" | "normal" | "wide" | "full";
   children: React.ReactNode;
 }
 

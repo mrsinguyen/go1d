@@ -1,18 +1,20 @@
 ---
-title: Field
-lead: Containers are used to handle width and padding for components
-status: ready
+title: Form Field
+lead: 
+status: in-development
 ---
 
 ## Examples
 
-### Lightmode page body
+### Example field and Form
 
 ```.jsx
 <Form onSubmit={(values, actions) => console.log(values, actions)}>
 <Field
  component={TextInput}
- name="email"
+ name="portalName"
+ label="Site name"
+ description="The name displayed across the site"
  />
   <ButtonFilled type="submit" color="accent">Submit</ButtonFilled>
 </Form>
