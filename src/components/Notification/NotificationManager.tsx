@@ -38,49 +38,28 @@ class NotificationManager extends EventEmitter {
     this.emitChange();
   }
 
-  public success({
-    strong: strongDescription,
-    weak: weakDescription,
-    options: { linkText, onClick, lifetime, isOpen },
-  }) {
+  public success({ message, options: { lifetime, isOpen } }) {
     this.create({
       type: Constants.SUCCESS,
-      strongDescription,
-      weakDescription,
-      linkText,
-      onClick,
+      message,
       lifetime,
       isOpen,
     });
   }
 
-  public warning({
-    strong: strongDescription,
-    weak: weakDescription,
-    options: { linkText, onClick, lifetime, isOpen },
-  }) {
+  public warning({ message, options: { lifetime, isOpen } }) {
     this.create({
       type: Constants.WARNING,
-      strongDescription,
-      weakDescription,
-      linkText,
-      onClick,
+      message,
       lifetime,
       isOpen,
     });
   }
 
-  public danger({
-    strong: strongDescription,
-    weak: weakDescription,
-    options: { linkText, onClick, lifetime, isOpen },
-  }) {
+  public danger({ message, options: { lifetime, isOpen } }) {
     this.create({
       type: Constants.DANGER,
-      strongDescription,
-      weakDescription,
-      linkText,
-      onClick,
+      message,
       lifetime,
       isOpen,
     });

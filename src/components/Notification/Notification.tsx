@@ -3,18 +3,13 @@ import posed from "react-pose";
 
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
-import Link from "../Link";
-import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   id: string;
   type: "success" | "warning" | "danger";
-  strongDescription: string;
-  weakDescription?: string;
-  linkText?: string;
-  onClick?: ((evt: React.SyntheticEvent) => void);
+  message?: React.ReactChild;
   lifetime: number;
   isOpen: boolean;
   onClose?: ((evt: React.SyntheticEvent) => void);
@@ -72,13 +67,7 @@ class Notification extends React.Component<Props, any> {
   };
 
   public render() {
-    const {
-      onClick,
-      linkText,
-      strongDescription,
-      weakDescription,
-      type,
-    } = this.props;
+    const { message, type } = this.props;
 
     // these icons are placeholders
     const iconType =
@@ -119,31 +108,7 @@ class Notification extends React.Component<Props, any> {
                     maxWidth: "80%",
                   }}
                 >
-                  <Text fontWeight="bold">
-                    {strongDescription}
-                    &nbsp;
-                  </Text>
-                  <Text>
-                    {weakDescription}
-                    &nbsp;
-                  </Text>
-                  {linkText &&
-                    onClick && (
-                      <Text>
-                        <Link
-                          onClick={onClick}
-                          data-testid="link"
-                          css={{
-                            fontWeight: 600,
-                            outline: "none",
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {linkText}
-                        </Link>
-                      </Text>
-                    )}
+                  {message}
                 </View>
                 <ButtonMinimal
                   borderRadius={10}
