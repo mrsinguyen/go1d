@@ -14,7 +14,7 @@ interface Props extends ViewProps {
   color?: string;
   activeOptions?: string[];
   textOverride?: string;
-  onChange?: ({ target: HTMLElement }) => void;
+  onChange?: ({ target }) => void;
   name?: string;
   closeOnSelect?: boolean;
 }
@@ -33,33 +33,49 @@ class Select extends React.Component<Props, any> {
     overrideFocusClose: false,
   };
 
+  public mounted;
+
   public inputRef: HTMLElement = null;
 
   public componentDidUpdate(prevProps: Props, prevState) {
-    const { disabled, value } = this.props;
-    const { isFocused } = this.state;
+    const { disabled } = this.props;
+    const { isFocused, value } = this.state;
 
     if (isFocused && !disabled && prevState.value !== value) {
       this.focusInput();
     }
   }
 
+  public componentDidMount() {
+    this.mounted = true;
+  }
+
+  public componentWillUnmount() {
+    this.blurInput();
+    this.mounted = false;
+  }
+
   public handleValueSelect = (label, value) => () => {
+    const CloseOnSelect =
+      typeof this.props.closeOnSelect !== "undefined"
+        ? this.props.closeOnSelect
+        : true;
+
     this.setState(
       {
         value,
         label,
-        closeOverride:
-          typeof this.props.closeOnSelect === "undefined" ||
-          this.props.closeOnSelect === false
-            ? true
-            : this.props.closeOnSelect,
-        overrideFocusClose: !this.props.closeOnSelect || false,
+        closeOverride: CloseOnSelect,
+        overrideFocusClose: !CloseOnSelect,
       },
       () => {
         if (this.props.onChange) {
           this.props.onChange({
-            target: this.inputRef,
+            target: {
+              value,
+              label,
+              name: this.props.name,
+            },
           });
         }
       }
@@ -70,33 +86,49 @@ class Select extends React.Component<Props, any> {
   public focusInput() {
     if (this.inputRef) {
       this.inputRef.focus();
+      this.onMenuOpen();
     }
   }
 
   public blurInput() {
     if (this.inputRef) {
       this.inputRef.blur();
+      this.onMenuClose();
     }
   }
 
-  public handleOnBlur = () =>
+  public handleOnBlur = () => {
     this.setState(OldState => ({
       isFocused: OldState.overrideFocusClose ? true : false,
-      closeOverride: false,
       focusedOptionIndex: null,
       focusedValue: null,
       searchValue: "",
       overrideFocusClose: false,
+      closeOverride: false,
     }));
+  };
 
   public handleOnFocus = () =>
     this.setState({
       isFocused: true,
-      closeOverride: false,
     });
 
   public getInputRef = (ref: HTMLElement) => {
     this.inputRef = ref;
+  };
+
+  public onMenuOpen = () => {
+    if (document) {
+      document.addEventListener("keydown", this.onKeyDown);
+      document.addEventListener("keyup", this.onKeyUp);
+    }
+  };
+
+  public onMenuClose = () => {
+    if (document) {
+      document.body.removeEventListener("onKeyDown", this.onKeyDown);
+      document.body.removeEventListener("onKeyUp", this.onKeyUp);
+    }
   };
 
   // Mouse Handlers
@@ -174,7 +206,7 @@ class Select extends React.Component<Props, any> {
 
     const { isFocused, focusedValue, closeOverride } = this.state;
 
-    if (disabled) {
+    if (disabled || this.mounted === false) {
       return;
     }
 
@@ -358,9 +390,6 @@ class Select extends React.Component<Props, any> {
               boxShadow={this.state.isFocused ? "strong" : "soft"}
               backgroundColor={backgroundColor}
               onClick={this.onMenuMouseDown}
-              onKeyDown={this.onKeyDown}
-              onKeyUp={this.onKeyUp}
-              data-testid="primarySection"
               {...props}
               css={{
                 border: "1px solid",
@@ -388,11 +417,12 @@ class Select extends React.Component<Props, any> {
               <View
                 css={{
                   position: "absolute",
-                  right: "8px",
+                  right: 8,
+                  top: 1,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                height="calc(100% - 2px)"
+                height="calc(100% - 3px)"
                 paddingX={3}
                 backgroundColor={backgroundColor}
               >
@@ -407,6 +437,7 @@ class Select extends React.Component<Props, any> {
                 onFocus={this.handleOnFocus}
                 innerRef={this.getInputRef}
                 readOnly={true}
+                data-testid="primarySection"
                 value={this.state.value || ""}
                 name={name}
               />
@@ -424,6 +455,9 @@ class Select extends React.Component<Props, any> {
               }}
               data-testid="dropDown"
               borderRadius={2}
+              data-ishidden={
+                this.state.isFocused === false || this.state.closeOverride
+              }
               width="100%"
               boxShadow="distant"
               backgroundColor="background"
@@ -457,7 +491,6 @@ class Select extends React.Component<Props, any> {
                       Option.label,
                       Option.value
                     )}
-                    onMouseUp={this.handleRefocus}
                     backgroundColor={getOptionBackground(Index, Option)}
                     color={
                       getOptionBackground(Index, Option) === "accent"
