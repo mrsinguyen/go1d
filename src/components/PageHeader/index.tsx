@@ -1,17 +1,22 @@
+import { css } from "emotion";
 import * as React from "react";
 import { Transition } from "react-transition-group";
 
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
+import Link from "../Link";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   title: string;
+  subtitle?: React.ReactNode;
   backgroundColor?: string;
   showMenuButton?: boolean;
   onMenuButtonClick?: ((evt: React.SyntheticEvent) => void);
+  breadcrumbHref?: string;
+  breadcrumbTitle?: string;
 }
 
 const PageHeader: React.SFC<Props> = ({
@@ -21,16 +26,19 @@ const PageHeader: React.SFC<Props> = ({
   showMenuButton,
   onMenuButtonClick,
   title,
+  subtitle,
+  breadcrumbHref,
+  breadcrumbTitle,
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, animation }) => (
+    {({ spacing, animation, colors }) => (
       <View
         backgroundColor={backgroundColor}
         padding={padding}
         paddingRight={7}
         paddingY={5}
-        height="104px"
+        minHeight="104px"
         boxShadow="crisp"
         display="flex"
         flexDirection="row"
@@ -57,11 +65,9 @@ const PageHeader: React.SFC<Props> = ({
               marginX="auto"
               justifyContent="center"
               width={spacing[7]}
-              css={[
-                {
-                  opacity: showMenuButton ? 1 : 0,
-                },
-              ]}
+              css={{
+                opacity: showMenuButton ? 1 : 0,
+              }}
               paddingX={2}
               onClick={onMenuButtonClick}
             >
@@ -76,11 +82,28 @@ const PageHeader: React.SFC<Props> = ({
           </Transition>
         </View>
         <View>
+          {breadcrumbTitle &&
+            breadcrumbHref && (
+              <Link href={breadcrumbHref}>
+                <View flexDirection="row" alignItems="center">
+                  <Icon
+                    name="ChevronLeft"
+                    color="subtle"
+                    size={1}
+                    marginRight={2}
+                  />
+                  <Text color="subtle">{breadcrumbTitle}</Text>
+                </View>
+              </Link>
+            )}
           <Text element="h1" fontWeight="bold" fontSize={5}>
             {title}
           </Text>
+          {subtitle}
         </View>
-        <View>{children}</View>
+        <View alignItems="flex-end" flexGrow={1}>
+          {children}
+        </View>
       </View>
     )}
   </Theme.Consumer>
