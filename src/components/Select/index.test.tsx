@@ -307,53 +307,53 @@ it("Backspace in search filter", () => {
   expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
 });
 
-// it("Delete in search filter", () => {
-//   const ChangeMock = jest.fn();
-//   const { getByTestId } = render(
-//     <Select options={Options} searchable={true} onChange={ChangeMock} />
-//   );
+it("Delete in search filter", () => {
+  const ChangeMock = jest.fn();
+  const { getByTestId } = render(
+    <Select options={Options} searchable={true} onChange={ChangeMock} />
+  );
 
-//   fireEvent.click(getByTestId("primarySection"));
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "i",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "Delete",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "1",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "ArrowDown",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "Enter",
-//   });
+  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "i",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Delete",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "1",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Enter",
+  });
 
-//   expect(ChangeMock.mock.calls.length).toBe(1);
-//   expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
-// });
+  expect(ChangeMock.mock.calls.length).toBe(1);
+  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
+});
 
-// it("Non Character keys dont show up", () => {
-//   const ChangeMock = jest.fn();
-//   const { getByTestId } = render(
-//     <Select options={Options} searchable={true} onChange={ChangeMock} />
-//   );
+it("Non Character keys dont show up", () => {
+  const ChangeMock = jest.fn();
+  const { getByTestId } = render(
+    <Select options={Options} searchable={true} onChange={ChangeMock} />
+  );
 
-//   fireEvent.click(getByTestId("primarySection"));
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "Control",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "1",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "ArrowDown",
-//   });
-//   fireEvent.keyDown(getByTestId("primarySection"), {
-//     key: "Enter",
-//   });
+  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Control",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "1",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Enter",
+  });
 
-//   expect(ChangeMock.mock.calls.length).toBe(1);
-//   expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
-// });
+  expect(ChangeMock.mock.calls.length).toBe(1);
+  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
+});
