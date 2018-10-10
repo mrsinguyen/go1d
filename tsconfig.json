@@ -6,7 +6,6 @@
       "declaration": true,
       "outDir": "./build",
       "forceConsistentCasingInFileNames": true,
-      "suppressImplicitAnyIndexErrors": true,
       "noUnusedLocals": true,
       "experimentalDecorators": true
     },
