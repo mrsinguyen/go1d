@@ -4,7 +4,7 @@ import NotificationManager from "./NotificationManager";
 import Notifications from "./Notifications";
 
 const AbsoluteStyling = {
-  position: "absolute" as "absolute",
+  position: "fixed" as "fixed",
   top: "87px",
   left: 0,
   right: 0,
