@@ -24,25 +24,15 @@ class Notifications extends React.Component<Props, any> {
       <div>
         {notifications.map((notification, i) => {
           const key = notification.id || new Date().getTime();
-          const {
-            strongDescription,
-            weakDescription,
-            type,
-            link,
-            linkText,
-            lifetime,
-          } = notification;
+          const { message, type, lifetime } = notification;
           return (
             <Notification
               key={key}
               id={key}
-              strongDescription={strongDescription}
-              weakDescription={weakDescription}
+              message={message}
               type={type}
               onClose={this.handleRemove(notification)}
               onDie={this.handleRemove(notification)}
-              link={link}
-              linkText={linkText}
               lifetime={lifetime}
               isOpen={true}
               offset={i}

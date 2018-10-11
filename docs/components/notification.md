@@ -10,12 +10,9 @@ releaseVersion: 0.0.29
   <Button 
     color='success' 
     onClick={() => NotificationManager.success({
-          strong: '1 course sent for import.',
-          weak: 'You now have',
+          message: <Text><Text fontWeight="bold">Success!</Text> This is a message <Link href="https://foo.com">read more</Link>.</Text>,
           options: {
-            linkText: '81 imports',
-            link: 'https://foo.com',
-            lifetime: 100000,
+            lifetime: 3000,
             isOpen: true
           }
         }
@@ -26,11 +23,8 @@ releaseVersion: 0.0.29
   <Button
     color='warning' 
     onClick={() => NotificationManager.warning({
-          strong: 'Careful,',
-          weak: 'read more',
+          message: <Text><Text fontWeight="bold">Warning!</Text> This is a message <Link href="https://foo.com">read more</Link>.</Text>,
           options: {
-            linkText: 'here.',
-            link: 'https://foo.com',
             lifetime: 3000,
             isOpen: true
           }
@@ -42,11 +36,8 @@ releaseVersion: 0.0.29
   <Button 
     color='danger' 
     onClick={() => NotificationManager.danger({
-          strong: 'There was an error.',
-          weak: 'Read more',
+          message: <Text><Text fontWeight="bold">Danger!</Text> This is a message <Link href="https://foo.com">read more</Link>.</Text>,
           options: {
-            linkText: 'here.',
-            link: 'https://foo.com',
             lifetime: 3000,
             isOpen: true
           }

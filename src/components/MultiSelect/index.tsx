@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { colors } from "../../foundations";
 import Button from "../Button";
-import Icon from "../Icon";
 import Select from "../Select";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
@@ -19,6 +18,7 @@ interface Props extends ViewProps {
 class MultiSelect extends React.Component<Props, any> {
   public state = {
     Selected: [],
+    closeOnSelect: true,
   };
 
   public handleChange = event => {
@@ -51,8 +51,37 @@ class MultiSelect extends React.Component<Props, any> {
     }
   };
 
+  public handleKeyDown = event => {
+    const Key = event.key;
+
+    switch (Key) {
+      case "Shift":
+        this.setState({
+          closeOnSelect: false,
+        });
+        break;
+      default:
+        return;
+    }
+  };
+
+  public handleKeyUp = event => {
+    const Key = event.key;
+
+    switch (Key) {
+      case "Shift":
+        this.setState({
+          closeOnSelect: true,
+        });
+        break;
+      default:
+        return;
+    }
+  };
+
   public render() {
     const { onChange, options, label, ...props } = this.props;
+    const { closeOnSelect } = this.state;
 
     const LabelMap = options.reduce(
       // Map of Values -> Labels
@@ -142,6 +171,9 @@ class MultiSelect extends React.Component<Props, any> {
           textOverride={getTextOverride()}
           onChange={this.handleChange}
           options={options}
+          onKeyDown={this.handleKeyDown}
+          onKeyUp={this.handleKeyUp}
+          closeOnSelect={closeOnSelect}
           {...props}
         />
       </React.Fragment>
