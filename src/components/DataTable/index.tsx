@@ -1,17 +1,15 @@
 import * as React from "react";
 import {
   AutoSizer,
-  InfiniteLoader,
   List,
   ListRowRenderer,
   WindowScroller,
 } from "react-virtualized";
 import TR from "../Table/TR";
 import Text from "../Text";
-import Theme from "../Theme";
-import View from "../View";
+import View, { Props as ViewProps } from "../View";
 
-interface Props {
+interface Props extends ViewProps {
   /** If this is supplied, it will automatically render these rows. */
   rows?: React.ReactNodeArray;
   rowHeight: number;
@@ -31,45 +29,55 @@ const DataTable: React.SFC<Props> = ({
   rowCount,
   header,
   total,
+  css,
+  ...viewProps
 }: Props) => {
   function defaultRenderer(obj) {
     return rows[obj.index];
   }
 
   return (
-    <Theme.Consumer>
-      {({ type }) => (
-        <React.Fragment>
-          {total && (
-            <View marginBottom={2}>
-              <Text fontSize={3} fontWeight="bold">
-                {total}
-              </Text>
-            </View>
-          )}
-          {header && <TR>{header}</TR>}
-          <WindowScroller>
-            {({ height, isScrolling, onChildScroll, scrollTop }) => (
-              <AutoSizer disableHeight={true}>
-                {({ width }) => (
-                  <List
-                    autoHeight={true}
-                    rowRenderer={rows ? defaultRenderer : rowRenderer}
-                    height={height}
-                    overscanRowCount={2}
-                    rowHeight={rowHeight}
-                    isScrolling={isScrolling}
-                    scrollTop={scrollTop}
-                    width={width}
-                    rowCount={rowCount}
-                  />
-                )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-        </React.Fragment>
+    <React.Fragment>
+      {total && (
+        <View marginBottom={3}>
+          <Text fontSize={3} fontWeight="bold">
+            {total}
+          </Text>
+        </View>
       )}
-    </Theme.Consumer>
+      <View
+        css={[
+          {
+            ".ReactVirtualized__Grid": {
+              outline: "none",
+            },
+          },
+          css,
+        ]}
+        {...viewProps}
+      >
+        {header && <TR>{header}</TR>}
+        <WindowScroller>
+          {({ height, isScrolling, onChildScroll, scrollTop }) => (
+            <AutoSizer disableHeight={true}>
+              {({ width }) => (
+                <List
+                  autoHeight={true}
+                  rowRenderer={rows ? defaultRenderer : rowRenderer}
+                  height={height}
+                  overscanRowCount={2}
+                  rowHeight={rowHeight}
+                  isScrolling={isScrolling}
+                  scrollTop={scrollTop}
+                  width={width}
+                  rowCount={rowCount}
+                />
+              )}
+            </AutoSizer>
+          )}
+        </WindowScroller>
+      </View>
+    </React.Fragment>
   );
 };
 

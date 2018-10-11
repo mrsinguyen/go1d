@@ -13,7 +13,7 @@ This component renders a table. It can do this in one of two ways. Either by sup
 ```.jsx
 <DataTable
   rowHeight={55}
-  totals="10 Items"
+  total="10 Items"
   rows={[
     <TR key="0">
         <TD><Text>Cell 0A</Text></TD>
@@ -47,7 +47,7 @@ This component renders a table. It can do this in one of two ways. Either by sup
 ```.jsx
 <DataTable
   rowHeight={55}
-  totals="10 Items"
+  total="10 Items"
   rowRenderer={({ index, isScrolling, isVisible, key, parent }) => <TR key={key}>
     <TD>{index}</TD>
     <TD>{key}</TD>

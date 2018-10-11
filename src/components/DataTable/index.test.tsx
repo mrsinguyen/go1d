@@ -10,6 +10,7 @@ it("renders without crashing without any optional props", () => {
   render(
     <DataTable
       rowHeight={10}
+      rowCount={2}
       rows={[
         <TR key="0">
           <TD>
