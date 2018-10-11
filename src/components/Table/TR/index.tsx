@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import Theme from "../../Theme";
-import View from "../../View";
+import View, { Props } from "../../View";
 
-const TR = ({ children }) => (
+const TR = ({ children, css, ...viewProps }: Props) => (
   <Theme.Consumer>
     {({ spacing }) => (
       <View
@@ -12,14 +12,18 @@ const TR = ({ children }) => (
         flexWrap="nowrap"
         flexDirection="row"
         width="100%"
-        css={{
-          "& > div:first-child": {
-            paddingLeft: `${spacing[6]}px`,
+        css={[
+          {
+            "& > div:first-child": {
+              paddingLeft: `${spacing[6]}px`,
+            },
+            "& > div:last-child": {
+              paddingRight: `${spacing[6]}px`,
+            },
           },
-          "& > div:last-child": {
-            paddingRight: `${spacing[6]}px`,
-          },
-        }}
+          css,
+        ]}
+        {...viewProps}
       >
         {children}
       </View>

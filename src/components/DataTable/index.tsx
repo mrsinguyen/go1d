@@ -39,7 +39,7 @@ const DataTable: React.SFC<Props> = ({
   return (
     <React.Fragment>
       {total && (
-        <View marginBottom={3}>
+        <View marginBottom={4}>
           <Text fontSize={3} fontWeight="bold">
             {total}
           </Text>
@@ -56,7 +56,16 @@ const DataTable: React.SFC<Props> = ({
         ]}
         {...viewProps}
       >
-        {header && <TR>{header}</TR>}
+        {header && (
+          <TR
+            position="sticky"
+            backgroundColor={viewProps.backgroundColor || "background"}
+            css={{ top: 0 }}
+            zIndex={2}
+          >
+            {header}
+          </TR>
+        )}
         <WindowScroller>
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
             <AutoSizer disableHeight={true}>
