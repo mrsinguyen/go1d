@@ -28,6 +28,12 @@ export const darken = (hexColor, ration = 1) =>
     .rgb()
     .string();
 
+export const tint = (hexColor, ration = 1) =>
+  Color(hexColor)
+    .lighten(1 - ration)
+    .rgb()
+    .string();
+
 export const isDark = color => Color(color).isDark();
 
 export const getContrastColor = color =>
@@ -141,6 +147,7 @@ export const shadows: MappedKey<Shadows, string> = {
   )}, 2px 20px 38px ${opacify(colors.contrast, 0.1)}`,
   inner: `inset 1px 1px 5px ${opacify(colors.contrast, 0.1)}`,
   text: `1px 1px 1px ${opacify(colors.contrast, 0.07)}`,
+  none: `none`,
 };
 
 /**

@@ -28,7 +28,8 @@ export type Shadows =
   | "strong"
   | "distant"
   | "inner"
-  | "text";
+  | "text"
+  | "none";
 
 export type MenuTransition = "closedMenu" | "openedMenu";
 

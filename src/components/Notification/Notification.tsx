@@ -69,7 +69,6 @@ class Notification extends React.Component<Props, any> {
   public render() {
     const { message, type } = this.props;
 
-    // these icons are placeholders
     const iconType =
       type === "success"
         ? "Success"
