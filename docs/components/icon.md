@@ -35,16 +35,5 @@ Define size with the size prop. This uses font sizing to determine the size, so 
 This is an exhaustive list of all icons currently in the system
 
 ```!jsx
-<table style={{ width: "100%"}}>
-    <tr>
-        <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Name</th>
-        <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Icon</th>
-    </tr>
-    {
-        Object.keys(AllIcons).map((name, index) => <tr key={index}>
-            <td style={{ padding: "0 0 1rem 0"}}>{name}</td>
-            <td style={{ padding: "0 0 1rem 0"}}><Icon name={name}/></td>
-        </tr>)
-    }
-</table>
+<AllIcons />
 ```
