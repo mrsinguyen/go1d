@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { tint } from "../../foundations";
+import { brandGreys, tint } from "../../foundations";
 import ButtonMinimal from "../ButtonFilled";
 import Container from "../Container";
 import Icon from "../Icon";
@@ -11,17 +11,18 @@ interface Props extends ViewProps {
   type: "success" | "warning" | "danger";
   children: React.ReactChild;
   close?: ((evt: React.SyntheticEvent) => void);
+  floating?: boolean;
 }
 
 const Banner: React.SFC<Props> = ({
   type,
   children,
   close,
+  floating,
   ...props
 }: Props) => {
   const iconType = type.charAt(0).toUpperCase() + type.slice(1);
   const tintLevel = type === "success" ? 0.1 : type === "warning" ? 0.2 : 0.2;
-
   return (
     <Container>
       <Theme.Consumer>
@@ -31,10 +32,13 @@ const Banner: React.SFC<Props> = ({
             marginTop={3}
             marginBottom={3}
             borderRadius={2}
+            boxShadow={floating && "distant"}
             justifyContent="space-between"
             data-testid="banner"
             css={{
-              backgroundColor: `${tint(colors[type], tintLevel)}`,
+              backgroundColor: `${
+                floating ? brandGreys.lightest : tint(colors[type], tintLevel)
+              }`,
               borderLeft: `4px solid ${colors[type]}`,
               flexDirection: "row",
               justifyContent: "justify",
@@ -43,15 +47,13 @@ const Banner: React.SFC<Props> = ({
           >
             <Icon name={iconType} color={type} marginTop={1} />
             <View
-              flexDirection="row"
               flexWrap="wrap"
+              flexGrow={1}
               paddingLeft={5}
               paddingRight={5}
-              css={{
-                width: "90%",
-              }}
+              alignItems={floating ? "center" : "left"}
             >
-              <View alignItems="left">{children}</View>
+              {children}
             </View>
             {close && (
               <ButtonMinimal

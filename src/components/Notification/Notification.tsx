@@ -1,10 +1,11 @@
 import * as React from "react";
 import posed from "react-pose";
 
-import ButtonMinimal from "../ButtonMinimal";
-import Icon from "../Icon";
+// import ButtonMinimal from "../ButtonMinimal";
+// import Icon from "../Icon";
+import Banner from "../Banner";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   id: string;
@@ -69,19 +70,22 @@ class Notification extends React.Component<Props, any> {
   public render() {
     const { message, type } = this.props;
 
-    const iconType =
-      type === "success"
-        ? "Success"
-        : type === "warning"
-          ? "Warning"
-          : "Danger";
+    // const iconType =
+    //   type === "success"
+    //     ? "Success"
+    //     : type === "warning"
+    //       ? "Warning"
+    //       : "Danger";
 
     return (
       <Theme.Consumer>
         {({ colors }) => (
           <React.Fragment>
             <Trans pose={this.state.alive ? "alive" : "dead"}>
-              <View
+              <Banner type={type} close={this.close} floating={true}>
+                {message}
+              </Banner>
+              {/* <View
                 backgroundColor="background"
                 alignItems="center"
                 padding={4}
@@ -118,7 +122,7 @@ class Notification extends React.Component<Props, any> {
                 >
                   <Icon name="Cross" color={type} />
                 </ButtonMinimal>
-              </View>
+              </View> */}
             </Trans>
           </React.Fragment>
         )}
