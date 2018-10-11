@@ -56,15 +56,7 @@ class SearchInput extends React.Component<Props, any> {
   }
 
   public render() {
-    const {
-      onChange,
-      onSubmit,
-      value,
-      element,
-      id,
-      clearable = true,
-      ...props
-    } = this.props;
+    const { element, id, clearable = true, ...props } = this.props;
     return (
       <TextInput
         id={id}
