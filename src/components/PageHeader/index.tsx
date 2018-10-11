@@ -1,4 +1,3 @@
-import { css } from "emotion";
 import * as React from "react";
 import { Transition } from "react-transition-group";
 
@@ -44,7 +43,7 @@ const PageHeader: React.SFC<Props> = ({
         flexDirection="row"
         alignItems="center"
         css={{
-          zIndex: 1,
+          zIndex: 0,
         }}
         {...props}
       >

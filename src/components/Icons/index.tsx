@@ -47,6 +47,7 @@ export { default as Lti } from "./Lti";
 export { default as Map } from "./Map";
 export { default as MapPin } from "./MapPin";
 export { default as Menu } from "./Menu";
+export { default as Minus } from "./Minus";
 export { default as MultipleUsers } from "./MultipleUsers";
 export { default as NotPassed } from "./NotPassed";
 export { default as NotificationBell } from "./NotificationBell";

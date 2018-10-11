@@ -19,7 +19,11 @@ const ComponentList = () => (
         .sort((a, b) => (a.name > b.name ? 1 : -1));
 
       const notStartedComponents = components
-        .filter(route => route.props.status === "not-currently-planned")
+        .filter(
+          route =>
+            route.props.status !== "ready" &&
+            route.props.status !== "in-development"
+        )
         .sort((a, b) => (a.name > b.name ? 1 : -1));
 
       const sortedComponents = [
@@ -49,15 +53,9 @@ const ComponentList = () => (
           ]}
           rows={sortedComponents.map(component => (
             <TR key={component.name}>
-              {component.props.status === "ready" ? (
-                <TD>
-                  <Link href={component.href}>{component.props.title}</Link>
-                </TD>
-              ) : (
-                <TD>
-                  <Text>{component.props.title}</Text>
-                </TD>
-              )}
+              <TD>
+                <Link href={component.href}>{component.props.title}</Link>
+              </TD>
               <TD>
                 {component.props.status !== "ready" && (
                   <Pill color={statuses[component.props.status].color}>

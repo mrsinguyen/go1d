@@ -4,7 +4,10 @@
       "jsx": "react",
       "module": "commonjs",
       "declaration": true,
-      "outDir": "./build"
+      "outDir": "./build",
+      "forceConsistentCasingInFileNames": true,
+      "noUnusedLocals": true,
+      "experimentalDecorators": true
     },
     "exclude": [
       "node_modules",
