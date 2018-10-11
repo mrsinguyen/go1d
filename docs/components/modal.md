@@ -4,6 +4,7 @@ status: ready
 releaseVersion: 0.0.23
 ---
 
+### Modal with some buttons
 ```.jsx
 <Flipflop>{({on, flip, flop}) => <React.Fragment>
   <ButtonFilled color='accent' onClick={flip}>Open</ButtonFilled>
