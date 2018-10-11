@@ -1,8 +1,7 @@
-import { css } from "emotion";
 import * as React from "react";
 
 import Container from "../Container";
-import View, { Props as ViewProps } from "../View";
+import { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   children: React.ReactNode;
