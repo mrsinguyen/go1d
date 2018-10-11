@@ -70,13 +70,6 @@ class Notification extends React.Component<Props, any> {
   public render() {
     const { message, type } = this.props;
 
-    // const iconType =
-    //   type === "success"
-    //     ? "Success"
-    //     : type === "warning"
-    //       ? "Warning"
-    //       : "Danger";
-
     return (
       <Theme.Consumer>
         {({ colors }) => (
@@ -85,44 +78,6 @@ class Notification extends React.Component<Props, any> {
               <Banner type={type} close={this.close} floating={true}>
                 {message}
               </Banner>
-              {/* <View
-                backgroundColor="background"
-                alignItems="center"
-                padding={4}
-                margin={3}
-                borderRadius={2}
-                boxShadow="distant"
-                justifyContent="space-between"
-                data-testid="notification"
-                css={{
-                  maxWidth: "550px",
-                  overflow: "hidden",
-                  borderLeft: `4px solid ${colors[type]}`,
-                  flexDirection: "row",
-                  justifyContent: "justify",
-                  transition: "all 0.2s linear",
-                }}
-              >
-                <Icon name={iconType} color={type} marginRight={4} />
-                <View
-                  flexDirection="row"
-                  flexWrap="wrap"
-                  css={{
-                    maxWidth: "80%",
-                  }}
-                >
-                  {message}
-                </View>
-                <ButtonMinimal
-                  borderRadius={10}
-                  boxShadow="crisp"
-                  size="sm"
-                  onClick={this.close}
-                  data-testid="closeNotification"
-                >
-                  <Icon name="Cross" color={type} />
-                </ButtonMinimal>
-              </View> */}
             </Trans>
           </React.Fragment>
         )}
