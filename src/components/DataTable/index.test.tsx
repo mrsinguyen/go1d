@@ -16,6 +16,11 @@ it("renders without crashing without any optional props", () => {
             <span>yo</span>
           </TD>
         </TR>,
+        <TR key="1">
+          <TD>
+            <span>yo</span>
+          </TD>
+        </TR>,
       ]}
     />
   );

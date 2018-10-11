@@ -15,8 +15,8 @@ interface Props {
   /** If this is supplied, it will automatically render these rows. */
   rows?: React.ReactNodeArray;
   rowHeight: number;
-  /** If rendering via a rowRenderer, you will need to supply the total number of loaded rows. */
-  rowCount?: number;
+  /** The total number of rows that can be loaded. Used for autoloading. */
+  rowCount: number;
   /** Function to render a row */
   rowRenderer?: ListRowRenderer;
   header?: React.ReactNodeArray;
@@ -61,7 +61,7 @@ const DataTable: React.SFC<Props> = ({
                     isScrolling={isScrolling}
                     scrollTop={scrollTop}
                     width={width}
-                    rowCount={rows ? rows.length : rowCount}
+                    rowCount={rowCount}
                   />
                 )}
               </AutoSizer>

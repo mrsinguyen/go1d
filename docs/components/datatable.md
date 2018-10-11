@@ -1,7 +1,7 @@
 ---
 title: Data Table
 status: ready
-releaseVersion: 0.0.26
+releaseVersion: 0.0.33
 ---
 
 This component renders a table. It can do this in one of two ways. Either by supplying the rows to the table, or by supplying a function to render each row out. This uses the TR and TH components from the Table component.
@@ -30,6 +30,7 @@ This component renders a table. It can do this in one of two ways. Either by sup
         <TD><Text>Cell 1E</Text></TD>
     </TR>
   ]}
+  rowCount={2}
   header={[
     <TH key="0" text="Header A" />,
     <TH key="0" text="Header B" />,
@@ -40,7 +41,25 @@ This component renders a table. It can do this in one of two ways. Either by sup
 />
 ```
 
+### Basic Table using a row renderer
+*NOTE* Normally you should not use a lamba expression as a prop. However one will be used here for the sake of brevity.
+
+```.jsx
+<DataTable
+  rowHeight={55}
+  totals="10 Items"
+  rowRenderer={({ index, isScrolling, isVisible, key, parent }) => <TR key={key}>
+    <TD>{index}</TD>
+    <TD>{key}</TD>
+  </TR>}
+  rowCount={2}
+  header={[
+    <TH key="0" text="Index Number" />,
+    <TH key="1" text="Key" />,
+  ]}
+/>
+```
+
 ```!jsx
 <ComponentDoc component={DataTable} />
 ```
-

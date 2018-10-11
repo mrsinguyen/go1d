@@ -10,8 +10,8 @@ interface Props extends ViewProps {
 
 const Table = ({ header, rows, css, ...props }: Props) => (
   <View
-    element="table"
-    display="table"
+    element="div"
+    display="block"
     paddingY={4}
     boxShadow="crisp"
     borderRadius={3}
