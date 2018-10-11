@@ -2,9 +2,9 @@ import * as React from "react";
 
 import ButtonMinimal from "../ButtonMinimal";
 import safeInvoke from "../../utils/safeInvoke";
-import TextInput, { TextInputBaseProps } from "../TextInput";
+import TextInput, { TextInputProps } from "../TextInput";
 
-interface Props extends TextInputBaseProps {
+interface Props extends TextInputProps {
   onSubmit: ((
     search: string,
     event: React.SyntheticEvent<HTMLElement>
@@ -50,10 +50,9 @@ class SearchInput extends React.Component<Props, any> {
   }
 
   public render() {
-    const { element, id, clearable = true, ...props } = this.props;
+    const { element, clearable = true, ...props } = this.props;
     return (
       <TextInput
-        id={id}
         iconName="Search"
         value={this.state.value}
         onChange={this.handleChange}

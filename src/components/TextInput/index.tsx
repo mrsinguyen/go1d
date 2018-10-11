@@ -8,7 +8,7 @@ import Text, { Props as TextProps } from "../Text";
 import Theme from "../Theme";
 import View from "../View";
 
-export interface TextInputBaseProps extends TextProps {
+export interface TextInputProps extends TextProps {
   id: string;
   size?: "lg" | "md" | "sm";
   name?: string;
@@ -24,9 +24,6 @@ export interface TextInputBaseProps extends TextProps {
   onClick?: (evt: React.MouseEvent<any>) => void;
   onFocus?: (evt: React.FocusEvent<any>) => void;
   onBlur?: (evt: React.FocusEvent<any>) => void;
-}
-
-export interface TextInputProps extends TextInputBaseProps {
   iconName?: string;
   suffixNode?: React.ReactNode;
 }
