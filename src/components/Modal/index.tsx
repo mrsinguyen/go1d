@@ -8,7 +8,7 @@ import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   title?: string;
-  children?: React.ReactChild;
+  children?: React.ReactNode;
   isOpen?: boolean;
   onRequestClose?: () => void;
   disableKeyBindings?: boolean;
@@ -48,6 +48,16 @@ class Modal extends React.Component<Props, any> {
       return null;
     }
 
+    const {
+      title,
+      isOpen,
+      onRequestClose,
+      disableBackgroundClose,
+      disableKeyBindings,
+      children,
+      ...viewProps
+    } = this.props;
+
     return (
       <Theme.Consumer>
         {({ colors }) => (
@@ -80,6 +90,7 @@ class Modal extends React.Component<Props, any> {
                 left: 0,
                 right: 0,
               }}
+              {...viewProps}
             >
               <View
                 paddingY={4}
@@ -90,9 +101,9 @@ class Modal extends React.Component<Props, any> {
                   borderBottom: `1px solid ${colors.divide}`,
                 }}
               >
-                {this.props.onRequestClose && (
+                {onRequestClose && (
                   <ButtonMinimal
-                    onClick={this.props.onRequestClose}
+                    onClick={onRequestClose}
                     position="absolute"
                     iconName="Cross"
                     size="lg"
@@ -100,11 +111,13 @@ class Modal extends React.Component<Props, any> {
                 )}
                 <View flexGrow={1}>
                   <Text element="h1" textAlign="center" fontSize={3}>
-                    {this.props.title}
+                    {title}
                   </Text>
                 </View>
               </View>
-              <View padding={5}>{this.props.children}</View>
+              <View padding={5} flexGrow={1}>
+                {children}
+              </View>
             </View>
           </Portal>
         )}

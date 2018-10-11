@@ -1,17 +1,12 @@
 import { Interpolation } from "emotion";
+import { get } from "lodash";
 import * as React from "react";
 import Icon from "../Icon/index";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-const sizes = {
-  sm: 1,
-  md: 2,
-  lg: 3,
-};
-
 export interface Props extends ViewProps {
-  size?: string;
+  size?: "lg" | "md" | "sm";
   color?: string;
   backgroundColor?: string;
   iconName?: string;
@@ -35,8 +30,8 @@ const Button: React.SFC<Props> = ({
     flexDirection="row"
     alignItems="center"
     justifyContent="space-between"
-    paddingY={size === "lg" ? 4 : size === "sm" ? 1 : 3}
-    paddingX={size === "lg" ? 5 : size === "sm" ? 1 : 3}
+    paddingY={get({ lg: 4, md: 3, sm: 1 }, size)}
+    paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
     backgroundColor={backgroundColor}
     color={color}
     borderRadius={2}
@@ -56,14 +51,14 @@ const Button: React.SFC<Props> = ({
     {iconName && (
       <Icon
         name={iconName}
-        size={sizes[size]}
-        marginRight={children && (size === "lg" ? 4 : 3)}
+        size={get({ lg: 3, md: 2, sm: 1 }, size)}
+        marginRight={children && get({ lg: 4, md: 3, sm: 1 }, size)}
       />
     )}
     <Text
       lineHeight="ui"
       fontWeight="bold"
-      fontSize={sizes[size]}
+      fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
       color="inherit"
     >
       {children}

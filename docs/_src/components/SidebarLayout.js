@@ -121,7 +121,7 @@ const Nav = ({ routes = [], handleMenuToggle, menuOpen, ...props }) => (
 const Main = props => <View {...props} paddingLeft={280} width="100%" />;
 
 export const statuses = {
-  dev: {
+  "in-development": {
     title: "In development",
     color: "note",
   },

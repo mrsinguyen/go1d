@@ -7,10 +7,11 @@ import {
 import { Interpolation } from "emotion";
 import * as React from "react";
 import { opacify } from "../../foundations";
+import applySpacing from "../../utils/applySpacing";
 import Base, { Props as BaseProps } from "../Base";
 import Theme from "../Theme";
 
-type MarginProperty = Globals | "auto" | number;
+type MarginProperty = Globals | "auto" | number | null;
 type PaddingProperty = Globals | number;
 
 export interface Props extends BaseProps {
@@ -46,42 +47,12 @@ export interface Props extends BaseProps {
   width?: number | string;
   minHeight?: number | string;
   height?: number | string;
-  maxWidth?: number;
+  maxWidth?: number | string;
   zIndex?: number;
   boxShadow?: string;
+  borderColor?: string;
   css?: Interpolation;
 }
-
-const applySpacing = (spacing: number[] = [], space: number | string) => {
-  if (space === undefined) {
-    return;
-  }
-
-  if (typeof space === "string") {
-    return space;
-  }
-
-  if (spacing[space] !== undefined) {
-    return spacing[space];
-  }
-  if (spacing[Math.abs(space)]) {
-    return spacing[Math.abs(space)] * -1;
-  }
-  if (
-    space > spacing[spacing.length - 1] ||
-    Math.abs(space) > spacing[spacing.length - 1]
-  ) {
-    return space;
-  }
-
-  // tslint:disable-next-line no-console
-  console.error(
-    "Please use spacing scale for value smaller than " +
-      spacing[spacing.length - 1]
-  );
-
-  return 0;
-};
 
 const View: React.SFC<Props> = ({
   element = "div",
@@ -120,6 +91,7 @@ const View: React.SFC<Props> = ({
   zIndex,
   boxShadow,
   textAlign = "inherit",
+  borderColor,
   css,
   ...props
 }: Props) => (
@@ -158,6 +130,8 @@ const View: React.SFC<Props> = ({
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
             borderRadius: s[borderRadius],
+            border: colors[borderColor] ? "1px solid" : null,
+            borderColor: colors[borderColor],
             boxShadow: shadows[boxShadow],
             transition: transitions.subtle,
             textAlign,
