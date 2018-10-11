@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cleanup, render, fireEvent } from "react-testing-library";
+import { cleanup, fireEvent, render } from "react-testing-library";
 import Text from "../Text";
 import Banner from "./index";
 
@@ -30,7 +30,6 @@ it("renders without crashing without any optional props (danger)", () => {
     </Banner>
   );
 });
-
 
 it("accepts and passes close event", () => {
   const { getByTestId } = render(
