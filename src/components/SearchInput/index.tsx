@@ -2,19 +2,13 @@ import * as React from "react";
 
 import ButtonMinimal from "../ButtonMinimal";
 import safeInvoke from "../../utils/safeInvoke";
-import TextInput from "../TextInput";
-import { Props as ViewProps } from "../View";
+import TextInput, { TextInputBaseProps } from "../TextInput";
 
-interface Props extends ViewProps {
-  id: string;
+interface Props extends TextInputBaseProps {
   onSubmit: ((
     search: string,
     event: React.SyntheticEvent<HTMLElement>
   ) => void);
-  onChange?: ((event: React.SyntheticEvent<HTMLElement>) => void);
-  value?: string;
-  placeholder?: string;
-  size?: "lg" | "md" | "sm";
   clearable?: boolean;
 }
 
