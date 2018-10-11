@@ -1,16 +1,21 @@
 import * as React from "react";
 
+import ButtonMinimal from "../ButtonMinimal";
+import safeInvoke from "../../utils/safeInvoke";
 import TextInput from "../TextInput";
 import { Props as ViewProps } from "../View";
 
-// if no onSubmit is provided, and onChange is defined, value state will be handled by parent component
 interface Props extends ViewProps {
+  id: string;
   onSubmit: ((
     search: string,
     event: React.SyntheticEvent<HTMLElement>
   ) => void);
-  onChange: ((event: React.SyntheticEvent<HTMLElement>) => void);
-  value: string;
+  onChange?: ((event: React.SyntheticEvent<HTMLElement>) => void);
+  value?: string;
+  placeholder?: string;
+  size?: "lg" | "md" | "sm";
+  clearable?: boolean;
 }
 
 class SearchInput extends React.Component<Props, any> {
@@ -19,21 +24,16 @@ class SearchInput extends React.Component<Props, any> {
   };
 
   public componentDidMount() {
-    const { onChange, value } = this.props;
-    if (!onChange && value) {
+    const { value } = this.props;
+    if (value) {
       this.setState({ value });
     }
   }
 
-  public handleChange = event => {
-    const { onChange, onSubmit } = this.props;
-    if (onChange) {
-      onChange(event);
-      if (!onSubmit) {
-        return;
-      }
-    }
+  public handleChange = (event: React.ChangeEvent<any>) => {
+    const { onChange } = this.props;
     this.setState({ value: event.target.value });
+    safeInvoke(onChange, event);
   };
 
   public handleOnKeyDown = event => {
@@ -41,22 +41,46 @@ class SearchInput extends React.Component<Props, any> {
     const Key = event.key;
     switch (Key) {
       case "Enter":
-        if (onSubmit) {
-          onSubmit(this.state.value, event);
+        if (this.state.value) {
+          safeInvoke(onSubmit, this.state.value, event);
         }
         event.preventDefault();
         break;
     }
   };
 
+  public handleClear = event => {
+    const { onSubmit } = this.props;
+    this.setState({ value: "" });
+    safeInvoke(onSubmit, "", event);
+  }
+
   public render() {
-    const { onChange, onSubmit, value, ...props } = this.props;
+    const {
+      onChange,
+      onSubmit,
+      value,
+      element,
+      id,
+      clearable = true,
+      ...props
+    } = this.props;
     return (
       <TextInput
-        prefixIcon="Search"
-        value={onChange && !onSubmit ? value : this.state.value}
+        id={id}
+        iconName="Search"
+        value={this.state.value}
         onChange={this.handleChange}
         onKeyDown={this.handleOnKeyDown}
+        suffixNode={
+          <ButtonMinimal
+            iconName="Cross"
+            color="accent"
+            data-testid="clearButton"
+            display={clearable && this.state.value ? "block" : "none"}
+            onClick={this.handleClear}
+          />
+        }
         {...props}
       />
     );
