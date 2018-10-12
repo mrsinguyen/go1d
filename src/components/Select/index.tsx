@@ -38,10 +38,13 @@ class Select extends React.Component<Props, any> {
   public inputRef: HTMLElement = null;
 
   public componentDidUpdate(prevProps: Props, prevState) {
-    const { disabled } = this.props;
+    const { disabled, closeOnSelect } = this.props;
     const { isFocused, value } = this.state;
 
-    if (isFocused && !disabled && prevState.value !== value) {
+    if (
+      (isFocused && !disabled && prevState.value !== value) ||
+      (isFocused && prevProps.closeOnSelect !== closeOnSelect)
+    ) {
       this.focusInput();
     }
   }
@@ -106,6 +109,7 @@ class Select extends React.Component<Props, any> {
       overrideFocusClose: false,
       closeOverride: false,
     }));
+    this.onMenuClose();
   };
 
   public handleOnFocus = () =>
@@ -119,15 +123,15 @@ class Select extends React.Component<Props, any> {
 
   public onMenuOpen = () => {
     if (document) {
-      document.addEventListener("keydown", this.onKeyDown);
-      document.addEventListener("keyup", this.onKeyUp);
+      document.body.addEventListener("keydown", this.onKeyDown);
+      document.body.addEventListener("keyup", this.onKeyUp);
     }
   };
 
   public onMenuClose = () => {
     if (document) {
-      document.body.removeEventListener("onKeyDown", this.onKeyDown);
-      document.body.removeEventListener("onKeyUp", this.onKeyUp);
+      document.body.removeEventListener("keydown", this.onKeyDown);
+      document.body.removeEventListener("keyup", this.onKeyUp);
     }
   };
 
@@ -139,7 +143,12 @@ class Select extends React.Component<Props, any> {
     }
     event.stopPropagation();
     event.preventDefault();
-    this.focusInput();
+
+    if (this.state.isFocused === false) {
+      this.focusInput();
+    } else {
+      this.blurInput();
+    }
   };
 
   // Keyboard Handler
@@ -389,7 +398,7 @@ class Select extends React.Component<Props, any> {
               paddingX={4}
               boxShadow={this.state.isFocused ? "strong" : "soft"}
               backgroundColor={backgroundColor}
-              onClick={this.onMenuMouseDown}
+              onMouseDown={this.onMenuMouseDown}
               {...props}
               css={{
                 border: "1px solid",

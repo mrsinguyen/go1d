@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import ButtonMinimal from "../ButtonMinimal";
 import safeInvoke from "../../utils/safeInvoke";
+import ButtonMinimal from "../ButtonMinimal";
 import TextInput, { TextInputProps } from "../TextInput";
 
 interface Props extends TextInputProps {
@@ -35,9 +35,7 @@ class SearchInput extends React.Component<Props, any> {
     const Key = event.key;
     switch (Key) {
       case "Enter":
-        if (this.state.value) {
-          safeInvoke(onSubmit, this.state.value, event);
-        }
+        safeInvoke(onSubmit, this.state.value, event);
         event.preventDefault();
         break;
     }
@@ -47,10 +45,10 @@ class SearchInput extends React.Component<Props, any> {
     const { onSubmit } = this.props;
     this.setState({ value: "" });
     safeInvoke(onSubmit, "", event);
-  }
+  };
 
   public render() {
-    const { element, clearable = true, ...props } = this.props;
+    const { element, onChange, clearable = true, ...props } = this.props;
     return (
       <TextInput
         iconName="Search"

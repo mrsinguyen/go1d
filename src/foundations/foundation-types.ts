@@ -6,7 +6,13 @@ export type FontFamily = "sansSerif" | "display" | "prose" | "ui" | "mono";
 export type FontWeight = "normal" | "bold";
 
 export type Gradients = "warmOverlay" | "lightWarmOverlay" | "darkWarmOverlay";
-export type Opacities = "feedback" | "pill" | "disabled" | "modal";
+export type Opacities =
+  | "feedback"
+  | "pill"
+  | "disabled"
+  | "modal"
+  | "emptyBackground"
+  | "emptyIcon";
 
 export type Greys =
   | "contrast"
