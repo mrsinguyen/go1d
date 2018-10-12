@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Interpolation } from "emotion";
+import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -12,7 +13,7 @@ interface Props extends ViewProps {
   title?: string;
   description?: string;
   author?: string;
-  time?: string;
+  duration?: number;
   actionRender?: () => React.ReactChild;
   contentRender?: () => React.ReactChild;
   type?: string;
@@ -25,7 +26,7 @@ const CourseSlat: React.SFC<Props> = ({
   title,
   description,
   author,
-  time,
+  duration,
   actionRender,
   contentRender,
   type,
@@ -96,7 +97,7 @@ const CourseSlat: React.SFC<Props> = ({
               {title}
             </Text>
           )}
-          {(time || author) && (
+          {(duration || author) && (
             <View flexDirection="row" marginBottom={3}>
               {author && (
                 <View paddingRight={5}>
@@ -105,7 +106,7 @@ const CourseSlat: React.SFC<Props> = ({
                   </Text>
                 </View>
               )}
-              {time && (
+              {duration && (
                 <View flexDirection="row">
                   <Icon
                     name="Clock"
@@ -115,7 +116,7 @@ const CourseSlat: React.SFC<Props> = ({
                     marginTop={1}
                   />
                   <Text color="subtle" fontSize={1}>
-                    {time}
+                    {formatDuration(duration)}
                   </Text>
                 </View>
               )}
