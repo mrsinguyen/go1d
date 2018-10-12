@@ -8,16 +8,27 @@ import Text, { Props as TextProps } from "../Text";
 import Theme from "../Theme";
 import View from "../View";
 
-interface Props extends TextProps {
+export interface TextInputProps extends TextProps {
   id: string;
   size?: "lg" | "md" | "sm";
-  iconName?: string;
-  suffixNode?: React.ReactNode;
+  name?: string;
+  value?: string;
+  placeholder?: string;
+  maxLength?: number;
+  minLength?: number;
+  disabled?: boolean;
+  readOnly?: boolean;
+  tabIndex?: string;
+  onChange?: (evt: React.ChangeEvent<any>) => void;
+  onKeyDown?: (evt: React.KeyboardEvent<any>) => void;
+  onClick?: (evt: React.MouseEvent<any>) => void;
   onFocus?: (evt: React.FocusEvent<any>) => void;
   onBlur?: (evt: React.FocusEvent<any>) => void;
+  iconName?: string;
+  suffixNode?: React.ReactNode;
 }
 
-class TextInput extends React.Component<Props, any> {
+class TextInput extends React.Component<TextInputProps, any> {
   public static displayName = "TextInput";
 
   public static defaultProps = {
@@ -54,6 +65,7 @@ class TextInput extends React.Component<Props, any> {
       iconName,
       size,
       suffixNode,
+      disabled,
       onFocus,
       onBlur,
       ...props
@@ -62,7 +74,7 @@ class TextInput extends React.Component<Props, any> {
 
     return (
       <Theme.Consumer>
-        {({ spacing: s }) => (
+        {({ spacing: s, opacity }) => (
           <View
             element="label"
             borderRadius={2}
@@ -73,6 +85,9 @@ class TextInput extends React.Component<Props, any> {
             flexDirection="row"
             alignItems="center"
             htmlFor={id}
+            css={{
+              opacity: disabled ? opacity.disabled : 1,
+            }}
           >
             {iconName && (
               <Icon
@@ -90,9 +105,13 @@ class TextInput extends React.Component<Props, any> {
               color="inherit"
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
+              disabled={disabled}
               {...props}
               data-testid="inputElement"
               css={{
+                // get rid of default styles
+                background: 0,
+                border: 0,
                 flexGrow: 1,
                 paddingBottom: applySpacing(
                   s,
