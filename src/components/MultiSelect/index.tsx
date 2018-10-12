@@ -12,7 +12,7 @@ interface Props extends ViewProps {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
-  label?: string;
+  label?: string | React.ReactChild;
 }
 
 class MultiSelect extends React.Component<Props, any> {
@@ -115,7 +115,7 @@ class MultiSelect extends React.Component<Props, any> {
         <View flexDirection="row">
           {label && (
             <View paddingBottom={3} paddingRight={4}>
-              <Text>{label}</Text>
+              {typeof label === "string" ? <Text>{label}</Text> : label}
             </View>
           )}
           <View

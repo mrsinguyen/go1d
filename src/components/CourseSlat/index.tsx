@@ -34,7 +34,7 @@ const CourseSlat: React.SFC<Props> = ({
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, breakpoints }) => (
+    {({ spacing, breakpoints, opacity }) => (
       <View
         backgroundColor="background"
         borderRadius={2}
@@ -47,42 +47,55 @@ const CourseSlat: React.SFC<Props> = ({
         }}
         {...props}
       >
-        {courseImage && (
-          <View
-            padding={3}
-            alignItems="start"
-            css={{
-              overflow: "hidden",
-              backgroundImage: `url(${courseImage})`,
-              backgroundSize: "cover",
-              position: "relative",
-              height: 142,
-              width: 221,
-              [breakpoints.sm]: {
-                height: 130,
-                width: 130,
-              },
-            }}
-          >
-            {(type || typeIcon) && (
-              <View
-                flexDirection="row"
-                padding={2}
-                borderRadius={1}
-                color="background"
-                backgroundColor="contrast"
-                css={{
-                  position: "absolute",
-                  bottom: 10,
-                  left: 10,
-                }}
-              >
-                {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
-                {type && <Text fontSize={1}>{type.toUpperCase()}</Text>}
-              </View>
-            )}
-          </View>
-        )}
+        <View
+          padding={3}
+          alignItems="start"
+          backgroundColor="default"
+          backgroundOpacity={courseImage ? "none" : "emptyBackground"}
+          css={{
+            overflow: "hidden",
+            backgroundImage: courseImage ? `url(${courseImage})` : undefined,
+            backgroundSize: "cover",
+            position: "relative",
+            height: 142,
+            width: 221,
+            [breakpoints.sm]: {
+              height: 130,
+              width: 130,
+            },
+          }}
+        >
+          {!courseImage && (
+            <View
+              alignItems="center"
+              justifyContent="center"
+              height="100%"
+              width="100%"
+              css={{
+                opacity: opacity.emptyIcon,
+              }}
+            >
+              <Icon size={7} name="Empty" color="default" />
+            </View>
+          )}
+          {(type || typeIcon) && (
+            <View
+              flexDirection="row"
+              padding={2}
+              borderRadius={1}
+              color="background"
+              backgroundColor="contrast"
+              css={{
+                position: "absolute",
+                bottom: 10,
+                left: 10,
+              }}
+            >
+              {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
+              {type && <Text fontSize={1}>{type.toUpperCase()}</Text>}
+            </View>
+          )}
+        </View>
         <View paddingY={4} paddingX={5} flexShrink={1}>
           {title && (
             <Text

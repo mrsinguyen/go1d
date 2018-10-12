@@ -93,6 +93,8 @@ const brandStatuses = {
 export const opacity: MappedKey<Opacities, number> = {
   feedback: 0.1,
   pill: 0.3,
+  emptyBackground: 0.16,
+  emptyIcon: 0.24,
   disabled: 0.5,
   modal: 0.7,
 };

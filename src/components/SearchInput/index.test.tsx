@@ -19,7 +19,7 @@ it("test onSubmit", () => {
     key: "Enter",
     keyCode: 13,
     which: 13,
-  })
+  });
   expect(onSubmit.mock.calls.length).toBe(1);
   expect(onSubmit.mock.calls[0][0]).toBe("testValue");
 });
