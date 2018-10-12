@@ -63,10 +63,14 @@ const Lesson: React.SFC<Props> = ({
               {title}
             </Text>
           )}
-          <Text color="subtle" fontSize={1}>
-            {type && <span>{type.toUpperCase()}</span>}
-            {type && duration && <span> • </span>}
-            {duration && <span>{formatDuration(duration)}</span>}
+          <Text
+            color="subtle"
+            fontSize={1}
+            css={{ textTransform: "uppercase" }}
+          >
+            {type}
+            {type && duration && " • "}
+            {duration && formatDuration(duration)}
           </Text>
         </View>
       </View>
