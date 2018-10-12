@@ -81,6 +81,15 @@ export interface Colors {
   background: string;
 }
 
+export type ZIndex =
+  | "dropdown"
+  | "sticky"
+  | "fixed"
+  | "modalBackdrop"
+  | "modal"
+  | "popover"
+  | "tooltip";
+
 export interface ThemeType {
   scale: MappedKey<Scale, number[]>;
   family: MappedKey<FontFamily, string>;
@@ -99,6 +108,7 @@ export interface Theme {
   breakpoints: MappedKey<Scale, string>;
   opacity: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
+  zIndex: MappedKey<ZIndex, number>;
 }
 
 export interface GenerateThemeInput {

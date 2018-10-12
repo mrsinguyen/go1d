@@ -26,15 +26,7 @@ const TableHeaderCell = ({ text, css, ...props }: Props) => {
           }}
           {...otherProps}
         >
-          <Text
-            css={[
-              {
-                textTransform: "uppercase",
-              },
-              css,
-            ]}
-            color="subtle"
-          >
+          <Text textTransform="uppercase" color="subtle">
             {text}
           </Text>
         </View>

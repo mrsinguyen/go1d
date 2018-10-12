@@ -5,14 +5,17 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from "react-virtualized";
+import { autobind } from "../../utils/decorators";
+// import Portal from "../Portal";
 import TR from "../Table/TR";
 import Text from "../Text";
+import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   /** If this is supplied, it will automatically render these rows. */
   rows?: React.ReactNodeArray;
-  rowHeight: number;
+  rowHeight?: number;
   /** The total number of rows that can be loaded. Used for autoloading. */
   rowCount: number;
   /** Function to render a row */
@@ -20,74 +23,148 @@ interface Props extends ViewProps {
   header?: React.ReactNodeArray;
   /** A string to display the total number of results */
   total?: string;
+  autoRowHeight?: boolean;
 }
 
-const DataTable: React.SFC<Props> = ({
-  rows,
-  rowHeight,
-  rowRenderer,
-  rowCount,
-  header,
-  total,
-  css,
-  ...viewProps
-}: Props) => {
-  function defaultRenderer(obj) {
-    return rows[obj.index];
+interface State {
+  rowHeight: number;
+}
+
+class DataTable extends React.Component<Props, State> {
+  public ref: boolean = false;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rowHeight: 0,
+    };
   }
 
-  return (
-    <React.Fragment>
-      {total && (
-        <View marginBottom={4}>
-          <Text fontSize={3} fontWeight="bold">
-            {total}
-          </Text>
-        </View>
-      )}
-      <View
-        css={[
-          {
-            ".ReactVirtualized__Grid": {
-              outline: "none",
-            },
-          },
-          css,
-        ]}
-        {...viewProps}
-      >
-        {header && (
-          <TR
-            position="sticky"
-            backgroundColor={viewProps.backgroundColor || "background"}
-            css={{ top: 0 }}
-            zIndex={2}
-          >
-            {header}
-          </TR>
-        )}
-        <WindowScroller>
-          {({ height, isScrolling, onChildScroll, scrollTop }) => (
-            <AutoSizer disableHeight={true}>
-              {({ width }) => (
-                <List
-                  autoHeight={true}
-                  rowRenderer={rows ? defaultRenderer : rowRenderer}
-                  height={height}
-                  overscanRowCount={2}
-                  rowHeight={rowHeight}
-                  isScrolling={isScrolling}
-                  scrollTop={scrollTop}
-                  width={width}
-                  rowCount={rowCount}
-                />
+  @autobind
+  public defaultRenderer(obj) {
+    return this.props.rows[obj.index];
+  }
+
+  @autobind
+  public setHeight(elem: HTMLElement | null) {
+    if (elem && this.state.rowHeight !== elem.offsetHeight) {
+      this.setState({ rowHeight: elem.offsetHeight }, () => (this.ref = false));
+    }
+  }
+
+  public render() {
+    const {
+      rows,
+      rowHeight,
+      rowRenderer,
+      rowCount,
+      header,
+      total,
+      css,
+      autoRowHeight,
+      ...viewProps
+    } = this.props;
+
+    let renderFunction = rows ? this.defaultRenderer : rowRenderer;
+
+    if (this.props.autoRowHeight) {
+      const oldRenderFunction = renderFunction;
+      renderFunction = args => {
+        if (!this.ref) {
+          this.ref = true;
+          return <div ref={this.setHeight}>{oldRenderFunction(args)}</div>;
+        }
+        return oldRenderFunction(args);
+      };
+    }
+
+    return (
+      <Theme.Consumer>
+        {({ zIndex }) => (
+          <React.Fragment>
+            {total && (
+              <View marginBottom={4}>
+                <Text fontSize={3} fontWeight="bold">
+                  {total}
+                </Text>
+              </View>
+            )}
+            <View
+              css={[
+                {
+                  ".ReactVirtualized__Grid": {
+                    outline: "none",
+                  },
+                },
+                css,
+              ]}
+              {...viewProps}
+            >
+              {header && (
+                <TR
+                  position="sticky"
+                  backgroundColor={viewProps.backgroundColor || "background"}
+                  css={{ top: 0 }}
+                  zIndex={zIndex.sticky}
+                >
+                  {header}
+                </TR>
               )}
-            </AutoSizer>
-          )}
-        </WindowScroller>
-      </View>
-    </React.Fragment>
-  );
-};
+              <WindowScroller>
+                {({ height, isScrolling, onChildScroll, scrollTop }) => (
+                  <AutoSizer disableHeight={true}>
+                    {({ width }) => (
+                      <List
+                        autoHeight={true}
+                        rowRenderer={renderFunction}
+                        height={height}
+                        overscanRowCount={2}
+                        rowHeight={
+                          autoRowHeight ? this.state.rowHeight || 0 : rowHeight
+                        }
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                        width={width}
+                        rowCount={rowCount}
+                      />
+                    )}
+                  </AutoSizer>
+                )}
+              </WindowScroller>
+            </View>
+            {/* {this.props.autoRowHeight && (
+              <Portal>
+                <View
+                  position="fixed"
+                  css={[
+                    {
+                      top: "100vh",
+                      visibility: "hidden",
+                      pointerEvents: "none",
+                    },
+                  ]}
+                >
+                  <div ref={this.setHeight}>
+                    {renderFunction({
+                      index: 1,
+                      columnIndex: 1,
+                      isScrolling: false,
+                      isVisible: true,
+                      key: "1",
+                      parent: null,
+                      rowIndex: 1,
+                      style: {},
+                    })}
+                  </div>
+                </View>
+              </Portal>
+            )} */}
+          </React.Fragment>
+        )}
+      </Theme.Consumer>
+    );
+  }
+}
 
 export default DataTable;

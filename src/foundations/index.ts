@@ -11,6 +11,7 @@ import {
   Theme,
   ThemedGreys,
   ThemeType,
+  ZIndex,
 } from "./foundation-types";
 
 /**
@@ -88,6 +89,16 @@ const brandStatuses = {
   yellow: "#FFDE00",
   orange: "#F6941D",
   red: "#DA3131",
+};
+
+export const zIndex: MappedKey<ZIndex, number> = {
+  dropdown: 1000,
+  sticky: 1020,
+  fixed: 1030,
+  modalBackdrop: 1040,
+  modal: 1050,
+  popover: 1060,
+  tooltip: 1070,
 };
 
 export const opacity: MappedKey<Opacities, number> = {
@@ -241,6 +252,7 @@ export const generateTheme = ({
   breakpoints,
   opacity,
   animation,
+  zIndex,
   ...theme,
 });
 

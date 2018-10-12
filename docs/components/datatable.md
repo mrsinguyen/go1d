@@ -8,42 +8,7 @@ This component renders a table. It can do this in one of two ways. Either by sup
 
 ## Examples
 
-### Basic table with rows supplied
-
-```.jsx
-<DataTable
-  rowHeight={55}
-  total="10 Items"
-  rows={[
-    <TR key="0">
-        <TD><Text>Cell 0A</Text></TD>
-        <TD><Text>Cell 0B</Text></TD>
-        <TD><Text>Cell 0C</Text></TD>
-        <TD><Text>Cell 0D</Text></TD>
-        <TD><Text>Cell 0E</Text></TD>
-    </TR>,
-    <TR key="1">
-        <TD><Text>Cell 1A</Text></TD>
-        <TD><Text>Cell 1B</Text></TD>
-        <TD><Text>Cell 1C</Text></TD>
-        <TD><Text>Cell 1D</Text></TD>
-        <TD><Text>Cell 1E</Text></TD>
-    </TR>
-  ]}
-  rowCount={2}
-  header={[
-    <TH key="0" text="Header A" />,
-    <TH key="0" text="Header B" />,
-    <TH key="0" text="Header C" />,
-    <TH key="0" text="Header D" />,
-    <TH key="0" text="Header E" />
-  ]}
-/>
-```
-
 ### Basic Table using a row renderer
-*NOTE* Normally you should not use a lamba expression as a prop. However one will be used here for the sake of brevity.
-
 ```.jsx
 <DataTable
   rowHeight={55}
@@ -53,6 +18,25 @@ This component renders a table. It can do this in one of two ways. Either by sup
     <TD>{key}</TD>
   </TR>}
   rowCount={2}
+  header={[
+    <TH key="0" text="Index Number" />,
+    <TH key="1" text="Key" />,
+  ]}
+/>
+```
+
+### Experimental: Auto Row Height
+
+Setting auto row height to true means you dont have to set the row height manually. However, this may produce unexpected results
+```.jsx
+<DataTable
+  autoRowHeight
+  total="10 Items"
+  rowRenderer={({ index, isScrolling, isVisible, key, parent }) => <TR key={key}>
+    <TD>{index}</TD>
+    <TD>{key}</TD>
+  </TR>}
+  rowCount={3}
   header={[
     <TH key="0" text="Index Number" />,
     <TH key="1" text="Key" />,

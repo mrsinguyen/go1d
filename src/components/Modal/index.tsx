@@ -60,7 +60,7 @@ class Modal extends React.Component<Props, any> {
 
     return (
       <Theme.Consumer>
-        {({ colors }) => (
+        {({ colors, zIndex }) => (
           <Portal>
             <View
               position="fixed"
@@ -73,18 +73,19 @@ class Modal extends React.Component<Props, any> {
                 bottom: 0,
               }}
               data-testid="backgroundOverlay"
+              zIndex={zIndex.modalBackdrop}
               onClick={this.handleBackgroundClick}
             />
             <View
               position="absolute"
               maxWidth={600}
               width="100%"
-              zIndex={3}
               minHeight={300}
               borderRadius={2}
               backgroundColor="background"
               boxShadow="distant"
               marginX="auto"
+              zIndex={zIndex.modal}
               css={{
                 top: "5rem",
                 left: 0,

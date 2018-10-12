@@ -27,6 +27,7 @@ const Text: React.SFC<Props> = ({
   letterSpacing = "normal",
   color,
   textAlign,
+  textTransform,
   css,
   ...props
 }: Props) => (
@@ -43,6 +44,7 @@ const Text: React.SFC<Props> = ({
             fontStyle,
             display,
             textAlign,
+            textTransform,
             fontWeight: fontWeight && type.weight[fontWeight],
             lineHeight: lineHeight && type.leading[lineHeight],
             transition: transitions.subtle,
