@@ -31,7 +31,7 @@ it("renders without crashing with optional props", () => {
   const createRows = ({ index }) => <div>{index}</div>;
   render(
     <DataTable
-      rowHeight={10}
+      autoRowHeight={true}
       rowCount={3}
       rowRenderer={createRows}
       total="Many things"

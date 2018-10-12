@@ -115,7 +115,7 @@ class DataTable extends React.Component<Props, State> {
                   {header}
                 </TR>
               )}
-              <WindowScroller scrollElement={window}>
+              <WindowScroller>
                 {({ height, isScrolling, onChildScroll, scrollTop }) => (
                   <AutoSizer disableHeight={true}>
                     {({ width }) => (
