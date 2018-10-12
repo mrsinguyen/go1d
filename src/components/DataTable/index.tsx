@@ -133,33 +133,6 @@ class DataTable extends React.Component<Props, State> {
                 )}
               </WindowScroller>
             </View>
-            {/* {this.props.autoRowHeight && (
-              <Portal>
-                <View
-                  position="fixed"
-                  css={[
-                    {
-                      top: "100vh",
-                      visibility: "hidden",
-                      pointerEvents: "none",
-                    },
-                  ]}
-                >
-                  <div ref={this.setHeight}>
-                    {renderFunction({
-                      index: 1,
-                      columnIndex: 1,
-                      isScrolling: false,
-                      isVisible: true,
-                      key: "1",
-                      parent: null,
-                      rowIndex: 1,
-                      style: {},
-                    })}
-                  </div>
-                </View>
-              </Portal>
-            )} */}
           </React.Fragment>
         )}
       </Theme.Consumer>
