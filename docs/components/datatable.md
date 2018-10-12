@@ -13,7 +13,7 @@ This component renders a table. It can do this in one of two ways. Either by sup
 <DataTable
   rowHeight={55}
   total="10 Items"
-  rowRenderer={({ index, isScrolling, isVisible, key, parent }) => <TR key={key}>
+  rowRenderer={({ index, isScrolling, isVisible, key, parent, style }) => <TR key={key} style={style}>
     <TD>{index}</TD>
     <TD>{key}</TD>
   </TR>}
@@ -32,7 +32,7 @@ Setting auto row height to true means you dont have to set the row height manual
 <DataTable
   autoRowHeight
   total="10 Items"
-  rowRenderer={({ index, isScrolling, isVisible, key, parent }) => <TR key={key}>
+  rowRenderer={({ index, isScrolling, isVisible, key, parent, style }) => <TR key={key} style={style}>
     <TD>{index}</TD>
     <TD>{key}</TD>
   </TR>}

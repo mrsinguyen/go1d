@@ -70,12 +70,16 @@ class DataTable extends React.Component<Props, State> {
 
     if (this.props.autoRowHeight) {
       const oldRenderFunction = renderFunction;
-      renderFunction = args => {
+      renderFunction = ({ style, ...args }) => {
         if (!this.ref) {
           this.ref = true;
-          return <div ref={this.setHeight}>{oldRenderFunction(args)}</div>;
+          return (
+            <div ref={this.setHeight} style={{ ...style, height: "auto" }}>
+              {oldRenderFunction({ ...args, style: {} })}
+            </div>
+          );
         }
-        return oldRenderFunction(args);
+        return oldRenderFunction({ style, ...args });
       };
     }
 
@@ -111,12 +115,13 @@ class DataTable extends React.Component<Props, State> {
                   {header}
                 </TR>
               )}
-              <WindowScroller>
+              <WindowScroller scrollElement={window}>
                 {({ height, isScrolling, onChildScroll, scrollTop }) => (
                   <AutoSizer disableHeight={true}>
                     {({ width }) => (
                       <List
                         autoHeight={true}
+                        onScroll={onChildScroll}
                         rowRenderer={renderFunction}
                         height={height}
                         overscanRowCount={2}
