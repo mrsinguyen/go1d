@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Interpolation } from "emotion";
-import formatDuration from "../../utils/durationFormater";
+import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";

@@ -1,4 +1,4 @@
-import formatDuration from "./durationFormater";
+import formatDuration from "./durationFormatter";
 
 it("formatDuration works as expected", () => {
   const result1 = formatDuration(60);
