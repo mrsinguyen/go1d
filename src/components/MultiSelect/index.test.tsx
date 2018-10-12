@@ -42,7 +42,7 @@ it("Can select an item in the dropdown with keyboard - Enter", () => {
     <MultiSelect options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -61,7 +61,7 @@ it("Can select multiple items in the dropdown", () => {
     <MultiSelect options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -90,7 +90,7 @@ it("Can deselect items in the dropdown", () => {
     <MultiSelect options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -124,7 +124,7 @@ it("Can clear selection", () => {
     <MultiSelect options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });

@@ -89,7 +89,6 @@ class Select extends React.Component<Props, any> {
   public focusInput() {
     if (this.inputRef) {
       this.inputRef.focus();
-      this.onMenuOpen();
     }
   }
 
@@ -112,10 +111,13 @@ class Select extends React.Component<Props, any> {
     this.onMenuClose();
   };
 
-  public handleOnFocus = () =>
+  public handleOnFocus = () => {
     this.setState({
       isFocused: true,
     });
+
+    this.onMenuOpen();
+  };
 
   public getInputRef = (ref: HTMLElement) => {
     this.inputRef = ref;
