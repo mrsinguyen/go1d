@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import * as Icons from "../../../src/components/Icons";
 import Icon from "../../../src/components/Icon";
+import SearchInput from "../../../src/components/SearchInput";
 
 
 class AllIcons extends Component {
@@ -22,7 +23,7 @@ class AllIcons extends Component {
     render() {
         const { filter } = this.state;
         return <Fragment>
-            <input onChange={this.updateFilter} placeholder="Type to filter icons" />
+            <SearchInput onChange={this.updateFilter} placeholder="Type to filter icons" />
             <table style={{ width: "100%"}}>
                 <tr>
                     <th style={{ "text-align": "left", padding: "0 0 1rem 0"}}>Name</th>
