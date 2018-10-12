@@ -12,7 +12,8 @@ export interface Props extends ViewProps {
   iconName?: string;
   css?: Interpolation;
   children?: React.ReactNode;
-  onClick: ((evt: React.SyntheticEvent) => void);
+  onClick?: ((evt: React.SyntheticEvent) => void);
+  href?: string;
 }
 
 const Button: React.SFC<Props> = ({
@@ -23,10 +24,11 @@ const Button: React.SFC<Props> = ({
   children,
   css,
   onClick,
+  href,
   ...props
 }: Props) => (
   <View
-    element="button"
+    element={href ? "a" : "button"}
     flexDirection="row"
     alignItems="center"
     justifyContent="space-between"
@@ -36,6 +38,7 @@ const Button: React.SFC<Props> = ({
     color={color}
     borderRadius={2}
     onClick={onClick}
+    href={href}
     css={[
       {
         cursor: "pointer",

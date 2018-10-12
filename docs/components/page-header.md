@@ -1,5 +1,5 @@
 ---
-title: Page header
+title: Page Header
 status: ready
 releaseVersion: 0.0.12
 ---
@@ -23,13 +23,13 @@ A container for the header of a page, it contains the menu open button and then 
 ```.jsx
 <PageHeader
   showMenuButton={false}
-  title="Skillhard"
+  title="Portal"
   subtitle={
     <Text element="h4" fontSize={2} color="accent">
-      skillhard.mygo1.com
+      portal.mygo1.com
     </Text>}
   breadcrumbHref="#testing"
-  breadcrumbTitle="Skillhard / Portals"
+  breadcrumbTitle="Portals"
 >
   <ButtonFilled iconName="Edit">
     Edit
