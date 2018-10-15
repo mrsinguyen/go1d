@@ -1,3 +1,4 @@
+import { TextTransformProperty } from "csstype";
 import { Interpolation } from "emotion";
 import * as React from "react";
 import Base, { Props as BaseProps } from "../Base";
@@ -12,16 +13,7 @@ export interface Props extends BaseProps {
   lineHeight?: number | string;
   fontSize?: number;
   color?: string;
-  textTransform?:
-    | "none"
-    | "inherit"
-    | "initial"
-    | "revert"
-    | "unset"
-    | "capitalize"
-    | "full-width"
-    | "lowercase"
-    | "uppercase";
+  textTransform?: TextTransformProperty;
   letterSpacing?: string;
   css?: Interpolation;
 }
