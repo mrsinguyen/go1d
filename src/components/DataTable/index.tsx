@@ -86,9 +86,7 @@ class DataTable extends React.Component<Props, State> {
           <React.Fragment>
             {total && (
               <View marginBottom={4}>
-                <Text fontSize={3} fontWeight="bold">
-                  {total}
-                </Text>
+                <Text fontSize={3}>{total}</Text>
               </View>
             )}
             <View
