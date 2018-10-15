@@ -365,7 +365,7 @@ class Select extends React.Component<Props, any> {
       onKeyDown,
       onKeyUp,
       closeOnSelect,
-      size,
+      size = "sm",
       ...props
     } = this.props;
 
@@ -438,14 +438,14 @@ class Select extends React.Component<Props, any> {
               }}
             >
               <View
-                paddingY={Sizes[size || "sm"].paddingY}
+                paddingY={Sizes[size].paddingY}
                 css={{
                   overflow: "hidden",
                 }}
               >
                 <Text
                   color={color}
-                  fontSize={Sizes[size || "sm"].fontSize}
+                  fontSize={Sizes[size].fontSize}
                   css={{
                     whiteSpace: "nowrap",
                   }}
@@ -548,9 +548,7 @@ class Select extends React.Component<Props, any> {
                         : {}
                     }
                   >
-                    <Text fontSize={Sizes[size || "sm"].fontSize}>
-                      {Option.label}
-                    </Text>
+                    <Text fontSize={Sizes[size].fontSize}>{Option.label}</Text>
                   </View>
                 ))}
               </View>
