@@ -7,6 +7,8 @@ import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 import Input from "./internals/Input";
 
+type FocusDirection = "up" | "down" | "first" | "last" | "open";
+
 interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
@@ -17,25 +19,38 @@ interface Props extends ViewProps {
   onChange?: ({ target }) => void;
   name?: string;
   closeOnSelect?: boolean;
+  size?: "sm" | "md";
 }
 
-type FocusDirection = "up" | "down" | "first" | "last" | "open";
-
 class Select extends React.Component<Props, any> {
-  public state = {
-    closeOverride: false,
-    value: null,
-    label: null,
-    isFocused: false,
-    focusedOptionIndex: null,
-    focusedValue: null,
-    searchValue: "",
-    overrideFocusClose: false,
-  };
-
   public mounted;
 
   public inputRef: HTMLElement = null;
+  constructor(props) {
+    super(props);
+
+    let OptionSelected = {
+      label: null,
+      value: null,
+    };
+
+    if (props.defaultValue || props.value) {
+      const Value = props.value || props.defaultValue;
+
+      OptionSelected = props.options.find(Option => Option.value === Value);
+    }
+
+    this.state = {
+      closeOverride: false,
+      value: OptionSelected.value,
+      label: OptionSelected.label,
+      isFocused: false,
+      focusedOptionIndex: null,
+      focusedValue: null,
+      searchValue: "",
+      overrideFocusClose: false,
+    };
+  }
 
   public componentDidUpdate(prevProps: Props, prevState) {
     const { disabled, closeOnSelect } = this.props;
@@ -350,6 +365,7 @@ class Select extends React.Component<Props, any> {
       onKeyDown,
       onKeyUp,
       closeOnSelect,
+      size,
       ...props
     } = this.props;
 
@@ -382,6 +398,17 @@ class Select extends React.Component<Props, any> {
       return null;
     };
 
+    const Sizes = {
+      sm: {
+        paddingY: 3,
+        fontSize: 1,
+      },
+      md: {
+        paddingY: 4,
+        fontSize: 2,
+      },
+    };
+
     const FilteredOptions = this.getFilteredOptions();
 
     return (
@@ -411,13 +438,14 @@ class Select extends React.Component<Props, any> {
               }}
             >
               <View
-                paddingY={4}
+                paddingY={Sizes[size || "sm"].paddingY}
                 css={{
                   overflow: "hidden",
                 }}
               >
                 <Text
                   color={color}
+                  fontSize={Sizes[size || "sm"].fontSize}
                   css={{
                     whiteSpace: "nowrap",
                   }}
@@ -520,7 +548,9 @@ class Select extends React.Component<Props, any> {
                         : {}
                     }
                   >
-                    <Text>{Option.label}</Text>
+                    <Text fontSize={Sizes[size || "sm"].fontSize}>
+                      {Option.label}
+                    </Text>
                   </View>
                 ))}
               </View>
