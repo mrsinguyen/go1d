@@ -6,7 +6,6 @@ import {
   WindowScroller,
 } from "react-virtualized";
 import { autobind } from "../../utils/decorators";
-// import Portal from "../Portal";
 import TR from "../Table/TR";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -74,7 +73,10 @@ class DataTable extends React.Component<Props, State> {
         if (!this.ref) {
           this.ref = true;
           return (
-            <div ref={this.setHeight} style={{ ...style, height: "auto" }}>
+            <div
+              ref={this.setHeight}
+              style={{ ...style, height: "auto", position: "relative" }}
+            >
               {oldRenderFunction({ ...args, style: {} })}
             </div>
           );
