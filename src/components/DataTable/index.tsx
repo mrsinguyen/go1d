@@ -7,7 +7,6 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from "react-virtualized";
-import { autobind } from "../../utils/decorators";
 import TR from "../Table/TR";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -25,23 +24,11 @@ interface Props extends ViewProps {
   autoRowHeight?: boolean;
 }
 
-interface State {
-  rowHeight: number;
-}
-
-class DataTable extends React.Component<Props, State> {
+class DataTable extends React.Component<Props, {}> {
   public cache = new CellMeasurerCache({
     defaultHeight: 0,
     fixedWidth: true,
   });
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      rowHeight: 0,
-    };
-  }
 
   public render() {
     const {
