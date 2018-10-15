@@ -1,6 +1,7 @@
-import { Field as FormikField, FieldProps } from "formik";
+import { Field as FormikField } from "formik";
 import * as React from "react";
 
+import Label from "../Label";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
@@ -10,13 +11,14 @@ interface Props extends ViewProps {
   name: string;
   value?: any;
   required?: boolean;
+  disabled?: boolean;
   description?: React.ReactNode;
   inputRef?: (instance: any) => void;
+  statusText?: string;
+  statusColor?: string;
+  statusIcon?: string;
 
-  component?:
-    | string
-    | React.ComponentType<FieldProps<any>>
-    | React.ComponentType<void>;
+  component?: string | React.ComponentType<any> | React.ComponentType<void>;
   children?: React.ReactNode;
 }
 
@@ -27,20 +29,24 @@ const Field: React.SFC<Props> = ({
   label,
   id,
   required,
+  disabled,
   name,
   value,
   inputRef,
+  statusText = !required && "Optional",
+  statusColor = "subtle",
+  statusIcon,
+  validate,
   ...props
 }: Props) => {
-  const validate = val => required && !val && "required";
-
   const formikProps = {
     name,
     value,
+    validate,
   };
 
   return (
-    <FormikField validate={validate} {...formikProps}>
+    <FormikField {...formikProps}>
       {({ field, form }) => {
         let node = null;
         if (component) {
@@ -48,48 +54,28 @@ const Field: React.SFC<Props> = ({
             ref: inputRef,
             field,
             form,
+            disabled: disabled || form.status === "disabled",
             id: id || field.name,
             children,
             ...props,
           });
         }
+        if (form.errors && form.errors[field.name]) {
+          statusText = form.errors[field.name];
+          statusColor = "danger";
+          statusIcon = null;
+        }
 
         return (
           <View paddingBottom={2}>
-            <View
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="flex-end"
-              paddingBottom={2}
+            <Label
+              htmlFor={id || field.name}
+              statusText={statusText}
+              statusColor={statusColor}
+              statusIcon={statusIcon}
             >
-              <Text
-                element="label"
-                fontWeight="bold"
-                htmlFor={id || field.name}
-              >
-                {label}
-              </Text>
-              {form.errors[field.name] ? (
-                <Text
-                  fontSize={1}
-                  fontWeight="bold"
-                  color="danger"
-                  css={{ textTransform: "uppercase" }}
-                >
-                  {form.errors[field.name]}
-                </Text>
-              ) : (
-                !required && (
-                  <Text
-                    fontSize={1}
-                    color="subtle"
-                    css={{ textTransform: "uppercase" }}
-                  >
-                    Optional
-                  </Text>
-                )
-              )}
-            </View>
+              {label}
+            </Label>
             <View paddingBottom={2}>{node}</View>
             {description && (
               <View paddingBottom={2}>
