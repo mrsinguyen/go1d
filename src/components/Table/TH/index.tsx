@@ -8,33 +8,31 @@ interface Props extends ViewProps {
   text: string;
 }
 
-const TableHeaderCell = ({ text, css, ...props }: Props) => (
-  <Theme.Consumer>
-    {({ colors }) => (
-      <View
-        element="th"
-        display="table-cell"
-        paddingY={3}
-        paddingX={3}
-        css={{
-          "border-bottom": `1px solid ${colors.divide}`,
-        }}
-        {...props}
-      >
-        <Text
-          css={[
-            {
-              textTransform: "uppercase",
-            },
-            css,
-          ]}
-          color="subtle"
+const TableHeaderCell = ({ text, css, ...props }: Props) => {
+  const { width, ...otherProps } = props;
+  return (
+    <Theme.Consumer>
+      {({ colors }) => (
+        <View
+          element="div"
+          display="block"
+          paddingY={3}
+          paddingX={3}
+          flexBasis={width || 0}
+          flexGrow={1}
+          flexShrink={1}
+          css={{
+            "border-bottom": `1px solid ${colors.divide}`,
+          }}
+          {...otherProps}
         >
-          {text}
-        </Text>
-      </View>
-    )}
-  </Theme.Consumer>
-);
+          <Text textTransform="uppercase" color="subtle">
+            {text}
+          </Text>
+        </View>
+      )}
+    </Theme.Consumer>
+  );
+};
 
 export default TableHeaderCell;

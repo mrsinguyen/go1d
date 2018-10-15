@@ -42,3 +42,4 @@ export { default as Banner } from "./components/Banner";
 export { default as Field } from "./components/Field";
 export { default as Form } from "./components/Form";
 export { default as TextInput } from "./components/TextInput";
+export { default as DataTable } from "./components/DataTable";
