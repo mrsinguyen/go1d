@@ -10,8 +10,8 @@ interface Props extends ViewProps {
 
 const Table = ({ header, rows, css, ...props }: Props) => (
   <View
-    element="table"
-    display="table"
+    element="div"
+    display="block"
     paddingY={4}
     boxShadow="crisp"
     borderRadius={3}
@@ -24,14 +24,8 @@ const Table = ({ header, rows, css, ...props }: Props) => (
     ]}
     {...props}
   >
-    {header && (
-      <View element="thead" display="table-header-group">
-        <TR>{header}</TR>
-      </View>
-    )}
-    <View element="tbody" display="table-row-group">
-      {rows}
-    </View>
+    {header && <TR>{header}</TR>}
+    <View element="div">{rows}</View>
   </View>
 );
 

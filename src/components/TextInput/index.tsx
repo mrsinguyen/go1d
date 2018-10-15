@@ -80,8 +80,8 @@ class TextInput extends React.Component<TextInputProps, any> {
             borderRadius={2}
             backgroundColor="background"
             paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
-            borderColor={isFocused ? "accent" : "background"}
-            boxShadow={isFocused ? "strong" : "soft"}
+            borderColor={isFocused ? "accent" : "faded"}
+            boxShadow="inner"
             flexDirection="row"
             alignItems="center"
             htmlFor={id}

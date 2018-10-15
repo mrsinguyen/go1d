@@ -31,11 +31,11 @@ const PageHeader: React.SFC<Props> = ({
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, animation, colors }) => (
+    {({ spacing, animation }) => (
       <View
         backgroundColor={backgroundColor}
         padding={padding}
-        paddingRight={7}
+        paddingRight={8}
         paddingY={5}
         minHeight="104px"
         boxShadow="crisp"

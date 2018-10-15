@@ -6,7 +6,13 @@ export type FontFamily = "sansSerif" | "display" | "prose" | "ui" | "mono";
 export type FontWeight = "normal" | "bold";
 
 export type Gradients = "warmOverlay" | "lightWarmOverlay" | "darkWarmOverlay";
-export type Opacities = "feedback" | "pill" | "disabled" | "modal";
+export type Opacities =
+  | "feedback"
+  | "pill"
+  | "disabled"
+  | "modal"
+  | "emptyBackground"
+  | "emptyIcon";
 
 export type Greys =
   | "contrast"
@@ -28,7 +34,8 @@ export type Shadows =
   | "strong"
   | "distant"
   | "inner"
-  | "text";
+  | "text"
+  | "none";
 
 export type MenuTransition = "closedMenu" | "openedMenu";
 
@@ -74,6 +81,15 @@ export interface Colors {
   background: string;
 }
 
+export type ZIndex =
+  | "dropdown"
+  | "sticky"
+  | "fixed"
+  | "modalBackdrop"
+  | "modal"
+  | "popover"
+  | "tooltip";
+
 export interface ThemeType {
   scale: MappedKey<Scale, number[]>;
   family: MappedKey<FontFamily, string>;
@@ -92,6 +108,7 @@ export interface Theme {
   breakpoints: MappedKey<Scale, string>;
   opacity: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
+  zIndex: MappedKey<ZIndex, number>;
 }
 
 export interface GenerateThemeInput {

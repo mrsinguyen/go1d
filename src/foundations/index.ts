@@ -11,6 +11,7 @@ import {
   Theme,
   ThemedGreys,
   ThemeType,
+  ZIndex,
 } from "./foundation-types";
 
 /**
@@ -25,6 +26,12 @@ export const opacify = (hexColor, opaque = 1) =>
 export const darken = (hexColor, ration = 1) =>
   Color(hexColor)
     .darken(ration)
+    .rgb()
+    .string();
+
+export const tint = (hexColor, ration = 1) =>
+  Color(hexColor)
+    .lighten(1 - ration)
     .rgb()
     .string();
 
@@ -84,9 +91,21 @@ const brandStatuses = {
   red: "#DA3131",
 };
 
+export const zIndex: MappedKey<ZIndex, number> = {
+  dropdown: 1000,
+  sticky: 1020,
+  fixed: 1030,
+  modalBackdrop: 1040,
+  modal: 1050,
+  popover: 1060,
+  tooltip: 1070,
+};
+
 export const opacity: MappedKey<Opacities, number> = {
   feedback: 0.1,
   pill: 0.3,
+  emptyBackground: 0.16,
+  emptyIcon: 0.24,
   disabled: 0.5,
   modal: 0.7,
 };
@@ -141,6 +160,7 @@ export const shadows: MappedKey<Shadows, string> = {
   )}, 2px 20px 38px ${opacify(colors.contrast, 0.1)}`,
   inner: `inset 1px 1px 5px ${opacify(colors.contrast, 0.1)}`,
   text: `1px 1px 1px ${opacify(colors.contrast, 0.07)}`,
+  none: `none`,
 };
 
 /**
@@ -232,6 +252,7 @@ export const generateTheme = ({
   breakpoints,
   opacity,
   animation,
+  zIndex,
   ...theme,
 });
 

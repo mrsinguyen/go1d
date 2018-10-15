@@ -3,11 +3,11 @@ import { View, Text, Table, TR, TH, TD, Theme, Icon } from "../../../src";
 
 const Prop = ({ name = "", type = {}, required = false }) => (
   <TR>
-    <TD>
+    <TD width="20%">
       <Text>{name}</Text>
     </TD>
     <TD>{required && <Icon name="Check" marginX="auto" />}</TD>
-    <TD>
+    <TD width="50%">
       <Text>{type.name || "N/A"}</Text>
     </TD>
   </TR>
@@ -31,9 +31,9 @@ export const ComponentDoc = ({ component = "" }) => {
               },
             }}
             header={[
-              <TH key="name" text="Name" />,
+              <TH key="name" text="Name" width="20%" />,
               <TH key="required" text="Required" />,
-              <TH key="type" text="Type" />,
+              <TH key="type" text="Type" width="50%" />,
             ]}
             rows={Object.keys(props).map(key => (
               <Prop key={key} name={key} {...props[key]} />

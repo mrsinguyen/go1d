@@ -1,6 +1,6 @@
 {
   "name": "@go1d/go1d",
-  "version": "0.0.36",
+  "version": "0.0.41",
   "description": "GO1 Design System",
   "main": "build/index.js",
   "homepage": "https://apps.pages.go1.co/GO1D",
@@ -17,6 +17,7 @@
     "precommit": "lint-staged",
     "size": "bundlesize",
     "test": "yarn lint && jest",
+    "test:debug": "yarn lint && node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "tslint": "tslint -c tslint.json --fix ./src/**/**/*.{ts,tsx}"
   },
   "lint-staged": {
@@ -39,6 +40,7 @@
     "react-pose": "^3.3.6",
     "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.4.0",
+    "react-virtualized": "^9.20.1",
     "recompose": "^0.27.1"
   },
   "devDependencies": {
@@ -51,6 +53,7 @@
     "@types/jest": "^23.3.2",
     "@types/react": "^16.4.13",
     "@types/react-transition-group": "^2.0.14",
+    "@types/react-virtualized": "^9.18.7",
     "babel-cli": "^6.26.0",
     "bundlesize": "^0.17.0",
     "husky": "^1.0.0",

@@ -1,3 +1,4 @@
+import { TextTransformProperty } from "csstype";
 import { Interpolation } from "emotion";
 import * as React from "react";
 import Base, { Props as BaseProps } from "../Base";
@@ -12,6 +13,7 @@ export interface Props extends BaseProps {
   lineHeight?: number | string;
   fontSize?: number;
   color?: string;
+  textTransform?: TextTransformProperty;
   letterSpacing?: string;
   css?: Interpolation;
 }
@@ -27,6 +29,7 @@ const Text: React.SFC<Props> = ({
   letterSpacing = "normal",
   color,
   textAlign,
+  textTransform,
   css,
   ...props
 }: Props) => (
@@ -43,6 +46,7 @@ const Text: React.SFC<Props> = ({
             fontStyle,
             display,
             textAlign,
+            textTransform,
             fontWeight: fontWeight && type.weight[fontWeight],
             lineHeight: lineHeight && type.leading[lineHeight],
             transition: transitions.subtle,

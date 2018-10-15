@@ -93,7 +93,7 @@ it("can close and remove from queue", () => {
     />
   );
 
-  fireEvent.click(getByTestId("closeNotification"));
+  fireEvent.click(getByTestId("close"));
 
   expect(CloseMock.mock.calls.length).toBe(1);
 });
@@ -109,7 +109,7 @@ it("can die and remove from queue", async () => {
     },
   });
 
-  await wait(() => expect(getByTestId("notification")).toBeFalsy);
+  await wait(() => expect(getByTestId("banner")).toBeFalsy);
 });
 
 // component no longer handles click events.

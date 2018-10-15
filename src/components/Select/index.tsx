@@ -7,6 +7,8 @@ import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 import Input from "./internals/Input";
 
+type FocusDirection = "up" | "down" | "first" | "last" | "open";
+
 interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
@@ -17,31 +19,47 @@ interface Props extends ViewProps {
   onChange?: ({ target }) => void;
   name?: string;
   closeOnSelect?: boolean;
+  size?: "sm" | "md";
 }
 
-type FocusDirection = "up" | "down" | "first" | "last" | "open";
-
 class Select extends React.Component<Props, any> {
-  public state = {
-    closeOverride: false,
-    value: null,
-    label: null,
-    isFocused: false,
-    focusedOptionIndex: null,
-    focusedValue: null,
-    searchValue: "",
-    overrideFocusClose: false,
-  };
-
   public mounted;
 
   public inputRef: HTMLElement = null;
+  constructor(props) {
+    super(props);
+
+    let OptionSelected = {
+      label: null,
+      value: null,
+    };
+
+    if (props.defaultValue || props.value) {
+      const Value = props.value || props.defaultValue;
+
+      OptionSelected = props.options.find(Option => Option.value === Value);
+    }
+
+    this.state = {
+      closeOverride: false,
+      value: OptionSelected.value,
+      label: OptionSelected.label,
+      isFocused: false,
+      focusedOptionIndex: null,
+      focusedValue: null,
+      searchValue: "",
+      overrideFocusClose: false,
+    };
+  }
 
   public componentDidUpdate(prevProps: Props, prevState) {
-    const { disabled } = this.props;
+    const { disabled, closeOnSelect } = this.props;
     const { isFocused, value } = this.state;
 
-    if (isFocused && !disabled && prevState.value !== value) {
+    if (
+      (isFocused && !disabled && prevState.value !== value) ||
+      (isFocused && prevProps.closeOnSelect !== closeOnSelect)
+    ) {
       this.focusInput();
     }
   }
@@ -86,7 +104,6 @@ class Select extends React.Component<Props, any> {
   public focusInput() {
     if (this.inputRef) {
       this.inputRef.focus();
-      this.onMenuOpen();
     }
   }
 
@@ -108,10 +125,13 @@ class Select extends React.Component<Props, any> {
     }));
   };
 
-  public handleOnFocus = () =>
+  public handleOnFocus = () => {
     this.setState({
       isFocused: true,
     });
+
+    this.onMenuOpen();
+  };
 
   public getInputRef = (ref: HTMLElement) => {
     this.inputRef = ref;
@@ -119,15 +139,15 @@ class Select extends React.Component<Props, any> {
 
   public onMenuOpen = () => {
     if (document) {
-      document.addEventListener("keydown", this.onKeyDown);
-      document.addEventListener("keyup", this.onKeyUp);
+      document.body.addEventListener("keydown", this.onKeyDown);
+      document.body.addEventListener("keyup", this.onKeyUp);
     }
   };
 
   public onMenuClose = () => {
     if (document) {
-      document.body.removeEventListener("onKeyDown", this.onKeyDown);
-      document.body.removeEventListener("onKeyUp", this.onKeyUp);
+      document.body.removeEventListener("keydown", this.onKeyDown);
+      document.body.removeEventListener("keyup", this.onKeyUp);
     }
   };
 
@@ -139,7 +159,12 @@ class Select extends React.Component<Props, any> {
     }
     event.stopPropagation();
     event.preventDefault();
-    this.focusInput();
+
+    if (this.state.isFocused === false) {
+      this.focusInput();
+    } else {
+      this.blurInput();
+    }
   };
 
   // Keyboard Handler
@@ -339,6 +364,7 @@ class Select extends React.Component<Props, any> {
       onKeyDown,
       onKeyUp,
       closeOnSelect,
+      size = "sm",
       ...props
     } = this.props;
 
@@ -371,6 +397,17 @@ class Select extends React.Component<Props, any> {
       return null;
     };
 
+    const Sizes = {
+      sm: {
+        paddingY: 3,
+        fontSize: 1,
+      },
+      md: {
+        paddingY: 4,
+        fontSize: 2,
+      },
+    };
+
     const FilteredOptions = this.getFilteredOptions();
 
     return (
@@ -389,7 +426,7 @@ class Select extends React.Component<Props, any> {
               paddingX={4}
               boxShadow={this.state.isFocused ? "strong" : "soft"}
               backgroundColor={backgroundColor}
-              onClick={this.onMenuMouseDown}
+              onMouseDown={this.onMenuMouseDown}
               {...props}
               css={{
                 border: "1px solid",
@@ -400,13 +437,14 @@ class Select extends React.Component<Props, any> {
               }}
             >
               <View
-                paddingY={4}
+                paddingY={Sizes[size].paddingY}
                 css={{
                   overflow: "hidden",
                 }}
               >
                 <Text
                   color={color}
+                  fontSize={Sizes[size].fontSize}
                   css={{
                     whiteSpace: "nowrap",
                   }}
@@ -509,7 +547,7 @@ class Select extends React.Component<Props, any> {
                         : {}
                     }
                   >
-                    <Text>{Option.label}</Text>
+                    <Text fontSize={Sizes[size].fontSize}>{Option.label}</Text>
                   </View>
                 ))}
               </View>

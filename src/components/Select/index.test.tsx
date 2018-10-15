@@ -33,7 +33,7 @@ it("Can select an item in the dropdown with keyboard - Enter", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -54,7 +54,7 @@ it("Can select an item in the dropdown with keyboard - Space", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -78,7 +78,7 @@ it("Can select an item in the dropdown with keyboard - Tab", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -102,7 +102,7 @@ it("Home selects the first entry - Space", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Home",
   });
@@ -120,7 +120,7 @@ it("End selects the first entry - Space", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "End",
   });
@@ -138,7 +138,7 @@ it("Can blur with escape key", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
   });
@@ -161,7 +161,7 @@ it("if you go all the way down it should overflow to the top", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "End",
   });
@@ -182,7 +182,7 @@ it("if you go all the way up it should overflow to the botton", () => {
     <Select options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Home",
   });
@@ -203,7 +203,7 @@ it("can't interact with disabled", () => {
     <Select disabled={true} options={Options} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Home",
   });
@@ -218,7 +218,7 @@ it("can't select without options", () => {
   const ChangeMock = jest.fn();
   const { getByTestId } = render(<Select options={[]} onChange={ChangeMock} />);
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Home",
   });
@@ -235,7 +235,7 @@ it("Can select a filtered option", () => {
     <Select options={Options} searchable={true} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "2",
   });
@@ -256,7 +256,7 @@ it("Clear search filter", () => {
     <Select options={Options} searchable={true} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "i",
   });
@@ -286,7 +286,7 @@ it("Backspace in search filter", () => {
     <Select options={Options} searchable={true} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "i",
   });
@@ -313,7 +313,7 @@ it("Delete in search filter", () => {
     <Select options={Options} searchable={true} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "i",
   });
@@ -340,7 +340,7 @@ it("Non Character keys dont show up", () => {
     <Select options={Options} searchable={true} onChange={ChangeMock} />
   );
 
-  fireEvent.click(getByTestId("primarySection"));
+  fireEvent.mouseDown(getByTestId("primarySection"));
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Control",
   });

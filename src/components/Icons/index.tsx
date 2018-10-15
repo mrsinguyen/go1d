@@ -26,6 +26,7 @@ export { default as Download } from "./Download";
 export { default as Drag } from "./Drag";
 export { default as Edit } from "./Edit";
 export { default as Ellipsis } from "./Ellipsis";
+export { default as Empty } from "./Empty";
 export { default as Expand } from "./Expand";
 export { default as Export } from "./Export";
 export { default as Externallink } from "./Externallink";

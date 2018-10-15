@@ -1,23 +1,29 @@
 import * as React from "react";
 
 import Theme from "../../Theme";
-import View from "../../View";
+import View, { Props } from "../../View";
 
-const TR = ({ children }) => (
+const TR = ({ children, css, ...viewProps }: Props) => (
   <Theme.Consumer>
     {({ spacing }) => (
       <View
-        element="tr"
-        display="table-row"
+        element="div"
+        display="flex"
+        flexWrap="nowrap"
+        flexDirection="row"
         width="100%"
-        css={{
-          "th:first-child, td:first-child": {
-            paddingLeft: `${spacing[6]}px`,
+        css={[
+          {
+            "& > div:first-child": {
+              paddingLeft: `${spacing[6]}px`,
+            },
+            "& > div:last-child": {
+              paddingRight: `${spacing[6]}px`,
+            },
           },
-          "th:last-child, td:last-child": {
-            paddingRight: `${spacing[6]}px`,
-          },
-        }}
+          css,
+        ]}
+        {...viewProps}
       >
         {children}
       </View>

@@ -42,6 +42,26 @@ yarn docs:dev
 yarn test
 ```
 
+## HOW TO DEBUG TESTS IN CHROME
+Add a `debugger;` statement in the test that you want to debug. Then run the following command in your terminal:
+```sh
+yarn test:debug
+```
+Now open a new tab in Chrome and go to `about:inspect`
+
+## Live Editing GO1D
+### Setup
+- Clone both repos. This assumes they are in the same directory
+- install dependencies of both in their repos via yarn or npm
+- in GO1D repo run `yarn run npm:dev` 
+- in another tab run inside content loader folder `npm link ../GO1D/build` (On Windows you might need to stop yarn in GO1D depo, you also have to relink every time you used yarn to add or update a package)
+- inside content loader run `yarn start`
+
+### Starting
+- in GO1D repo run `yarn run npm:dev` 
+- inside content loader run `yarn start`
+
+
 ## PIPELINES
 This repository deploys to npm and gitlab pages. This is a MANUAL part of the pipeline. If you want to deploy your changes to npm, follow these steps:
 
