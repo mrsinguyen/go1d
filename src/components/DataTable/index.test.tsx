@@ -5,30 +5,13 @@ import TR from "../Table/TR";
 import DataTable from "./";
 
 afterEach(cleanup);
+const createRows = ({ index }) => <div>{index}</div>;
 
 it("renders without crashing without any optional props", () => {
-  render(
-    <DataTable
-      rowHeight={10}
-      rowCount={2}
-      rows={[
-        <TR key="0">
-          <TD>
-            <span>yo</span>
-          </TD>
-        </TR>,
-        <TR key="1">
-          <TD>
-            <span>yo</span>
-          </TD>
-        </TR>,
-      ]}
-    />
-  );
+  render(<DataTable rowHeight={10} rowCount={2} rowRenderer={createRows} />);
 });
 
 it("renders without crashing with optional props", () => {
-  const createRows = ({ index }) => <div>{index}</div>;
   render(
     <DataTable
       autoRowHeight={true}

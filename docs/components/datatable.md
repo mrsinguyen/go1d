@@ -1,7 +1,7 @@
 ---
 title: Data Table
 status: ready
-releaseVersion: 0.0.33
+releaseVersion: 0.0.40
 ---
 
 This component renders a table. It can do this in one of two ways. Either by supplying the rows to the table, or by supplying a function to render each row out. This uses the TR and TH components from the Table component.

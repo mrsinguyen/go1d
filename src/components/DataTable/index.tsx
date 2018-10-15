@@ -14,13 +14,11 @@ import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
-  /** If this is supplied, it will automatically render these rows. */
-  rows?: React.ReactNodeArray;
   rowHeight?: number;
   /** The total number of rows that can be loaded. Used for autoloading. */
   rowCount: number;
   /** Function to render a row */
-  rowRenderer?: ListRowRenderer;
+  rowRenderer: ListRowRenderer;
   header?: React.ReactNodeArray;
   /** A string to display the total number of results */
   total?: string;
@@ -45,14 +43,8 @@ class DataTable extends React.Component<Props, State> {
     };
   }
 
-  @autobind
-  public defaultRenderer(obj) {
-    return this.props.rows[obj.index];
-  }
-
   public render() {
     const {
-      rows,
       rowHeight,
       rowRenderer,
       rowCount,
@@ -63,7 +55,7 @@ class DataTable extends React.Component<Props, State> {
       ...viewProps
     } = this.props;
 
-    let renderFunction = rows ? this.defaultRenderer : rowRenderer;
+    let renderFunction = rowRenderer;
 
     if (this.props.autoRowHeight) {
       const oldRenderFunction = renderFunction;
