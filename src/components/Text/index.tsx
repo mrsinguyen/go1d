@@ -12,6 +12,16 @@ export interface Props extends BaseProps {
   lineHeight?: number | string;
   fontSize?: number;
   color?: string;
+  textTransform?:
+    | "none"
+    | "inherit"
+    | "initial"
+    | "revert"
+    | "unset"
+    | "capitalize"
+    | "full-width"
+    | "lowercase"
+    | "uppercase";
   letterSpacing?: string;
   css?: Interpolation;
 }

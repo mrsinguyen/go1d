@@ -1,6 +1,8 @@
 import * as React from "react";
 import {
   AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
   List,
   ListRowRenderer,
   WindowScroller,
@@ -30,7 +32,10 @@ interface State {
 }
 
 class DataTable extends React.Component<Props, State> {
-  public ref: boolean = false;
+  public cache = new CellMeasurerCache({
+    defaultHeight: 0,
+    fixedWidth: true,
+  });
 
   constructor(props) {
     super(props);
@@ -43,13 +48,6 @@ class DataTable extends React.Component<Props, State> {
   @autobind
   public defaultRenderer(obj) {
     return this.props.rows[obj.index];
-  }
-
-  @autobind
-  public setHeight(elem: HTMLElement | null) {
-    if (elem && this.state.rowHeight !== elem.offsetHeight) {
-      this.setState({ rowHeight: elem.offsetHeight }, () => (this.ref = false));
-    }
   }
 
   public render() {
@@ -69,20 +67,17 @@ class DataTable extends React.Component<Props, State> {
 
     if (this.props.autoRowHeight) {
       const oldRenderFunction = renderFunction;
-      renderFunction = ({ style, ...args }) => {
-        if (!this.ref) {
-          this.ref = true;
-          return (
-            <div
-              ref={this.setHeight}
-              style={{ ...style, height: "auto", position: "relative" }}
-            >
-              {oldRenderFunction({ ...args, style: {} })}
-            </div>
-          );
-        }
-        return oldRenderFunction({ style, ...args });
-      };
+      renderFunction = ({ ...args }) => (
+        <CellMeasurer
+          cache={this.cache}
+          parent={args.parent}
+          rowIndex={args.index}
+          columnIndex={0}
+          key={args.key}
+        >
+          {oldRenderFunction({ ...args })}
+        </CellMeasurer>
+      );
     }
 
     return (
@@ -122,13 +117,16 @@ class DataTable extends React.Component<Props, State> {
                   <AutoSizer disableHeight={true}>
                     {({ width }) => (
                       <List
+                        deferredMeasurementCache={
+                          autoRowHeight ? this.cache : null
+                        }
                         autoHeight={true}
                         onScroll={onChildScroll}
                         rowRenderer={renderFunction}
                         height={height}
                         overscanRowCount={2}
                         rowHeight={
-                          autoRowHeight ? this.state.rowHeight || 0 : rowHeight
+                          autoRowHeight ? this.cache.rowHeight : rowHeight
                         }
                         isScrolling={isScrolling}
                         scrollTop={scrollTop}
