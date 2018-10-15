@@ -123,7 +123,6 @@ class Select extends React.Component<Props, any> {
       overrideFocusClose: false,
       closeOverride: false,
     }));
-    this.onMenuClose();
   };
 
   public handleOnFocus = () => {
