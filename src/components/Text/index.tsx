@@ -27,7 +27,7 @@ const Text: React.SFC<Props> = ({
   lineHeight,
   fontSize = 2,
   letterSpacing = "normal",
-  color = "default",
+  color = "inherit",
   textAlign,
   textTransform,
   css,
@@ -39,7 +39,7 @@ const Text: React.SFC<Props> = ({
         element={element}
         css={[
           {
-            color: color === undefined ? colors.black : colors[color] || color,
+            color: colors[color] || color,
             fontFamily: fontFamily
               ? type.family[fontFamily]
               : type.family.sansSerif,
