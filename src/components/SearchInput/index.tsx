@@ -31,7 +31,7 @@ class SearchInput extends React.Component<Props, any> {
   };
 
   public handleOnKeyDown = event => {
-    const { onSubmit } = this.props;
+    const { onSubmit, onKeyDown } = this.props;
     const Key = event.key;
     switch (Key) {
       case "Enter":
@@ -39,6 +39,7 @@ class SearchInput extends React.Component<Props, any> {
         event.preventDefault();
         break;
     }
+    safeInvoke(onKeyDown, event);
   };
 
   public handleClear = event => {
@@ -48,7 +49,14 @@ class SearchInput extends React.Component<Props, any> {
   };
 
   public render() {
-    const { element, onChange, clearable = true, ...props } = this.props;
+    const {
+      element, // prevent it from being passed down to the child
+      onChange, // prevent it from being passed down to the child
+      onKeyDown, // prevent it from being passed down to the child
+      value, // prevent it from being passed down to the child
+      clearable = true,
+      ...props
+    } = this.props;
     return (
       <TextInput
         iconName="Search"
