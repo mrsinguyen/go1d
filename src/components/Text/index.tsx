@@ -25,7 +25,7 @@ const Text: React.SFC<Props> = ({
   lineHeight,
   fontSize = 2,
   letterSpacing = "normal",
-  color,
+  color = "default",
   textAlign,
   css,
   ...props

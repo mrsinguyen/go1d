@@ -56,11 +56,12 @@ class Select extends React.Component<Props, any> {
     const { disabled, closeOnSelect } = this.props;
     const { isFocused, value } = this.state;
 
-    if (
-      (isFocused && !disabled && prevState.value !== value) ||
-      (isFocused && prevProps.closeOnSelect !== closeOnSelect)
-    ) {
-      this.focusInput();
+    if (isFocused && !disabled && prevState.value !== value && !closeOnSelect) {
+      setTimeout(() => {
+        if (this.mounted) {
+          this.focusInput();
+        }
+      }, 0);
     }
   }
 
@@ -110,7 +111,6 @@ class Select extends React.Component<Props, any> {
   public blurInput() {
     if (this.inputRef) {
       this.inputRef.blur();
-      this.onMenuClose();
     }
   }
 
@@ -123,6 +123,8 @@ class Select extends React.Component<Props, any> {
       overrideFocusClose: false,
       closeOverride: false,
     }));
+
+    this.onMenuClose();
   };
 
   public handleOnFocus = () => {
@@ -530,11 +532,6 @@ class Select extends React.Component<Props, any> {
                       Option.value
                     )}
                     backgroundColor={getOptionBackground(Index, Option)}
-                    color={
-                      getOptionBackground(Index, Option) === "accent"
-                        ? "background"
-                        : "default"
-                    }
                     css={
                       getOptionBackground(Index, Option) !== "accent"
                         ? {
@@ -547,7 +544,16 @@ class Select extends React.Component<Props, any> {
                         : {}
                     }
                   >
-                    <Text fontSize={Sizes[size].fontSize}>{Option.label}</Text>
+                    <Text
+                      fontSize={Sizes[size].fontSize}
+                      color={
+                        getOptionBackground(Index, Option) === "accent"
+                          ? "background"
+                          : "default"
+                      }
+                    >
+                      {Option.label}
+                    </Text>
                   </View>
                 ))}
               </View>
