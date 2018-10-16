@@ -6,13 +6,13 @@ interface InnerFormProps {
   status: string;
   setStatus: (status?: any) => void;
   onReset: (a: any) => void;
-  disabled: boolean;
+  disabled?: boolean;
   onSubmit: (evt: React.SyntheticEvent) => void;
 }
 
 interface FormProps extends FormikConfig<any> {
   children?: React.ReactNode;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export class InternalForm extends React.Component<InnerFormProps, any> {

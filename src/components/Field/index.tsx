@@ -52,7 +52,7 @@ const Field: React.SFC<Props> = ({
         if (component) {
           node = React.createElement(component as any, {
             ref: inputRef,
-            field,
+            ...field,
             form,
             disabled: disabled || form.status === "disabled",
             id: id || field.name,
