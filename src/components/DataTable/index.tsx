@@ -1,4 +1,3 @@
-// tslint:disable
 import { throttle } from "lodash-decorators";
 import * as React from "react";
 import {
@@ -12,6 +11,8 @@ import {
 } from "react-virtualized";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
+import ButtonFilled from "../ButtonFilled";
+import Icon from "../Icon";
 import TR from "../Table/TR";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -24,11 +25,15 @@ interface Props extends ViewProps {
   rowCount: number;
   /** Function to render a row */
   rowRenderer: ListRowRenderer;
+  /*
+   * A header row. Rendered inside a TR component
+  */
   header?: React.ReactNodeArray;
   /** A string to display the total number of results */
   total?: string;
   /** Used to scroll directly to a row. When using autoRowHeight, the height wont be populated yet, so it is important to also specify a rowHeight */
   scrollToIndex?: number;
+  /** *Experimental* Automatically measures the row height. Due to the measurement method, this is not suggested for data sets of over 250 items */
   autoRowHeight?: boolean;
   /**
    * If set, will use an infinite loader. The following props will be required for correct functionality:
@@ -45,6 +50,10 @@ interface Props extends ViewProps {
    * Function to load the required rows. Used in conjunction with infiniteLoad
    */
   loadMoreRows?: ({ startIndex, stopIndex }) => Promise<any>;
+
+  /**
+   * A callback that returns the top row rendered. Triggers when the top rendered row changes.
+   */
   scrollCallback?: ({ row }) => void;
 }
 
@@ -66,17 +75,31 @@ class DataTable extends React.Component<Props, {}> {
   @autobind
   public scroll({ startIndex }) {
     if (startIndex) {
-      safeInvoke(
-        this.props.scrollCallback({
-          row: startIndex,
-        })
-      );
+      safeInvoke(this.props.scrollCallback, {
+        row: startIndex,
+      });
     }
   }
 
   @autobind
   public setHeader(ref: HTMLElement) {
     this.header = ref;
+  }
+
+  @autobind
+  public rowsReturn(onRowsRendered) {
+    return args => {
+      this.scroll(args);
+      safeInvoke(onRowsRendered(args));
+    };
+  }
+
+  @autobind
+  public scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   public render() {
@@ -115,7 +138,7 @@ class DataTable extends React.Component<Props, {}> {
 
     return (
       <Theme.Consumer>
-        {({ zIndex }) => (
+        {({ zIndex, spacing }) => (
           <React.Fragment>
             {total && (
               <View marginBottom={4}>
@@ -123,6 +146,7 @@ class DataTable extends React.Component<Props, {}> {
               </View>
             )}
             <View
+              display="block"
               css={[
                 {
                   ".ReactVirtualized__Grid": {
@@ -159,11 +183,7 @@ class DataTable extends React.Component<Props, {}> {
                             <List
                               autoHeight={true}
                               height={height}
-                              // tslint:disable
-                              onRowsRendered={args => {
-                                this.scroll(args);
-                                onRowsRendered(args);
-                              }}
+                              onRowsRendered={this.rowsReturn(onRowsRendered)}
                               ref={el => {
                                 this.listEl = el;
                               }}
@@ -191,6 +211,16 @@ class DataTable extends React.Component<Props, {}> {
                 )}
               </InfiniteLoader>
             </View>
+            <ButtonFilled
+              color="contrast"
+              onClick={this.scrollToTop}
+              position="sticky"
+              marginTop={4}
+              marginLeft="auto"
+              css={{ bottom: spacing[4] }}
+            >
+              <Icon name="ChevronUp" color="background" />
+            </ButtonFilled>
           </React.Fragment>
         )}
       </Theme.Consumer>
