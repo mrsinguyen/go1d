@@ -33,21 +33,6 @@ Helpful Resources
 </Form>
 ```
 
-
-### Example Disabled Form with required field
-
-```.jsx
-<Form disabled={true} initialValues={{ portalName: "A portal" }} onSubmit={(values, actions) => actions.submit()}>
-    <Field
-    component={TextInput}
-    name="portalName"
-    label="Portal name"
-    placeholder="Leslie Knope"
-    />
-    <ButtonFilled type="submit" color="accent">Submit</ButtonFilled>
-</Form>
-```
-
 ```!jsx
 <ComponentDoc component={Form} />
 ```
