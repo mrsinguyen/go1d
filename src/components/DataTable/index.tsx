@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { throttle } from "lodash-decorators";
 import * as React from "react";
 import {
@@ -9,7 +10,6 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from "react-virtualized";
-import scrollTo from "scroll-to";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import ButtonFilled from "../ButtonFilled";
@@ -97,8 +97,8 @@ class DataTable extends React.Component<Props, {}> {
 
   @autobind
   public scrollToTop() {
-    scrollTo(0, 0, {
-      duration: 250,
+    scrollTo({
+      top: 0,
     });
   }
 
@@ -172,7 +172,7 @@ class DataTable extends React.Component<Props, {}> {
                 isRowLoaded={infiniteLoad ? isRowLoaded : () => true}
                 loadMoreRows={infiniteLoad ? loadMoreRows : () => null}
                 rowCount={rowCount}
-                threshold={10}
+                threshold={2}
               >
                 {({ onRowsRendered, registerChild }) => (
                   <WindowScroller>
@@ -197,7 +197,7 @@ class DataTable extends React.Component<Props, {}> {
                               }
                               scrollTop={scrollTop}
                               onScroll={onChildScroll}
-                              overscanRowCount={20}
+                              overscanRowCount={5}
                               scrollToAlignment="start"
                               isScrolling={isScrolling}
                               width={width}
