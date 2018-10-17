@@ -60,7 +60,12 @@ An overview container for a hero page
     <View
       boxShadow="crisp"
       backgroundColor="background"
-      width="100%">
+      width="300px"
+      css={{
+        position: "relative",
+        top: -250,
+        right: 0,
+      }}>
       <View
         height="150px"
         width="100%"

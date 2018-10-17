@@ -104,17 +104,7 @@ const OverviewHero: React.SFC<Props> = ({
       <View flexGrow={1} flexShrink={1}>
         {children}
       </View>
-      <View
-        alignItems="flex-end"
-        width="300px"
-        css={{
-          position: "relative",
-          top: -250,
-          right: 0,
-        }}
-      >
-        {ctaCard}
-      </View>
+      <View alignItems="flex-end">{ctaCard}</View>
     </View>
   </View>
 );
