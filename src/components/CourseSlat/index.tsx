@@ -20,6 +20,16 @@ interface Props extends ViewProps {
   typeIcon?: string;
 }
 
+const backgroundStyles = (colors, passive) => {
+  let styles = { background: `${colors.background}` };
+  if (!passive) {
+    styles["&:hover, &:focus"] = {
+      background: `${colors.gradients.darkWarmOverlay}, ${colors.background}`
+    }
+  }
+  return styles;
+}
+
 const CourseSlat: React.SFC<Props> = ({
   courseImage,
   css,
@@ -31,20 +41,26 @@ const CourseSlat: React.SFC<Props> = ({
   contentRender,
   type,
   typeIcon,
+  passive,
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, breakpoints, opacity }) => (
+    {({ spacing, breakpoints, opacity, colors }) => {
+      return (
       <View
-        backgroundColor="background"
         borderRadius={2}
         boxShadow="crisp"
         flexDirection="row"
         marginBottom={4}
-        css={{
-          ...((css as object) || {}),
-          overflow: "hidden",
-        }}
+        color="default"
+        css={[
+          {
+            ...((css as object) || {}),
+            overflow: "hidden",
+            textDecoration: "none",
+          },
+          backgroundStyles(colors, passive),
+        ]}
         {...props}
       >
         <View
@@ -167,7 +183,7 @@ const CourseSlat: React.SFC<Props> = ({
           </View>
         )}
       </View>
-    )}
+    )}}
   </Theme.Consumer>
 );
 
