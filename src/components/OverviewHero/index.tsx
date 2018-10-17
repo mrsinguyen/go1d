@@ -42,7 +42,7 @@ const OverviewHero: React.SFC<Props> = ({
           display="flex"
           flexDirection="row"
           alignItems="center"
-          color={props.color ? props.color : 'background'}
+          color={props.color ? props.color : "background"}
           css={{
             position: "relative",
             overflow: "hidden",
