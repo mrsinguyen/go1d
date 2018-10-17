@@ -15,11 +15,12 @@ it("renders without crashing with all props", () => {
     <OverviewHero
       title="Test"
       backgroundImage="example.jpg"
-      subtitle="Subtitle"
+      subtitle={<div>Subtitle</div>}
       breadcrumbHref="#testing"
       breadcrumbTitle="Results"
       author="GO1 Team"
-      duration="9 Days 13 Hours"
+      duration={4}
+      ctaCard={<div />}
     >
       <div>test content</div>
     </OverviewHero>

@@ -55,7 +55,7 @@ An overview container for a hero page
       />
       Leslie Knope
     </View>}
-  duration="9 Days 13 Hours"
+  duration={1360}
   ctaCard={
     <View
       boxShadow="crisp"
