@@ -12,13 +12,14 @@ const Prop = ({ name = "", type = {}, required = false, description = "" }) => (
         <Text>{type.name || "N/A"}</Text>
       </TD>
     </TR>
-    {description.length !== 0 && <TR>
-      <TD>
-        <Text fontSize={1}>{description}</Text>
-      </TD>
-    </TR>}
+    {description.length !== 0 && (
+      <TR>
+        <TD>
+          <Text fontSize={1}>{description}</Text>
+        </TD>
+      </TR>
+    )}
   </React.Fragment>
-
 );
 
 export const ComponentDoc = ({ component = "" }) => {

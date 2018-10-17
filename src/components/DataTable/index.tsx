@@ -9,6 +9,7 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from "react-virtualized";
+import scrollTo from "scroll-to";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import ButtonFilled from "../ButtonFilled";
@@ -96,9 +97,8 @@ class DataTable extends React.Component<Props, {}> {
 
   @autobind
   public scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+    scrollTo(0, 0, {
+      duration: 250,
     });
   }
 
