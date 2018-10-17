@@ -1,3 +1,5 @@
+// tslint:disable
+import { throttle } from "lodash-decorators";
 import * as React from "react";
 import {
   AutoSizer,
@@ -9,6 +11,7 @@ import {
   WindowScroller,
 } from "react-virtualized";
 import { autobind } from "../../utils/decorators";
+import safeInvoke from "../../utils/safeInvoke";
 import TR from "../Table/TR";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -42,13 +45,14 @@ interface Props extends ViewProps {
    * Function to load the required rows. Used in conjunction with infiniteLoad
    */
   loadMoreRows?: ({ startIndex, stopIndex }) => Promise<any>;
+  scrollCallback?: ({ row }) => void;
 }
 
 class DataTable extends React.Component<Props, {}> {
   public listEl: List;
   public header: HTMLElement;
 
-  public cache;
+  public cache: CellMeasurerCache;
 
   constructor(props) {
     super(props);
@@ -58,39 +62,16 @@ class DataTable extends React.Component<Props, {}> {
     });
   }
 
-  public componentDidMount() {
-    this.autoScroll();
-  }
-
-  public componentDidUpdate(prevProps: Props) {
-    if (this.props.scrollToIndex !== undefined) {
-      if (
-        (this.props.rowCount && prevProps.rowCount === 0) ||
-        this.props.scrollToIndex !== prevProps.scrollToIndex
-      ) {
-        this.autoScroll();
-      }
-    }
-  }
-
-  /*
-  * This is being used as a workaround for autoScroll not working. See: https://github.com/bvaughn/react-virtualized/issues/1226
-  */
+  @throttle(100)
   @autobind
-  public autoScroll() {
-    if (this.props.scrollToIndex <= 0 || !this.listEl) {
-      return;
+  public scroll({ startIndex }) {
+    if (startIndex) {
+      safeInvoke(
+        this.props.scrollCallback({
+          row: startIndex,
+        })
+      );
     }
-
-    const initialTop = this.listEl.getOffsetForRow({
-      alignment: "start",
-      index: this.props.scrollToIndex,
-    });
-
-    window.scrollTo(
-      0,
-      initialTop + (this.header ? this.header.offsetHeight : 0)
-    );
   }
 
   @autobind
@@ -111,6 +92,7 @@ class DataTable extends React.Component<Props, {}> {
       isRowLoaded,
       loadMoreRows,
       scrollToIndex,
+      scrollCallback,
       ...viewProps
     } = this.props;
 
@@ -177,7 +159,11 @@ class DataTable extends React.Component<Props, {}> {
                             <List
                               autoHeight={true}
                               height={height}
-                              onRowsRendered={onRowsRendered}
+                              // tslint:disable
+                              onRowsRendered={args => {
+                                this.scroll(args);
+                                onRowsRendered(args);
+                              }}
                               ref={el => {
                                 this.listEl = el;
                               }}
