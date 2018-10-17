@@ -4,20 +4,19 @@ status: ready
 releaseVersion: 0.0.41
 ---
 
-@TODO
+An overview container for a hero page
 
 ## Examples
 
-### Overview hero with required props (title)
+### Overview hero with required props only (title)
 ```.jsx
 <OverviewHero 
-  title="Interaction Design"
-  backgroundImage="https://images.unsplash.com/photo-1539602010674-1346135ab34e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=eb91750f2ad63d82661fb76b0772d6fd&auto=format&fit=crop&w=668&q=80">
+  title="Interaction Design">
   <Text>This course will provide you with the skills and knowledge to design, build, test and launch digital products that are intuitive, user-friendly and accessible.</Text>
 </OverviewHero>
 ```
 
-### Overview hero with breadcrumb and subtitle
+### Overview hero with background, breadcrumb and subtitle
 ```.jsx
 <OverviewHero
   title="Interaction Design"
@@ -46,9 +45,34 @@ releaseVersion: 0.0.41
     </View>}
   breadcrumbHref="#testing"
   breadcrumbTitle="Results"
-  authorImage="https://i.imgur.com/Ee55uvc.jpg"
-  authorName="Leslie Knope"
+  author={
+    <View flexDirection="row" alignItems="center">
+      <Avatar
+        size={4}
+        src="https://i.imgur.com/Ee55uvc.jpg"
+        fullName="Leslie Knope"
+        marginRight={3}
+      />
+      Leslie Knope
+    </View>}
   duration="9 Days 13 Hours"
+  ctaCard={
+    <View
+      boxShadow="crisp"
+      backgroundColor="background"
+      width="100%">
+      <View
+        height="150px"
+        width="100%"
+        css={{
+          backgroundImage: "url(https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80)",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      />
+      <View padding={4} height="200px" width="100%" />
+    </View>
+  }
 >
   <Text>This course will provide you with the skills and knowledge to design, build, test and launch digital products that are intuitive, user-friendly and accessible.</Text>
 </OverviewHero>
