@@ -18,7 +18,7 @@ function onReset(values: any, formikActions: FormikActions<any>) {
 
 it("renders without crashing without any optional props", () => {
   render(
-    <Form disabled={false} initialValues={{ name: "" }} onSubmit={test}>
+    <Form initialValues={{ name: "" }} onSubmit={test}>
       <Field label="name" name="name" />
     </Form>
   );
@@ -26,7 +26,7 @@ it("renders without crashing without any optional props", () => {
 
 it("renders without crashing with disabled true", () => {
   render(
-    <Form disabled={true} initialValues={{ name: "" }} onSubmit={test}>
+    <Form initialValues={{ name: "" }} onSubmit={test}>
       <Field label="name" name="name" />
     </Form>
   );
@@ -34,7 +34,7 @@ it("renders without crashing with disabled true", () => {
 
 it("renders without crashing with onsubmit null", () => {
   render(
-    <Form disabled={false} initialValues={{ name: "" }} onSubmit={null}>
+    <Form initialValues={{ name: "" }} onSubmit={null}>
       <Field label="name" name="name" />
     </Form>
   );
@@ -42,7 +42,7 @@ it("renders without crashing with onsubmit null", () => {
 
 it("renders without crashing with disabled null", () => {
   render(
-    <Form disabled={null} initialValues={{ name: "" }} onSubmit={test}>
+    <Form initialValues={{ name: "" }} onSubmit={test}>
       <Field label="name" name="name" />
     </Form>
   );
