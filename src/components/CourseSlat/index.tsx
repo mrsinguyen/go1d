@@ -92,7 +92,11 @@ const CourseSlat: React.SFC<Props> = ({
               }}
             >
               {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
-              {type && <Text fontSize={1}>{type.toUpperCase()}</Text>}
+              {type && (
+                <Text color="background" fontSize={1}>
+                  {type.toUpperCase()}
+                </Text>
+              )}
             </View>
           )}
         </View>

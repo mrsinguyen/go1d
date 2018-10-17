@@ -49,21 +49,29 @@ const Field: React.SFC<Props> = ({
     <FormikField {...formikProps}>
       {({ field, form }) => {
         let node = null;
+        let message = null;
+        if (form.errors && form.errors[field.name]) {
+          message = form.errors[field.name];
+        }
         if (component) {
           node = React.createElement(component as any, {
             ref: inputRef,
-            field,
+            ...field,
             form,
             disabled: disabled || form.status === "disabled",
             id: id || field.name,
             children,
+            error: !!message,
             ...props,
           });
         }
         if (form.errors && form.errors[field.name]) {
-          statusText = form.errors[field.name];
+          statusText = required ? "Required" : "Invalid";
           statusColor = "danger";
           statusIcon = null;
+        } else {
+          statusColor = "subtle";
+          statusText = !required && "Optional";
         }
 
         return (
@@ -77,6 +85,11 @@ const Field: React.SFC<Props> = ({
               {label}
             </Label>
             <View paddingBottom={2}>{node}</View>
+            {message && (
+              <View paddingBottom={2}>
+                <Text color="danger">{message}</Text>
+              </View>
+            )}
             {description && (
               <View paddingBottom={2}>
                 <Text color="subtle">{description}</Text>

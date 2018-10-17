@@ -6,13 +6,12 @@ interface InnerFormProps {
   status: string;
   setStatus: (status?: any) => void;
   onReset: (a: any) => void;
-  disabled: boolean;
+  disabled?: boolean;
   onSubmit: (evt: React.SyntheticEvent) => void;
 }
 
 interface FormProps extends FormikConfig<any> {
   children?: React.ReactNode;
-  disabled: boolean;
 }
 
 export class InternalForm extends React.Component<InnerFormProps, any> {
@@ -62,18 +61,14 @@ export class InternalForm extends React.Component<InnerFormProps, any> {
   }
 }
 
-const Form: React.SFC<FormProps> = ({
-  children,
-  disabled,
-  ...props
-}: FormProps) => {
+const Form: React.SFC<FormProps> = ({ children, ...props }: FormProps) => {
   return (
     <Formik {...props}>
-      {({ handleSubmit, handleReset, status, setStatus }) => (
+      {({ handleSubmit, handleReset, status, setStatus, isSubmitting }) => (
         <InternalForm
           onReset={handleReset}
           onSubmit={handleSubmit}
-          disabled={disabled}
+          disabled={isSubmitting}
           status={status}
           setStatus={setStatus}
         >

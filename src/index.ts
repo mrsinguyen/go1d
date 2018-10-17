@@ -24,6 +24,7 @@ export { default as Link } from "./components/Link";
 export { default as EmptyState } from "./components/EmptyState";
 export { default as Lesson } from "./components/Lesson";
 export { default as SearchInput } from "./components/SearchInput";
+export { default as Tooltip } from "./components/Tooltip";
 
 export {
   Notifications,

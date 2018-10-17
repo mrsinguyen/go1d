@@ -2,6 +2,7 @@
 title: Label
 lead: 
 status: ready
+releaseVersion: 0.0.41
 ---
 
 ## Examples

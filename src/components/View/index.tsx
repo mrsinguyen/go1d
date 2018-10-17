@@ -51,6 +51,12 @@ export interface Props extends BaseProps {
   zIndex?: number;
   boxShadow?: string;
   borderColor?: string;
+  border?: number;
+  borderTop?: number;
+  borderRight?: number;
+  borderBottom?: number;
+  borderLeft?: number;
+  transition?: string;
   css?: Interpolation;
 }
 
@@ -80,7 +86,13 @@ const View: React.SFC<Props> = ({
   paddingBottom = paddingY,
   paddingRight = paddingX,
   paddingLeft = paddingX,
-  color,
+  borderColor,
+  border = 0,
+  borderTop = border,
+  borderRight = border,
+  borderBottom = border,
+  borderLeft = border,
+  color = "inherit",
   backgroundColor,
   backgroundOpacity,
   borderRadius,
@@ -91,7 +103,7 @@ const View: React.SFC<Props> = ({
   zIndex,
   boxShadow,
   textAlign = "inherit",
-  borderColor,
+  transition = "subtle",
   css,
   ...props
 }: Props) => (
@@ -125,15 +137,19 @@ const View: React.SFC<Props> = ({
             // fix flexbox bugs
             minHeight,
             minWidth: 0,
-            color: colors[color],
+            color: colors[color] || color,
             backgroundColor: opacity[backgroundOpacity]
               ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
               : colors[backgroundColor],
             borderRadius: s[borderRadius],
-            border: colors[borderColor] ? "1px solid" : null,
+            borderStyle: "solid",
+            borderTopWidth: borderTop,
+            borderRightWidth: borderRight,
+            borderBottomWidth: borderBottom,
+            borderLeftWidth: borderLeft,
             borderColor: colors[borderColor],
             boxShadow: shadows[boxShadow],
-            transition: transitions.subtle,
+            transition: transitions[transition],
             textAlign,
           },
           css,

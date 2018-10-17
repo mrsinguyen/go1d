@@ -14,20 +14,20 @@ interface Props extends ViewProps {
 
 export const typeIconDic = {
   activities: "Activity",
-  attendance: "Course",
+  attendance: "UserTick",
   assignment: "Assignment",
   document: "Document",
-  h5p: "Course",
-  iframe: "Course",
+  h5p: "Videoplay",
+  iframe: "Weblink",
   interactive: "Interactive",
-  question: "Quiz",
+  question: "Checkbox",
   quiz: "Quiz",
-  resource: "Course",
+  resource: "Content",
   text: "Text",
   video: "Video",
   workshop: "Course",
-  lti: "Course",
-  event: "Course",
+  lti: "Lti",
+  event: "Calendar",
 };
 
 const Lesson: React.SFC<Props> = ({

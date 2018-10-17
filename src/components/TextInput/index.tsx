@@ -26,6 +26,7 @@ export interface TextInputProps extends TextProps {
   onBlur?: (evt: React.FocusEvent<any>) => void;
   iconName?: string;
   suffixNode?: React.ReactNode;
+  error?: boolean;
 }
 
 class TextInput extends React.Component<TextInputProps, any> {
@@ -59,6 +60,21 @@ class TextInput extends React.Component<TextInputProps, any> {
     safeInvoke(this.props.onBlur, evt);
   }
 
+  @autobind
+  public getBorderColor() {
+    const { isFocused } = this.state;
+    const { error } = this.props;
+
+    if (error) {
+      return "danger";
+    }
+    if (isFocused) {
+      return "accent";
+    }
+
+    return "faded";
+  }
+
   public render() {
     const {
       id,
@@ -70,7 +86,6 @@ class TextInput extends React.Component<TextInputProps, any> {
       onBlur,
       ...props
     } = this.props;
-    const { isFocused } = this.state;
 
     return (
       <Theme.Consumer>
@@ -80,7 +95,8 @@ class TextInput extends React.Component<TextInputProps, any> {
             borderRadius={2}
             backgroundColor="background"
             paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
-            borderColor={isFocused ? "accent" : "faded"}
+            border={1}
+            borderColor={this.getBorderColor()}
             boxShadow="inner"
             flexDirection="row"
             alignItems="center"
