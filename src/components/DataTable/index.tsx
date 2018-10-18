@@ -62,7 +62,7 @@ interface Props extends ViewProps {
   hideScrollButton?: boolean;
 }
 
-class DataTable extends React.Component<Props, {}> {
+class DataTable extends React.Component<Props, { offset: number }> {
   public listEl: List;
   public header: HTMLElement;
 
@@ -74,15 +74,10 @@ class DataTable extends React.Component<Props, {}> {
       defaultHeight: this.props.rowHeight || 50,
       fixedWidth: true,
     });
-  }
 
-  @autobind
-  public scroll({ startIndex }) {
-    if (startIndex) {
-      safeInvoke(this.props.scrollCallback, {
-        row: startIndex,
-      });
-    }
+    this.state = {
+      offset: 0,
+    };
   }
 
   @autobind
@@ -93,11 +88,12 @@ class DataTable extends React.Component<Props, {}> {
   @autobind
   public rowsReturn(onRowsRendered) {
     return args => {
-      if (args.startIndex) {
-        safeInvoke(this.props.scrollCallback, {
-          row: args.startIndex,
-        });
-      }
+      this.setState({
+        offset: args.startIndex,
+      });
+      safeInvoke(this.props.scrollCallback, {
+        row: args.startIndex,
+      });
       safeInvoke(onRowsRendered, args);
     };
   }
@@ -220,18 +216,19 @@ class DataTable extends React.Component<Props, {}> {
                 )}
               </InfiniteLoader>
             </View>
-            {!hideScrollButton && (
-              <ButtonFilled
-                color="contrast"
-                onClick={this.scrollToTop}
-                position="sticky"
-                marginTop={4}
-                marginLeft="auto"
-                css={{ bottom: spacing[4] }}
-              >
-                <Icon name="ChevronUp" color="background" />
-              </ButtonFilled>
-            )}
+            {!hideScrollButton &&
+              this.state.offset && (
+                <ButtonFilled
+                  color="contrast"
+                  onClick={this.scrollToTop}
+                  position="sticky"
+                  marginTop={4}
+                  marginLeft="auto"
+                  css={{ bottom: spacing[4] }}
+                >
+                  <Icon name="ChevronUp" color="background" />
+                </ButtonFilled>
+              )}
           </React.Fragment>
         )}
       </Theme.Consumer>
