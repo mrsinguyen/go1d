@@ -3,18 +3,25 @@ import { generateTheme } from "../../foundations";
 import { GenerateThemeInput } from "../../foundations/foundation-types";
 import Theme from "../Theme";
 
-interface Props {
-  LinkComponent?: React.ReactNode;
+interface Props extends GenerateThemeInput {
+  linkComponent?: React.ReactNode;
   children?: React.ReactNode;
 }
 
+export const LinkContext = React.createContext(null);
+
 const Provider = ({
-  LinkComponent,
+  linkComponent,
+  darkMode,
+  accent,
+  theme,
   children,
-  ...props
-}: Props & GenerateThemeInput) => (
-  <Theme.Provider value={{ ...generateTheme(props), LinkComponent }}>
-    {children}
+}: Props) => (
+  <Theme.Provider value={generateTheme({ darkMode, accent, theme })}>
+    <LinkContext.Provider value={linkComponent}>
+      {children}
+    </LinkContext.Provider>
   </Theme.Provider>
 );
+
 export default Provider;

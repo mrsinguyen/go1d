@@ -1,5 +1,6 @@
 import { css as emotion } from "emotion";
 import * as React from "react";
+import { LinkContext } from "../Provider";
 import Theme from "../Theme";
 import View from "../View";
 
@@ -17,29 +18,33 @@ const Link = ({
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ LinkComponent, colors }) => {
-      const defaultCss = {
-        textDecoration: "none",
-        ":hover, :focus, :focus": {
-          "svg, span": {
-            color: colors[hoverFocusColor],
-          },
-        },
-      };
-      if (LinkComponent) {
-        return (
-          <LinkComponent className={emotion(defaultCss, css)} {...props}>
-            {children}
-          </LinkComponent>
-        );
-      } else {
-        return (
-          <View element="a" css={[defaultCss, css]} {...props}>
-            {children}
-          </View>
-        );
-      }
-    }}
+    {({ colors }) => (
+      <LinkContext.Consumer>
+        {LinkComponent => {
+          const defaultCss = {
+            textDecoration: "none",
+            ":hover, :focus, :focus": {
+              "svg, span": {
+                color: colors[hoverFocusColor],
+              },
+            },
+          };
+          if (LinkComponent) {
+            return (
+              <LinkComponent className={emotion(defaultCss, css)} {...props}>
+                {children}
+              </LinkComponent>
+            );
+          } else {
+            return (
+              <View element="a" css={[defaultCss, css]} {...props}>
+                {children}
+              </View>
+            );
+          }
+        }}
+      </LinkContext.Consumer>
+    )}
   </Theme.Consumer>
 );
 
