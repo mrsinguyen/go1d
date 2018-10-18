@@ -75,7 +75,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/**/*.js",
+      "path": "./build/**/*.js",
       "maxSize": "3 kB"
     }
   ],
