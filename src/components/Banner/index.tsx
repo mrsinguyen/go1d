@@ -8,7 +8,7 @@ import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
   type: "success" | "warning" | "danger";
-  children: React.ReactChild;
+  children: React.ReactNode;
   close?: ((evt: React.SyntheticEvent) => void);
   floating?: boolean;
 }

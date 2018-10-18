@@ -1,17 +1,22 @@
 function formatDuration(minutes: number): string {
+  let output = "";
   if (minutes) {
     // In case a formatted string is passed in here
     if (isNaN(minutes)) {
       return `${minutes}`;
     }
-    if (minutes < 60) {
-      return `${minutes} min`;
+    if (minutes >= 1440) {
+      const days = Math.floor(minutes / 1440);
+      output += days > 0 ? `${days} day ` : "";
+      minutes %= 1440;
     }
-    const hours = Math.floor(minutes / 60);
-    const restMins = minutes - hours * 60;
-    const mins = restMins > 0 ? ` ${restMins} min` : "";
-    return `${hours} hr${mins}`;
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60);
+      output += hours > 0 ? `${hours} hr ` : "";
+      minutes %= 60;
+    }
+    output += minutes > 0 ? `${minutes} min` : "";
   }
-  return "";
+  return output.trim();
 }
 export default formatDuration;

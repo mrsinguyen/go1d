@@ -9,6 +9,10 @@ it("formatDuration works as expected", () => {
   expect(result3).toBe("2 hr 5 min");
   const result4 = formatDuration(25);
   expect(result4).toBe("25 min");
+  const result5 = formatDuration(1440);
+  expect(result5).toBe("1 day");
+  const result6 = formatDuration(1600);
+  expect(result6).toBe("1 day 2 hr 40 min");
   const result7 = formatDuration(undefined);
   expect(result7).toBe("");
 });
