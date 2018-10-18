@@ -102,7 +102,6 @@ class TextInput extends React.Component<TextInputProps, any> {
             flexDirection="row"
             alignItems="center"
             htmlFor={id}
-            value={value}
             css={{
               opacity: disabled ? opacity.disabled : 1,
             }}

@@ -1,25 +1,28 @@
 import * as React from "react";
 
+import { FieldConfig } from "formik";
+import { get } from "lodash";
 import { brandGreys } from "../../foundations";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import Field from "../Field";
-import Form from "../Form";
 import TextInput from "../TextInput";
 import Theme from "../Theme";
-import { Props as ViewProps } from "../View";
 import View from "../View";
 
-export interface Props extends ViewProps {
+export interface Props extends FieldConfig {
   color?: string;
   children?: React.ReactNode;
   onClick?: (evt: React.MouseEvent<any>) => void;
   onFocus?: (evt: React.FocusEvent<any>) => void;
   onBlur?: (evt: React.FocusEvent<any>) => void;
   isAvailable?: boolean;
+  portalUrl?: string;
+  label: string;
+  size?: "lg" | "md" | "sm";
 }
 
-class PortalUrl extends React.Component<Props, any> {
+class PortalUrlField extends React.Component<Props, any> {
   public static displayName = "PortalUrlField";
 
   constructor(props) {
@@ -31,11 +34,6 @@ class PortalUrl extends React.Component<Props, any> {
       statusColor: "",
       statusIcon: "",
     };
-  }
-
-  @autobind
-  public onSubmit(evt: React.FocusEvent<any>) {
-    safeInvoke(this.props.onFocus, evt);
   }
 
   @autobind
@@ -85,60 +83,45 @@ class PortalUrl extends React.Component<Props, any> {
   }
 
   public render() {
-    const {
-      color = "subtle",
-      portalUrl,
-      portalUrlName,
-      description,
-      label,
-      size,
-      css,
-      ...props
-    } = this.props;
+    const { color = "subtle", size = "md", portalUrl, ...props } = this.props;
 
     return (
       <Theme.Consumer>
-        {({ colors }) => (
-          <Form initialValues={{ name: "" }} onSubmit={this.onSubmit}>
-            <Field
-              component={TextInput}
-              label={label}
-              name={portalUrlName}
-              description={description}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
-              value={this.state.value}
-              statusText={this.getStatusText()}
-              statusColor={this.getStatusColor()}
-              statusIcon={this.getStatusIcon()}
-              suffixNode={
-                <View
-                  paddingX={5}
-                  paddingY={3}
-                  css={{
-                    marginBottom: "-1px",
-                    marginRight: "-9px",
-                    border: "1px solid",
-                    borderTop: 0,
-                    borderColor: this.state.isFocused
-                      ? colors.accent
-                      : brandGreys.lighter,
-                    color: brandGreys.darkest,
-                    backgroundColor: brandGreys.lighter,
-                    borderRadius: "4px",
-                  }}
-                  {...props}
-                >
-                  {portalUrl}
-                </View>
-              }
-              {...props}
-            />
-          </Form>
+        {({ colors, spacing }) => (
+          <Field
+            component={TextInput}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            value={this.state.value}
+            statusText={this.getStatusText()}
+            statusColor={this.getStatusColor()}
+            statusIcon={this.getStatusIcon()}
+            suffixNode={
+              <View
+                paddingX={get({ lg: 7, md: 5, sm: 5 }, size)}
+                paddingY={get({ lg: 5, md: 3, sm: 3 }, size)}
+                css={{
+                  marginBottom: "-1px",
+                  marginRight: "-9px",
+                  border: "1px solid",
+                  borderTop: 0,
+                  borderColor: this.state.isFocused
+                    ? colors.accent
+                    : brandGreys.lighter,
+                  color: brandGreys.darkest,
+                  backgroundColor: brandGreys.lighter,
+                  borderRadius: "4px",
+                }}
+              >
+                {portalUrl}
+              </View>
+            }
+            {...props}
+          />
         )}
       </Theme.Consumer>
     );
   }
 }
 
-export default PortalUrl;
+export default PortalUrlField;
