@@ -18,7 +18,7 @@ it("renders without crashing with optional props", () => {
   const onSubmit = jest.fn();
   render(
     <Form initialValues={{ portalName: "A portal" }} onSubmit={onSubmit}>
-      <PortalUrlField label="label" name="Name" portalUrl=".mygo1.com" />
+      <PortalUrlField label="label" name="Name" suffixValue=".mygo1.com" />
     </Form>
   );
 });
