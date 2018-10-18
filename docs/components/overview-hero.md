@@ -28,7 +28,6 @@ An overview container for a hero page
     </View>}
   breadcrumb={
     <Link to="/back">
-      <Icon name="ChevronLeft" marginRight={3} />
       Back
     </Link>}
 >
@@ -48,7 +47,6 @@ An overview container for a hero page
     </View>}
   breadcrumb={
     <Link to="/back">
-      <Icon name="ChevronLeft" marginRight={3} />
       Back
     </Link>}
   author={
