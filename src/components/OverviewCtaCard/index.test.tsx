@@ -9,7 +9,7 @@ it("renders without crashing without any optional props", () => {
 });
 
 it("renders without crashing with all available props", () => {
-  const onButtonClickHandler = function () {
+  const onButtonClickHandler = () => {
     alert("test");
   };
   render(
