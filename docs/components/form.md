@@ -29,9 +29,24 @@ Helpful Resources
     label="Portal name"
     description="The name displayed across the site"
     />
-    <ButtonFilled type="submit" color="accent">Submit</ButtonFilled>
+    <SubmitButton>Submit</SubmitButton>
 </Form>
 ```
+
+### Example Disabled Form with field
+
+```.jsx
+<Form initialValues={{ portalName: "A portal" }} disabled={true} onSubmit={(values, actions) => console.log(values, actions)}>
+    <Field
+    component={TextInput}
+    name="portalName"
+    label="Portal name"
+    description="The name displayed across the site"
+    />
+    <SubmitButton>Create</SubmitButton>
+</Form>
+```
+
 
 ```!jsx
 <ComponentDoc component={Form} />
