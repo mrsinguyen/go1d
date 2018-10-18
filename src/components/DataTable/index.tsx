@@ -243,8 +243,8 @@ const Loader: React.SFC<{
   if (infiniteLoad) {
     return (
       <InfiniteLoader
-        isRowLoaded={infiniteLoad ? isRowLoaded : () => true}
-        loadMoreRows={infiniteLoad ? loadMoreRows : () => null}
+        isRowLoaded={infiniteLoad ? isRowLoaded : null}
+        loadMoreRows={infiniteLoad ? loadMoreRows : null}
         rowCount={rowCount}
         threshold={2}
       >
