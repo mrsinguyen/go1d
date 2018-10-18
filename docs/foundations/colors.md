@@ -29,7 +29,6 @@ These are the complementary colors to our accent blue. Every grey contains a per
 ```!jsx
 <Colors
   mode='dark'
-  paddingX={2}
   paddingTop={6}
   borderRadius={2}
   backgroundColor="background"

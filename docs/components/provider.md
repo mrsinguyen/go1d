@@ -26,7 +26,7 @@ Provider is a component that allows for the specification of whether the child c
 
 ### Custom link and dark mode specified
 ```.jsx
-<Provider darkMode={true} LinkComponent={() => <div>custom link</div>}>
+<Provider darkMode={true} linkComponent={() => <div>custom link</div>}>
   <PageBody>
     <View marginBottom={5}>
       <Text element="h2" fontSize={4} fontWeight="bold">Reports</Text>

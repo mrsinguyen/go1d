@@ -23,6 +23,7 @@ const Link = ({
         {LinkComponent => {
           const defaultCss = {
             textDecoration: "none",
+            display: "inline-flex",
             ":hover, :focus, :focus": {
               "svg, span": {
                 color: colors[hoverFocusColor],
