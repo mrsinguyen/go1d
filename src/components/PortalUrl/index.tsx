@@ -5,6 +5,7 @@ import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import Field from "../Field";
 import Form from "../Form";
+import TextInput from "../TextInput";
 import Theme from "../Theme";
 import { Props as ViewProps } from "../View";
 import View from "../View";
@@ -15,6 +16,7 @@ export interface Props extends ViewProps {
   onClick?: (evt: React.MouseEvent<any>) => void;
   onFocus?: (evt: React.FocusEvent<any>) => void;
   onBlur?: (evt: React.FocusEvent<any>) => void;
+  isAvailable?: boolean;
 }
 
 class PortalUrl extends React.Component<Props, any> {
@@ -22,7 +24,18 @@ class PortalUrl extends React.Component<Props, any> {
 
   constructor(props) {
     super(props);
-    this.state = { isFocused: false, value: "" };
+    this.state = {
+      isFocused: false,
+      value: "",
+      statusText: "",
+      statusColor: "",
+      statusIcon: "",
+    };
+  }
+
+  @autobind
+  public onSubmit(evt: React.FocusEvent<any>) {
+    safeInvoke(this.props.onFocus, evt);
   }
 
   @autobind
@@ -41,13 +54,42 @@ class PortalUrl extends React.Component<Props, any> {
     safeInvoke(this.props.onBlur, evt);
   }
 
+  @autobind
+  public getStatusText() {
+    if (this.props.isAvailable) {
+      return "Available";
+    } else if (this.props.isAvailable === false) {
+      return "Not Available";
+    }
+    return "";
+  }
+
+  @autobind
+  public getStatusColor() {
+    if (this.props.isAvailable) {
+      return "success";
+    } else if (this.props.isAvailable === false) {
+      return "danger";
+    }
+    return "";
+  }
+
+  @autobind
+  public getStatusIcon() {
+    if (this.props.isAvailable) {
+      return "Passed";
+    } else if (this.props.isAvailable === false) {
+      return "NotPassed";
+    }
+    return "";
+  }
+
   public render() {
     const {
       color = "subtle",
       portalUrl,
       portalUrlName,
       description,
-      component,
       label,
       size,
       css,
@@ -57,15 +99,18 @@ class PortalUrl extends React.Component<Props, any> {
     return (
       <Theme.Consumer>
         {({ colors }) => (
-          <Form>
+          <Form initialValues={{ name: "" }} onSubmit={this.onSubmit}>
             <Field
+              component={TextInput}
               label={label}
               name={portalUrlName}
-              component={component}
               description={description}
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
               value={this.state.value}
+              statusText={this.getStatusText()}
+              statusColor={this.getStatusColor()}
+              statusIcon={this.getStatusIcon()}
               suffixNode={
                 <View
                   paddingX={5}

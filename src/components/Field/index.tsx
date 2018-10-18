@@ -65,13 +65,14 @@ const Field: React.SFC<Props> = ({
             ...props,
           });
         }
+
         if (form.errors && form.errors[field.name]) {
           statusText = required ? "Required" : "Invalid";
           statusColor = "danger";
           statusIcon = null;
         } else {
-          statusColor = "subtle";
-          statusText = !required && "Optional";
+          statusColor = statusColor ? statusColor : "subtle";
+          statusText = statusText ? statusText : !required && "Optional";
         }
 
         return (
