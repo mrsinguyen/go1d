@@ -26,8 +26,10 @@ An overview container for a hero page
       <Icon name="Video" marginRight={3} />
       VIDEO
     </View>}
-  breadcrumbHref="#testing"
-  breadcrumbTitle="Home"
+  breadcrumb={
+    <Link to="/back">
+      Back
+    </Link>}
 >
   <Text>This course will provide you with the skills and knowledge to design, build, test and launch digital products that are intuitive, user-friendly and accessible.</Text>
 </OverviewHero>
@@ -43,8 +45,10 @@ An overview container for a hero page
       <Icon name="Course" marginRight={3} />
       COURSE
     </View>}
-  breadcrumbHref="#testing"
-  breadcrumbTitle="Results"
+  breadcrumb={
+    <Link to="/back">
+      Back
+    </Link>}
   author={
     <View flexDirection="row" alignItems="center">
       <Avatar
@@ -55,6 +59,7 @@ An overview container for a hero page
       />
       Leslie Knope
     </View>}
+  contentWidth="wide"
   duration={1360}
   ctaCard={
     <View

@@ -20,6 +20,16 @@ interface Props extends ViewProps {
   typeIcon?: string;
 }
 
+const backgroundStyles = (colors, passive) => {
+  const styles = { background: `${colors.background}` };
+  if (!passive) {
+    styles["&:hover, &:focus"] = {
+      background: `${colors.gradients.darkWarmOverlay}, ${colors.background}`,
+    };
+  }
+  return styles;
+};
+
 const CourseSlat: React.SFC<Props> = ({
   courseImage,
   css,
@@ -31,143 +41,150 @@ const CourseSlat: React.SFC<Props> = ({
   contentRender,
   type,
   typeIcon,
+  passive,
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, breakpoints, opacity }) => (
-      <View
-        backgroundColor="background"
-        borderRadius={2}
-        boxShadow="crisp"
-        flexDirection="row"
-        marginBottom={4}
-        css={{
-          ...((css as object) || {}),
-          overflow: "hidden",
-        }}
-        {...props}
-      >
+    {({ spacing, breakpoints, opacity, colors }) => {
+      return (
         <View
-          padding={3}
-          alignItems="start"
-          backgroundColor="default"
-          backgroundOpacity={courseImage ? "none" : "emptyBackground"}
-          css={{
-            overflow: "hidden",
-            backgroundImage: courseImage ? `url(${courseImage})` : undefined,
-            backgroundSize: "cover",
-            position: "relative",
-            height: 142,
-            width: 221,
-            [breakpoints.sm]: {
-              height: 130,
-              width: 130,
+          borderRadius={2}
+          boxShadow="crisp"
+          flexDirection="row"
+          marginBottom={4}
+          color="default"
+          css={[
+            {
+              ...((css as object) || {}),
+              overflow: "hidden",
+              textDecoration: "none",
             },
-          }}
+            backgroundStyles(colors, passive),
+          ]}
+          {...props}
         >
-          {!courseImage && (
-            <View
-              alignItems="center"
-              justifyContent="center"
-              height="100%"
-              width="100%"
-              css={{
-                opacity: opacity.emptyIcon,
-              }}
-            >
-              <Icon size={7} name="Empty" color="default" />
-            </View>
-          )}
-          {(type || typeIcon) && (
-            <View
-              flexDirection="row"
-              padding={2}
-              borderRadius={1}
-              color="background"
-              backgroundColor="contrast"
-              css={{
-                position: "absolute",
-                bottom: 10,
-                left: 10,
-              }}
-            >
-              {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
-              {type && (
-                <Text color="background" fontSize={1}>
-                  {type.toUpperCase()}
-                </Text>
-              )}
-            </View>
-          )}
-        </View>
-        <View paddingY={4} paddingX={5} flexShrink={1}>
-          {title && (
-            <Text
-              fontSize={3}
-              css={{
-                marginBottom: 8,
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {title}
-            </Text>
-          )}
-          {(duration || author) && (
-            <View flexDirection="row" marginBottom={3}>
-              {author && (
-                <View paddingRight={5}>
-                  <Text color="subtle" fontSize={1}>
-                    {author}
-                  </Text>
-                </View>
-              )}
-              {duration && (
-                <View flexDirection="row">
-                  <Icon
-                    name="Clock"
-                    size={1}
-                    color="subtle"
-                    marginRight={2}
-                    marginTop={1}
-                  />
-                  <Text color="subtle" fontSize={1}>
-                    {formatDuration(duration)}
-                  </Text>
-                </View>
-              )}
-            </View>
-          )}
-          {contentRender && contentRender()}
-          {description && (
-            <Text
-              color="subtle"
-              css={{
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {description}
-            </Text>
-          )}
-        </View>
-        {actionRender && (
           <View
+            padding={3}
+            alignItems="start"
+            backgroundColor="default"
+            backgroundOpacity={courseImage ? "none" : "emptyBackground"}
             css={{
-              padding: spacing[5],
-              paddingLeft: spacing[7],
+              overflow: "hidden",
+              backgroundImage: courseImage ? `url(${courseImage})` : undefined,
+              backgroundSize: "cover",
+              position: "relative",
+              height: 142,
+              width: 221,
               [breakpoints.sm]: {
-                padding: spacing[4],
+                height: 130,
+                width: 130,
               },
             }}
           >
-            {actionRender()}
+            {!courseImage && (
+              <View
+                alignItems="center"
+                justifyContent="center"
+                height="100%"
+                width="100%"
+                css={{
+                  opacity: opacity.emptyIcon,
+                }}
+              >
+                <Icon size={7} name="Empty" color="default" />
+              </View>
+            )}
+            {(type || typeIcon) && (
+              <View
+                flexDirection="row"
+                padding={2}
+                borderRadius={1}
+                color="background"
+                backgroundColor="contrast"
+                css={{
+                  position: "absolute",
+                  bottom: 10,
+                  left: 10,
+                }}
+              >
+                {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
+                {type && (
+                  <Text color="background" fontSize={1}>
+                    {type.toUpperCase()}
+                  </Text>
+                )}
+              </View>
+            )}
           </View>
-        )}
-      </View>
-    )}
+          <View paddingY={4} paddingX={5} flexShrink={1}>
+            {title && (
+              <Text
+                fontSize={3}
+                css={{
+                  marginBottom: 8,
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {title}
+              </Text>
+            )}
+            {(duration || author) && (
+              <View flexDirection="row" marginBottom={3}>
+                {author && (
+                  <View paddingRight={5}>
+                    <Text color="subtle" fontSize={1}>
+                      {author}
+                    </Text>
+                  </View>
+                )}
+                {duration && (
+                  <View flexDirection="row">
+                    <Icon
+                      name="Clock"
+                      size={1}
+                      color="subtle"
+                      marginRight={2}
+                      marginTop={1}
+                    />
+                    <Text color="subtle" fontSize={1}>
+                      {formatDuration(duration)}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+            {contentRender && contentRender()}
+            {description && (
+              <Text
+                color="subtle"
+                css={{
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {description}
+              </Text>
+            )}
+          </View>
+          {actionRender && (
+            <View
+              css={{
+                padding: spacing[5],
+                paddingLeft: spacing[7],
+                [breakpoints.sm]: {
+                  padding: spacing[4],
+                },
+              }}
+            >
+              {actionRender()}
+            </View>
+          )}
+        </View>
+      );
+    }}
   </Theme.Consumer>
 );
 
