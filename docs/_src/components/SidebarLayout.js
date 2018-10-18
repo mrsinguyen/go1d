@@ -34,11 +34,14 @@ const Sidebar = props => (
         <View
           paddingY={4}
           backgroundColor="background"
+          color="subtle"
           {...props}
           css={{
-            minWidth: 280,
-            color: colors.subtle,
+            [breakpoints.sm]: {
+              width: "100%",
+            },
             [breakpoints.md]: {
+              minWidth: 280,
               position: "fixed",
               height: "100vh",
               overflow: "auto",
@@ -65,7 +68,7 @@ const Link = props => (
           paddingLeft: depthPad(props) + 12,
           borderLeft: "4px solid",
           borderColor: "transparent",
-          color: colors.faded,
+          color: colors.subtle,
           "&::before": {
             content: '""',
             position: "absolute",
