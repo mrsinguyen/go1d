@@ -70,6 +70,7 @@ const modeComponents = {
 
 const View: React.SFC<Props> = ({
   element = "div",
+  mode,
   display = "flex",
   flexDirection = "column",
   flexWrap,
@@ -101,8 +102,8 @@ const View: React.SFC<Props> = ({
   borderRight = border,
   borderBottom = border,
   borderLeft = border,
-  color = "inherit",
-  backgroundColor,
+  color = mode ? "default" : "inherit",
+  backgroundColor = mode && "background",
   backgroundOpacity,
   borderRadius,
   width,
@@ -113,7 +114,6 @@ const View: React.SFC<Props> = ({
   boxShadow,
   textAlign = "inherit",
   transition = "subtle",
-  mode,
   css,
   ...props
 }: Props) => {
