@@ -2,12 +2,14 @@ import { Interpolation } from "emotion";
 import { get } from "lodash";
 import * as React from "react";
 import Icon from "../Icon/index";
+import Link from "../Link";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
 export interface Props extends ViewProps {
   size?: "lg" | "md" | "sm";
   color?: string;
+  iconColor?: string;
   backgroundColor?: string;
   iconName?: string;
   css?: Interpolation;
@@ -25,10 +27,11 @@ const Button: React.SFC<Props> = ({
   css,
   onClick,
   href,
+  iconColor = color,
   ...props
 }: Props) => (
   <View
-    element={href ? "a" : "button"}
+    element={href ? (href.includes("http") ? "a" : Link) : "button"}
     flexDirection="row"
     alignItems="center"
     justifyContent="space-between"
@@ -56,6 +59,7 @@ const Button: React.SFC<Props> = ({
         name={iconName}
         size={get({ lg: 3, md: 2, sm: 1 }, size)}
         marginRight={children && get({ lg: 4, md: 3, sm: 1 }, size)}
+        color={iconColor}
       />
     )}
     <Text

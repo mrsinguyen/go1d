@@ -47,3 +47,5 @@ export { default as DataTable } from "./components/DataTable";
 export { default as Label } from "./components/Label";
 export { default as OverviewHero } from "./components/OverviewHero";
 export { default as SubmitButton } from "./components/SubmitButton";
+export { default as MoreMenu } from "./components/MoreMenu";
+export { default as Dropdown } from "./components/Dropdown";
