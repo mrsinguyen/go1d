@@ -26,15 +26,10 @@ const OverviewCtaCard: React.SFC<Props> = ({
   onButtonClick,
   ...props
 }: Props) => (
-  <View
-    boxShadow="crisp"
-    backgroundColor="background"
-    maxWidth="300px"
-    {...props}
-  >
+  <View boxShadow="soft" backgroundColor="background" width={280} {...props}>
     <View
       backgroundColor="soft"
-      height="150px"
+      height={140}
       css={{
         backgroundImage: backgroundImage
           ? `url(${backgroundImage})`
@@ -43,7 +38,7 @@ const OverviewCtaCard: React.SFC<Props> = ({
         backgroundSize: "cover",
       }}
     />
-    <View padding={4}>
+    <View padding={4} paddingTop={3}>
       <View flexDirection="row" alignItems="center">
         <Icon name="ThumbsUp" paddingX={1} />
         {likes}
