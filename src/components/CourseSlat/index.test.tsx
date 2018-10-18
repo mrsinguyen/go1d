@@ -21,6 +21,25 @@ it("renders without crashing with all props", () => {
       contentRender={testRenderer}
       type="Course"
       typeIcon="Course"
+      passive={false}
+    />
+  );
+});
+
+it("renders passive course slats", () => {
+  const testRenderer = () => <p>Hello</p>;
+  render(
+    <CourseSlat
+      courseImage="#"
+      title="Master sourdough in a week"
+      description="Despite general improvements in workplace health and safety"
+      author="Bob Bobberson"
+      duration={4}
+      actionRender={testRenderer}
+      contentRender={testRenderer}
+      type="Course"
+      typeIcon="Course"
+      passive={true}
     />
   );
 });
