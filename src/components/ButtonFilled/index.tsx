@@ -31,6 +31,7 @@ const ButtonFilled: React.SFC<Props> = ({
       <Button
         backgroundColor={color}
         color={getTextColor(color, colors)}
+        fontWeight="bold"
         css={[
           {
             background: `${colors.gradients.warmOverlay}, ${colors[color]}`,

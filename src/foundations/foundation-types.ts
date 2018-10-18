@@ -1,9 +1,9 @@
 /**
  * interfaces
  */
-export type FontFamily = "sansSerif" | "display" | "prose" | "ui" | "mono";
+export type FontFamily = "sansSerif" | "title" | "paragraph" | "ui" | "mono";
 
-export type FontWeight = "normal" | "bold";
+export type FontWeight = "normal" | "semibold" | "bold";
 
 export type Gradients = "warmOverlay" | "lightWarmOverlay" | "darkWarmOverlay";
 export type Opacities =
@@ -15,7 +15,7 @@ export type Opacities =
   | "disabled"
   | "modal";
 
-export type Leading = "display" | "ui" | "prose";
+export type Leading = "title" | "ui" | "paragraph";
 
 export type Scale = "sm" | "md" | "lg";
 
