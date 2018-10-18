@@ -62,7 +62,7 @@ interface Props extends ViewProps {
   hideScrollButton?: boolean;
 }
 
-class DataTable extends React.Component<Props, { offset: number }> {
+class DataTable extends React.Component<Props, {}> {
   public listEl: List;
   public header: HTMLElement;
 
@@ -74,10 +74,6 @@ class DataTable extends React.Component<Props, { offset: number }> {
       defaultHeight: this.props.rowHeight || 50,
       fixedWidth: true,
     });
-
-    this.state = {
-      offset: 0,
-    };
   }
 
   @autobind
@@ -88,9 +84,6 @@ class DataTable extends React.Component<Props, { offset: number }> {
   @autobind
   public rowsReturn(onRowsRendered) {
     return args => {
-      this.setState({
-        offset: args.startIndex,
-      });
       safeInvoke(this.props.scrollCallback, {
         row: args.startIndex,
       });
@@ -160,7 +153,6 @@ class DataTable extends React.Component<Props, { offset: number }> {
                 },
                 css,
               ]}
-              {...viewProps}
             >
               {header && (
                 <TR
@@ -177,53 +169,61 @@ class DataTable extends React.Component<Props, { offset: number }> {
                 {({ registerChild, onRowsRendered }) => (
                   <WindowScroller>
                     {({ height, isScrolling, onChildScroll, scrollTop }) => (
-                      <AutoSizer disableHeight={true}>
-                        {({ width }) => (
-                          <div ref={registerChild}>
-                            <List
-                              autoHeight={true}
-                              height={height}
-                              onRowsRendered={this.rowsReturn(onRowsRendered)}
-                              ref={el => {
-                                this.listEl = el;
-                              }}
-                              rowCount={rowCount}
-                              rowHeight={
-                                autoRowHeight ? this.cache.rowHeight : rowHeight
-                              }
-                              rowRenderer={renderFunction}
-                              deferredMeasurementCache={
-                                autoRowHeight ? this.cache : null
-                              }
-                              scrollTop={scrollTop}
-                              onScroll={onChildScroll}
-                              overscanRowCount={5}
-                              scrollToAlignment="start"
-                              isScrolling={isScrolling}
-                              width={width}
-                              scrollToIndex={scrollToIndex}
-                            />
-                          </div>
-                        )}
-                      </AutoSizer>
+                      <React.Fragment>
+                        <View display="block" {...viewProps}>
+                          <AutoSizer disableHeight={true}>
+                            {({ width }) => (
+                              <div ref={registerChild}>
+                                <List
+                                  autoHeight={true}
+                                  height={height}
+                                  onRowsRendered={this.rowsReturn(
+                                    onRowsRendered
+                                  )}
+                                  ref={el => {
+                                    this.listEl = el;
+                                  }}
+                                  rowCount={rowCount}
+                                  rowHeight={
+                                    autoRowHeight
+                                      ? this.cache.rowHeight
+                                      : rowHeight
+                                  }
+                                  rowRenderer={renderFunction}
+                                  deferredMeasurementCache={
+                                    autoRowHeight ? this.cache : null
+                                  }
+                                  scrollTop={scrollTop}
+                                  onScroll={onChildScroll}
+                                  overscanRowCount={5}
+                                  scrollToAlignment="start"
+                                  isScrolling={isScrolling}
+                                  width={width}
+                                  scrollToIndex={scrollToIndex}
+                                />
+                              </div>
+                            )}
+                          </AutoSizer>
+                        </View>
+                        {!hideScrollButton &&
+                          scrollTop > 0 && (
+                            <ButtonFilled
+                              color="contrast"
+                              onClick={this.scrollToTop}
+                              position="sticky"
+                              marginTop={4}
+                              marginLeft="auto"
+                              css={{ bottom: spacing[4] }}
+                            >
+                              <Icon name="ChevronUp" color="background" />
+                            </ButtonFilled>
+                          )}
+                      </React.Fragment>
                     )}
                   </WindowScroller>
                 )}
               </Loader>
             </View>
-            {!hideScrollButton &&
-              this.state.offset > 0 && (
-                <ButtonFilled
-                  color="contrast"
-                  onClick={this.scrollToTop}
-                  position="sticky"
-                  marginTop={4}
-                  marginLeft="auto"
-                  css={{ bottom: spacing[4] }}
-                >
-                  <Icon name="ChevronUp" color="background" />
-                </ButtonFilled>
-              )}
           </React.Fragment>
         )}
       </Theme.Consumer>
@@ -243,8 +243,8 @@ const Loader: React.SFC<{
   if (infiniteLoad) {
     return (
       <InfiniteLoader
-        isRowLoaded={infiniteLoad ? isRowLoaded : null}
-        loadMoreRows={infiniteLoad ? loadMoreRows : null}
+        isRowLoaded={infiniteLoad && isRowLoaded}
+        loadMoreRows={infiniteLoad && loadMoreRows}
         rowCount={rowCount}
         threshold={2}
       >
