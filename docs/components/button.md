@@ -56,6 +56,13 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonMinimal color='danger'>Really</ButtonMinimal>
 ```
 
+### Submit Button used in a Form
+
+```.jsx
+<SubmitButton>Create</SubmitButton>
+```
+
+
 ## Best practice
 
 - Only one accent or button may be prominent
