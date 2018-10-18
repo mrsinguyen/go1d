@@ -17,6 +17,7 @@ it("renders without crashing with optional props", () => {
       autoRowHeight={true}
       rowCount={10}
       scrollToIndex={4}
+      hideScrollButton={true}
       rowRenderer={createRows}
       total="Many things"
       header={[

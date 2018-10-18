@@ -1,5 +1,4 @@
 import * as _ from "lodash";
-import { throttle } from "lodash-decorators";
 import * as React from "react";
 import {
   AutoSizer,
@@ -56,6 +55,11 @@ interface Props extends ViewProps {
    * A callback that returns the top row rendered. Triggers when the top rendered row changes.
    */
   scrollCallback?: ({ row }) => void;
+
+  /**
+   * Hide the scroll to top of page button
+   */
+  hideScrollButton?: boolean;
 }
 
 class DataTable extends React.Component<Props, {}> {
@@ -72,7 +76,6 @@ class DataTable extends React.Component<Props, {}> {
     });
   }
 
-  @throttle(100)
   @autobind
   public scroll({ startIndex }) {
     if (startIndex) {
@@ -90,13 +93,18 @@ class DataTable extends React.Component<Props, {}> {
   @autobind
   public rowsReturn(onRowsRendered) {
     return args => {
-      this.scroll(args);
-      safeInvoke(onRowsRendered(args));
+      if (args.startIndex) {
+        safeInvoke(this.props.scrollCallback, {
+          row: args.startIndex,
+        });
+      }
+      safeInvoke(onRowsRendered, args);
     };
   }
 
   @autobind
   public scrollToTop() {
+    safeInvoke(this.props.scrollCallback, { row: 0 });
     scrollTo({
       top: 0,
     });
@@ -116,6 +124,7 @@ class DataTable extends React.Component<Props, {}> {
       loadMoreRows,
       scrollToIndex,
       scrollCallback,
+      hideScrollButton,
       ...viewProps
     } = this.props;
 
@@ -211,16 +220,18 @@ class DataTable extends React.Component<Props, {}> {
                 )}
               </InfiniteLoader>
             </View>
-            <ButtonFilled
-              color="contrast"
-              onClick={this.scrollToTop}
-              position="sticky"
-              marginTop={4}
-              marginLeft="auto"
-              css={{ bottom: spacing[4] }}
-            >
-              <Icon name="ChevronUp" color="background" />
-            </ButtonFilled>
+            {!hideScrollButton && (
+              <ButtonFilled
+                color="contrast"
+                onClick={this.scrollToTop}
+                position="sticky"
+                marginTop={4}
+                marginLeft="auto"
+                css={{ bottom: spacing[4] }}
+              >
+                <Icon name="ChevronUp" color="background" />
+              </ButtonFilled>
+            )}
           </React.Fragment>
         )}
       </Theme.Consumer>
