@@ -64,9 +64,4 @@ it("renders without crashing with infinite loading", () => {
       ]}
     />
   );
-
-  // tslint:disable-next-line
-  global["scrollTo"] = () => null;
-
-  container.querySelector("button").click();
 });

@@ -173,13 +173,8 @@ class DataTable extends React.Component<Props, { offset: number }> {
                   {header}
                 </TR>
               )}
-              <InfiniteLoader
-                isRowLoaded={infiniteLoad ? isRowLoaded : () => true}
-                loadMoreRows={infiniteLoad ? loadMoreRows : () => null}
-                rowCount={rowCount}
-                threshold={2}
-              >
-                {({ onRowsRendered, registerChild }) => (
+              <Loader {...this.props}>
+                {({ registerChild, onRowsRendered }) => (
                   <WindowScroller>
                     {({ height, isScrolling, onChildScroll, scrollTop }) => (
                       <AutoSizer disableHeight={true}>
@@ -214,10 +209,10 @@ class DataTable extends React.Component<Props, { offset: number }> {
                     )}
                   </WindowScroller>
                 )}
-              </InfiniteLoader>
+              </Loader>
             </View>
             {!hideScrollButton &&
-              this.state.offset && (
+              this.state.offset > 0 && (
                 <ButtonFilled
                   color="contrast"
                   onClick={this.scrollToTop}
@@ -237,3 +232,26 @@ class DataTable extends React.Component<Props, { offset: number }> {
 }
 
 export default DataTable;
+
+const Loader: React.SFC<{
+  infiniteLoad?: boolean;
+  isRowLoaded?: (obj: any) => boolean;
+  loadMoreRows?: (obj: any) => Promise<any>;
+  rowCount: number;
+  children: any;
+}> = ({ infiniteLoad, isRowLoaded, loadMoreRows, rowCount, children }) => {
+  if (infiniteLoad) {
+    return (
+      <InfiniteLoader
+        isRowLoaded={infiniteLoad ? isRowLoaded : () => true}
+        loadMoreRows={infiniteLoad ? loadMoreRows : () => null}
+        rowCount={rowCount}
+        threshold={2}
+      >
+        {children}
+      </InfiniteLoader>
+    );
+  }
+
+  return children({});
+};
