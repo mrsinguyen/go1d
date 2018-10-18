@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import formatDuration from "../../utils/durationFormatter";
+import Container from "../Container";
 import Icon from "../Icon";
 import Text from "../Text";
-import Container from "../Container";
 import View, { Props as ViewProps } from "../View";
 
 export interface Props extends ViewProps {
@@ -64,14 +64,14 @@ const OverviewHero: React.SFC<Props> = ({
           transform: "scale(1.2)",
         }}
       />
-      <Container 
+      <Container
         contain={contentWidth ? contentWidth : "wide"}
         paddingX={4}
         css={{
           zIndex: 1,
         }}
       >
-        {breadcrumb &&
+        {breadcrumb && (
           <View flexDirection="row" alignItems="center">
             <Icon
               name="ChevronLeft"
@@ -81,12 +81,9 @@ const OverviewHero: React.SFC<Props> = ({
             />
             <Text fontSize={1}>{breadcrumb}</Text>
           </View>
-          }
+        )}
         <View marginY={2}>
-          <Text 
-            element="h1" 
-            fontSize={5} 
-          >
+          <Text element="h1" fontSize={5}>
             {title}
           </Text>
         </View>
@@ -94,7 +91,9 @@ const OverviewHero: React.SFC<Props> = ({
         <View flexDirection="row" marginTop={5} alignItems="center">
           {author && (
             <View flexDirection="row" alignItems="center" marginRight={5}>
-              <Text fontSize={3} color="soft">{author}</Text>
+              <Text fontSize={3} color="soft">
+                {author}
+              </Text>
             </View>
           )}
           {duration && (
@@ -107,10 +106,12 @@ const OverviewHero: React.SFC<Props> = ({
       </Container>
     </View>
     <View flexDirection="row" padding={8}>
-      <View flexGrow={1} flexShrink={1}>
-        {children}
-      </View>
-      <View alignItems="flex-end">{ctaCard}</View>
+      <Container contain={contentWidth ? contentWidth : "wide"} paddingX={4}>
+        <View flexGrow={1} flexShrink={1}>
+          {children}
+        </View>
+        <View alignItems="flex-end">{ctaCard}</View>
+      </Container>
     </View>
   </View>
 );
