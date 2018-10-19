@@ -367,6 +367,7 @@ class Select extends React.Component<Props, any> {
       onKeyUp,
       closeOnSelect,
       size = "sm",
+      id,
       ...props
     } = this.props;
 
@@ -477,6 +478,7 @@ class Select extends React.Component<Props, any> {
                 onFocus={this.handleOnFocus}
                 innerRef={this.getInputRef}
                 readOnly={true}
+                id={id}
                 data-testid="primarySection"
                 value={this.state.value || ""}
                 name={name}
