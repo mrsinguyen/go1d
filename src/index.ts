@@ -50,3 +50,4 @@ export { default as OverviewCtaCard } from "./components/OverviewCtaCard";
 export { default as SubmitButton } from "./components/SubmitButton";
 export { default as MoreMenu } from "./components/MoreMenu";
 export { default as Dropdown } from "./components/Dropdown";
+export { default as Prose } from "./components/Prose";
