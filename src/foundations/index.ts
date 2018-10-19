@@ -200,7 +200,7 @@ export const type: ThemeType = {
     bold: 700,
   },
   leading: {
-    title: 1,
+    display: 1.2,
     ui: 1.35,
     paragraph: 1.5,
   },

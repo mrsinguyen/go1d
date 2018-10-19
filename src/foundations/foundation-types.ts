@@ -15,7 +15,7 @@ export type Opacities =
   | "disabled"
   | "modal";
 
-export type Leading = "title" | "ui" | "paragraph";
+export type Leading = "display" | "ui" | "paragraph";
 
 export type Scale = "sm" | "md" | "lg";
 
