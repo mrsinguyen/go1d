@@ -1,8 +1,10 @@
 import * as React from "react";
-import ButtonMinimal from "../../ButtonMinimal";
+import ButtonMinimal, {
+  Props as ButtonMinimalProps,
+} from "../../ButtonMinimal";
 import Text from "../../Text";
 
-export interface Item {
+export interface Item extends ButtonMinimalProps {
   title: string;
   href?: string;
   iconName?: string;

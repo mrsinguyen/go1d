@@ -3,7 +3,7 @@ import { darken } from "../../foundations";
 import Button, { Props as ButtonProps } from "../Button";
 import Theme from "../Theme";
 
-interface Props extends ButtonProps {
+export interface Props extends ButtonProps {
   color?: string;
   children?: React.ReactNode;
 }
