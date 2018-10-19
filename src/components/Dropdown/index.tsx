@@ -1,6 +1,7 @@
 import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
+import Portal from "../Portal";
 import View, { Props as ViewProps } from "../View";
 
 interface Props extends ViewProps {
@@ -60,33 +61,35 @@ const Dropdown = ({
             }
           </Reference>
           {isOpen && (
-            <Popper
-              placement={placement}
-              modifiers={offset && { offset: { offset } }}
-            >
-              {({ ref, style }) => (
-                <View
-                  {...getMenuProps({
-                    refKey: "innerRef",
-                  })}
-                >
+            <Portal>
+              <Popper
+                placement={placement}
+                modifiers={offset && { offset: { offset } }}
+              >
+                {({ ref, style }) => (
                   <View
-                    backgroundColor="background"
-                    boxShadow="strong"
-                    borderRadius={3}
-                    style={style}
-                    innerRef={ref}
-                    transition="none"
-                    paddingY={3}
-                    {...props}
+                    {...getMenuProps({
+                      refKey: "innerRef",
+                    })}
                   >
-                    {itemList.map((item, i) =>
-                      renderFunction(item, i, getItemProps)
-                    )}
+                    <View
+                      backgroundColor="background"
+                      boxShadow="strong"
+                      borderRadius={3}
+                      style={style}
+                      innerRef={ref}
+                      transition="none"
+                      paddingY={3}
+                      {...props}
+                    >
+                      {itemList.map((item, i) =>
+                        renderFunction(item, i, getItemProps)
+                      )}
+                    </View>
                   </View>
-                </View>
-              )}
-            </Popper>
+                )}
+              </Popper>
+            </Portal>
           )}
         </Manager>
       </View>
