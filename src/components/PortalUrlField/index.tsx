@@ -3,7 +3,6 @@ import * as React from "react";
 import { autobind } from "../../utils/decorators";
 import Field, { Props as FieldProps } from "../Field";
 import InputSuffix from "../InputSuffix";
-import { Props } from "../View";
 
 export interface Props extends FieldProps {
   isAvailable?: boolean;
@@ -48,8 +47,6 @@ class PortalUrlField extends React.Component<Props, any> {
 
     return (
       <Field
-        label=""
-        name={name}
         statusText={this.getStatusText()}
         statusColor={this.getStatusColor()}
         statusIcon={this.getStatusIcon()}
