@@ -28,21 +28,6 @@ class InputSuffix extends React.Component<Props, any> {
   }
 
   @autobind
-  public getBorderColor() {
-    const { isFocused } = this.state;
-    const { error } = this.props;
-
-    if (error) {
-      return "danger";
-    }
-    if (isFocused) {
-      return "accent";
-    }
-
-    return "faded";
-  }
-
-  @autobind
   public handleBlur(evt: React.FocusEvent<any>) {
     this.setState({
       isFocused: false,
@@ -75,13 +60,12 @@ class InputSuffix extends React.Component<Props, any> {
                 backgroundColor="soft"
                 borderRadius={2}
                 border={1}
-                borderColor={this.getBorderColor()}
                 borderTop={0}
                 marginBottom={-1}
                 marginRight={-1}
-                // css={{
-                //   marginRight: "-9px",
-                // }}
+                css={{
+                   marginRight: "-9px",
+                }}
               >
                 {suffixValue}
               </View>

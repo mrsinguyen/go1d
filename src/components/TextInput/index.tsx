@@ -101,7 +101,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             flexDirection="row"
             alignItems="center"
             htmlFor={id}
-            paddingRight={suffixNode ? 0 : get({ lg: 5, md: 3, sm: 1 }, size)}
+            //paddingRight={suffixNode ? 0 : get({ lg: 5, md: 3, sm: 1 }, size)}
             css={{
               opacity: disabled ? opacity.disabled : 1,
             }}

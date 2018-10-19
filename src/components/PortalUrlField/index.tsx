@@ -2,11 +2,10 @@ import * as React from "react";
 
 import { autobind } from "../../utils/decorators";
 import Field, { Props as FieldProps } from "../Field";
-import InputSuffix, {Props as InputSuffixProps} from "../InputSuffix";
+import InputSuffix from "../InputSuffix";
 import { Props } from "../View";
 
-export interface Props extends FieldProps {  
-  onKeyDown?: (evt: React.Component<Props & InputSuffixProps, any> ) => void;
+export interface Props extends FieldProps {
   isAvailable?: boolean;
   suffixValue?: string;
 }
@@ -45,12 +44,12 @@ class PortalUrlField extends React.Component<Props, any> {
   }
 
   public render() {
-    const { suffixValue, name, ...props } = this.props;
+    const { suffixValue, ...props } = this.props;
 
     return (
       <Field
         label=""
-        name=""
+        name={name}     
         statusText={this.getStatusText()}
         statusColor={this.getStatusColor()}
         statusIcon={this.getStatusIcon()}
