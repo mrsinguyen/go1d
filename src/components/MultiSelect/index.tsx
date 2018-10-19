@@ -80,7 +80,13 @@ class MultiSelect extends React.Component<Props, any> {
   };
 
   public render() {
-    const { onChange, options, label, id=`MultiSelect_${Math.random()}`, ...props } = this.props;
+    const {
+      onChange,
+      options,
+      label,
+      id = `MultiSelect_${Math.random()}`,
+      ...props
+    } = this.props;
     const { closeOnSelect } = this.state;
 
     const LabelMap = options.reduce(
@@ -115,7 +121,13 @@ class MultiSelect extends React.Component<Props, any> {
         <View flexDirection="row">
           {label && (
             <View paddingBottom={3} paddingRight={4}>
-              {typeof label === "string" ? <Text element="label" htmlFor={id}>{label}</Text> : label}
+              {typeof label === "string" ? (
+                <Text element="label" htmlFor={id}>
+                  {label}
+                </Text>
+              ) : (
+                label
+              )}
             </View>
           )}
           <View
