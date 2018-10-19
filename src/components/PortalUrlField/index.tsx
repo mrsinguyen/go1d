@@ -1,15 +1,17 @@
 import * as React from "react";
 
-import { FieldProps } from "formik";
+import { FieldConfig } from "formik";
 import { autobind } from "../../utils/decorators";
+// import Field from "../Field";
+// import { Props } from "../View";
 import Field from "../Field";
 import InputSuffix from "../InputSuffix";
 
-export interface Props extends FieldProps {
+export interface Props extends FieldConfig {
   isAvailable?: boolean;
   suffixValue?: string;
   label: string;
-  name: string;
+  // name: string;
 }
 
 class PortalUrlField extends React.Component<Props, any> {

@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { get } from "lodash";
-import { brandGreys } from "../../foundations";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import TextInput, { TextInputProps } from "../TextInput";
@@ -37,7 +36,14 @@ class InputSuffix extends React.Component<Props, any> {
   }
 
   public render() {
-    const { value, size = "md", suffixValue, ...props } = this.props;
+    const {
+      value,
+      size = "md",
+      suffixValue,
+      isFocused = this.state.isFocused,
+      ...props
+    } = this.props;
+
     return (
       <Theme.Consumer>
         {({ colors }) => (
@@ -52,14 +58,12 @@ class InputSuffix extends React.Component<Props, any> {
                 css={{
                   marginBottom: "-1px",
                   marginRight: "-9px",
-                  color: brandGreys.darkest,
-                  backgroundColor: brandGreys.lighter,
+                  color: "subtle",
+                  backgroundColor: colors.soft,
                   borderRadius: "4px",
                   border: "1px solid",
                   borderTop: 0,
-                  borderColor: this.state.isFocused
-                    ? colors.accent
-                    : brandGreys.lighter,
+                  borderColor: isFocused ? colors.accent : colors.soft,
                 }}
               >
                 {suffixValue}
