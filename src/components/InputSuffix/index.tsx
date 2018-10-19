@@ -7,7 +7,7 @@ import TextInput, { TextInputProps } from "../TextInput";
 import Theme from "../Theme";
 import View from "../View";
 
-interface Props extends TextInputProps {
+export interface Props extends TextInputProps {
   suffixValue: string;
 }
 

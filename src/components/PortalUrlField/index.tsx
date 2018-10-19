@@ -2,11 +2,11 @@ import * as React from "react";
 
 import { autobind } from "../../utils/decorators";
 import Field, { Props as FieldProps } from "../Field";
-import InputSuffix from "../InputSuffix";
+import InputSuffix, {Props as InputSuffixProps} from "../InputSuffix";
 import { Props } from "../View";
 
-export interface Props extends FieldProps {
-  onKeyDown?: (evt: React.KeyboardEvent<any>) => void;
+export interface Props extends FieldProps {  
+  onKeyDown?: (evt: React.Component<Props & InputSuffixProps, any> ) => void;
   isAvailable?: boolean;
   suffixValue?: string;
 }
