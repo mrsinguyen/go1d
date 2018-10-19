@@ -49,7 +49,7 @@ class PortalUrlField extends React.Component<Props, any> {
     return (
       <Field
         label=""
-        name={name}     
+        name={name}
         statusText={this.getStatusText()}
         statusColor={this.getStatusColor()}
         statusIcon={this.getStatusIcon()}

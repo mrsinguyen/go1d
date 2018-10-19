@@ -64,7 +64,7 @@ class InputSuffix extends React.Component<Props, any> {
                 marginBottom={-1}
                 marginRight={-1}
                 css={{
-                   marginRight: "-9px",
+                  marginRight: "-9px",
                 }}
               >
                 {suffixValue}
