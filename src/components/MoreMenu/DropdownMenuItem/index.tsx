@@ -21,15 +21,13 @@ const DropdownMenu = (item: Item, index: number, getItemProps) => (
       index,
     })}
     color={item.color || "default"}
-    iconName={item.iconName}
-    iconColor={item.iconColor}
     justifyContent="flex-start"
     paddingTop={3}
     paddingRight={4}
     paddingBottom={3}
     paddingLeft={4}
     borderRadius={0}
-    onClick={item.onClick}
+    {...item}
   >
     <Text>{item.title}</Text>
   </ButtonMinimal>

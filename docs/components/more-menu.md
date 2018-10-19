@@ -37,6 +37,8 @@ The standard action menu contains:
         href: "#testing",
         color: "danger",
         iconName: "Trash",
+        target:"_blank",
+        rel:"noopener noreferrer",
       },
     ]}
 />
