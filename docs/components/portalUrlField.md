@@ -1,5 +1,5 @@
 ---
-title: PortalUrl
+title: PortalUrlField
 lead: 
 status: ready
 releaseVersion: 0.0.32
@@ -7,7 +7,7 @@ releaseVersion: 0.0.32
 
 ## Examples
 
-### PortalUrl Available
+### PortalUrlField Available
 ```.jsx
 <Form initialValues={{ portalName: "A portal" }} onSubmit={(values, actions) => actions.submit()}>
 <PortalUrlField
@@ -20,7 +20,7 @@ releaseVersion: 0.0.32
 </Form>
 ```
 
-### PortalUrl Not Available
+### PortalUrlField Not Available
 ```.jsx
 <Form initialValues={{ portalName: "A portal" }} onSubmit={(values, actions) => actions.submit()}>
 <PortalUrlField

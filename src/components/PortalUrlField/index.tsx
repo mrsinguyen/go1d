@@ -14,13 +14,6 @@ export interface Props extends FieldProps {
 class PortalUrlField extends React.Component<Props, any> {
   public static displayName = "PortalUrlField";
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: "",
-    };
-  }
-
   @autobind
   public getStatusText() {
     if (this.props.isAvailable) {
