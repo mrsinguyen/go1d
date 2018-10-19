@@ -58,8 +58,8 @@ const OverviewHero: React.SFC<Props> = ({
           right: 0,
           bottom: 0,
           top: 0,
-          "-webkit-filter": "opacity(64%) blur(12px)",
-          filter: "opacity(64%) blur(12px)",
+          "-webkit-filter": "opacity(80%) blur(12px)",
+          filter: "opacity(80%) blur(12px)",
           "-webkit-transform": "scale(1.2)",
           transform: "scale(1.2)",
         }}
@@ -111,10 +111,10 @@ const OverviewHero: React.SFC<Props> = ({
         paddingX={4}
         flexDirection="row"
       >
-        <View flexGrow={1} flexShrink={1}>
-          {children}
+        <View flexGrow={1}>{children}</View>
+        <View alignItems="flex-end" flexGrow={1}>
+          {ctaCard}
         </View>
-        <View alignItems="flex-end">{ctaCard}</View>
       </Container>
     </View>
   </View>
