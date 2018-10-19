@@ -6,8 +6,18 @@ export interface Props extends TextProps {
   HTML?: string;
 }
 
-const Prose: React.SFC<Props> = ({ HTML, ...props }: Props) => (
-  <Text dangerouslySetInnerHTML={{ __html: SanitizeHTML(HTML) }} {...props} />
+const Prose: React.SFC<Props> = ({
+  HTML,
+  fontSize = 3,
+  lineHeight = "paragraph",
+  ...props
+}: Props) => (
+  <Text
+    fontSize={fontSize}
+    lineHeight={lineHeight}
+    dangerouslySetInnerHTML={{ __html: SanitizeHTML(HTML) }}
+    {...props}
+  />
 );
 
 Prose.displayName = "Prose";
