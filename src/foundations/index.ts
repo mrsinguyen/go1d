@@ -4,12 +4,10 @@ import {
   ColorArguments,
   Colors,
   Gradients,
-  Greys,
   MappedKey,
   Opacities,
   Shadows,
   Theme,
-  ThemedGreys,
   ThemeType,
   ZIndex,
 } from "./foundation-types";
@@ -35,6 +33,11 @@ export const tint = (hexColor, ration = 1) =>
     .rgb()
     .string();
 
+export const mix = mixColor => (baseColor, weight = 0.5) =>
+  Color(baseColor)
+    .mix(Color(mixColor), weight)
+    .hex();
+
 export const isDark = color => Color(color).isDark();
 
 export const getContrastColor = color =>
@@ -44,52 +47,94 @@ export const getContrastColor = color =>
  * Color
  */
 
+export const opacity: MappedKey<Opacities, number> = {
+  feedback: 0.1,
+  highlight: 0.15,
+  emptyBackground: 0.16,
+  emptyIcon: 0.24,
+  pill: 0.3,
+  disabled: 0.5,
+  modal: 0.7,
+};
+
 const brandAccent = "#31B8DA";
 
-export const brandGreys = {
-  darkest: "#121F22",
-  darker: "#36464B",
-  dark: "#798A8F",
-  grey: "#C7D5DB",
-  light: "#E6EEF2",
-  lighter: "#EDF7FA",
-  lightest: "#ffffff",
+const baseGreys = {
+  grey0: "#ffffff",
+  grey1: "#fcfcfc",
+  grey2: "#f9f9f9",
+  grey3: "#e9e9e9",
+  grey4: "#d9d9d9",
+  grey5: "#cdcdcd",
+  grey6: "#9b9b9b",
+  grey7: "#797979",
+  grey8: "#383838",
+  grey9: "#1d1d1d",
 };
 
-export const themedGreys = {
-  lightMode: {
-    contrast: brandGreys.darkest,
-    default: brandGreys.darker,
-    subtle: brandGreys.dark,
-    muted: brandGreys.grey,
-    divide: opacify(brandGreys.darker, 0.08),
-    faded: brandGreys.light,
-    soft: brandGreys.lighter,
-    background: brandGreys.lightest,
-  },
-  darkMode: {
-    contrast: brandGreys.lightest,
-    default: brandGreys.lighter,
-    subtle: brandGreys.light,
-    muted: brandGreys.grey,
-    divide: opacify(brandGreys.lighter, 0.08),
-    faded: brandGreys.dark,
-    soft: brandGreys.darker,
-    background: brandGreys.darkest,
-  },
+export const generateColors = ({
+  accent = brandAccent,
+  darkMode = false,
+}: ColorArguments = {}): Colors => {
+  const accentMix = mix(accent);
+
+  const accentGreys = {
+    lightMode: {
+      contrast: accentMix(baseGreys.grey9, 0.05),
+      default: accentMix(baseGreys.grey8, 0.15),
+      subtle: accentMix(baseGreys.grey7, 0.2),
+      muted: accentMix(baseGreys.grey5, 0.25),
+      divide: accentMix(baseGreys.grey2, 0.07),
+      faded: accentMix(baseGreys.grey3, 0.15),
+      soft: accentMix(baseGreys.grey2, 0.07),
+      faint: accentMix(baseGreys.grey1, 0.02),
+      background: baseGreys.grey0,
+    },
+    darkMode: {
+      contrast: baseGreys.grey0,
+      default: accentMix(baseGreys.grey4, 0.15),
+      subtle: accentMix(baseGreys.grey6, 0.25),
+      muted: accentMix(baseGreys.grey8, 0.35),
+      divide: accentMix(baseGreys.grey9, 0.17),
+      faded: accentMix(baseGreys.grey8, 0.14),
+      soft: accentMix(baseGreys.grey9, 0.17),
+      faint: accentMix(baseGreys.grey9, 0.11),
+      background: accentMix(baseGreys.grey9, 0.05),
+    },
+  };
+
+  const themedGreys = darkMode ? accentGreys.darkMode : accentGreys.lightMode;
+
+  const statusColors = {
+    highlight: opacify(accent, opacity.highlight),
+    success: "#51C133",
+    note: "#FFDE00",
+    warning: "#F6941D",
+    danger: "#DA3131",
+  };
+
+  const gradients: MappedKey<Gradients, string> = {
+    warmOverlay:
+      "linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%),",
+    lightWarmOverlay:
+      "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)",
+    darkWarmOverlay:
+      "linear-gradient(0deg, rgba(18, 31, 34, 0.05), rgba(18, 31, 34, 0.05)), linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%)",
+  };
+
+  return {
+    accent,
+    ...themedGreys,
+    ...statusColors,
+    gradients,
+  };
 };
 
-const getGreys = (
-  greys: MappedKey<ThemedGreys, MappedKey<Greys, string>> = themedGreys,
-  darkMode
-): MappedKey<Greys, string> => (darkMode ? greys.darkMode : greys.lightMode);
+export const colors: Colors = generateColors();
 
-const brandStatuses = {
-  green: "#51C133",
-  yellow: "#FFDE00",
-  orange: "#F6941D",
-  red: "#DA3131",
-};
+/**
+ * z-index values
+ */
 
 export const zIndex: MappedKey<ZIndex, number> = {
   dropdown: 1000,
@@ -100,42 +145,6 @@ export const zIndex: MappedKey<ZIndex, number> = {
   popover: 1060,
   tooltip: 1070,
 };
-
-export const opacity: MappedKey<Opacities, number> = {
-  feedback: 0.1,
-  pill: 0.3,
-  emptyBackground: 0.16,
-  emptyIcon: 0.24,
-  disabled: 0.5,
-  modal: 0.7,
-};
-
-export const gradients: MappedKey<Gradients, string> = {
-  warmOverlay:
-    "linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%),",
-  lightWarmOverlay:
-    "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)",
-  darkWarmOverlay:
-    "linear-gradient(0deg, rgba(18, 31, 34, 0.05), rgba(18, 31, 34, 0.05)), linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%)",
-};
-
-export const generateColors = ({
-  accent = brandAccent,
-  greys = themedGreys,
-  darkMode = false,
-  statuses = brandStatuses,
-}: ColorArguments = {}): Colors => ({
-  accent,
-  ...getGreys(greys, darkMode),
-  highlight: opacify(accent, 0.15),
-  success: statuses.green,
-  note: statuses.yellow,
-  warning: statuses.orange,
-  danger: statuses.red,
-  gradients,
-});
-
-export const colors: Colors = generateColors();
 
 /**
  * Shadows
@@ -240,12 +249,10 @@ export const breakpoints = {
 
 export const generateTheme = ({
   accent = brandAccent,
-  greys = themedGreys,
   darkMode = false,
-  statuses = brandStatuses,
   theme = {},
 } = {}): Theme => ({
-  colors: generateColors({ accent, greys, darkMode, statuses }),
+  colors: generateColors({ accent, darkMode }),
   type,
   spacing,
   shadows,

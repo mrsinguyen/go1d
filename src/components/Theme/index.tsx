@@ -1,21 +1,18 @@
 import * as React from "react";
 import foundations, { generateTheme } from "../../foundations";
 
-const Theme = React.createContext({
-  LinkComponent: null,
-  ...foundations,
-});
+const Theme = React.createContext(foundations);
 
-const DarkMode = props => (
-  <Theme.Provider
-    value={{
-      LinkComponent: null,
-      ...generateTheme({ darkMode: true }),
-    }}
-    {...props}
-  />
+const lightTheme = generateTheme({ darkMode: false });
+
+const darkTheme = generateTheme({ darkMode: true });
+
+export const LightMode = props => (
+  <Theme.Provider value={lightTheme} {...props} />
 );
 
-export { DarkMode };
+export const DarkMode = props => (
+  <Theme.Provider value={darkTheme} {...props} />
+);
 
 export default Theme;

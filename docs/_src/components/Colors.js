@@ -1,13 +1,20 @@
 import React from "react";
 import Color from "./Color";
-import { foundations } from "../../../src/";
+import { foundations, View } from "../../../src/";
 
-export const Colors = () => (
-  <div>
-    {Object.keys(foundations.colors).map(key => (
-      <Color key={key} colorKey={key} color={foundations.colors[key]} />
+export const Colors = ({ colors = [], ...props }) => (
+  <View
+    marginTop={6}
+    marginBottom={8}
+    marginX={-4}
+    flexDirection="row"
+    flexWrap="wrap"
+    {...props}
+  >
+    {colors.map((color, key) => (
+      <Color marginX={4} marginBottom={6} key={key} color={color} />
     ))}
-  </div>
+  </View>
 );
 
 export default Colors;

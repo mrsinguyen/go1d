@@ -2,6 +2,7 @@ import {
   FlexDirectionProperty,
   FlexWrapProperty,
   Globals,
+  OverflowProperty,
   PositionProperty,
 } from "csstype";
 import { Interpolation } from "emotion";
@@ -9,13 +10,14 @@ import * as React from "react";
 import { opacify } from "../../foundations";
 import applySpacing from "../../utils/applySpacing";
 import Base, { Props as BaseProps } from "../Base";
-import Theme from "../Theme";
+import Theme, { DarkMode, LightMode } from "../Theme";
 
 type MarginProperty = Globals | "auto" | number | null;
 type PaddingProperty = Globals | number;
 
 export interface Props extends BaseProps {
   element?: string | React.ComponentType;
+  mode?: "light" | "dark";
   display?: string;
   flexDirection?: FlexDirectionProperty;
   flexWrap?: FlexWrapProperty;
@@ -25,6 +27,7 @@ export interface Props extends BaseProps {
   flexShrink?: number;
   flexBasis?: number | string;
   position?: PositionProperty;
+  overflow?: OverflowProperty;
   // Reset margins by default
   margin?: MarginProperty;
   marginX?: MarginProperty;
@@ -60,8 +63,14 @@ export interface Props extends BaseProps {
   css?: Interpolation;
 }
 
+const modeComponents = {
+  light: LightMode,
+  dark: DarkMode,
+};
+
 const View: React.SFC<Props> = ({
   element = "div",
+  mode,
   display = "flex",
   flexDirection = "column",
   flexWrap,
@@ -71,6 +80,7 @@ const View: React.SFC<Props> = ({
   flexShrink = 0,
   flexBasis = "auto",
   position,
+  overflow,
   // Reset margins by default
   margin = 0,
   marginX = margin,
@@ -92,8 +102,8 @@ const View: React.SFC<Props> = ({
   borderRight = border,
   borderBottom = border,
   borderLeft = border,
-  color = "inherit",
-  backgroundColor,
+  color = mode ? "default" : "inherit",
+  backgroundColor = mode && "background",
   backgroundOpacity,
   borderRadius,
   width,
@@ -106,59 +116,65 @@ const View: React.SFC<Props> = ({
   transition = "subtle",
   css,
   ...props
-}: Props) => (
-  <Theme.Consumer>
-    {({ spacing: s, colors, shadows, transitions, opacity }) => (
-      <Base
-        element={element}
-        css={[
-          {
-            display,
-            alignItems,
-            justifyContent,
-            flexDirection,
-            flexWrap,
-            flexGrow,
-            flexShrink,
-            flexBasis,
-            position,
-            height,
-            width,
-            maxWidth,
-            zIndex,
-            marginTop: applySpacing(s, marginTop),
-            marginBottom: applySpacing(s, marginBottom),
-            marginRight: applySpacing(s, marginRight),
-            marginLeft: applySpacing(s, marginLeft),
-            paddingTop: applySpacing(s, paddingTop),
-            paddingBottom: applySpacing(s, paddingBottom),
-            paddingRight: applySpacing(s, paddingRight),
-            paddingLeft: applySpacing(s, paddingLeft),
-            // fix flexbox bugs
-            minHeight,
-            minWidth: 0,
-            color: colors[color] || color,
-            backgroundColor: opacity[backgroundOpacity]
-              ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
-              : colors[backgroundColor],
-            borderRadius: s[borderRadius],
-            borderStyle: "solid",
-            borderTopWidth: borderTop,
-            borderRightWidth: borderRight,
-            borderBottomWidth: borderBottom,
-            borderLeftWidth: borderLeft,
-            borderColor: colors[borderColor],
-            boxShadow: shadows[boxShadow],
-            transition: transitions[transition],
-            textAlign,
-          },
-          css,
-        ]}
-        {...props}
-      />
-    )}
-  </Theme.Consumer>
-);
+}: Props) => {
+  const Wrapper = mode ? modeComponents[mode] : React.Fragment;
+  return (
+    <Wrapper>
+      <Theme.Consumer>
+        {({ spacing: s, colors, shadows, transitions, opacity }) => (
+          <Base
+            element={element}
+            css={[
+              {
+                display,
+                alignItems,
+                justifyContent,
+                flexDirection,
+                flexWrap,
+                flexGrow,
+                flexShrink,
+                flexBasis,
+                position,
+                overflow,
+                height,
+                width,
+                maxWidth,
+                zIndex,
+                marginTop: applySpacing(s, marginTop),
+                marginBottom: applySpacing(s, marginBottom),
+                marginRight: applySpacing(s, marginRight),
+                marginLeft: applySpacing(s, marginLeft),
+                paddingTop: applySpacing(s, paddingTop),
+                paddingBottom: applySpacing(s, paddingBottom),
+                paddingRight: applySpacing(s, paddingRight),
+                paddingLeft: applySpacing(s, paddingLeft),
+                // fix flexbox bugs
+                minHeight,
+                minWidth: 0,
+                color: colors[color] || color,
+                backgroundColor: opacity[backgroundOpacity]
+                  ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
+                  : colors[backgroundColor],
+                borderRadius: s[borderRadius],
+                borderStyle: "solid",
+                borderTopWidth: borderTop,
+                borderRightWidth: borderRight,
+                borderBottomWidth: borderBottom,
+                borderLeftWidth: borderLeft,
+                borderColor: colors[borderColor],
+                boxShadow: shadows[boxShadow],
+                transition: transitions[transition],
+                textAlign,
+              },
+              css,
+            ]}
+            {...props}
+          />
+        )}
+      </Theme.Consumer>
+    </Wrapper>
+  );
+};
 
 View.displayName = "View";
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { brandGreys, tint } from "../../foundations";
+import { tint } from "../../foundations";
 import ButtonMinimal from "../ButtonFilled";
 import Icon from "../Icon";
 import Theme from "../Theme";
@@ -34,7 +34,7 @@ const Banner: React.SFC<Props> = ({
           data-testid="banner"
           css={{
             backgroundColor: `${
-              floating ? brandGreys.lightest : tint(colors[type], tintLevel)
+              floating ? colors.background : tint(colors[type], tintLevel)
             }`,
             borderLeft: `4px solid ${colors[type]}`,
             flexDirection: "row",
