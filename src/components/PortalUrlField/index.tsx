@@ -7,8 +7,6 @@ import { Props } from "../View";
 
 export interface Props extends FieldProps {
   onKeyDown?: (evt: React.KeyboardEvent<any>) => void;
-  onFocus?: (evt: React.FocusEvent<any>) => void;
-  onBlur?: (evt: React.FocusEvent<any>) => void;
   isAvailable?: boolean;
   suffixValue?: string;
 }
@@ -20,9 +18,6 @@ class PortalUrlField extends React.Component<Props, any> {
     super(props);
     this.state = {
       value: "",
-      statusText: "",
-      statusColor: "",
-      statusIcon: "",
     };
   }
 
@@ -57,7 +52,7 @@ class PortalUrlField extends React.Component<Props, any> {
   }
 
   public render() {
-    const { suffixValue, ...props } = this.props;
+    const { suffixValue, name, ...props } = this.props;
 
     return (
       <Field

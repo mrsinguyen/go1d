@@ -28,6 +28,21 @@ class InputSuffix extends React.Component<Props, any> {
   }
 
   @autobind
+  public getBorderColor() {
+    const { isFocused } = this.state;
+    const { error } = this.props;
+
+    if (error) {
+      return "danger";
+    }
+    if (isFocused) {
+      return "accent";
+    }
+
+    return "faded";
+  }
+
+  @autobind
   public handleBlur(evt: React.FocusEvent<any>) {
     this.setState({
       isFocused: false,
@@ -36,7 +51,14 @@ class InputSuffix extends React.Component<Props, any> {
   }
 
   public render() {
-    const { value, size = "md", suffixValue, ...props } = this.props;
+    const {
+      value,
+      size = "md",
+      suffixValue,
+      onBlur,
+      onFocus,
+      ...props
+    } = this.props;
 
     return (
       <Theme.Consumer>
@@ -49,18 +71,17 @@ class InputSuffix extends React.Component<Props, any> {
               <View
                 paddingX={get({ lg: 7, md: 5, sm: 5 }, size)}
                 paddingY={get({ lg: 5, md: 3, sm: 3 }, size)}
-                css={{
-                  marginBottom: "-1px",
-                  marginRight: "-9px",
-                  color: colors.subtle,
-                  backgroundColor: colors.soft,
-                  borderRadius: "4px",
-                  border: "1px solid",
-                  borderTop: 0,
-                  borderColor: this.state.isFocused
-                    ? colors.accent
-                    : colors.soft,
-                }}
+                color="subtle"
+                backgroundColor="soft"
+                borderRadius={2}
+                border={1}
+                borderColor={this.getBorderColor()}
+                borderTop={0}
+                marginBottom={-1}
+                marginRight={-1}
+                // css={{
+                //   marginRight: "-9px",
+                // }}
               >
                 {suffixValue}
               </View>
