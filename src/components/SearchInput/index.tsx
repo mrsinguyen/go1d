@@ -63,11 +63,13 @@ class SearchInput extends React.Component<Props, any> {
         value={this.state.value}
         onChange={this.handleChange}
         onKeyDown={this.handleOnKeyDown}
+        aria-label="Search Field"
         suffixNode={
           <ButtonMinimal
             iconName="Cross"
             color="accent"
             data-testid="clearButton"
+            aria-label="Clear Icon"
             display={clearable && this.state.value ? "block" : "none"}
             onClick={this.handleClear}
           />
