@@ -1,19 +1,15 @@
 import * as React from "react";
 
-import { FieldConfig } from "formik";
+import { FieldProps } from "formik";
 import { autobind } from "../../utils/decorators";
 import Field from "../Field";
 import InputSuffix from "../InputSuffix";
 
-export interface Props extends FieldConfig {
-  color?: string;
-  children?: React.ReactNode;
-  onClick?: (evt: React.MouseEvent<any>) => void;
-  onFocus?: (evt: React.FocusEvent<any>) => void;
-  onBlur?: (evt: React.FocusEvent<any>) => void;
+export interface Props extends FieldProps {
   isAvailable?: boolean;
   suffixValue?: string;
   label: string;
+  name: string;
 }
 
 class PortalUrlField extends React.Component<Props, any> {
@@ -60,7 +56,7 @@ class PortalUrlField extends React.Component<Props, any> {
   }
 
   public render() {
-    const { value, suffixValue, ...props } = this.props;
+    const { suffixValue, ...props } = this.props;
 
     return (
       <Field

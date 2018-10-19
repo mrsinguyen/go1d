@@ -84,7 +84,6 @@ class TextInput extends React.Component<TextInputProps, any> {
       disabled,
       onFocus,
       onBlur,
-      value,
       ...props
     } = this.props;
 
