@@ -11,7 +11,7 @@ releaseVersion: 0.0.36
   type="success"
   close={() => alert('close event')}
 >
-  <Text fontWeight="bold">Success! </Text>
+  <Text fontWeight="semibold">Success! </Text>
   <Text>
     This is a message <Link css={{ display: 'inline', fontWeight: '600', textDecoration: 'underline' }} href="https://foo.com">read more</Link>.
   </Text>
@@ -21,7 +21,7 @@ releaseVersion: 0.0.36
   type="warning"
   close={() => alert('close event')}
 >
-  <Text fontWeight="bold">Warning! </Text>
+  <Text fontWeight="semibold">Warning! </Text>
   <Text>
     This is a message <Link css={{ display: 'inline', fontWeight: '600', textDecoration: 'underline' }} href="https://foo.com">read more</Link>.
   </Text>
@@ -31,7 +31,7 @@ releaseVersion: 0.0.36
   type="danger"
   close={() => alert('close event')}
 >
-  <Text fontWeight="bold">Danger! </Text>
+  <Text fontWeight="semibold">Danger! </Text>
   <Text>
     This is a message <Link css={{ display: 'inline', fontWeight: '600', textDecoration: 'underline' }} href="https://foo.com">read more</Link>.
   </Text>

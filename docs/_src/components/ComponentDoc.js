@@ -29,7 +29,7 @@ export const ComponentDoc = ({ component = "" }) => {
       {({ type }) => (
         <View>
           <View marginY={3}>
-            <Text element="h2" fontSize={3} fontWeight="bold">
+            <Text element="h2" fontSize={3} fontWeight="semibold">
               Props &amp; methods
             </Text>
           </View>

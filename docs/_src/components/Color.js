@@ -6,17 +6,22 @@ export const Color = ({ color, ...props }) => (
     {({ colors }) => (
       <View
         borderRadius={2}
-        width="160"
+        width="144"
         boxShadow="strong"
         overflow="hidden"
         {...props}
       >
-        <View backgroundColor={color} height="160" width="100%" />
+        <View backgroundColor={color} height="144" width="100%" />
         <View mode="light" padding={4} backgroundColor="background">
-          <Text size={1} fontWeight="bold" fontFamily="mono">
+          <Text fontSize={1} fontWeight="semibold" fontFamily="mono">
             {color}
           </Text>
-          <Text size={1} fontWeight="bold" fontFamily="mono" color="subtle">
+          <Text
+            fontSize={1}
+            fontWeight="semibold"
+            fontFamily="mono"
+            color="subtle"
+          >
             {colors[color]}
           </Text>
         </View>
