@@ -17,7 +17,7 @@ it("renders without crashing without any optional props", () => {
         },
         {
           title: "Delete",
-          href: "#testing",
+          onClick: jest.fn(),
           color: "danger",
           iconName: "Trash",
         },
