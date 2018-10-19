@@ -57,7 +57,7 @@ class PortalUrlField extends React.Component<Props, any> {
   }
 
   public render() {
-    const { suffixValue, isFocused, ...props } = this.props;
+    const { suffixValue, ...props } = this.props;
 
     return (
       <Field
