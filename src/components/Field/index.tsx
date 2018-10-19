@@ -5,7 +5,7 @@ import Label from "../Label";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   label: string;
   id?: string;
   name: string;

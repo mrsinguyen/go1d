@@ -36,13 +36,7 @@ class InputSuffix extends React.Component<Props, any> {
   }
 
   public render() {
-    const {
-      value,
-      size = "md",
-      suffixValue,
-      isFocused = this.state.isFocused,
-      ...props
-    } = this.props;
+    const { value, size = "md", suffixValue, ...props } = this.props;
 
     return (
       <Theme.Consumer>
@@ -58,12 +52,14 @@ class InputSuffix extends React.Component<Props, any> {
                 css={{
                   marginBottom: "-1px",
                   marginRight: "-9px",
-                  color: "subtle",
+                  color: colors.subtle,
                   backgroundColor: colors.soft,
                   borderRadius: "4px",
                   border: "1px solid",
                   borderTop: 0,
-                  borderColor: isFocused ? colors.accent : colors.soft,
+                  borderColor: this.state.isFocused
+                    ? colors.accent
+                    : colors.soft,
                 }}
               >
                 {suffixValue}

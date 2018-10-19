@@ -1,17 +1,16 @@
 import * as React from "react";
 
-import { FieldConfig } from "formik";
 import { autobind } from "../../utils/decorators";
-// import Field from "../Field";
-// import { Props } from "../View";
-import Field from "../Field";
+import Field, { Props as FieldProps } from "../Field";
 import InputSuffix from "../InputSuffix";
+import { Props } from "../View";
 
-export interface Props extends FieldConfig {
+export interface Props extends FieldProps {
+  onKeyDown?: (evt: React.KeyboardEvent<any>) => void;
+  onFocus?: (evt: React.FocusEvent<any>) => void;
+  onBlur?: (evt: React.FocusEvent<any>) => void;
   isAvailable?: boolean;
   suffixValue?: string;
-  label: string;
-  // name: string;
 }
 
 class PortalUrlField extends React.Component<Props, any> {
@@ -58,10 +57,12 @@ class PortalUrlField extends React.Component<Props, any> {
   }
 
   public render() {
-    const { suffixValue, ...props } = this.props;
+    const { suffixValue, isFocused, ...props } = this.props;
 
     return (
       <Field
+        label=""
+        name=""
         statusText={this.getStatusText()}
         statusColor={this.getStatusColor()}
         statusIcon={this.getStatusIcon()}
