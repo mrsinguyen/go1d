@@ -37,7 +37,7 @@ const Label: React.SFC<Props> = ({
               size={1}
               name={statusIcon}
               color={statusColor}
-              marginRight={1}
+              marginRight={2}
             />
           )}
           <Text
