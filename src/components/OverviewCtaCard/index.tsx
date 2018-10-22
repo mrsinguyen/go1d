@@ -103,7 +103,7 @@ const OverviewCtaCard: React.SFC<Props> = ({
           </View>
         )}
       {actions && (
-        <View>
+        <View marginLeft="auto">
           <Dropdown
             itemToString={itemToString}
             borderRadius={2}

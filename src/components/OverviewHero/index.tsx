@@ -110,6 +110,7 @@ const OverviewHero: React.SFC<Props> = ({
         contain={contentWidth ? contentWidth : "wide"}
         paddingX={4}
         flexDirection="row"
+        alignItems="flex-start"
       >
         <View flexGrow={1}>{children}</View>
         <View alignItems="flex-end" flexGrow={1}>
