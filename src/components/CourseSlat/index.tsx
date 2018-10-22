@@ -18,6 +18,7 @@ interface Props extends ViewProps {
   contentRender?: () => React.ReactChild;
   type?: string;
   typeIcon?: string;
+  passive?: boolean;
 }
 
 const backgroundStyles = (colors, passive) => {
