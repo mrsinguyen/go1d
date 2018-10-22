@@ -103,6 +103,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             backgroundColor="background"
             paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
             border={1}
+            borderRight={0}
             borderColor={this.getBorderColor()}
             boxShadow="inner"
             flexDirection="row"
