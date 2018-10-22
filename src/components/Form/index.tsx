@@ -8,18 +8,26 @@ interface InnerFormProps {
   onReset: (a: any) => void;
   disabled?: boolean;
   onSubmit: (evt: React.SyntheticEvent) => void;
+  onChange?: (data: any) => void;
+  values?: any;
 }
 
 interface FormProps extends FormikConfig<any> {
   children?: React.ReactNode;
+  disabled?: boolean;
+  onChange?: (data: any) => void;
 }
 
 export class InternalForm extends React.Component<InnerFormProps, any> {
-  public componentDidUpdate() {
-    const { status, setStatus, disabled } = this.props;
+  public componentDidUpdate(prevProps: InnerFormProps) {
+    const { status, setStatus, disabled, values } = this.props;
 
     if ((status === "disabled") !== !!disabled) {
       setStatus(disabled ? "disabled" : null);
+    }
+
+    if (this.props.onChange && prevProps.values !== values) {
+      this.props.onChange({ values: this.props.values });
     }
   }
 
@@ -61,16 +69,30 @@ export class InternalForm extends React.Component<InnerFormProps, any> {
   }
 }
 
-const Form: React.SFC<FormProps> = ({ children, ...props }: FormProps) => {
+const Form: React.SFC<FormProps> = ({
+  children,
+  disabled,
+  onChange,
+  ...props
+}: FormProps) => {
   return (
     <Formik {...props}>
-      {({ handleSubmit, handleReset, status, setStatus, isSubmitting }) => (
+      {({
+        handleSubmit,
+        handleReset,
+        status,
+        values,
+        setStatus,
+        isSubmitting,
+      }) => (
         <InternalForm
           onReset={handleReset}
           onSubmit={handleSubmit}
-          disabled={isSubmitting}
+          disabled={disabled || isSubmitting}
           status={status}
           setStatus={setStatus}
+          onChange={onChange}
+          values={values}
         >
           {children}
         </InternalForm>

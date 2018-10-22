@@ -1,7 +1,8 @@
 ---
-title: More menu
+title: More Menu
 lead: The more menu is a dropdown for more actions, typically accessed in a bar of actions and always by a more button. It helps keep secondary actions accessible while reducing visual clutter.
-status: not-currently-planned
+status: ready
+releaseVersion: 0.0.46
 ---
 
 It is helpful for uncommon actions that require a more explicit label that can be too long for a button.
@@ -22,9 +23,25 @@ The standard action menu contains:
 ```
 
 ### Action menu with a single page/section/screen action:
-
 ```.jsx
-<div> Example to come</div>
+<MoreMenu
+  itemList={[
+      {
+        title: "Add",
+        href: "#testing",
+        iconName: "Plus",
+        iconColor: "muted"
+      },
+      {
+        title: "Delete",
+        href: "#testing",
+        color: "danger",
+        iconName: "Trash",
+        target:"_blank",
+        rel:"noopener noreferrer",
+      },
+    ]}
+/>
 ```
 
 ### Action menu with two page/section/screen actions:
@@ -33,16 +50,38 @@ The standard action menu contains:
 <div> Example to come</div>
 ```
 
-### Action menu only on a list item:
-
-```.jsx
-<div> Example to come</div>
-```
-
 ### Action menu with a list item action:
 
+### More menu without shadow (e.g. list row)
 ```.jsx
-<div> Example to come</div>
+<Table
+  rows={[
+    <TR key={0}>
+      <TD flexBasis="30%">Cell 00</TD>
+      <TD flexBasis="30%">Cell 01</TD>
+      <TD flexBasis="30%">Cell 02</TD>
+      <TD flexBasis="10%">
+        <MoreMenu
+          isButtonFilled={false}
+          itemList={[
+            {
+              title: "Add",
+              href: "#testing",
+              iconName: "Plus",
+              iconColor: "muted"
+            },
+            {
+              title: "Delete",
+              href: "#testing",
+              color: "danger",
+              iconName: "Trash",
+            },
+          ]}
+        />
+      </TD>
+    </TR>
+  ]}>
+</Table>
 ```
 
 ### Action menu on a card:

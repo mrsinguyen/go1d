@@ -7,7 +7,7 @@ import Theme from "../Theme";
 export interface Props extends BaseProps {
   element?: string;
   display?: string;
-  fontWeight?: number | string;
+  fontWeight?: string;
   fontFamily?: string;
   fontStyle?: string;
   lineHeight?: number | string;
@@ -24,7 +24,7 @@ const Text: React.SFC<Props> = ({
   fontWeight,
   fontFamily,
   fontStyle,
-  lineHeight,
+  lineHeight = "ui",
   fontSize = 2,
   letterSpacing = "normal",
   color = "inherit",

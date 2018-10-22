@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import formatDuration from "../../utils/durationFormatter";
+import Container from "../Container";
 import Icon from "../Icon";
-import Link from "../Link";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
@@ -10,8 +10,8 @@ export interface Props extends ViewProps {
   title: string;
   subtitle?: React.ReactNode;
   backgroundImage?: string;
-  breadcrumbHref?: string;
-  breadcrumbTitle?: string;
+  breadcrumb?: React.ReactNode;
+  contentWidth?: "narrow" | "normal" | "wide" | "full";
   author?: React.ReactNode;
   duration?: number;
   ctaCard?: React.ReactNode;
@@ -22,8 +22,8 @@ const OverviewHero: React.SFC<Props> = ({
   backgroundImage,
   title,
   subtitle,
-  breadcrumbHref,
-  breadcrumbTitle,
+  breadcrumb,
+  contentWidth,
   author,
   duration,
   ctaCard,
@@ -47,7 +47,7 @@ const OverviewHero: React.SFC<Props> = ({
       <View
         backgroundColor="muted"
         css={{
-          zIndex: -1,
+          zIndex: 0,
           backgroundImage: backgroundImage
             ? `url(${backgroundImage})`
             : undefined,
@@ -58,53 +58,65 @@ const OverviewHero: React.SFC<Props> = ({
           right: 0,
           bottom: 0,
           top: 0,
-          "-webkit-filter": "opacity(64%) blur(12px)",
-          filter: "opacity(64%) blur(12px)",
+          "-webkit-filter": "opacity(80%) blur(12px)",
+          filter: "opacity(80%) blur(12px)",
           "-webkit-transform": "scale(1.2)",
           transform: "scale(1.2)",
         }}
       />
-      <View flexGrow={1}>
-        {breadcrumbTitle &&
-          breadcrumbHref && (
-            <Link href={breadcrumbHref}>
-              <View flexDirection="row" alignItems="center">
-                <Icon
-                  name="ChevronLeft"
-                  color="background"
-                  size={1}
-                  marginRight={2}
-                />
-                <Text color="background" fontSize={1}>
-                  {breadcrumbTitle}
-                </Text>
-              </View>
-            </Link>
-          )}
-        <Text element="h1" fontSize={5}>
-          {title}
-        </Text>
+      <Container
+        contain={contentWidth ? contentWidth : "wide"}
+        paddingX={4}
+        css={{
+          zIndex: 1,
+        }}
+      >
+        {breadcrumb && (
+          <View flexDirection="row" alignItems="center">
+            <Icon
+              name="ChevronLeft"
+              color="background"
+              size={1}
+              marginRight={2}
+            />
+            <Text fontSize={1}>{breadcrumb}</Text>
+          </View>
+        )}
+        <View marginY={2}>
+          <Text element="h1" fontSize={5}>
+            {title}
+          </Text>
+        </View>
         <Text fontSize={2}>{subtitle}</Text>
         <View flexDirection="row" marginTop={5} alignItems="center">
           {author && (
             <View flexDirection="row" alignItems="center" marginRight={5}>
-              {author}
+              <Text fontSize={3} color="soft">
+                {author}
+              </Text>
             </View>
           )}
           {duration && (
             <View flexDirection="row" alignItems="center">
               <Icon name="Clock" color="muted" marginRight={3} />
-              {formatDuration(duration)}
+              <Text fontSize={3}>{formatDuration(duration)}</Text>
             </View>
           )}
         </View>
-      </View>
+      </Container>
     </View>
-    <View flexDirection="row" padding={8}>
-      <View flexGrow={1} flexShrink={1}>
-        {children}
-      </View>
-      <View alignItems="flex-end">{ctaCard}</View>
+    <View padding={8}>
+      <Container
+        contain={contentWidth ? contentWidth : "wide"}
+        paddingX={4}
+        flexDirection="row"
+        alignItems="flex-start"
+      >
+        <View flexGrow={1}>{children}</View>
+        <View alignItems="flex-end" flexGrow={1}>
+          {ctaCard}
+        </View>
+      </Container>
     </View>
   </View>
 );

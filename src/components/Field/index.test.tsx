@@ -5,10 +5,12 @@ import Field from "./index";
 
 afterEach(cleanup);
 
+const noOp = jest.fn();
+
 it("renders without crashing without any optional props", () => {
   const input = () => <div />;
   render(
-    <Form>
+    <Form onSubmit={noOp} initialValues={{}}>
       <Field label="label" name="name" component={input} />
     </Form>
   );

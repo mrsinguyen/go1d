@@ -27,7 +27,7 @@ const Label: React.SFC<Props> = ({
       paddingBottom={2}
       {...props}
     >
-      <Text element="label" fontWeight="bold" htmlFor={htmlFor}>
+      <Text element="label" fontWeight="semibold" htmlFor={htmlFor}>
         {children}
       </Text>
       {statusText && (
@@ -37,7 +37,7 @@ const Label: React.SFC<Props> = ({
               size={1}
               name={statusIcon}
               color={statusColor}
-              marginRight={1}
+              marginRight={2}
             />
           )}
           <Text

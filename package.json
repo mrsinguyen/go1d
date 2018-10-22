@@ -1,6 +1,6 @@
 {
   "name": "@go1d/go1d",
-  "version": "0.0.44",
+  "version": "0.0.54",
   "description": "GO1 Design System",
   "main": "build/index.js",
   "homepage": "https://apps.pages.go1.co/GO1D",
@@ -30,7 +30,9 @@
   },
   "dependencies": {
     "@types/events": "^1.2.0",
+    "@types/react-virtualized": "^9.18.7",
     "color": "^3.0.0",
+    "downshift": "^3.1.1",
     "emotion": "^9.2.4",
     "formik": "^1.3.1",
     "libreact": "^2.1.0",
@@ -42,7 +44,8 @@
     "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.4.0",
     "react-virtualized": "^9.20.1",
-    "recompose": "^0.27.1"
+    "recompose": "^0.27.1",
+    "sanitize-html": "^1.19.1"
   },
   "devDependencies": {
     "@compositor/kit": "^1.0.43",
@@ -54,10 +57,9 @@
     "@types/jest": "^23.3.2",
     "@types/react": "^16.4.13",
     "@types/react-transition-group": "^2.0.14",
-    "@types/react-virtualized": "^9.18.7",
     "babel-cli": "^6.26.0",
     "bundlesize": "^0.17.0",
-    "husky": "^1.0.0",
+    "husky": "^1.1.2",
     "jest-cli": "^23.5.0",
     "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
@@ -74,7 +76,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/**/*.js",
+      "path": "./build/**/*.js",
       "maxSize": "3 kB"
     }
   ],
@@ -96,7 +98,7 @@
     "links": [
       {
         "rel": "stylesheet",
-        "href": "https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+        "href": "https://fonts.googleapis.com/css?family=Muli:400,400i,600,700"
       }
     ]
   },

@@ -10,10 +10,7 @@ An overview container for a hero page
 
 ### Overview hero with required props only (title)
 ```.jsx
-<OverviewHero 
-  title="Interaction Design">
-  <Text>This course will provide you with the skills and knowledge to design, build, test and launch digital products that are intuitive, user-friendly and accessible.</Text>
-</OverviewHero>
+<OverviewHero title="Interaction Design" />
 ```
 
 ### Overview hero with background, breadcrumb and subtitle
@@ -26,8 +23,10 @@ An overview container for a hero page
       <Icon name="Video" marginRight={3} />
       VIDEO
     </View>}
-  breadcrumbHref="#testing"
-  breadcrumbTitle="Home"
+  breadcrumb={
+    <Link to="/back">
+      Back
+    </Link>}
 >
   <Text>This course will provide you with the skills and knowledge to design, build, test and launch digital products that are intuitive, user-friendly and accessible.</Text>
 </OverviewHero>
@@ -43,8 +42,8 @@ An overview container for a hero page
       <Icon name="Course" marginRight={3} />
       COURSE
     </View>}
-  breadcrumbHref="#testing"
-  breadcrumbTitle="Results"
+  breadcrumb={
+    <Link to="/back">Back</Link>}
   author={
     <View flexDirection="row" alignItems="center">
       <Avatar
@@ -55,28 +54,17 @@ An overview container for a hero page
       />
       Leslie Knope
     </View>}
+  contentWidth="wide"
   duration={1360}
   ctaCard={
-    <View
-      boxShadow="crisp"
-      backgroundColor="background"
-      width="300px"
-      css={{
-        position: "relative",
-        top: -250,
-        right: 0,
-      }}>
-      <View
-        height="150px"
-        width="100%"
-        css={{
-          backgroundImage: "url(https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80)",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-      />
-      <View padding={4} height="200px" width="100%" />
-    </View>
+    <OverviewCtaCard
+      backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
+      buttonLabel="Import"
+      onButtonClick
+      width="280px"
+      marginLeft={3}
+      css="position:relative;top:-250px;"
+    />
   }
 >
   <Text>This course will provide you with the skills and knowledge to design, build, test and launch digital products that are intuitive, user-friendly and accessible.</Text>

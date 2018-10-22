@@ -32,6 +32,7 @@ export { default as Export } from "./Export";
 export { default as Externallink } from "./Externallink";
 export { default as Eye } from "./Eye";
 export { default as Eyeoff } from "./Eyeoff";
+export { default as Flag } from "./Flag";
 export { default as Folder } from "./Folder";
 export { default as FullStar } from "./FullStar";
 export { default as Go1Logo } from "./Go1Logo";

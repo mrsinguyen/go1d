@@ -1,30 +1,21 @@
 /**
  * interfaces
  */
-export type FontFamily = "sansSerif" | "display" | "prose" | "ui" | "mono";
+export type FontFamily = "sansSerif" | "title" | "paragraph" | "ui" | "mono";
 
-export type FontWeight = "normal" | "bold";
+export type FontWeight = "normal" | "semibold" | "bold";
 
 export type Gradients = "warmOverlay" | "lightWarmOverlay" | "darkWarmOverlay";
 export type Opacities =
   | "feedback"
+  | "highlight"
+  | "emptyBackground"
+  | "emptyIcon"
   | "pill"
   | "disabled"
-  | "modal"
-  | "emptyBackground"
-  | "emptyIcon";
+  | "modal";
 
-export type Greys =
-  | "contrast"
-  | "default"
-  | "subtle"
-  | "muted"
-  | "divide"
-  | "faded"
-  | "soft"
-  | "background";
-
-export type Leading = "display" | "ui" | "prose";
+export type Leading = "display" | "ui" | "paragraph";
 
 export type Scale = "sm" | "md" | "lg";
 
@@ -41,8 +32,6 @@ export type MenuTransition = "closedMenu" | "openedMenu";
 
 export type Statuses = "green" | "yellow" | "orange" | "red";
 
-export type ThemedGreys = "lightMode" | "darkMode";
-
 export type Tracking = "tightest" | "tight" | "normal";
 
 export type Measure = "narrow" | "normal" | "wide" | "full";
@@ -55,9 +44,7 @@ export type MappedKey<K extends string, T> = { [P in K]: T };
 
 export interface ColorArguments {
   accent?: string;
-  greys?: MappedKey<ThemedGreys, MappedKey<Greys, string>>;
   darkMode?: boolean;
-  statuses?: MappedKey<Statuses, string>;
 }
 
 export interface Colors {
@@ -78,6 +65,7 @@ export interface Colors {
   subtle: string;
   divide: string;
   soft: string;
+  faint: string;
   background: string;
 }
 
@@ -113,8 +101,6 @@ export interface Theme {
 
 export interface GenerateThemeInput {
   accent?: string;
-  greys?: MappedKey<ThemedGreys, MappedKey<Greys, string>>;
   darkMode?: boolean;
-  statuses?: MappedKey<Statuses, string>;
   theme?: Theme;
 }

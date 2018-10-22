@@ -1,16 +1,25 @@
 import React from "react";
 import { View, Text, Table, TR, TH, TD, Theme, Icon } from "../../../src";
 
-const Prop = ({ name = "", type = {}, required = false }) => (
-  <TR>
-    <TD width="20%">
-      <Text>{name}</Text>
-    </TD>
-    <TD>{required && <Icon name="Check" marginX="auto" />}</TD>
-    <TD width="50%">
-      <Text>{type.name || "N/A"}</Text>
-    </TD>
-  </TR>
+const Prop = ({ name = "", type = {}, required = false, description = "" }) => (
+  <React.Fragment>
+    <TR>
+      <TD width="20%">
+        <Text>{name}</Text>
+      </TD>
+      <TD>{required && <Icon name="Check" marginX="auto" />}</TD>
+      <TD width="50%">
+        <Text>{type.name || "N/A"}</Text>
+      </TD>
+    </TR>
+    {description.length !== 0 && (
+      <TR>
+        <TD>
+          <Text fontSize={1}>{description}</Text>
+        </TD>
+      </TR>
+    )}
+  </React.Fragment>
 );
 
 export const ComponentDoc = ({ component = "" }) => {
@@ -20,7 +29,7 @@ export const ComponentDoc = ({ component = "" }) => {
       {({ type }) => (
         <View>
           <View marginY={3}>
-            <Text element="h2" fontSize={3} fontWeight="bold">
+            <Text element="h2" fontSize={3} fontWeight="semibold">
               Props &amp; methods
             </Text>
           </View>

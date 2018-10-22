@@ -1,56 +1,33 @@
 import React from "react";
-import colorable from "colorable";
-import head from "lodash/head";
-import View from "../../../src/components/View";
-import Text from "../../../src/components/Text";
-import Theme from "../../../src/components/Theme";
-import { themedGreys, colors } from "../../../src/foundations";
+import { View, Text, Theme } from "../../../src/";
 
-export const Color = ({ color, background = "light", ...props }) => {
-  const a11y = head(
-    colorable(
-      { color: props.color, ...themedGreys.lightMode, accent: colors.accent },
-      { compact: true }
-    )
-  );
-  return (
-    <Theme.Consumer>
-      {({ spacing }) => (
-        <View
-          css={{
-            backgroundColor: color,
-            padding: spacing[5],
-            marginBottom: spacing[7],
-            maxWidth: "100%",
-            borderRadius: 4,
-          }}
-        >
-          <Text fontSize={4}>
-            {props.colorKey} | {props.color}
+export const Color = ({ color, ...props }) => (
+  <Theme.Consumer>
+    {({ colors }) => (
+      <View
+        borderRadius={2}
+        width="144"
+        boxShadow="strong"
+        overflow="hidden"
+        {...props}
+      >
+        <View backgroundColor={color} height="144" width="100%" />
+        <View mode="light" padding={4} backgroundColor="background">
+          <Text fontSize={1} fontWeight="semibold" fontFamily="mono">
+            {color}
           </Text>
-          {a11y.combinations.map(color => (
-            <div>
-              <Text color={color.name}>
-                {color.name} - AA: {color.accessibility.aa ? "Pass" : "Fail"} |{" "}
-              </Text>
-              <Text color={color.name} fontSize={3}>
-                AA Large:
-                {color.accessibility.aaLarge ? "Pass" : "Fail"}
-              </Text>
-              <Text color={color.name} fontSize={3}>
-                AAA:
-                {color.accessibility.aaa ? "Pass" : "Fail"}
-              </Text>
-              <Text color={color.name} fontSize={3}>
-                AAA Large:
-                {color.accessibility.aaaLarge ? "Pass" : "Fail"}
-              </Text>
-            </div>
-          ))}
+          <Text
+            fontSize={1}
+            fontWeight="semibold"
+            fontFamily="mono"
+            color="subtle"
+          >
+            {colors[color]}
+          </Text>
         </View>
-      )}
-    </Theme.Consumer>
-  );
-};
+      </View>
+    )}
+  </Theme.Consumer>
+);
 
 export default Color;
