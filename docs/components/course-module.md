@@ -2,7 +2,7 @@
 title: Course Module
 lead: A component that wraps lessons
 status: ready
-releaseVersion: 0.0.54
+releaseVersion: 0.0.55
 ---
 
 Base
