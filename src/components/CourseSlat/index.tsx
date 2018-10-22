@@ -46,7 +46,7 @@ const CourseSlat: React.SFC<Props> = ({
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ spacing, breakpoints, opacity, colors }) => {
+    {({ spacing, breakpoints, colors }) => {
       return (
         <View
           borderRadius={2}
@@ -88,9 +88,7 @@ const CourseSlat: React.SFC<Props> = ({
                 justifyContent="center"
                 height="100%"
                 width="100%"
-                css={{
-                  opacity: opacity.emptyIcon,
-                }}
+                opacity="emptyIcon"
               >
                 <Icon size={7} name="Empty" color="default" />
               </View>

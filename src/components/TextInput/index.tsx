@@ -89,7 +89,7 @@ class TextInput extends React.Component<TextInputProps, any> {
 
     return (
       <Theme.Consumer>
-        {({ spacing: s, opacity }) => (
+        {({ spacing: s }) => (
           <View
             element="label"
             borderRadius={2}
@@ -101,9 +101,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             flexDirection="row"
             alignItems="center"
             htmlFor={id}
-            css={{
-              opacity: disabled ? opacity.disabled : 1,
-            }}
+            opacity={disabled && "disabled"}
           >
             {iconName && (
               <Icon

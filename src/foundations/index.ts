@@ -47,12 +47,15 @@ export const getContrastColor = color =>
  * Color
  */
 
-export const opacity: MappedKey<Opacities, number> = {
+export const opacities: MappedKey<Opacities, number> = {
   feedback: 0.1,
   highlight: 0.15,
   emptyBackground: 0.16,
   emptyIcon: 0.24,
   pill: 0.3,
+  heroOverlayAccentNoImage: 0.3,
+  heroOverlayAccent: 0.6,
+  heroOverlayImage: 0.8,
   disabled: 0.5,
   modal: 0.7,
 };
@@ -106,7 +109,7 @@ export const generateColors = ({
   const themedGreys = darkMode ? accentGreys.darkMode : accentGreys.lightMode;
 
   const statusColors = {
-    highlight: opacify(accent, opacity.highlight),
+    highlight: opacify(accent, opacities.highlight),
     success: "#51C133",
     note: "#FFDE00",
     warning: "#F6941D",
@@ -259,7 +262,7 @@ export const generateTheme = ({
   shadows,
   transitions,
   breakpoints,
-  opacity,
+  opacities,
   animation,
   zIndex,
   ...theme,
