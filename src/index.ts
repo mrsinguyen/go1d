@@ -53,3 +53,4 @@ export { default as Dropdown } from "./components/Dropdown";
 export { default as Prose } from "./components/Prose";
 export { default as SubmitButton } from "./components/SubmitButton";
 export { default as PortalUrlField } from "./components/PortalUrlField";
+export { default as CourseModule } from "./components/CourseModule";

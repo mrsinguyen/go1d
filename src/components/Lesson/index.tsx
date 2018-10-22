@@ -43,7 +43,7 @@ const Lesson: React.SFC<Props> = ({
         flexDirection="row"
         css={{
           overflow: "hidden",
-          borderTop: `1px solid ${colors.soft}`,
+          borderBottom: `1px solid ${colors.soft}`,
         }}
         {...props}
       >
