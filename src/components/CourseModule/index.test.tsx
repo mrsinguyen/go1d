@@ -12,13 +12,13 @@ it("Can hide accordian section", () => {
   const { getByTestId } = render(<CourseModule title="Test Title" />);
 
   expect(() => {
-    getByTestId("AccordianSegment");
+    getByTestId("collapsibleSegment");
   }).not.toThrow();
 
   fireEvent.click(getByTestId("ToggleButton"));
 
   expect(() => {
-    getByTestId("AccordianSegment");
+    getByTestId("collapsibleSegment");
   }).toThrow();
 });
 
@@ -28,19 +28,19 @@ it("Can change default state", () => {
   );
 
   expect(() => {
-    getByTestId("AccordianSegment");
+    getByTestId("collapsibleSegment");
   }).toThrow();
 
   fireEvent.click(getByTestId("ToggleButton"));
 
   expect(() => {
-    getByTestId("AccordianSegment");
+    getByTestId("collapsibleSegment");
   }).not.toThrow();
 });
 
 it("Hide the button when prop there", () => {
   const { getByTestId } = render(
-    <CourseModule noAccordian={true} title="Test Title" />
+    <CourseModule collapsible={false} title="Test Title" />
   );
 
   expect(() => {

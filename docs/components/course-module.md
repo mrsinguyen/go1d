@@ -30,7 +30,7 @@ Default Closed
 
 No Toggle
 ```.tsx
-<CourseModule noAccordian={true} title="Test Title">
+<CourseModule collapsible={false} title="Test Title">
   <Lesson title="This is a test lesson" type="resource" />
   <Lesson title="This is a test lesson" type="resource" />
   <Lesson title="This is a test lesson" type="resource" />

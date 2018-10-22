@@ -35,7 +35,7 @@ class CourseModule extends React.Component<Props, any> {
       title,
       children,
       duration,
-      noAccordian,
+      collapsible,
       defaultOpen,
       ...props
     } = this.props;
@@ -71,7 +71,7 @@ class CourseModule extends React.Component<Props, any> {
             )}
           </View>
         </View>
-        {isOpen && <View data-testid="AccordianSegment">{children}</View>}
+        {isOpen && <View data-testid="collapsibleSegment">{children}</View>}
       </View>
     );
   }
