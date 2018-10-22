@@ -8,14 +8,14 @@ import View, { Props as ViewProps } from "../View";
 interface Props extends ViewProps {
   title: string;
   duration?: number;
-  noAccordian?: boolean;
+  collapsible?: boolean;
   defaultOpen?: boolean;
 }
 
 class CourseModule extends React.Component<Props, any> {
   public static defaultProps = {
     defaultOpen: true,
-    noAccordian: false,
+    collapsible: true,
   };
   constructor(props) {
     super(props);
@@ -57,7 +57,7 @@ class CourseModule extends React.Component<Props, any> {
                 </Text>
               </View>
             )}
-            {!noAccordian && (
+            {collapsible && (
               <View
                 marginLeft={6}
                 onClick={this.toggleHidden}
