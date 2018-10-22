@@ -67,7 +67,7 @@ const OverviewHero: React.SFC<Props> = ({
       <View
         backgroundColor="contrast"
         css={{
-          zIndex: 1,
+          zIndex: 0,
           position: "absolute",
           left: 0,
           right: 0,
