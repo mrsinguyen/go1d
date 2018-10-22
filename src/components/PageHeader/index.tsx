@@ -95,7 +95,7 @@ const PageHeader: React.SFC<Props> = ({
                 </View>
               </Link>
             )}
-          <Text element="h1" fontWeight="bold" fontSize={5}>
+          <Text element="h1" fontWeight="semibold" fontSize={5}>
             {title}
           </Text>
           {subtitle}

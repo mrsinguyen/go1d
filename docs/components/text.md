@@ -2,17 +2,21 @@
 title: Text
 status: ready
 releaseVersion: 0.0.1
+lead: Text uses our responsive type scale under the hood and connects props with all our type foundations.
 ---
 
-This is a text component
+All text in our apps should be wrapped in a Text component.
+
+Try out the props below.
 
 ```.jsx
 <Text
   color='subtle'
   fontSize={4}
-  fontWeight='bold'
+  fontWeight="semibold"
+  lineHeight="paragraph"
 >
-  My large bold grey text
+  My large semibold subtle text
 </Text>
 ```
 

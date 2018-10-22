@@ -14,7 +14,7 @@ Provider is a component that allows for the specification of whether the child c
 <Provider>
   <PageBody>
     <View marginBottom={5}>
-      <Text element="h2" fontSize={4} fontWeight="bold">Reports</Text>
+      <Text element="h2" fontSize={4} fontWeight="semibold">Reports</Text>
     </View>
     <View backgroundColor="background" padding={5} borderRadius={2}>
       Market place dashboard
@@ -26,10 +26,10 @@ Provider is a component that allows for the specification of whether the child c
 
 ### Custom link and dark mode specified
 ```.jsx
-<Provider darkMode={true} LinkComponent={() => <div>custom link</div>}>
+<Provider darkMode={true} linkComponent={() => <div>custom link</div>}>
   <PageBody>
     <View marginBottom={5}>
-      <Text element="h2" fontSize={4} fontWeight="bold">Reports</Text>
+      <Text element="h2" fontSize={4} fontWeight="semibold">Reports</Text>
     </View>
     <View backgroundColor="background" padding={5} borderRadius={2}>
       Market place dashboard

@@ -12,6 +12,7 @@ export interface Props extends ViewProps {
   iconColor?: string;
   backgroundColor?: string;
   iconName?: string;
+  fontWeight?: string;
   css?: Interpolation;
   children?: React.ReactNode;
   onClick?: ((evt: React.SyntheticEvent) => void);
@@ -24,6 +25,7 @@ const Button: React.SFC<Props> = ({
   backgroundColor = "background",
   iconName,
   children,
+  fontWeight = "semibold",
   css,
   onClick,
   href,
@@ -64,7 +66,7 @@ const Button: React.SFC<Props> = ({
     )}
     <Text
       lineHeight="ui"
-      fontWeight="bold"
+      fontWeight={fontWeight}
       fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
       color="inherit"
     >

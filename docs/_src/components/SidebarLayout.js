@@ -34,11 +34,14 @@ const Sidebar = props => (
         <View
           paddingY={4}
           backgroundColor="background"
+          color="subtle"
           {...props}
           css={{
-            minWidth: 280,
-            color: colors.subtle,
+            [breakpoints.sm]: {
+              width: "100%",
+            },
             [breakpoints.md]: {
+              minWidth: 280,
               position: "fixed",
               height: "100vh",
               overflow: "auto",
@@ -60,12 +63,12 @@ const Link = props => (
         flexDirection="row"
         alignItems="center"
         paddingRight={6}
-        paddingY={2}
+        paddingY={3}
         css={{
           paddingLeft: depthPad(props) + 12,
           borderLeft: "4px solid",
           borderColor: "transparent",
-          color: colors.faded,
+          color: colors.subtle,
           "&::before": {
             content: '""',
             position: "absolute",
@@ -152,10 +155,10 @@ const Hero = ({
       <View marginBottom={4}>
         <Text
           element="h1"
-          fontSize={6}
-          fontWeight="bold"
+          fontSize={7}
+          fontWeight="semibold"
           color="default"
-          lineHeight="display"
+          lineHeight="ui"
         >
           {title}
         </Text>
@@ -165,7 +168,7 @@ const Hero = ({
           {statuses[status].title}
         </Pill>
       )}
-      <Text element="p" fontSize={3} color="subtle" lineHeight="prose">
+      <Text element="p" fontSize={4} color="subtle" lineHeight="paragraph">
         {lead}
       </Text>
     </View>
@@ -194,9 +197,9 @@ const SidebarTitle = props => (
     <Text
       element="h2"
       fontSize={3}
-      fontWeight="bold"
+      fontWeight="semibold"
       color="contrast"
-      lineHeight="display"
+      lineHeight="ui"
     >
       GO1D
     </Text>
@@ -224,7 +227,7 @@ const PrevNextLink = ({ title, path, name = "" }) => (
       {title}
     </Text>
     <View marginTop={3}>
-      <Text fontSize={3} fontWeight="bold">
+      <Text fontSize={3} fontWeight="semibold">
         {format(name)}
       </Text>
     </View>

@@ -5,7 +5,7 @@ import Label from "../Label";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   label: string;
   id?: string;
   name: string;
@@ -65,13 +65,14 @@ const Field: React.SFC<Props> = ({
             ...props,
           });
         }
+
         if (form.errors && form.errors[field.name]) {
           statusText = required ? "Required" : "Invalid";
           statusColor = "danger";
           statusIcon = null;
         } else {
-          statusColor = "subtle";
-          statusText = !required && "Optional";
+          statusColor = statusColor ? statusColor : "subtle";
+          statusText = statusText ? statusText : !required && "Optional";
         }
 
         return (
