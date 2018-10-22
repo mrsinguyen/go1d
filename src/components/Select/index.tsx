@@ -415,11 +415,11 @@ class Select extends React.Component<Props, any> {
 
     return (
       <Theme.Consumer>
-        {({ colors, spacing, opacity }) => (
+        {({ colors, spacing }) => (
           <View
+            opacity={disabled && "disabled"}
             css={{
               position: "relative",
-              opacity: disabled ? opacity.disabled : 1,
               pointerEvents: disabled ? "none" : "all",
               cursor: disabled ? "initial" : "pointer",
             }}

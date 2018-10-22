@@ -27,25 +27,29 @@ const OverviewHero: React.SFC<Props> = ({
   author,
   duration,
   ctaCard,
+  color = "contrast",
   ...props
 }: Props) => (
   <View flexDirection="column">
     <View
+      mode="dark"
       paddingX={8}
       paddingBottom={6}
       paddingTop={9}
       display="flex"
       flexDirection="row"
       alignItems="center"
-      color={props.color ? props.color : "background"}
-      css={{
-        position: "relative",
-        overflow: "hidden",
-      }}
+      color={color}
+      position="relative"
+      overflow="hidden"
       {...props}
     >
       <View
-        backgroundColor="muted"
+        backgroundColor="accent"
+        backgroundOpacity={
+          backgroundImage ? "heroOverlayAccent" : "heroOverlayAccentNoImage"
+        }
+        opacity="heroOverlayImage"
         css={{
           zIndex: 0,
           backgroundImage: backgroundImage
@@ -58,22 +62,9 @@ const OverviewHero: React.SFC<Props> = ({
           right: 0,
           bottom: 0,
           top: 0,
-          "-webkit-filter": "opacity(80%) blur(12px)",
-          filter: "opacity(80%) blur(12px)",
-          "-webkit-transform": "scale(1.2)",
+          filter: "blur(12px)",
+          backgroundBlendMode: "multiply",
           transform: "scale(1.2)",
-        }}
-      />
-      <View
-        backgroundColor="contrast"
-        css={{
-          zIndex: 0,
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          opacity: 0.25,
         }}
       />
       <Container
@@ -85,12 +76,7 @@ const OverviewHero: React.SFC<Props> = ({
       >
         {breadcrumb && (
           <View flexDirection="row" alignItems="center">
-            <Icon
-              name="ChevronLeft"
-              color="background"
-              size={1}
-              marginRight={2}
-            />
+            <Icon name="ChevronLeft" size={1} marginRight={2} />
             <Text fontSize={1}>{breadcrumb}</Text>
           </View>
         )}
@@ -103,15 +89,17 @@ const OverviewHero: React.SFC<Props> = ({
         <View flexDirection="row" marginTop={5} alignItems="center">
           {author && (
             <View flexDirection="row" alignItems="center" marginRight={5}>
-              <Text fontSize={3} color="soft">
+              <Text fontSize={3} color="default">
                 {author}
               </Text>
             </View>
           )}
           {duration && (
             <View flexDirection="row" alignItems="center">
-              <Icon name="Clock" color="muted" marginRight={3} />
-              <Text fontSize={3}>{formatDuration(duration)}</Text>
+              <Icon name="Clock" color="subtle" marginRight={3} />
+              <Text fontSize={3} color="default">
+                {formatDuration(duration)}
+              </Text>
             </View>
           )}
         </View>

@@ -12,6 +12,9 @@ export type Opacities =
   | "emptyBackground"
   | "emptyIcon"
   | "pill"
+  | "heroOverlayAccentNoImage"
+  | "heroOverlayAccent"
+  | "heroOverlayImage"
   | "disabled"
   | "modal";
 
@@ -94,7 +97,7 @@ export interface Theme {
   shadows: MappedKey<Shadows, string>;
   transitions: MappedKey<"subtle", string>;
   breakpoints: MappedKey<Scale, string>;
-  opacity: MappedKey<Opacities, number>;
+  opacities: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
   zIndex: MappedKey<ZIndex, number>;
 }

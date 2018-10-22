@@ -28,6 +28,7 @@ export interface Props extends BaseProps {
   flexBasis?: number | string;
   position?: PositionProperty;
   overflow?: OverflowProperty;
+  opacity?: number | string;
   // Reset margins by default
   margin?: MarginProperty;
   marginX?: MarginProperty;
@@ -81,6 +82,7 @@ const View: React.SFC<Props> = ({
   flexBasis = "auto",
   position,
   overflow,
+  opacity,
   // Reset margins by default
   margin = 0,
   marginX = margin,
@@ -121,7 +123,7 @@ const View: React.SFC<Props> = ({
   return (
     <Wrapper>
       <Theme.Consumer>
-        {({ spacing: s, colors, shadows, transitions, opacity }) => (
+        {({ spacing: s, colors, shadows, transitions, opacities }) => (
           <Base
             element={element}
             css={[
@@ -136,6 +138,7 @@ const View: React.SFC<Props> = ({
                 flexBasis,
                 position,
                 overflow,
+                opacity: opacities[opacity],
                 height,
                 width,
                 maxWidth,
@@ -152,8 +155,11 @@ const View: React.SFC<Props> = ({
                 minHeight,
                 minWidth: 0,
                 color: colors[color] || color,
-                backgroundColor: opacity[backgroundOpacity]
-                  ? opacify(colors[backgroundColor], opacity[backgroundOpacity])
+                backgroundColor: opacities[backgroundOpacity]
+                  ? opacify(
+                      colors[backgroundColor],
+                      opacities[backgroundOpacity]
+                    )
                   : colors[backgroundColor],
                 borderRadius: s[borderRadius],
                 borderStyle: "solid",
