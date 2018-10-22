@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import Avatar from "../Avatar";
-import ButtonFilled from "../ButtonFilled";
 import ButtonMinimal from "../ButtonMinimal";
 import Dropdown from "../Dropdown";
 import Icon from "../Icon";
@@ -13,8 +12,7 @@ export interface Props extends ViewProps {
   likes?: number;
   dislikes?: number;
   enrolled?: number;
-  buttonLabel?: string;
-  onButtonClick?: ((evt: React.SyntheticEvent) => void);
+  ctaButton?: React.ReactNode;
   actions?: Array<{
     title: string;
     onClick: ((evt: React.SyntheticEvent) => void);
@@ -53,8 +51,7 @@ const OverviewCtaCard: React.SFC<Props> = ({
   likes = 0,
   dislikes = 0,
   enrolled = 0,
-  buttonLabel,
-  onButtonClick,
+  ctaButton,
   actions,
   ...props
 }: Props) => (
@@ -142,16 +139,7 @@ const OverviewCtaCard: React.SFC<Props> = ({
       >
         {children}
       </View>
-      {buttonLabel &&
-        onButtonClick && (
-          <ButtonFilled
-            color="accent"
-            flexDirection="column"
-            onClick={onButtonClick}
-          >
-            {buttonLabel}
-          </ButtonFilled>
-        )}
+      {ctaButton}
     </View>
   </View>
 );
