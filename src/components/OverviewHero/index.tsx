@@ -67,18 +67,6 @@ const OverviewHero: React.SFC<Props> = ({
           transform: "scale(1.2)",
         }}
       />
-      <View
-        backgroundColor="contrast"
-        css={{
-          zIndex: 0,
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          opacity: 0.25,
-        }}
-      />
       <Container
         contain={contentWidth ? contentWidth : "wide"}
         paddingX={4}
