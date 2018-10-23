@@ -6,6 +6,7 @@ import InputSuffix from "../InputSuffix";
 
 export interface Props extends FieldProps {
   isAvailable?: boolean;
+  name: string;
   suffixValue?: string;
 }
 
@@ -43,10 +44,11 @@ class PortalUrlField extends React.Component<Props, any> {
   }
 
   public render() {
-    const { suffixValue, ...props } = this.props;
+    const { name, suffixValue, ...props } = this.props;
 
     return (
       <Field
+        name={name}
         statusText={this.getStatusText()}
         statusColor={this.getStatusColor()}
         statusIcon={this.getStatusIcon()}
