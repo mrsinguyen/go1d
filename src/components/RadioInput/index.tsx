@@ -4,13 +4,13 @@ import Base from "../Base";
 import Text, { Props as TextProps } from "../Text";
 import View from "../View";
 
-export interface TextInputProps extends TextProps {
+export interface RadioInputProps extends TextProps {
   id?: string;
   name: string;
   value: string;
 }
 
-class RadioInput extends React.Component<TextInputProps, any> {
+class RadioInput extends React.Component<RadioInputProps, any> {
   public state = {
     RandomID: `RadioInput_${Math.random()}`,
   };
