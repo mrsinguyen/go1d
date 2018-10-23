@@ -13,6 +13,7 @@ export interface TextInputProps extends TextProps {
   size?: "lg" | "md" | "sm";
   name?: string;
   value?: string;
+  multiline?: number;
   placeholder?: string;
   maxLength?: number;
   minLength?: number;
@@ -89,6 +90,7 @@ class TextInput extends React.Component<TextInputProps, any> {
       onBlur,
       borderRadius,
       viewCss,
+      multiline,
       ...props
     } = this.props;
 
@@ -119,7 +121,8 @@ class TextInput extends React.Component<TextInputProps, any> {
             )}
             <Text
               id={id}
-              element="input"
+              element={multiline ? "textarea" : "input"}
+              rows={multiline}
               lineHeight="ui"
               fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
               color="inherit"

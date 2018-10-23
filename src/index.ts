@@ -54,3 +54,4 @@ export { default as Prose } from "./components/Prose";
 export { default as SubmitButton } from "./components/SubmitButton";
 export { default as PortalUrlField } from "./components/PortalUrlField";
 export { default as CourseModule } from "./components/CourseModule";
+export { default as TextArea } from "./components/TextArea";
