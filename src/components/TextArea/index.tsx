@@ -9,7 +9,16 @@ class TextArea extends React.Component<TextInputProps, any> {
   };
 
   public render() {
-    return <TextInput {...this.props} />;
+    const { css, ...props } = this.props;
+    return (
+      <TextInput
+        css={{
+          resize: "vertical",
+          ...(css as object),
+        }}
+        {...props}
+      />
+    );
   }
 }
 
