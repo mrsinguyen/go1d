@@ -17,6 +17,7 @@ class InputSuffix extends React.Component<Props, any> {
     const { value, size = "md", suffixValue, ...props } = this.props;
 
     return (
+<<<<<<< HEAD
       <View flexDirection="row">
         <TextInput
           value={value}
@@ -46,6 +47,43 @@ class InputSuffix extends React.Component<Props, any> {
           {suffixValue}
         </View>
       </View>
+=======
+      <Theme.Consumer>
+        {({ colors }) => (
+          <View flexDirection="row">
+            <TextInput
+              value={this.state.value}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              flexGrow="1"
+              borderRadius={0}
+              borderRight={0}
+              viewProps={{
+                borderTopLeftRadius: "4px",
+                borderBottomLeftRadius: "4px",
+              }}
+              {...props}
+            />
+            <View
+              paddingX={get({ lg: 7, md: 5, sm: 5 }, size)}
+              paddingY={get({ lg: 5, md: 3, sm: 3 }, size)}
+              color="subtle"
+              backgroundColor="soft"
+              border={1}
+              marginRight={-1}
+              paddingTop={3}
+              paddingBottom={3}
+              css={{
+                borderTopRightRadius: "4px",
+                borderBottomRightRadius: "4px",
+              }}
+            >
+              {suffixValue}
+            </View>
+          </View>
+        )}
+      </Theme.Consumer>
+>>>>>>> GO1P-21757 Removing flexbasis
     );
   }
 }
