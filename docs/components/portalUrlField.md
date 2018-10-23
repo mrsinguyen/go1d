@@ -11,6 +11,7 @@ releaseVersion: 0.0.32
 ```.jsx
 <Form initialValues={{ portalName: "A portal" }} onSubmit={(values, actions) => actions.submit()}>
 <PortalUrlField
+  name="portalName"
   label="Portal Url"
   suffixValue=".mygo1.com"  
   description="This is the description"
@@ -24,6 +25,7 @@ releaseVersion: 0.0.32
 ```.jsx
 <Form initialValues={{ portalName: "A portal" }} onSubmit={(values, actions) => actions.submit()}>
 <PortalUrlField
+  name="portalName"
   label="Portal Url"
   suffixValue=".mygo1.com"  
   description="This is the description"
