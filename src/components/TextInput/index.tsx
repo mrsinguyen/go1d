@@ -27,6 +27,8 @@ export interface TextInputProps extends TextProps {
   iconName?: string;
   suffixNode?: React.ReactNode;
   error?: boolean;
+  borderRadius?: number;
+  viewCss?: any;
 }
 
 class TextInput extends React.Component<TextInputProps, any> {
@@ -34,6 +36,7 @@ class TextInput extends React.Component<TextInputProps, any> {
 
   public static defaultProps = {
     size: "md",
+    borderRadius: 2,
   };
 
   constructor(props) {
@@ -84,6 +87,8 @@ class TextInput extends React.Component<TextInputProps, any> {
       disabled,
       onFocus,
       onBlur,
+      borderRadius,
+      viewCss,
       ...props
     } = this.props;
 
@@ -92,7 +97,7 @@ class TextInput extends React.Component<TextInputProps, any> {
         {({ spacing: s }) => (
           <View
             element="label"
-            borderRadius={2}
+            borderRadius={borderRadius}
             backgroundColor="background"
             paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
             border={1}
@@ -102,6 +107,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             alignItems="center"
             htmlFor={id}
             opacity={disabled && "disabled"}
+            css={viewCss}
           >
             {iconName && (
               <Icon
