@@ -1,7 +1,8 @@
 import * as React from "react";
-import View from "../View";
 import NotificationManager from "./NotificationManager";
 import Notifications from "./Notifications";
+import Theme from "../Theme";
+import View from "../View";
 
 const AbsoluteStyling = {
   position: "fixed" as "fixed",
@@ -39,16 +40,21 @@ class NotificationContainer extends React.Component {
   public render() {
     const { notifications } = this.state;
     return (
-      <View
-        css={{
-          ...AbsoluteStyling,
-        }}
-      >
-        <Notifications
-          notifications={notifications}
-          removeFromQueue={this.handleRemove}
-        />
-      </View>
+      <Theme.Consumer>
+        {({ zIndex }) => (
+          <View
+            zIndex={zIndex.tooltip}
+            css={{
+              ...AbsoluteStyling,
+            }}
+          >
+            <Notifications
+              notifications={notifications}
+              removeFromQueue={this.handleRemove}
+            />
+          </View>
+        )}
+      </Theme.Consumer>
     );
   }
 }
