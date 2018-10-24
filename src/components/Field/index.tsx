@@ -66,7 +66,7 @@ const Field: React.SFC<Props> = ({
           });
         }
 
-        if (!statusText && form.touched[field.name]) {
+        if (!statusText) {
           if (
             form.errors &&
             form.errors[field.name] &&
