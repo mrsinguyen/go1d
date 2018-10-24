@@ -8,6 +8,7 @@ export interface RadioInputProps extends TextProps {
   id?: string;
   name: string;
   value: string;
+  disabled?: boolean;
 }
 
 class RadioInput extends React.Component<RadioInputProps, any> {
@@ -27,6 +28,7 @@ class RadioInput extends React.Component<RadioInputProps, any> {
       onChange,
       selected,
       label,
+      disabled = false,
       ...props
     } = this.props;
 
@@ -72,6 +74,7 @@ class RadioInput extends React.Component<RadioInputProps, any> {
           onChange={onChange}
           type="radio"
           name={name}
+          disabled={disabled}
           value={value}
           {...props}
         />
