@@ -133,6 +133,7 @@ class TextInput extends React.Component<TextInputProps, any> {
               data-testid="inputElement"
               css={{
                 // get rid of default styles
+                width: "100%",
                 background: 0,
                 border: 0,
                 flexGrow: 1,
