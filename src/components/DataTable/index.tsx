@@ -173,7 +173,7 @@ class DataTable extends React.Component<Props, {}> {
               )}
               <Loader {...this.props}>
                 {({ registerChild, onRowsRendered }) => (
-                  <WindowScroller scrollElement={scrollElement || window}>
+                  <WindowScroller scrollElement={scrollElement}>
                     {({ height, isScrolling, onChildScroll, scrollTop }) => (
                       <React.Fragment>
                         <View display="block" {...viewProps}>
