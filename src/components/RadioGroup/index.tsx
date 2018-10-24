@@ -9,6 +9,7 @@ export interface RadioGroupProps extends ViewProps {
   name: string;
   value?: string;
   key?: string;
+  disabled?: boolean;
   options: RadioInputProps[];
 }
 
@@ -34,6 +35,9 @@ class RadioGroup extends React.Component<RadioGroupProps, any> {
       options,
       onChange, // Do not pass down
       name,
+      disabled,
+      error, // Do not pass down
+      form, // Do not pass down
       ...props
     } = this.props;
 
@@ -50,6 +54,7 @@ class RadioGroup extends React.Component<RadioGroupProps, any> {
               <RadioInput
                 onChange={this.onChange}
                 name={name}
+                disabled={disabled}
                 selected={Option.value === activeSelect}
                 {...Option}
               />
