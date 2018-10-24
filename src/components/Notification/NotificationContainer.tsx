@@ -42,6 +42,7 @@ class NotificationContainer extends React.Component {
       <View
         css={{
           ...AbsoluteStyling,
+          zIndex: 10000,
         }}
       >
         <Notifications
