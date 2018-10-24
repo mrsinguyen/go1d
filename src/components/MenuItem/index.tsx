@@ -24,7 +24,13 @@ const MenuItem: React.SFC<Props> = ({
 }: Props) => (
   <Theme.Consumer>
     {({ colors, animation }) => (
-      <Link href={href} hoverFocusColor="faded">
+      <Link
+        href={href}
+        hoverFocusColor="faded"
+        css={{
+          flexShrink: 0,
+        }}
+      >
         <View
           flexDirection="row"
           alignItems="center"

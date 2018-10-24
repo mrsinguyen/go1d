@@ -60,6 +60,7 @@ interface Props extends ViewProps {
    * Hide the scroll to top of page button
    */
   hideScrollButton?: boolean;
+  scrollElement?: any;
 }
 
 class DataTable extends React.Component<Props, {}> {
@@ -94,9 +95,13 @@ class DataTable extends React.Component<Props, {}> {
   @autobind
   public scrollToTop() {
     safeInvoke(this.props.scrollCallback, { row: 0 });
-    scrollTo({
-      top: 0,
-    });
+    if (this.props.scrollElement) {
+      this.props.scrollElement.scrollTo({ top: 0 });
+    } else {
+      scrollTo({
+        top: 0,
+      });
+    }
   }
 
   public render() {
@@ -114,6 +119,7 @@ class DataTable extends React.Component<Props, {}> {
       scrollToIndex,
       scrollCallback,
       hideScrollButton,
+      scrollElement,
       ...viewProps
     } = this.props;
 
@@ -167,7 +173,7 @@ class DataTable extends React.Component<Props, {}> {
               )}
               <Loader {...this.props}>
                 {({ registerChild, onRowsRendered }) => (
-                  <WindowScroller>
+                  <WindowScroller scrollElement={scrollElement}>
                     {({ height, isScrolling, onChildScroll, scrollTop }) => (
                       <React.Fragment>
                         <View display="block" {...viewProps}>
