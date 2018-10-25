@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import foundations from "../../foundations";
 import ButtonMinimal from "../ButtonMinimal";
 import Portal from "../Portal";
 import Text from "../Text";
@@ -105,13 +106,26 @@ class Modal extends React.Component<Props, any> {
                 {onRequestClose && (
                   <ButtonMinimal
                     onClick={onRequestClose}
-                    position="absolute"
                     iconName="Cross"
                     size="lg"
+                    css={{
+                      // Issue with overrides
+                      paddingRight: foundations.spacing[5],
+                      paddingLeft: foundations.spacing[5],
+                    }}
                   />
                 )}
                 <View flexGrow={1}>
-                  <Text element="h1" textAlign="center" fontSize={3}>
+                  <Text
+                    element="h1"
+                    textAlign="center"
+                    fontSize={3}
+                    css={{
+                      wordWrap: "break-word",
+                      maxWidth: `calc(100% - ${foundations.spacing[5] * 2 +
+                        18}px)`,
+                    }}
+                  >
                     {title}
                   </Text>
                 </View>

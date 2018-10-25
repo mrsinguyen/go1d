@@ -1,8 +1,8 @@
 import * as React from "react";
-import NotificationManager from "./NotificationManager";
-import Notifications from "./Notifications";
 import Theme from "../Theme";
 import View from "../View";
+import NotificationManager from "./NotificationManager";
+import Notifications from "./Notifications";
 
 const AbsoluteStyling = {
   position: "fixed" as "fixed",
