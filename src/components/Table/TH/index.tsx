@@ -21,7 +21,7 @@ interface Props extends ViewProps {
   sortAction?: (evt: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
-const TableHeaderCell = ({
+const TableHeaderCell: React.SFC<Props> = ({
   text,
   css,
   sort,
@@ -46,17 +46,19 @@ const TableHeaderCell = ({
       {...otherProps}
     >
       <HeaderWrapper sort={sort} onClick={sortAction}>
-        <Text textTransform="uppercase" color="subtle">
-          {text}
-        </Text>
-        {sort &&
-          sort === currentSort && (
-            <Icon
-              name={direction === "up" ? "ChevronUp" : "ChevronDown"}
-              marginLeft={2}
-              color="subtle"
-            />
-          )}
+        <View flexDirection="row" alignItems="center">
+          <Text textTransform="uppercase" color="subtle">
+            {text}
+          </Text>
+          {sort &&
+            sort === currentSort && (
+              <Icon
+                name={direction === "up" ? "ChevronUp" : "ChevronDown"}
+                marginLeft={2}
+                color="subtle"
+              />
+            )}
+        </View>
       </HeaderWrapper>
     </View>
   );
@@ -68,10 +70,10 @@ const HeaderWrapper: React.SFC<any> = ({ sort, onClick, children }) => {
   if (sort) {
     return (
       <ButtonMinimal
-        flexDirection="row"
         data-sort={sort}
         fontWeight="normal"
-        padding={0}
+        paddingX={0}
+        paddingY={0}
         onClick={onClick}
       >
         {children}
