@@ -18,7 +18,7 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   /** The hieght of a row. When using autoRowHeight, you can supply this for a more accurate initial estimate */
   rowHeight?: number;
   /** The total number of rows that can be loaded. Used for autoloading. */
@@ -173,7 +173,7 @@ class DataTable extends React.Component<Props, {}> {
               )}
               <Loader {...this.props}>
                 {({ registerChild, onRowsRendered }) => (
-                  <WindowScroller scrollElement={scrollElement}>
+                  <WindowScroller scrollElement={scrollElement || undefined}>
                     {({ height, isScrolling, onChildScroll, scrollTop }) => (
                       <React.Fragment>
                         <View display="block" {...viewProps}>
