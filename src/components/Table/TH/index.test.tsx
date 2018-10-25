@@ -21,6 +21,8 @@ it("renders without crashing with all props", () => {
 });
 
 it("renders without crashing with sort props", () => {
+  const sortAction = evt => null;
+
   render(
     <Table
       header={[
@@ -30,6 +32,7 @@ it("renders without crashing with sort props", () => {
           sort="name"
           currentSort="name"
           direction="up"
+          sortAction={sortAction}
         />,
       ]}
       rows={[
