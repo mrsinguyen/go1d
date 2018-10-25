@@ -19,3 +19,24 @@ it("renders without crashing with all props", () => {
     />
   );
 });
+
+it("renders without crashing with sort props", () => {
+  render(
+    <Table
+      header={[
+        <TH
+          key="0"
+          text="header"
+          sort="name"
+          currentSort="name"
+          direction="up"
+        />,
+      ]}
+      rows={[
+        <TR key="0">
+          <TD>0</TD>
+        </TR>,
+      ]}
+    />
+  );
+});
