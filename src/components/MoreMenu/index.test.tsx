@@ -7,7 +7,6 @@ afterEach(cleanup);
 it("renders without crashing without any optional props", () => {
   render(
     <MoreMenu
-      hasShadow={false}
       itemList={[
         {
           title: "Add",

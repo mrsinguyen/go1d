@@ -12,7 +12,7 @@ interface Props {
   placement?: "top" | "right" | "bottom" | "left";
   mode?: "hover" | "click" | "always";
   tip: React.ReactNode;
-  children: React.ReactNode | ((params: any) => React.ReactNode);
+  children: React.ReactNode | ((params: any) => React.ReactNode); // this doesn't work
 }
 
 function generateArrowCSS(p, s, colors): Interpolation {
@@ -127,14 +127,19 @@ class Tooltip extends React.Component<Props, any> {
   public render() {
     const { placement, tip, children } = this.props;
 
+    let render = null;
+    if (typeof children === "function") {
+      render = children as ((params: any) => React.ReactNode);
+    }
+
     return (
       <Theme.Consumer>
         {({ spacing: s, colors }) => (
           <Manager>
             <Reference>
               {({ ref }) =>
-                typeof children === "function" ? (
-                  children({ ref, getEventProps: this.getEventProps })
+                render ? (
+                  render({ ref, getEventProps: this.getEventProps })
                 ) : (
                   <span
                     ref={ref}

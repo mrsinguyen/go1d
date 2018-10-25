@@ -91,6 +91,7 @@ class TextInput extends React.Component<TextInputProps, any> {
       borderRadius,
       viewCss,
       multiline,
+      error, // do not pass
       ...props
     } = this.props;
 

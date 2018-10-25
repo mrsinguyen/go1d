@@ -12,7 +12,7 @@ it("renders without crashing without any optional props", () => {
 });
 
 it("renders without crashing with all props", () => {
-  const wrapper = render(<Icon name="Cross" color="accent" size="22" />);
+  const wrapper = render(<Icon name="Cross" color="accent" size={22} />);
   expect(wrapper.container.children.length).toBe(1);
   expect(wrapper.container.children[0].tagName).toBe("svg");
 });

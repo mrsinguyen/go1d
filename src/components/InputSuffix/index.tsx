@@ -21,7 +21,6 @@ class InputSuffix extends React.Component<Props, any> {
         <TextInput
           value={value}
           borderRadius={0}
-          borderRight={0}
           viewCss={{
             borderTopLeftRadius: "4px",
             borderBottomLeftRadius: "4px",

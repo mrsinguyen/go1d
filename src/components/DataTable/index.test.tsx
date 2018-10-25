@@ -44,7 +44,7 @@ class LoadMocker {
 it("renders without crashing with infinite loading", () => {
   const loadMocker = new LoadMocker();
 
-  const { container } = render(
+  render(
     <DataTable
       infiniteLoad={true}
       autoRowHeight={true}
