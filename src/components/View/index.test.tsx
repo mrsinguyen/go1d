@@ -58,7 +58,7 @@ it("renders with margins larger than spacing", () => {
 it("renders a margin of 0 if a key smaller than the max spacing is used", () => {
   const originalWarn = global.console.error;
   global.console.error = jest.fn();
-  const wrapper = render(<View margin={20} />);
+  render(<View margin={20} />);
   expect(global.console.error).toHaveBeenCalledWith(
     "Please use spacing scale for value smaller than 256"
   );

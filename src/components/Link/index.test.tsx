@@ -10,7 +10,7 @@ it("renders without crashing without being wrapped in a provider", () => {
 it("renders without crashing while being wrapped in a provider with a custom link component", () => {
   const customLink = () => <div>here</div>;
   render(
-    <Provider LinkComponent={customLink}>
+    <Provider linkComponent={customLink}>
       <Link href="test">here</Link>
     </Provider>
   );
