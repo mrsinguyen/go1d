@@ -48,6 +48,7 @@ const Banner: React.SFC<Props> = ({
             flexWrap="wrap"
             flexGrow={1}
             paddingX={5}
+            maxWidth="90%"
             alignItems={floating ? "center" : "left"}
           >
             {children}
