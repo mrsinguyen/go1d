@@ -5,7 +5,7 @@ import Icon from "../../Icon";
 import Text from "../../Text";
 import View, { Props as ViewProps } from "../../View";
 
-interface Props extends ViewProps {
+interface TableHeaderCellProps extends ViewProps {
   text: string;
 
   /** The sort keyword that is currently ineffect. Used to determine whether to show the sort chevron */
@@ -15,13 +15,13 @@ interface Props extends ViewProps {
   sort?: string;
 
   /** The current sort direction */
-  direction?: "up" | "down";
+  direction?: "ASC" | "DESC";
 
   /** the action to take when the header is selected. The sort value is passed as data-sort on the event target */
   sortAction?: (evt: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
-const TableHeaderCell: React.SFC<Props> = ({
+const TableHeaderCell: React.SFC<TableHeaderCellProps> = ({
   text,
   css,
   sort,
@@ -29,7 +29,7 @@ const TableHeaderCell: React.SFC<Props> = ({
   currentSort,
   sortAction,
   ...props
-}: Props) => {
+}: TableHeaderCellProps) => {
   const { width, ...otherProps } = props;
   return (
     <View
@@ -53,7 +53,7 @@ const TableHeaderCell: React.SFC<Props> = ({
           {sort &&
             sort === currentSort && (
               <Icon
-                name={direction === "up" ? "ChevronUp" : "ChevronDown"}
+                name={direction === "ASC" ? "ChevronUp" : "ChevronDown"}
                 marginLeft={2}
                 color="subtle"
               />
