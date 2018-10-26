@@ -99,29 +99,30 @@ const OverviewCtaCard: React.SFC<Props> = ({
             )}
           </View>
         )}
-      {actions && (
-        <View marginLeft="auto">
-          <Dropdown
-            itemToString={itemToString}
-            borderRadius={2}
-            renderFunction={renderFunction}
-            itemList={actions}
-            placement="bottom-end"
-          >
-            {({ ref, getToggleButtonProps }) => (
-              <View width="32">
-                <ButtonMinimal
-                  {...getToggleButtonProps()}
-                  innerRef={ref}
-                  size="md"
-                >
-                  <Icon name="Ellipsis" />
-                </ButtonMinimal>
-              </View>
-            )}
-          </Dropdown>
-        </View>
-      )}
+      {actions &&
+        actions.length > 0 && (
+          <View marginLeft="auto">
+            <Dropdown
+              itemToString={itemToString}
+              borderRadius={2}
+              renderFunction={renderFunction}
+              itemList={actions}
+              placement="bottom-end"
+            >
+              {({ ref, getToggleButtonProps }) => (
+                <View width="32">
+                  <ButtonMinimal
+                    {...getToggleButtonProps()}
+                    innerRef={ref}
+                    size="md"
+                  >
+                    <Icon name="Ellipsis" />
+                  </ButtonMinimal>
+                </View>
+              )}
+            </Dropdown>
+          </View>
+        )}
     </View>
     <View paddingX={5} paddingTop={0} paddingBottom={5}>
       {enrolled > 0 && (
