@@ -18,6 +18,8 @@ export interface Props extends ViewProps {
   ctaCard?: React.ReactNode;
 }
 
+const MobileDisplayBreak = "@media(max-width: 740px)";
+
 const OverviewHero: React.SFC<Props> = ({
   children,
   backgroundImage,
@@ -28,12 +30,12 @@ const OverviewHero: React.SFC<Props> = ({
   author,
   duration,
   ctaCard,
+  css,
   color = "contrast",
   ...props
 }: Props) => (
   <View flexDirection="column">
     <View
-      mode="dark"
       paddingX={8}
       paddingBottom={6}
       paddingTop={9}
@@ -42,6 +44,14 @@ const OverviewHero: React.SFC<Props> = ({
       alignItems="center"
       color={color}
       position="relative"
+      css={{
+        [MobileDisplayBreak]: {
+          paddingRight: foundations.spacing[5],
+          paddingLeft: foundations.spacing[5],
+          paddingTop: foundations.spacing[8],
+        },
+        ...(css as object),
+      }}
       {...props}
     >
       <View
@@ -52,6 +62,9 @@ const OverviewHero: React.SFC<Props> = ({
           overflow: "hidden",
           left: 0,
           top: 0,
+          [MobileDisplayBreak]: {
+            maxHeight: "250px",
+          },
         }}
       >
         <View
@@ -82,13 +95,28 @@ const OverviewHero: React.SFC<Props> = ({
       </View>
       <Container
         contain={contentWidth ? contentWidth : "wide"}
+        mode="dark"
+        backgroundColor="transparent"
+        color="contrast"
         paddingX={4}
         css={{
           zIndex: 1,
+          [MobileDisplayBreak]: {
+            paddingBottom: 40,
+          },
         }}
         flexDirection="row"
       >
-        <View flexGrow={1} flexShrink={2} paddingRight={6}>
+        <View
+          flexGrow={1}
+          flexShrink={2}
+          paddingRight={6}
+          css={{
+            [MobileDisplayBreak]: {
+              display: "none",
+            },
+          }}
+        >
           {breadcrumb && (
             <View flexDirection="row" alignItems="center">
               <Icon name="ChevronLeft" size={1} marginRight={2} />
@@ -127,7 +155,12 @@ const OverviewHero: React.SFC<Props> = ({
             position: "relative",
             background: "transparent",
             [foundations.breakpoints.sm]: {
-              minWidth: 250,
+              width: "100%",
+              minWidth: "100%",
+            },
+            [MobileDisplayBreak]: {
+              // When the page goes to single column
+              alignItems: "center",
             },
             [foundations.breakpoints.md]: {
               minWidth: 300,
@@ -141,14 +174,33 @@ const OverviewHero: React.SFC<Props> = ({
         </View>
       </Container>
     </View>
-    <View padding={8}>
+    <View
+      padding={8}
+      css={{
+        [MobileDisplayBreak]: {
+          paddingRight: foundations.spacing[5],
+          paddingLeft: foundations.spacing[5],
+          paddingTop: foundations.spacing[3],
+        },
+      }}
+    >
       <Container
         contain={contentWidth ? contentWidth : "wide"}
         paddingX={4}
         flexDirection="row"
         alignItems="flex-start"
       >
-        <View flexGrow={1}>{children}</View>
+        <View
+          maxWidth={700}
+          width="calc(80vw - 350px)"
+          css={{
+            [MobileDisplayBreak]: {
+              width: "100%",
+            },
+          }}
+        >
+          {children}
+        </View>
       </Container>
     </View>
   </View>
