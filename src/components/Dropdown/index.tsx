@@ -82,7 +82,7 @@ const Dropdown = ({
                       transition="none"
                       paddingY={3}
                       css={{
-                        zIndex: foundations.zIndex.tooltip,
+                        zIndex: foundations.zIndex.dropdown,
                       }}
                       {...props}
                     >
