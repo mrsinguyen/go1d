@@ -92,6 +92,7 @@ export const generateColors = ({
       soft: accentMix(baseGreys.grey2, 0.07),
       faint: accentMix(baseGreys.grey1, 0.02),
       background: baseGreys.grey0,
+      transparent: "transparent",
     },
     darkMode: {
       contrast: baseGreys.grey0,
@@ -103,6 +104,7 @@ export const generateColors = ({
       soft: accentMix(baseGreys.grey9, 0.17),
       faint: accentMix(baseGreys.grey9, 0.11),
       background: accentMix(baseGreys.grey9, 0.05),
+      transparent: "transparent",
     },
   };
 

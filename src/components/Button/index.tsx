@@ -6,7 +6,7 @@ import Link from "../Link";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface ButtonProps extends ViewProps {
   size?: "lg" | "md" | "sm";
   color?: string;
   iconColor?: string;
@@ -19,7 +19,7 @@ export interface Props extends ViewProps {
   href?: string;
 }
 
-const Button: React.SFC<Props> = ({
+const Button: React.SFC<ButtonProps> = ({
   size = "md",
   color = "subtle",
   backgroundColor = "background",
@@ -31,7 +31,7 @@ const Button: React.SFC<Props> = ({
   href,
   iconColor = color,
   ...props
-}: Props) => (
+}: ButtonProps) => (
   <View
     element={href ? (href.includes("http") ? "a" : Link) : "button"}
     flexDirection="row"
