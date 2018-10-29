@@ -46,9 +46,10 @@ const OverviewHero: React.SFC<Props> = ({
       position="relative"
       css={{
         [MobileDisplayBreak]: {
-          paddingRight: foundations.spacing[5],
-          paddingLeft: foundations.spacing[5],
+          paddingRight: foundations.spacing[3],
+          paddingLeft: foundations.spacing[3],
           paddingTop: foundations.spacing[8],
+          paddingBottom: foundations.spacing[0],
         },
         ...(css as object),
       }}
@@ -190,7 +191,15 @@ const OverviewHero: React.SFC<Props> = ({
         flexDirection="row"
         alignItems="flex-start"
       >
-        <View maxWidth={700} width="calc(100% - 360px)">
+        <View 
+          maxWidth={700} 
+          width="calc(100% - 360px)"
+          css={{
+            [MobileDisplayBreak]: {
+              width: "100%",
+            }
+          }}
+          >
           <View
             maxWidth="calc(75vw - 360px)"
             css={{
