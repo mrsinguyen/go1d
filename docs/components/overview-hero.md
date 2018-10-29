@@ -63,7 +63,6 @@ An overview container for a hero page
       onButtonClick
       width="280px"
       marginLeft={3}
-      css="position:relative;top:-250px;"
     />
   }
 >

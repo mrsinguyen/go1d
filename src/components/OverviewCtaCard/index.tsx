@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import Avatar from "../Avatar";
 import ButtonMinimal from "../ButtonMinimal";
@@ -82,6 +83,9 @@ const OverviewCtaCard: React.SFC<Props> = ({
       backgroundColor="soft"
       height={230}
       css={{
+        borderRadius: `${foundations.spacing[2]}px ${
+          foundations.spacing[2]
+        }px 0 0`,
         backgroundImage: backgroundImage
           ? `url(${backgroundImage})`
           : undefined,
