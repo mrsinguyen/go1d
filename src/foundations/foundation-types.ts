@@ -70,6 +70,7 @@ export interface Colors {
   soft: string;
   faint: string;
   background: string;
+  transparent: string;
 }
 
 export type ZIndex =

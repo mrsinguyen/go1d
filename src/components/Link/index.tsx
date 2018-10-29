@@ -24,7 +24,7 @@ const Link = ({
           const defaultCss = {
             textDecoration: "none",
             display: "inline-flex",
-            ":hover, :focus, :focus": {
+            ":hover, :focus": {
               "svg, span": {
                 color: colors[hoverFocusColor],
               },
@@ -38,7 +38,7 @@ const Link = ({
             );
           } else {
             return (
-              <View element="a" css={[defaultCss, css]} {...props}>
+              <View element="a" css={{ ...defaultCss, ...css }} {...props}>
                 {children}
               </View>
             );

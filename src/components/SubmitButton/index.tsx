@@ -1,6 +1,6 @@
 import { connect, FormikContext } from "formik";
 import * as React from "react";
-import { Props as ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import ButtonFilled from "../ButtonFilled";
 
 interface Props extends ButtonProps {

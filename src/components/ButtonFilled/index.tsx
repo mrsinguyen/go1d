@@ -2,7 +2,7 @@ import { Interpolation } from "emotion";
 import * as React from "react";
 import { isDark } from "../../foundations";
 import { Colors } from "../../foundations/foundation-types";
-import Button, { Props as ButtonProps } from "../Button";
+import Button, { ButtonProps } from "../Button";
 import Theme from "../Theme";
 
 interface Props extends ButtonProps {

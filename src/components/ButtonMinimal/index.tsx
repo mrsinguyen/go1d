@@ -1,6 +1,6 @@
 import * as React from "react";
 import { darken } from "../../foundations";
-import Button, { Props as ButtonProps } from "../Button";
+import Button, { ButtonProps } from "../Button";
 import Theme from "../Theme";
 
 export interface Props extends ButtonProps {
