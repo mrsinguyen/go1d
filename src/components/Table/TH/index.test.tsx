@@ -19,3 +19,27 @@ it("renders without crashing with all props", () => {
     />
   );
 });
+
+it("renders without crashing with sort props", () => {
+  const sortAction = evt => null;
+
+  render(
+    <Table
+      header={[
+        <TH
+          key="0"
+          text="header"
+          sort="name"
+          currentSort="name"
+          direction="up"
+          sortAction={sortAction}
+        />,
+      ]}
+      rows={[
+        <TR key="0">
+          <TD>0</TD>
+        </TR>,
+      ]}
+    />
+  );
+});

@@ -30,10 +30,10 @@ The table component takes in two props, rows and headers and then automatically 
   ]}
   header={[
     <TH key="0" text="Header A" />,
-    <TH key="0" text="Header B" />,
-    <TH key="0" text="Header C" />,
-    <TH key="0" text="Header D" />,
-    <TH key="0" text="Header E" />
+    <TH key="1" text="Header B" />,
+    <TH key="2" text="Header C" />,
+    <TH key="3" text="Header D" />,
+    <TH key="4" text="Header E" />
   ]}
 />
 ```
@@ -85,10 +85,33 @@ The Table Header Cell (TH) is a component that provides the styling for the tabl
   ]}
   header={[
     <TH key="0" text="Header A" />,
-    <TH key="0" text="Header B" />,
-    <TH key="0" text="Header C" />,
-    <TH key="0" text="Header D" />,
-    <TH key="0" text="Header E" />
+    <TH key="1" text="Header B" />,
+    <TH key="2" text="Header C" />,
+    <TH key="3" text="Header D" />,
+    <TH key="4" text="Header E" />
+  ]}
+/>
+```
+
+### Basic table with a sortable header
+
+```.jsx
+<Table
+  rows={[
+    <TR key="0">
+        <TD><Text>Cell 0A</Text></TD>
+        <TD><Text>Cell 0B</Text></TD>
+        <TD><Text>Cell 0C</Text></TD>
+        <TD><Text>Cell 0D</Text></TD>
+        <TD><Text>Cell 0E</Text></TD>
+    </TR>
+  ]}
+  header={[
+    <TH key="0" text="Header A" sort="A" currentSort="A" direction="up"/>,
+    <TH key="1" text="Header B" sort="B" currentSort="A" direction="up"/>,
+    <TH key="2" text="Header C" />,
+    <TH key="3" text="Header D" />,
+    <TH key="4" text="Header E" />
   ]}
 />
 ```
