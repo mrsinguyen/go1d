@@ -1,6 +1,7 @@
 import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
+import foundations from "../../foundations";
 import Portal from "../Portal";
 import View, { Props as ViewProps } from "../View";
 
@@ -80,6 +81,9 @@ const Dropdown = ({
                       innerRef={ref}
                       transition="none"
                       paddingY={3}
+                      css={{
+                        zIndex: foundations.zIndex.dropdown,
+                      }}
                       {...props}
                     >
                       {itemList.map((item, i) =>
