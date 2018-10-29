@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Interpolation } from "emotion";
+import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
@@ -124,6 +125,13 @@ const CourseSlat: React.SFC<Props> = ({
                   overflow: "hidden",
                   whiteSpace: "nowrap",
                   textOverflow: "ellipsis",
+                  [foundations.breakpoints.sm]: {
+                    wordWrap: "break-word",
+                    whiteSpace: "initial",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    display: "-webkit-box",
+                  },
                 }}
               >
                 {title}
@@ -162,6 +170,9 @@ const CourseSlat: React.SFC<Props> = ({
                   overflow: "hidden",
                   whiteSpace: "nowrap",
                   textOverflow: "ellipsis",
+                  [foundations.breakpoints.sm]: {
+                    display: "none",
+                  },
                 }}
               >
                 {description}
