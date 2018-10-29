@@ -71,6 +71,7 @@ const OverviewCtaCard: React.SFC<Props> = ({
     width="100%"
     borderRadius={2}
     flexGrow={1}
+    zIndex={1}
     css={{
       position: "absolute",
       [MobileDisplayBreak]: {
