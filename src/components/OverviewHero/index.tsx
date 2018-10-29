@@ -36,6 +36,7 @@ const OverviewHero: React.SFC<Props> = ({
 }: Props) => (
   <View flexDirection="column">
     <View
+      mode="dark"
       paddingX={8}
       paddingBottom={6}
       paddingTop={9}
