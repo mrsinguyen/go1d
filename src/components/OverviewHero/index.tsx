@@ -192,15 +192,15 @@ const OverviewHero: React.SFC<Props> = ({
         flexDirection="row"
         alignItems="flex-start"
       >
-        <View 
-          maxWidth={700} 
+        <View
+          maxWidth={700}
           width="calc(100% - 360px)"
           css={{
             [MobileDisplayBreak]: {
               width: "100%",
-            }
+            },
           }}
-          >
+        >
           <View
             maxWidth="calc(75vw - 360px)"
             css={{
