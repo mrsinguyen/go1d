@@ -54,7 +54,13 @@ const ComponentList = () => (
           rows={sortedComponents.map(component => (
             <TR key={component.name}>
               <TD>
-                <Link href={component.href}>{component.props.title}</Link>
+                <Link
+                  color="default"
+                  href={component.href}
+                  hoverFocusColor="accent"
+                >
+                  <Text color="default">{component.props.title}</Text>
+                </Link>
               </TD>
               <TD>
                 {component.props.status !== "ready" && (

@@ -45,9 +45,6 @@ const LinkComponent = ({ href, children, ...props }) => (
     {({ colors }) => (
       <Link
         to={href}
-        className={css`
-          color: ${colors.accent};
-        `}
         {...props}
       >
         {children}
@@ -57,7 +54,7 @@ const LinkComponent = ({ href, children, ...props }) => (
 );
 
 const App = ({ routes, ...props }) => (
-  <Provider LinkComponent={LinkComponent}>
+  <Provider linkComponent={LinkComponent}>
     <RoutesContext.Provider value={routes}>
       <ScopeProvider scope={scope}>
         <RebassProvider

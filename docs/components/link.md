@@ -21,7 +21,7 @@ This component will default to producing an anchor tag or a custom link componen
 ### Overriden link
 
 ```.jsx
-<Provider LinkComponent={({ href, children}) => <a href={href + "-custom"}>{children} + {href}</a>}>
+<Provider linkComponent={({ href, children}) => <a href={href + "-custom"}>{children} + {href}</a>}>
   <Link href="#testing">
     Link text
   </Link>
