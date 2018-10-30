@@ -36,7 +36,6 @@ const OverviewHero: React.SFC<Props> = ({
 }: Props) => (
   <View flexDirection="column">
     <View
-      mode="dark"
       paddingX={8}
       paddingBottom={6}
       paddingTop={9}
@@ -57,6 +56,7 @@ const OverviewHero: React.SFC<Props> = ({
       {...props}
     >
       <View
+        mode="dark"
         css={{
           height: "100%",
           width: "100%",
