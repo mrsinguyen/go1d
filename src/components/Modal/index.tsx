@@ -115,7 +115,7 @@ class Modal extends React.Component<Props, any> {
                     }}
                   />
                 )}
-                <View flexGrow={1}>
+                <View flexGrow={1} flexShrink={1}>
                   <Text
                     element="h1"
                     textAlign="center"
