@@ -5,7 +5,7 @@ import TextInput, { TextInputProps } from "../TextInput";
 import View from "../View";
 
 export interface Props extends TextInputProps {
-  suffixValue: string;
+  suffixValue: React.ReactNode;
 }
 
 class InputSuffix extends React.Component<Props, any> {
