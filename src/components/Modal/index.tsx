@@ -115,15 +115,16 @@ class Modal extends React.Component<Props, any> {
                     }}
                   />
                 )}
-                <View flexGrow={1}>
+                <View flexGrow={1} flexShrink={1}>
                   <Text
                     element="h1"
                     textAlign="center"
                     fontSize={3}
                     css={{
                       wordWrap: "break-word",
-                      maxWidth: `calc(100% - ${foundations.spacing[5] * 2 +
-                        18}px)`,
+                      maxWidth: onRequestClose
+                        ? `calc(100% - ${foundations.spacing[5] * 2 + 18}px)`
+                        : "100%",
                     }}
                   >
                     {title}
