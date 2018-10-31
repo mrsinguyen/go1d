@@ -74,12 +74,13 @@ class Select extends React.Component<Props, any> {
     this.mounted = false;
   }
 
-  public handleValueSelect = (label, value) => () => {
+  public handleValueSelect = (label, value) => event => {
     const CloseOnSelect =
       typeof this.props.closeOnSelect !== "undefined"
         ? this.props.closeOnSelect
         : true;
-
+    event.stopPropagation();
+    event.preventDefault();
     this.setState(
       {
         value,
@@ -210,9 +211,9 @@ class Select extends React.Component<Props, any> {
     });
   }
 
-  public selectOption = Selected => {
+  public selectOption = Selected => event => {
     if (Selected.label && Selected.value) {
-      this.handleValueSelect(Selected.label, Selected.value)();
+      this.handleValueSelect(Selected.label, Selected.value)(event);
     }
   };
 
@@ -247,12 +248,12 @@ class Select extends React.Component<Props, any> {
       switch (Key) {
         case "Tab":
           if (!event.shiftKey && focusedValue) {
-            this.selectOption(focusedValue);
+            this.selectOption(focusedValue)(event);
           }
           break;
         case "Enter":
           if (focusedValue) {
-            this.selectOption(focusedValue);
+            this.selectOption(focusedValue)(event);
           }
           break;
         case "Escape":
@@ -260,7 +261,7 @@ class Select extends React.Component<Props, any> {
           break;
         case " ": // space
           if (focusedValue) {
-            this.selectOption(focusedValue);
+            this.selectOption(focusedValue)(event);
           }
           break;
         case "ArrowUp":
