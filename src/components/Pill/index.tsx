@@ -5,10 +5,12 @@ import View, { Props as ViewProps } from "../View";
 interface Props extends ViewProps {
   color?: string;
   children: React.ReactNode;
+  textColor?: string;
 }
 
 const Pill: React.SFC<Props> = ({
   color = "faded",
+  textColor = "default",
   children,
   ...props
 }: Props) => {
@@ -22,7 +24,9 @@ const Pill: React.SFC<Props> = ({
       paddingY={2}
       {...props}
     >
-      <Text size={1}>{children}</Text>
+      <Text color={textColor} size={1}>
+        {children}
+      </Text>
     </View>
   );
 };

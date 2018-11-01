@@ -116,7 +116,13 @@ const CourseSlat: React.SFC<Props> = ({
               </View>
             )}
           </View>
-          <View paddingY={4} paddingX={5} flexShrink={1} flexGrow={1}>
+          <View
+            paddingY={4}
+            paddingX={5}
+            flexShrink={1}
+            flexGrow={1}
+            width="100%"
+          >
             {title && (
               <Text
                 fontSize={3}
