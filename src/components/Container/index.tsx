@@ -3,7 +3,7 @@ import * as React from "react";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   contain?: "narrow" | "normal" | "wide" | "full";
   children: React.ReactNode;
 }

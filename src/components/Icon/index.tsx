@@ -4,7 +4,7 @@ import View, { Props as ViewProps } from "../View";
 
 import * as Icons from "../Icons";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   name: string;
   color?: string;
   size?: number;

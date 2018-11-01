@@ -3,7 +3,7 @@ import * as React from "react";
 import { ButtonProps } from "../Button";
 import ButtonFilled from "../ButtonFilled";
 
-interface Props extends ButtonProps {
+export interface Props extends ButtonProps {
   children?: React.ReactNode;
 }
 

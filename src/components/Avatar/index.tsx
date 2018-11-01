@@ -4,7 +4,7 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   fullName?: string;
   size?: number;
   src?: string;

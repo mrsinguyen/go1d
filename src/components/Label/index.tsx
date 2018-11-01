@@ -3,7 +3,7 @@ import Icon from "../Icon";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   htmlFor?: string;
   statusText?: string;
   statusColor?: string;

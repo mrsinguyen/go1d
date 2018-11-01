@@ -7,7 +7,7 @@ import Icon from "../Icon";
 import Theme from "../Theme";
 import DropdownMenuItem, { Item as DropdownItem } from "./DropdownMenuItem";
 
-interface Props extends ButtonProps {
+export interface Props extends ButtonProps {
   isButtonFilled?: boolean;
   itemList: DropdownItem[];
 }
