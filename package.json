@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0",
     "@types/events": "^1.2.0",
     "@types/react-virtualized": "^9.18.7",
     "color": "^3.0.0",
@@ -38,7 +39,9 @@
     "libreact": "^2.1.0",
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.0",
+    "nuka-carousel": "^4.4.2",
     "react": "^16.4.1",
+    "react-container-dimensions": "^1.4.1",
     "react-popper": "^1.0.2",
     "react-pose": "^3.3.6",
     "react-router-dom": "^4.3.1",
