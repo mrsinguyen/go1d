@@ -39,7 +39,6 @@
     "libreact": "^2.1.0",
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.0",
-    "nuka-carousel": "^4.4.2",
     "react": "^16.4.1",
     "react-container-dimensions": "^1.4.1",
     "react-popper": "^1.0.2",

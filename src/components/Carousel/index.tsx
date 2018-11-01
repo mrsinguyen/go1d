@@ -281,7 +281,7 @@ class Carousel extends React.Component<Props, any> {
   }
 }
 
-export default props => (
+const ExportCarousel: React.SFC<Props> = (props: Props) => (
   <ContainerDimensions>
     {Params => {
       let size = "lg";
@@ -305,3 +305,5 @@ export default props => (
     }}
   </ContainerDimensions>
 );
+
+export default ExportCarousel;
