@@ -60,3 +60,4 @@ export { default as RadioGroup } from "./components/RadioGroup";
 export { default as TabNavigation } from "./components/TabNavigation";
 export { default as Tab } from "./components/Tab";
 export { default as Carousel } from "./components/Carousel";
+export { default as Checkbox } from "./components/Checkbox";
