@@ -31,7 +31,7 @@ it("renders without crashing with sort props", () => {
           text="header"
           sort="name"
           currentSort="name"
-          direction="up"
+          direction="ASC"
           sortAction={sortAction}
         />,
       ]}

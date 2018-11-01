@@ -73,7 +73,7 @@ it("does not crash", () => {
 });
 
 it("Can click next", async () => {
-  const { rerender, getByTestId, container } = render(
+  const { rerender, getByTestId } = render(
     <Carousel size="md">
       <DummyChild />
       <DummyChild />

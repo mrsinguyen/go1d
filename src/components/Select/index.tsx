@@ -9,7 +9,7 @@ import Input from "./internals/Input";
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
   backgroundColor?: string;

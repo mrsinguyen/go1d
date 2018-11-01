@@ -3,7 +3,7 @@ import * as React from "react";
 import View, { Props as ViewProps } from "../View";
 import TR from "./TR";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   header?: React.ReactNodeArray;
   rows: React.ReactNodeArray;
 }

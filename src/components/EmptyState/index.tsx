@@ -5,7 +5,7 @@ import Container from "../Container";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   title?: string;
   description?: string;
   children?: React.ReactNode;
