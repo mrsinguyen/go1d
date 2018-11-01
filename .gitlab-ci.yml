@@ -26,7 +26,29 @@ build:
       - build
       - dist
     expire_in: 6h
+  except:
+    - "tags"
+  only:
+    - master
+
+build-dev:
+  stage: build
+  tags: ["aws"]
+  cache:
+    paths: [node_modules]
+    key: "$CI_PROJECT_ID"
+  script:
+    - yarn install
+    - yarn "npm:build"
+  artifacts:
+    paths:
+      - node_modules
+      - build
+      - dist
+    expire_in: 6h
   only: ["branches"]
+  except:
+    - master
 
 test:linting:
   stage: test

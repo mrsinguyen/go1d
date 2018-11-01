@@ -43,10 +43,7 @@ const createNav = routes => {
 const LinkComponent = ({ href, children, ...props }) => (
   <Theme.Consumer>
     {({ colors }) => (
-      <Link
-        to={href}
-        {...props}
-      >
+      <Link to={href} {...props}>
         {children}
       </Link>
     )}
