@@ -58,5 +58,5 @@ export { default as TextArea } from "./components/TextArea";
 export { default as RadioInput } from "./components/RadioInput";
 export { default as RadioGroup } from "./components/RadioGroup";
 export { default as TabNavigation } from "./components/TabNavigation";
-export { default as Tab } from "./components/Tab";
+export { default as Tab, TabProps } from "./components/Tab";
 export { default as Carousel } from "./components/Carousel";
