@@ -150,7 +150,7 @@ class Carousel extends React.Component<Props, any> {
   };
 
   public scrollToIndex = Index => () => {
-    const { children } = this.props;
+    const { children, slideAnimationDuration } = this.props;
     let ScrollIndex = Index;
 
     if (ScrollIndex < 0) {
@@ -177,7 +177,7 @@ class Carousel extends React.Component<Props, any> {
       requestAnimationFrame(animate);
 
       new TWEEN.Tween(coords)
-        .to({ x: ElementOffset, y: 0 }, 300)
+        .to({ x: ElementOffset, y: 0 }, slideAnimationDuration)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(() => {
           Slider.scrollTo(coords.x, 0);
@@ -305,5 +305,7 @@ const ExportCarousel: React.SFC<Props> = (props: Props) => (
     }}
   </ContainerDimensions>
 );
+
+ExportCarousel.displayName = "Carousel";
 
 export default ExportCarousel;

@@ -5,11 +5,90 @@ status: ready
 releaseVersion: 0.0.69
 ---
 
-## Examples
+Note that Breakpoints are controlled by the width of their parent component not by the page width. 
 
+## Examples
 ### Base
 ```.jsx
 <Carousel>
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#7732bb",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#047cc0",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#e3bc13",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#db7c00",
+  }} />
+</Carousel>
+```
+
+### More Props
+```.jsx
+<Carousel clickScrollAmount={2} breakpoints={{
+  "sm": {
+    slidesToShow: 1.3,
+  },
+  "md": {
+    slidesToShow: 2.75,
+  },
+  "lg": {
+    slidesToShow: 4,
+  }
+}}>
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#7732bb",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#047cc0",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#e3bc13",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 400,
+    backgroundColor: "#db7c00",
+  }} />
+</Carousel>
+```
+
+### Shorter Duration
+```.jsx
+<Carousel slideAnimationDuration={50}>
   <View css={{
     height: 200,
     minWidth: 150,
