@@ -21,7 +21,7 @@ interface BreakpointProps {
   lg?: StandardProps;
 }
 
-interface Props extends StandardProps {
+export interface Props extends StandardProps {
   Breakpoints?: BreakpointProps;
 }
 

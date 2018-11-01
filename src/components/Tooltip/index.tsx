@@ -8,7 +8,7 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View from "../View";
 
-interface Props {
+export interface Props {
   placement?: "top" | "right" | "bottom" | "left";
   mode?: "hover" | "click" | "always";
   tip: React.ReactNode;

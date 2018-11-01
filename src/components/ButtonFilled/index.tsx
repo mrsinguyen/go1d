@@ -5,7 +5,7 @@ import { Colors } from "../../foundations/foundation-types";
 import Button, { ButtonProps } from "../Button";
 import Theme from "../Theme";
 
-interface Props extends ButtonProps {
+export interface Props extends ButtonProps {
   children?: React.ReactNode;
   color?: string;
   css?: Interpolation;

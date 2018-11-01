@@ -6,7 +6,7 @@ import Select from "../Select";
 import Text from "../Text";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
   defaultText?: string;

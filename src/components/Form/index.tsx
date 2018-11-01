@@ -12,7 +12,7 @@ interface InnerFormProps {
   values?: any;
 }
 
-interface FormProps extends FormikConfig<any> {
+export interface FormProps extends FormikConfig<any> {
   children?: React.ReactNode;
   disabled?: boolean;
   onChange?: (data: any) => void;

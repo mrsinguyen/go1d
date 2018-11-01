@@ -6,7 +6,7 @@ import Icon from "../Icon";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   type: "success" | "warning" | "danger";
   children: React.ReactNode;
   close?: ((evt: React.SyntheticEvent) => void);

@@ -5,7 +5,7 @@ import foundations from "../../foundations";
 import Portal from "../Portal";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   children: ((params: any) => React.ReactNode);
   itemList: any;
   renderFunction: ((

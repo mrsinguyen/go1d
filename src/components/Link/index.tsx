@@ -4,7 +4,7 @@ import { LinkContext } from "../Provider";
 import Theme from "../Theme";
 import View from "../View";
 
-interface Props {
+export interface Props {
   children: React.ReactNode;
   css?: any;
   href: string;
