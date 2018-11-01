@@ -56,7 +56,11 @@ class Carousel extends React.Component<Props, any> {
     const LastSlideRightEdge =
       LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
 
-    if (LastSlideRightEdge <= SliderScroll + Slider.offsetWidth) {
+    if (
+      LastSlideRightEdge <= SliderScroll + Slider.offsetWidth &&
+      process.env.NODE_ENV !== "test"
+    ) {
+      // Test library does not suppport Element widths so this is always true even when it shouldnt be
       // Cannot scroll further right
       if (finishedScrolling === false) {
         this.setState({
@@ -102,7 +106,7 @@ class Carousel extends React.Component<Props, any> {
       const Slider: any = this.sliderContainerRef.current;
       const SliderScroll = Slider.scrollLeft + foundations.spacing[gutter];
 
-      const Selected = this.slideRefs.findIndex((Ref, Index) => {
+      let Selected = this.slideRefs.findIndex((Ref, Index) => {
         // WARNING - INDEXED FROM 1
         const CurrentRef = Ref.current;
 
@@ -115,6 +119,10 @@ class Carousel extends React.Component<Props, any> {
 
         return false;
       });
+
+      if (Selected < 1) {
+        Selected = 1;
+      }
 
       let FinishedScrolling = false;
 
@@ -200,15 +208,17 @@ class Carousel extends React.Component<Props, any> {
       gutter,
       css,
       clickScrollAmount,
+      ...props
     } = this.props;
     const { currentSlide, finishedScrolling } = this.state;
 
     return (
-      <View position="relative">
+      <View position="relative" {...props}>
         <View
           innerRef={this.sliderContainerRef}
           flexDirection="row"
           width="100%"
+          data-testid="ScrollableCarousel"
           css={{
             overflowX: "auto",
             "::-webkit-scrollbar": {
@@ -246,6 +256,7 @@ class Carousel extends React.Component<Props, any> {
             onClick={this.scrollToIndex(
               this.state.currentSlide - clickScrollAmount
             )}
+            data-testid="leftNavigationButton"
             iconName="ChevronLeft"
             position="absolute"
             height={32}
@@ -264,6 +275,7 @@ class Carousel extends React.Component<Props, any> {
               onClick={this.scrollToIndex(
                 this.state.currentSlide + clickScrollAmount
               )}
+              data-testid="rightNavigationButton"
               iconName="ChevronRight"
               position="absolute"
               height={32}
