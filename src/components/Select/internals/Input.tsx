@@ -22,7 +22,7 @@ export default class Input extends React.Component<any> {
           color: "transparent",
 
           // remove cursor on mobile whilst maintaining "scroll into view" behaviour
-          left: -100,
+          left: -9999,
           opacity: 0,
           position: "absolute",
           transform: "scale(0)",

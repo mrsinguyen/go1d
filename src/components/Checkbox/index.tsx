@@ -100,6 +100,10 @@ class Checkbox extends React.Component<CheckboxProps, any> {
           name={name}
           disabled={disabled}
           value={Selected}
+          css={{
+            position: "absolute",
+            left: -9999,
+          }}
           {...props}
         />
       </React.Fragment>
