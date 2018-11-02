@@ -132,4 +132,6 @@ export {
   default as Carousel,
   Props as CarouselProps,
 } from "./components/Carousel";
+export { default as UL } from "./components/UL";
+export { default as LI } from "./components/UL/LI";
 export { default as PasswordInput } from "./components/PasswordInput";
