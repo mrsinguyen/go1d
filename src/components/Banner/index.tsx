@@ -30,15 +30,15 @@ const Banner: React.SFC<Props> = ({
           marginY={3}
           borderRadius={2}
           boxShadow={floating && "distant"}
-          justifyContent="space-between"
+          flexDirection="row"
+          justifyContent="flex-start"
           data-testid="banner"
+          maxWidth="100%"
           css={{
             backgroundColor: `${
               floating ? colors.background : tint(colors[type], tintLevel)
             }`,
             borderLeft: `4px solid ${colors[type]}`,
-            flexDirection: "row",
-            justifyContent: "justify",
             transition: "all 0.2s linear",
           }}
           {...props}
@@ -48,8 +48,14 @@ const Banner: React.SFC<Props> = ({
             flexWrap="wrap"
             flexGrow={1}
             paddingX={5}
+            width="90%"
             maxWidth="90%"
             alignItems={floating ? "center" : "left"}
+            css={{
+              "*": {
+                maxWidth: "100%", // IE11 fix
+              },
+            }}
           >
             {children}
           </View>
