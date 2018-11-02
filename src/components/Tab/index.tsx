@@ -31,7 +31,7 @@ const Tab = ({ children, isSelected, ...props }: TabProps) => (
           },
         }}
       >
-        <Text fontWeight={isSelected ? "bold" : "semibold"} color="default">
+        <Text fontWeight="semibold" color={isSelected ? "contrast" : "subtle"}>
           {children}
         </Text>
       </Button>
