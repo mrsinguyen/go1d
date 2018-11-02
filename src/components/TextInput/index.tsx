@@ -27,6 +27,7 @@ export interface TextInputProps extends TextProps {
   onBlur?: (evt: React.FocusEvent<any>) => void;
   iconName?: string;
   suffixNode?: React.ReactNode;
+  inputType?: string;
   error?: boolean;
   borderRadius?: number;
   viewCss?: any;
@@ -38,6 +39,7 @@ class TextInput extends React.Component<TextInputProps, any> {
   public static defaultProps = {
     size: "md",
     borderRadius: 2,
+    inputType: "text",
   };
 
   constructor(props) {
@@ -91,6 +93,7 @@ class TextInput extends React.Component<TextInputProps, any> {
       borderRadius,
       viewCss,
       multiline,
+      inputType,
       error, // do not pass
       ...props
     } = this.props;
@@ -123,6 +126,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             <Text
               id={id}
               element={multiline ? "textarea" : "input"}
+              type={inputType}
               rows={multiline}
               lineHeight="ui"
               fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
