@@ -7,7 +7,7 @@ import Theme from "../Theme";
 export interface TabProps extends ButtonProps {
   children?: React.ReactNode;
   isSelected?: boolean;
-  href?: string | { [key: string]: string };
+  href?: string | { [key: string]: any };
 }
 
 const Tab = ({ children, isSelected, ...props }: TabProps) => (

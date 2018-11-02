@@ -7,7 +7,7 @@ import View from "../View";
 interface Props {
   children: React.ReactNode;
   css?: any;
-  href: string | { [key: string]: string };
+  href: string | { [key: string]: any };
   hoverFocusColor?: string;
 }
 

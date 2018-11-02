@@ -16,7 +16,7 @@ export interface ButtonProps extends ViewProps {
   css?: Interpolation;
   children?: React.ReactNode;
   onClick?: ((evt: React.SyntheticEvent) => void);
-  href?: string | { [key: string]: string };
+  href?: string | { [key: string]: any };
 }
 
 const Button: React.SFC<ButtonProps> = ({
