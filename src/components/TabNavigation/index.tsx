@@ -8,6 +8,8 @@ const TabNavigation = ({ children, ...props }: ViewProps) => (
     display="flex"
     flexDirection="row"
     alignItems="left"
+    borderTop={1}
+    borderColor="highlight"
     {...props}
   >
     {children}
