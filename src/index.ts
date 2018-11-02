@@ -126,6 +126,7 @@ export {
   RadioGroupProps,
 } from "./components/RadioGroup";
 export { default as TabNavigation } from "./components/TabNavigation";
+export { default as Checkbox, CheckboxProps } from "./components/Checkbox";
 export { default as Tab, TabProps } from "./components/Tab";
 export {
   default as Carousel,
@@ -133,3 +134,4 @@ export {
 } from "./components/Carousel";
 export { default as UL } from "./components/UL";
 export { default as LI } from "./components/UL/LI";
+export { default as PasswordInput } from "./components/PasswordInput";
