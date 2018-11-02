@@ -4,7 +4,7 @@ import safeInvoke from "../../utils/safeInvoke";
 import ButtonMinimal from "../ButtonMinimal";
 import TextInput, { TextInputProps } from "../TextInput";
 
-interface Props extends TextInputProps {
+export interface Props extends TextInputProps {
   onSubmit: ((
     search: string,
     event: React.SyntheticEvent<HTMLElement>

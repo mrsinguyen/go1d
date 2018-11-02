@@ -7,7 +7,7 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View, { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   title?: string;
   children?: React.ReactNode;
   isOpen?: boolean;

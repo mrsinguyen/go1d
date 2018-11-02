@@ -121,7 +121,22 @@ const Nav = ({ routes = [], handleMenuToggle, menuOpen, ...props }) => (
   </View>
 );
 
-const Main = props => <View {...props} paddingLeft={280} width="100%" />;
+const Main = props => (
+  <Theme.Consumer>
+    {({ breakpoints }) => (
+      <View
+        {...props}
+        paddingLeft={280}
+        width="100%"
+        css={{
+          [breakpoints.sm]: {
+            paddingLeft: 0,
+          },
+        }}
+      />
+    )}
+  </Theme.Consumer>
+);
 
 export const statuses = {
   "in-development": {

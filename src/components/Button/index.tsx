@@ -16,7 +16,7 @@ export interface ButtonProps extends ViewProps {
   css?: Interpolation;
   children?: React.ReactNode;
   onClick?: ((evt: React.SyntheticEvent) => void);
-  href?: string;
+  href?: any;
 }
 
 const Button: React.SFC<ButtonProps> = ({
@@ -33,7 +33,7 @@ const Button: React.SFC<ButtonProps> = ({
   ...props
 }: ButtonProps) => (
   <View
-    element={href ? (href.includes("http") ? "a" : Link) : "button"}
+    element={href ? Link : "button"}
     flexDirection="row"
     alignItems="center"
     justifyContent="space-between"

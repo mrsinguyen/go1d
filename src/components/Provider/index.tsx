@@ -3,7 +3,7 @@ import { generateTheme } from "../../foundations";
 import { GenerateThemeInput } from "../../foundations/foundation-types";
 import Theme from "../Theme";
 
-interface Props extends GenerateThemeInput {
+export interface Props extends GenerateThemeInput {
   linkComponent?: React.ReactNode;
   children?: React.ReactNode;
 }

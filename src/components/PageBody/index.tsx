@@ -3,7 +3,7 @@ import * as React from "react";
 import Container from "../Container";
 import { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   children: React.ReactNode;
   padding?: number;
   paddingX?: number;

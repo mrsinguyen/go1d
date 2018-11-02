@@ -1,7 +1,7 @@
 import * as React from "react";
 import Notification from "./Notification";
 
-interface Props {
+export interface Props {
   notifications: any[];
   removeFromQueue?: ((evt: React.SyntheticEvent) => void);
 }

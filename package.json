@@ -1,6 +1,6 @@
 {
   "name": "@go1d/go1d",
-  "version": "0.0.66",
+  "version": "0.0.74",
   "description": "GO1 Design System",
   "main": "build/index.js",
   "homepage": "https://apps.pages.go1.co/GO1D",
@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0",
     "@types/events": "^1.2.0",
     "@types/react-virtualized": "^9.18.7",
     "color": "^3.0.0",
@@ -39,6 +40,7 @@
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.0",
     "react": "^16.4.1",
+    "react-container-dimensions": "^1.4.1",
     "react-popper": "^1.0.2",
     "react-pose": "^3.3.6",
     "react-router-dom": "^4.3.1",

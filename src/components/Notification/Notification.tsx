@@ -7,7 +7,7 @@ import Banner from "../Banner";
 import Theme from "../Theme";
 import { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
+export interface Props extends ViewProps {
   id: string;
   type: "success" | "warning" | "danger";
   message?: React.ReactChild;
