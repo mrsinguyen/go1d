@@ -16,7 +16,7 @@ const Tab = ({ children, isSelected, ...props }: TabProps) => (
       <Button
         borderColor={isSelected ? "accent" : "transparent"}
         borderBottom={2}
-        paddingY={4}
+        paddingY={3}
         marginRight={6}
         marginTop={2}
         paddingX={0}
