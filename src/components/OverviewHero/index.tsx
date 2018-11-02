@@ -150,9 +150,9 @@ const OverviewHero: React.SFC<Props> = ({
           </View>
         </View>
         <View
-          alignItems="flex-end"
           flexGrow={1}
           mode="light"
+          justifyContent="flex-start"
           css={{
             position: "relative",
             background: "transparent",
@@ -169,6 +169,7 @@ const OverviewHero: React.SFC<Props> = ({
             },
             [foundations.breakpoints.lg]: {
               minWidth: 360,
+              maxWidth: 400,
             },
           }}
         >
