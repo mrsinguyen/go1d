@@ -76,6 +76,10 @@ class RadioInput extends React.Component<RadioInputProps, any> {
           name={name}
           disabled={disabled}
           value={value}
+          css={{
+            position: "absolute",
+            left: -9999,
+          }}
           {...props}
         />
       </React.Fragment>

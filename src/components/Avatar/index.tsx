@@ -32,6 +32,7 @@ const Avatar: React.SFC<Props> = ({ src, fullName, size = 6, ...props }) => {
             verticalAlign: "middle",
             borderRadius: "50%",
             textAlign: "center",
+            position: "relative",
             ...Object.keys(breakpoints).reduce(
               (acc, bpKey) => ({
                 ...acc,
@@ -70,6 +71,8 @@ const Avatar: React.SFC<Props> = ({ src, fullName, size = 6, ...props }) => {
             <View
               position="absolute"
               css={{
+                top: 0,
+                left: 0,
                 verticalAlign: "middle",
                 backgroundSize: "cover",
                 backgroundImage: `url('${src}')`,
