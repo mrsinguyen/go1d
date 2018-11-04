@@ -11,6 +11,7 @@ import {
   ThemeType,
   ZIndex,
 } from "./foundation-types";
+import facepaint from "../utils/facepaint";
 
 /**
  * Color utilities
@@ -264,6 +265,7 @@ export const generateTheme = ({
   shadows,
   transitions,
   breakpoints,
+  mq: facepaint(Object.keys(breakpoints).map(k => breakpoints[k])),
   opacities,
   animation,
   zIndex,

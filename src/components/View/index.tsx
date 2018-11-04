@@ -26,17 +26,17 @@ export interface Props extends BaseProps {
   flexGrow?: number;
   flexShrink?: number;
   flexBasis?: number | string;
-  position?: PositionProperty;
+  position?: PositionProperty | PositionProperty[];
   overflow?: OverflowProperty;
   opacity?: number | string;
   // Reset margins by default
-  margin?: MarginProperty;
-  marginX?: MarginProperty;
-  marginY?: MarginProperty;
-  marginTop?: MarginProperty;
-  marginBottom?: MarginProperty;
-  marginRight?: MarginProperty;
-  marginLeft?: MarginProperty;
+  margin?: MarginProperty | MarginProperty[];
+  marginX?: MarginProperty | MarginProperty[];
+  marginY?: MarginProperty | MarginProperty[];
+  marginTop?: MarginProperty | MarginProperty[];
+  marginBottom?: MarginProperty | MarginProperty[];
+  marginRight?: MarginProperty | MarginProperty[];
+  marginLeft?: MarginProperty | MarginProperty[];
   padding?: PaddingProperty;
   paddingX?: PaddingProperty;
   paddingY?: PaddingProperty;
@@ -68,6 +68,14 @@ const modeComponents = {
   light: LightMode,
   dark: DarkMode,
 };
+
+function getWidth(n) {
+  if (Array.isArray(n)) {
+    return n.map(getWidth);
+  }
+
+  return isNaN(n) ? n : n > 1 ? n : n * 100 + "%";
+}
 
 const View: React.SFC<Props> = ({
   element = "div",
@@ -134,14 +142,14 @@ const View: React.SFC<Props> = ({
                 flexDirection,
                 flexWrap,
                 flexGrow,
+                flexBasis: getWidth(flexBasis),
                 flexShrink,
-                flexBasis,
                 position,
                 overflow,
                 opacity: opacities[opacity],
                 height,
-                width,
-                maxWidth,
+                width: getWidth(width),
+                maxWidth: getWidth(maxWidth),
                 zIndex,
                 marginTop: applySpacing(s, marginTop),
                 marginBottom: applySpacing(s, marginBottom),

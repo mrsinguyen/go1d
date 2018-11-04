@@ -1,10 +1,14 @@
-function applySpacing(spacing: number[] = [], space: number | string) {
+function applySpacing(spacing: number[] = [], space: any) {
   if (space === undefined) {
     return;
   }
 
   if (typeof space === "string") {
     return space;
+  }
+
+  if (Array.isArray(space)) {
+    return space.map(s => applySpacing(spacing, s));
   }
 
   if (spacing[space] !== undefined) {

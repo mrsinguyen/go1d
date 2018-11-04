@@ -1,5 +1,6 @@
 import { css as emotion, Interpolation } from "emotion";
 import * as React from "react";
+import Theme from "../Theme";
 
 export interface Props {
   element?: string | React.ComponentType;
@@ -33,12 +34,16 @@ const Base: React.SFC<Props> = ({
   css = [],
   ...props
 }: Props) => (
-  <Element
-    className={emotion(styleReset, css)}
-    children={children}
-    ref={innerRef}
-    {...props}
-  />
+  <Theme.Consumer>
+    {({ mq }) => (
+      <Element
+        className={emotion(styleReset, mq(css))}
+        children={children}
+        ref={innerRef}
+        {...props}
+      />
+    )}
+  </Theme.Consumer>
 );
 
 Base.displayName = "Base";

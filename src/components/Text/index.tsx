@@ -53,15 +53,11 @@ const Text: React.SFC<Props> = ({
             letterSpacing: type.tracking[letterSpacing],
             whiteSpace: "pre-wrap",
             wordWrap: "break-word",
-            ...Object.keys(breakpoints).reduce(
-              (acc, bpKey) => ({
-                ...acc,
-                [breakpoints[bpKey]]: {
-                  fontSize: type.scale[bpKey][fontSize],
-                },
-              }),
-              {}
-            ),
+            fontSize: [
+              type.scale.sm[fontSize],
+              type.scale.md[fontSize],
+              type.scale.lg[fontSize],
+            ],
           },
           css,
         ]}

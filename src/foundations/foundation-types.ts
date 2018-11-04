@@ -98,6 +98,7 @@ export interface Theme {
   shadows: MappedKey<Shadows, string>;
   transitions: MappedKey<"subtle", string>;
   breakpoints: MappedKey<Scale, string>;
+  mq: any;
   opacities: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
   zIndex: MappedKey<ZIndex, number>;
