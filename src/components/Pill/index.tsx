@@ -6,12 +6,14 @@ export interface Props extends ViewProps {
   color?: string;
   children: React.ReactNode;
   textColor?: string;
+  fontSize?: number;
 }
 
 const Pill: React.SFC<Props> = ({
   color = "faded",
   textColor = "default",
   children,
+  fontSize,
   ...props
 }: Props) => {
   return (
@@ -24,7 +26,7 @@ const Pill: React.SFC<Props> = ({
       paddingY={2}
       {...props}
     >
-      <Text color={textColor} size={1}>
+      <Text color={textColor} fontSize={fontSize}>
         {children}
       </Text>
     </View>
