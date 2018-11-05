@@ -1,9 +1,9 @@
 import * as React from "react";
-import foundations, { spacing } from "../../foundations";
 import safeInvoke from "../../utils/safeInvoke";
 import Base from "../Base";
 import Icon from "../Icon";
 import Text, { Props as TextProps } from "../Text";
+import Theme from "../Theme";
 import View from "../View";
 
 export interface CheckboxProps extends TextProps {
@@ -35,7 +35,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     safeInvoke(onChange, {
       target: {
         name,
-        value: Selected,
+        value: NewValue,
       },
     });
   };
@@ -57,56 +57,60 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     } = this.props;
 
     return (
-      <React.Fragment>
-        <View
-          element="label"
-          htmlFor={id}
-          flexDirection="row"
-          css={{
-            cursor: "pointer",
-          }}
-        >
-          <View
-            borderColor={Selected ? "accent" : "faded"}
-            backgroundColor="background"
-            borderRadius={2}
-            alignItems="center"
-            justifyContent="center"
-            css={{
-              opacity: disabled ? foundations.opacities.disabled : 1,
-              height: 24,
-              width: 24,
-              borderWidth: 1,
-            }}
-          >
-            {Selected && <Icon color="accent" name="Check" />}
-          </View>
-          <Text
-            color="contrast"
-            css={{
-              paddingLeft: spacing[3],
-              alignSelf: "center",
-            }}
-          >
-            {label}
-            {children}
-          </Text>
-        </View>
-        <Base
-          element="input"
-          id={id}
-          onChange={this.handleOnChange}
-          type="checkbox"
-          name={name}
-          disabled={disabled}
-          value={Selected}
-          css={{
-            position: "absolute",
-            left: -9999,
-          }}
-          {...props}
-        />
-      </React.Fragment>
+      <Theme.Consumer>
+        {({ spacing }) => (
+          <React.Fragment>
+            <View
+              element="label"
+              htmlFor={id}
+              flexDirection="row"
+              css={{
+                cursor: "pointer",
+              }}
+            >
+              <View
+                borderColor={Selected ? "accent" : "faded"}
+                backgroundColor="background"
+                borderRadius={2}
+                alignItems="center"
+                justifyContent="center"
+                opacity={disabled ? "disabled" : null}
+                css={{
+                  height: 24,
+                  width: 24,
+                  borderWidth: 1,
+                }}
+              >
+                {Selected && <Icon color="accent" name="Check" />}
+              </View>
+              <Text
+                color="contrast"
+                css={{
+                  paddingLeft: spacing[3],
+                  alignSelf: "center",
+                }}
+              >
+                {label}
+                {children}
+              </Text>
+            </View>
+            <Base
+              element="input"
+              id={id}
+              onChange={this.handleOnChange}
+              type="checkbox"
+              name={name}
+              disabled={disabled}
+              value={Selected}
+              css={{
+                position: "absolute",
+                left: -9999,
+              }}
+              {...props}
+            />
+          </React.Fragment>
+        )}
+      </Theme.Consumer>
     );
   }
 }
