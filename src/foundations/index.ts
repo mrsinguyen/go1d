@@ -1,4 +1,5 @@
 import * as Color from "color";
+import facepaint from "../utils/facepaint";
 import {
   Animation,
   ColorArguments,
@@ -11,7 +12,6 @@ import {
   ThemeType,
   ZIndex,
 } from "./foundation-types";
-import facepaint from "../utils/facepaint";
 
 /**
  * Color utilities
@@ -59,6 +59,7 @@ export const opacities: MappedKey<Opacities, number> = {
   heroOverlayImage: 0.8,
   disabled: 0.5,
   modal: 0.7,
+  none: 1,
 };
 
 const brandAccent = "#31B8DA";

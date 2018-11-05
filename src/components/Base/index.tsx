@@ -1,11 +1,22 @@
+import { Globals } from "csstype";
 import { css as emotion, Interpolation } from "emotion";
 import * as React from "react";
+import applySpacing from "../../utils/applySpacing";
 import Theme from "../Theme";
+
+type PaddingProperty = Globals | number;
 
 export interface Props {
   element?: string | React.ComponentType;
   children?: React.ReactNode;
-  css?: Interpolation;
+  padding?: PaddingProperty | PaddingProperty[];
+  paddingX?: PaddingProperty | PaddingProperty[];
+  paddingY?: PaddingProperty | PaddingProperty[];
+  paddingTop?: PaddingProperty | PaddingProperty[];
+  paddingBottom?: PaddingProperty | PaddingProperty[];
+  paddingRight?: PaddingProperty | PaddingProperty[];
+  paddingLeft?: PaddingProperty | PaddingProperty[];
+  css?: any;
   [key: string]: any;
 }
 
@@ -31,13 +42,31 @@ const Base: React.SFC<Props> = ({
   element: Element = "div",
   children,
   innerRef,
+  padding,
+  paddingX = padding,
+  paddingY = padding,
+  paddingTop = paddingY,
+  paddingBottom = paddingY,
+  paddingRight = paddingX,
+  paddingLeft = paddingX,
   css = [],
   ...props
 }: Props) => (
   <Theme.Consumer>
-    {({ mq }) => (
+    {({ spacing: s, mq }) => (
       <Element
-        className={emotion(styleReset, mq(css))}
+        className={emotion(
+          styleReset,
+          mq([
+            {
+              paddingTop: applySpacing(s, paddingTop),
+              paddingBottom: applySpacing(s, paddingBottom),
+              paddingRight: applySpacing(s, paddingRight),
+              paddingLeft: applySpacing(s, paddingLeft),
+            },
+            css,
+          ])
+        )}
         children={children}
         ref={innerRef}
         {...props}

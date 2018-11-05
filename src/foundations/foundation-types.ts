@@ -16,7 +16,8 @@ export type Opacities =
   | "heroOverlayAccent"
   | "heroOverlayImage"
   | "disabled"
-  | "modal";
+  | "modal"
+  | "none";
 
 export type Leading = "display" | "ui" | "paragraph";
 

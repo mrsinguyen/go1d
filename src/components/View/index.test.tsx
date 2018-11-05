@@ -36,12 +36,12 @@ it("renders without crashing with all props passed to it", () => {
       paddingLeft={4}
       color="green"
       backgroundColor="pink"
-      backgroundOpacity={0.5}
+      backgroundOpacity="modal"
       borderRadius={5}
       width={100}
       minHeight={50}
       maxWidth={50}
-      zIndex={999}
+      zIndex="modal"
       css={styles}
     />
   );

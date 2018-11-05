@@ -165,6 +165,7 @@ class Tooltip extends React.Component<Props, any> {
                       margin={3}
                       transition="none"
                       boxShadow="soft"
+                      zIndex="tooltip"
                       role="tooltip"
                       data-testid="tooltip"
                     >

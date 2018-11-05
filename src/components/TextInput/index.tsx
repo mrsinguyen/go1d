@@ -1,6 +1,5 @@
 import { get } from "lodash";
 import * as React from "react";
-import applySpacing from "../../utils/applySpacing";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import Icon from "../Icon";
@@ -114,7 +113,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             flexDirection="row"
             alignItems="center"
             htmlFor={id}
-            opacity={disabled && "disabled"}
+            opacity={disabled ? "disabled" : null}
             css={viewCss}
           >
             {iconName && (
@@ -132,6 +131,7 @@ class TextInput extends React.Component<TextInputProps, any> {
               rows={multiline}
               lineHeight="ui"
               fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
+              paddingY={get({ lg: 4, md: 3, sm: 1 }, size)}
               color="inherit"
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
@@ -144,11 +144,6 @@ class TextInput extends React.Component<TextInputProps, any> {
                 background: 0,
                 border: 0,
                 flexGrow: 1,
-                paddingBottom: applySpacing(
-                  s,
-                  get({ lg: 4, md: 3, sm: 1 }, size)
-                ),
-                paddingTop: applySpacing(s, get({ lg: 4, md: 3, sm: 1 }, size)),
               }}
             />
             {suffixNode}

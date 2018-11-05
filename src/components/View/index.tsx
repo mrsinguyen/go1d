@@ -1,34 +1,39 @@
 import {
+  AlignItemsProperty,
+  DisplayProperty,
   FlexDirectionProperty,
   FlexWrapProperty,
   Globals,
+  JustifyContentProperty,
   OverflowProperty,
   PositionProperty,
 } from "csstype";
-import { Interpolation } from "emotion";
 import * as React from "react";
 import { opacify } from "../../foundations";
+import { Opacities, Shadows, ZIndex } from "../../foundations/foundation-types";
 import applySpacing from "../../utils/applySpacing";
 import Base, { Props as BaseProps } from "../Base";
 import Theme, { DarkMode, LightMode } from "../Theme";
 
 type MarginProperty = Globals | "auto" | number | null;
-type PaddingProperty = Globals | number;
+type WidthProperty = Globals | "auto" | number | string | null;
+type HeightProperty = Globals | "auto" | number | string | null;
+type FlexBasisProperty = Globals | "auto" | number | string | null;
 
 export interface Props extends BaseProps {
   element?: string | React.ComponentType;
   mode?: "light" | "dark";
-  display?: string;
-  flexDirection?: FlexDirectionProperty;
-  flexWrap?: FlexWrapProperty;
-  alignItems?: string;
-  justifyContent?: string;
-  flexGrow?: number;
-  flexShrink?: number;
-  flexBasis?: number | string;
+  display?: DisplayProperty | DisplayProperty[];
+  flexDirection?: FlexDirectionProperty | FlexDirectionProperty[];
+  flexWrap?: FlexWrapProperty | FlexWrapProperty[];
+  alignItems?: AlignItemsProperty | AlignItemsProperty[];
+  justifyContent?: JustifyContentProperty | JustifyContentProperty[];
+  flexGrow?: number | number[];
+  flexShrink?: number | number[];
+  flexBasis?: FlexBasisProperty | FlexBasisProperty[];
   position?: PositionProperty | PositionProperty[];
-  overflow?: OverflowProperty;
-  opacity?: number | string;
+  overflow?: OverflowProperty | OverflowProperty[];
+  opacity?: Opacities | "";
   // Reset margins by default
   margin?: MarginProperty | MarginProperty[];
   marginX?: MarginProperty | MarginProperty[];
@@ -37,31 +42,24 @@ export interface Props extends BaseProps {
   marginBottom?: MarginProperty | MarginProperty[];
   marginRight?: MarginProperty | MarginProperty[];
   marginLeft?: MarginProperty | MarginProperty[];
-  padding?: PaddingProperty;
-  paddingX?: PaddingProperty;
-  paddingY?: PaddingProperty;
-  paddingTop?: PaddingProperty;
-  paddingBottom?: PaddingProperty;
-  paddingRight?: PaddingProperty;
-  paddingLeft?: PaddingProperty;
   color?: string;
   backgroundColor?: string;
-  backgroundOpacity?: number | string;
+  backgroundOpacity?: Opacities | "";
   borderRadius?: number;
-  width?: number | string;
-  minHeight?: number | string;
-  height?: number | string;
-  maxWidth?: number | string;
-  zIndex?: number;
-  boxShadow?: string;
+  width?: WidthProperty | WidthProperty[];
+  minHeight?: HeightProperty | HeightProperty[];
+  height?: HeightProperty | HeightProperty[];
+  maxWidth?: WidthProperty | WidthProperty[];
+  zIndex?: ZIndex | number | "";
+  boxShadow?: Shadows | "";
   borderColor?: string;
-  border?: number;
-  borderTop?: number;
-  borderRight?: number;
-  borderBottom?: number;
-  borderLeft?: number;
+  border?: number | number[];
+  borderTop?: number | number[];
+  borderRight?: number | number[];
+  borderBottom?: number | number[];
+  borderLeft?: number | number[];
   transition?: string;
-  css?: Interpolation;
+  css?: any;
 }
 
 const modeComponents = {
@@ -99,13 +97,6 @@ const View: React.SFC<Props> = ({
   marginBottom = marginY,
   marginRight = marginX,
   marginLeft = marginX,
-  padding,
-  paddingX = padding,
-  paddingY = padding,
-  paddingTop = paddingY,
-  paddingBottom = paddingY,
-  paddingRight = paddingX,
-  paddingLeft = paddingX,
   borderColor,
   border = 0,
   borderTop = border,
@@ -131,7 +122,14 @@ const View: React.SFC<Props> = ({
   return (
     <Wrapper>
       <Theme.Consumer>
-        {({ spacing: s, colors, shadows, transitions, opacities }) => (
+        {({
+          spacing: s,
+          colors,
+          shadows,
+          transitions,
+          opacities,
+          zIndex: zi,
+        }) => (
           <Base
             element={element}
             css={[
@@ -150,25 +148,22 @@ const View: React.SFC<Props> = ({
                 height,
                 width: getWidth(width),
                 maxWidth: getWidth(maxWidth),
-                zIndex,
+                zIndex: zi[zIndex] || zIndex,
                 marginTop: applySpacing(s, marginTop),
                 marginBottom: applySpacing(s, marginBottom),
                 marginRight: applySpacing(s, marginRight),
                 marginLeft: applySpacing(s, marginLeft),
-                paddingTop: applySpacing(s, paddingTop),
-                paddingBottom: applySpacing(s, paddingBottom),
-                paddingRight: applySpacing(s, paddingRight),
-                paddingLeft: applySpacing(s, paddingLeft),
                 // fix flexbox bugs
                 minHeight,
                 minWidth: 0,
                 color: colors[color] || color,
-                backgroundColor: opacities[backgroundOpacity]
-                  ? opacify(
-                      colors[backgroundColor],
-                      opacities[backgroundOpacity]
-                    )
-                  : colors[backgroundColor],
+                backgroundColor:
+                  opacities[backgroundOpacity] < 1
+                    ? opacify(
+                        colors[backgroundColor],
+                        opacities[backgroundOpacity]
+                      )
+                    : colors[backgroundColor],
                 borderRadius: s[borderRadius],
                 borderStyle: "solid",
                 borderTopWidth: borderTop,

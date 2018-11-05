@@ -1,6 +1,7 @@
 import { Interpolation } from "emotion";
 import { get } from "lodash";
 import * as React from "react";
+import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
 import Link from "../Link";
 import Text from "../Text";
@@ -12,7 +13,7 @@ export interface ButtonProps extends ViewProps {
   iconColor?: string;
   backgroundColor?: string;
   iconName?: string;
-  fontWeight?: string;
+  fontWeight?: FontWeight;
   css?: Interpolation;
   children?: React.ReactNode;
   onClick?: ((evt: React.SyntheticEvent) => void);

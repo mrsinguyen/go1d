@@ -29,7 +29,7 @@ const EmptyState: React.SFC<Props> = ({
       borderRadius={2}
       {...props}
     >
-      <Text element="h1" fontSize={4} fontWeight="600">
+      <Text element="h1" fontSize={4} fontWeight="semibold">
         {title}
       </Text>
       <View textAlign="center" marginY={6}>
