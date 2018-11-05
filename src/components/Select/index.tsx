@@ -413,7 +413,7 @@ class Select extends React.Component<Props, any> {
     };
 
     const FilteredOptions = this.getFilteredOptions() || [];
-    const isVisable = this.state.isFocused && !this.state.closeOverride;
+    const isVisible = this.state.isFocused && !this.state.closeOverride;
 
     return (
       <Theme.Consumer>
@@ -492,11 +492,11 @@ class Select extends React.Component<Props, any> {
                 top: `calc(100% + ${spacing[2]}px)`,
                 maxHeight: "300px",
                 overflowY: "auto",
-                display: !isVisable ? "none" : "block",
+                display: !isVisible ? "none" : "block",
               }}
               data-testid="dropDown"
               borderRadius={2}
-              data-ishidden={!isVisable}
+              data-ishidden={!isVisible}
               width="100%"
               boxShadow="distant"
               backgroundColor="background"
@@ -519,7 +519,7 @@ class Select extends React.Component<Props, any> {
                   />
                 </View>
               )}
-              {isVisable && (
+              {isVisible && (
                 <View>
                   {FilteredOptions.map((Option, Index) => (
                     <View
