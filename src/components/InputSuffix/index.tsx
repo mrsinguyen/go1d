@@ -36,6 +36,7 @@ class InputSuffix extends React.Component<Props, any> {
           color="subtle"
           backgroundColor="soft"
           border={1}
+          borderColor="faded"
           marginRight={-1}
           css={{
             borderTopRightRadius: "4px",

@@ -31,6 +31,7 @@ export interface TextInputProps extends TextProps {
   error?: boolean;
   borderRadius?: number;
   viewCss?: any;
+  borderColor?: string;
 }
 
 class TextInput extends React.Component<TextInputProps, any> {
@@ -69,7 +70,7 @@ class TextInput extends React.Component<TextInputProps, any> {
   @autobind
   public getBorderColor() {
     const { isFocused } = this.state;
-    const { error } = this.props;
+    const { error, borderColor } = this.props;
 
     if (error) {
       return "danger";
@@ -78,7 +79,7 @@ class TextInput extends React.Component<TextInputProps, any> {
       return "accent";
     }
 
-    return "faded";
+    return borderColor ? borderColor : "faded";
   }
 
   public render() {
@@ -95,6 +96,7 @@ class TextInput extends React.Component<TextInputProps, any> {
       multiline,
       inputType,
       error, // do not pass
+      borderColor, // do not pass
       ...props
     } = this.props;
 
