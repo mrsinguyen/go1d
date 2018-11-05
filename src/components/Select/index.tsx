@@ -412,7 +412,8 @@ class Select extends React.Component<Props, any> {
       },
     };
 
-    const FilteredOptions = this.getFilteredOptions();
+    const FilteredOptions = this.getFilteredOptions() || [];
+    const isVisable = this.state.isFocused && !this.state.closeOverride;
 
     return (
       <Theme.Consumer>
@@ -491,16 +492,11 @@ class Select extends React.Component<Props, any> {
                 top: `calc(100% + ${spacing[2]}px)`,
                 maxHeight: "300px",
                 overflowY: "auto",
-                display:
-                  this.state.isFocused === false || this.state.closeOverride
-                    ? "none"
-                    : "block",
+                display: !isVisable ? "none" : "block",
               }}
               data-testid="dropDown"
               borderRadius={2}
-              data-ishidden={
-                this.state.isFocused === false || this.state.closeOverride
-              }
+              data-ishidden={!isVisable}
               width="100%"
               boxShadow="distant"
               backgroundColor="background"
@@ -523,43 +519,45 @@ class Select extends React.Component<Props, any> {
                   />
                 </View>
               )}
-              <View>
-                {FilteredOptions.map((Option, Index) => (
-                  <View
-                    width={"100%"}
-                    paddingY={4}
-                    paddingX={4}
-                    key={Option.label + "_" + Option.value + "_" + Index}
-                    onMouseDown={this.handleValueSelect(
-                      Option.label,
-                      Option.value
-                    )}
-                    backgroundColor={getOptionBackground(Index, Option)}
-                    css={
-                      getOptionBackground(Index, Option) !== "accent"
-                        ? {
-                            "&:hover": {
-                              background: colors.highlight,
-                              color: colors.default,
-                              cursor: "pointer",
-                            },
-                          }
-                        : {}
-                    }
-                  >
-                    <Text
-                      fontSize={Sizes[size].fontSize}
-                      color={
-                        getOptionBackground(Index, Option) === "accent"
-                          ? "background"
-                          : "default"
+              {isVisable && (
+                <View>
+                  {FilteredOptions.map((Option, Index) => (
+                    <View
+                      width={"100%"}
+                      paddingY={4}
+                      paddingX={4}
+                      key={Option.label + "_" + Option.value + "_" + Index}
+                      onMouseDown={this.handleValueSelect(
+                        Option.label,
+                        Option.value
+                      )}
+                      backgroundColor={getOptionBackground(Index, Option)}
+                      css={
+                        getOptionBackground(Index, Option) !== "accent"
+                          ? {
+                              "&:hover": {
+                                background: colors.highlight,
+                                color: colors.default,
+                                cursor: "pointer",
+                              },
+                            }
+                          : {}
                       }
                     >
-                      {Option.label}
-                    </Text>
-                  </View>
-                ))}
-              </View>
+                      <Text
+                        fontSize={Sizes[size].fontSize}
+                        color={
+                          getOptionBackground(Index, Option) === "accent"
+                            ? "background"
+                            : "default"
+                        }
+                      >
+                        {Option.label}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
             </View>
           </View>
         )}
