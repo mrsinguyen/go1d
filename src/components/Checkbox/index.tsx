@@ -35,7 +35,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     safeInvoke(onChange, {
       target: {
         name,
-        value: Selected,
+        value: NewValue,
       },
     });
   };
