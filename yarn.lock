@@ -187,31 +187,6 @@
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.8.1.tgz#f3a81587ad8d0ef33cdad6f3b4310774fcc1053e"
 
-"@go1d/go1d@^0.0.78":
-  version "0.0.78"
-  resolved "https://registry.yarnpkg.com/@go1d/go1d/-/go1d-0.0.78.tgz#257333502abb9aa15b27742785a695412be0736f"
-  integrity sha512-aearOWZ8zvkQanGw7rx4XGEeXEWWz9VO5/HtxZ/wgvYTcYyd2fz44ctWp5VSw01+SyALgJG4EbUZTuPxynbgyQ==
-  dependencies:
-    "@tweenjs/tween.js" "^17.2.0"
-    "@types/events" "^1.2.0"
-    "@types/react-virtualized" "^9.18.7"
-    color "^3.0.0"
-    downshift "^3.1.1"
-    emotion "^9.2.4"
-    formik "^1.3.1"
-    libreact "^2.1.0"
-    lodash "^4.17.11"
-    lodash-decorators "^6.0.0"
-    react "^16.4.1"
-    react-container-dimensions "^1.4.1"
-    react-popper "^1.0.2"
-    react-pose "^3.3.6"
-    react-router-dom "^4.3.1"
-    react-transition-group "^2.4.0"
-    react-virtualized "^9.20.1"
-    recompose "^0.27.1"
-    sanitize-html "^1.19.1"
-
 "@mdx-js/loader@^0.15.0":
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-0.15.0.tgz#05a36267d5a491ae1981508a3e662eaf848f6ad3"

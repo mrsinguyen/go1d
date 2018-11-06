@@ -31,9 +31,6 @@ const PageTitle: React.SFC<Props> = ({
         display="flex"
         flexDirection="row"
         alignItems="center"
-        css={{
-          zIndex: 0,
-        }}
         {...props}
       >
         <Text element="h1" fontWeight="semibold" fontSize={5}>

@@ -30,7 +30,6 @@
     ]
   },
   "dependencies": {
-    "@go1d/go1d": "^0.0.79",
     "@tweenjs/tween.js": "^17.2.0",
     "@types/events": "^1.2.0",
     "@types/react-virtualized": "^9.18.7",
