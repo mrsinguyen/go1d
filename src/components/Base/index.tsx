@@ -5,6 +5,7 @@ import applySpacing from "../../utils/applySpacing";
 import Theme from "../Theme";
 
 type PaddingProperty = Globals | number;
+type MarginProperty = Globals | "auto" | number | null;
 
 export interface Props {
   element?: string | React.ComponentType;
@@ -16,6 +17,14 @@ export interface Props {
   paddingBottom?: PaddingProperty | PaddingProperty[];
   paddingRight?: PaddingProperty | PaddingProperty[];
   paddingLeft?: PaddingProperty | PaddingProperty[];
+  // Reset margins by default
+  margin?: MarginProperty | MarginProperty[];
+  marginX?: MarginProperty | MarginProperty[];
+  marginY?: MarginProperty | MarginProperty[];
+  marginTop?: MarginProperty | MarginProperty[];
+  marginBottom?: MarginProperty | MarginProperty[];
+  marginRight?: MarginProperty | MarginProperty[];
+  marginLeft?: MarginProperty | MarginProperty[];
   css?: any;
   [key: string]: any;
 }
@@ -49,6 +58,14 @@ const Base: React.SFC<Props> = ({
   paddingBottom = paddingY,
   paddingRight = paddingX,
   paddingLeft = paddingX,
+  // Reset margins by default
+  margin = 0,
+  marginX = margin,
+  marginY = margin,
+  marginTop = marginY,
+  marginBottom = marginY,
+  marginRight = marginX,
+  marginLeft = marginX,
   css = [],
   ...props
 }: Props) => (
@@ -63,6 +80,10 @@ const Base: React.SFC<Props> = ({
               paddingBottom: applySpacing(s, paddingBottom),
               paddingRight: applySpacing(s, paddingRight),
               paddingLeft: applySpacing(s, paddingLeft),
+              marginTop: applySpacing(s, marginTop),
+              marginBottom: applySpacing(s, marginBottom),
+              marginRight: applySpacing(s, marginRight),
+              marginLeft: applySpacing(s, marginLeft),
             },
             css,
           ])

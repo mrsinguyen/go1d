@@ -11,11 +11,9 @@ import {
 import * as React from "react";
 import { opacify } from "../../foundations";
 import { Opacities, Shadows, ZIndex } from "../../foundations/foundation-types";
-import applySpacing from "../../utils/applySpacing";
 import Base, { Props as BaseProps } from "../Base";
 import Theme, { DarkMode, LightMode } from "../Theme";
 
-type MarginProperty = Globals | "auto" | number | null;
 type WidthProperty = Globals | "auto" | number | string | null;
 type HeightProperty = Globals | "auto" | number | string | null;
 type FlexBasisProperty = Globals | "auto" | number | string | null;
@@ -34,14 +32,6 @@ export interface Props extends BaseProps {
   position?: PositionProperty | PositionProperty[];
   overflow?: OverflowProperty | OverflowProperty[];
   opacity?: Opacities | "";
-  // Reset margins by default
-  margin?: MarginProperty | MarginProperty[];
-  marginX?: MarginProperty | MarginProperty[];
-  marginY?: MarginProperty | MarginProperty[];
-  marginTop?: MarginProperty | MarginProperty[];
-  marginBottom?: MarginProperty | MarginProperty[];
-  marginRight?: MarginProperty | MarginProperty[];
-  marginLeft?: MarginProperty | MarginProperty[];
   color?: string;
   backgroundColor?: string;
   backgroundOpacity?: Opacities | "";
@@ -89,14 +79,6 @@ const View: React.SFC<Props> = ({
   position,
   overflow,
   opacity,
-  // Reset margins by default
-  margin = 0,
-  marginX = margin,
-  marginY = margin,
-  marginTop = marginY,
-  marginBottom = marginY,
-  marginRight = marginX,
-  marginLeft = marginX,
   borderColor,
   border = 0,
   borderTop = border,
@@ -149,10 +131,6 @@ const View: React.SFC<Props> = ({
                 width: getWidth(width),
                 maxWidth: getWidth(maxWidth),
                 zIndex: zi[zIndex] || zIndex,
-                marginTop: applySpacing(s, marginTop),
-                marginBottom: applySpacing(s, marginBottom),
-                marginRight: applySpacing(s, marginRight),
-                marginLeft: applySpacing(s, marginLeft),
                 // fix flexbox bugs
                 minHeight,
                 minWidth: 0,
