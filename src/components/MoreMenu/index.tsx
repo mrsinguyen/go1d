@@ -36,7 +36,7 @@ class MoreMenu extends React.Component<Props, State> {
       size,
       marginLeft: "auto",
     };
-    const icon = <Icon name="Ellipsis" size={4} color="subtle" />;
+    const icon = <Icon name="Ellipsis" size={4} color="muted" />;
 
     return (
       <Theme.Consumer>
@@ -64,7 +64,7 @@ class MoreMenu extends React.Component<Props, State> {
                     ":hover, :focus": {
                       background: "none",
                       svg: {
-                        color: colors.accent,
+                        color: colors.subtle,
                       },
                     },
                     paddingRight: 0,
