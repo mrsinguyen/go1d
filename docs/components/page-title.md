@@ -11,7 +11,7 @@ A page title for use in standard content.
 ### Lightmode page title
 ```.jsx
 <PageBody>
-  <PageTitle title="Page Title" />
+  <PageTitle>Title</PageTitle>
   <Text>This is standard body content text.</Text>
 </PageBody>
 ```

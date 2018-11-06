@@ -23,6 +23,8 @@ it("renders without crashing with all props", () => {
       color="subtle"
       css={styles}
       title="Test"
-    />
+    >
+      Title
+    </PageTitle>
   );
 });
