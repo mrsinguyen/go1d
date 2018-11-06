@@ -11,7 +11,7 @@ const PageTitle: React.SFC<PageTitleProps> = ({
   title,
   children,
   ...props
-}: ViewProps) => (
+}: PageTitleProps) => (
   <View
     display="flex"
     flexDirection="row"

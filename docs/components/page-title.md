@@ -27,5 +27,5 @@ A page title for use in standard content.
 ```
 
 ```!jsx
-<ComponentDoc component={PageTitle} />
+<ComponentDoc component="PageTitleProps" />
 ```
