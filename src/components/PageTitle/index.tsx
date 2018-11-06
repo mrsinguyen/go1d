@@ -3,17 +3,32 @@ import * as React from "react";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
 
-const PageTitle: React.SFC<ViewProps> = ({ children, ...props }: ViewProps) => (
-  <View alignItems="left" {...props}>
+export interface PageTitleProps extends ViewProps {
+  title: string;
+}
+
+const PageTitle: React.SFC<PageTitleProps> = ({
+  title,
+  children,
+  ...props
+}: ViewProps) => (
+  <View
+    display="flex"
+    flexDirection="row"
+    alignItems="center"
+    marginBottom={4}
+    {...props}
+  >
     <Text
       element="h1"
       fontWeight="semibold"
       fontSize={5}
       display="block"
-      marginBottom={5}
+      marginRight={4}
     >
-      {children}
+      {title}
     </Text>
+    {children}
   </View>
 );
 

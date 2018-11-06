@@ -2,6 +2,7 @@ import { css } from "emotion";
 import * as React from "react";
 import { render } from "react-testing-library";
 import PageTitle from "./index";
+import Text from "./index";
 
 it("renders without crashing without any optional props", () => {
   render(<PageTitle title="Test" />);
@@ -23,8 +24,6 @@ it("renders without crashing with all props", () => {
       color="subtle"
       css={styles}
       title="Test"
-    >
-      Title
-    </PageTitle>
+    />
   );
 });
