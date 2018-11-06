@@ -3,8 +3,6 @@ import * as React from "react";
 import { render } from "react-testing-library";
 import PageTitle from "./index";
 
-const mock = jest.fn();
-
 it("renders without crashing without any optional props", () => {
   render(<PageTitle title="Test" />);
 });

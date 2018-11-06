@@ -10,9 +10,12 @@ A page title for use in standard content.
 
 ### Lightmode page title
 ```.jsx
-<PageTitle title="Page Title" />
+<PageBody>
+  <PageTitle title="Page Title" />
+  <Text>This is standard body content text.</Text>
+</PageBody>
 ```
 
 ```!jsx
-<ComponentDoc component={PageHeader} />
+<ComponentDoc component={PageTitle} />
 ```

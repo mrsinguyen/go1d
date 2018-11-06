@@ -6,19 +6,11 @@ import View, { Props as ViewProps } from "../View";
 
 export interface Props extends ViewProps {
   title: string;
-  subtitle?: React.ReactNode;
-  backgroundColor?: string;
-  showMenuButton?: boolean;
-  onMenuButtonClick?: ((evt: React.SyntheticEvent) => void);
-  breadcrumbHref?: string;
-  breadcrumbTitle?: string;
 }
 
 const PageTitle: React.SFC<Props> = ({
   children,
   padding,
-  showMenuButton,
-  onMenuButtonClick,
   title,
   ...props
 }: Props) => (
