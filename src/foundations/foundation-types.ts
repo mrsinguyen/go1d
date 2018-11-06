@@ -16,7 +16,8 @@ export type Opacities =
   | "heroOverlayAccent"
   | "heroOverlayImage"
   | "disabled"
-  | "modal";
+  | "modal"
+  | "none";
 
 export type Leading = "display" | "ui" | "paragraph";
 
@@ -98,6 +99,7 @@ export interface Theme {
   shadows: MappedKey<Shadows, string>;
   transitions: MappedKey<"subtle", string>;
   breakpoints: MappedKey<Scale, string>;
+  mq: any;
   opacities: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
   zIndex: MappedKey<ZIndex, number>;

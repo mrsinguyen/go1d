@@ -1,21 +1,25 @@
-import { TextTransformProperty } from "csstype";
-import { Interpolation } from "emotion";
+import { DisplayProperty, TextTransformProperty } from "csstype";
 import * as React from "react";
+import {
+  FontWeight,
+  Leading,
+  Tracking,
+} from "../../foundations/foundation-types";
 import Base, { Props as BaseProps } from "../Base";
 import Theme from "../Theme";
 
 export interface Props extends BaseProps {
   element?: string;
-  display?: string;
-  fontWeight?: string;
+  display?: DisplayProperty | DisplayProperty[];
+  fontWeight?: FontWeight;
   fontFamily?: string;
-  fontStyle?: string;
-  lineHeight?: number | string;
+  fontStyle?: string | string[];
+  lineHeight?: Leading;
   fontSize?: number;
   color?: string;
-  textTransform?: TextTransformProperty;
-  letterSpacing?: string;
-  css?: Interpolation;
+  textTransform?: TextTransformProperty | TextTransformProperty[];
+  letterSpacing?: Tracking;
+  css?: any;
 }
 
 const Text: React.SFC<Props> = ({
@@ -53,15 +57,11 @@ const Text: React.SFC<Props> = ({
             letterSpacing: type.tracking[letterSpacing],
             whiteSpace: "pre-wrap",
             wordWrap: "break-word",
-            ...Object.keys(breakpoints).reduce(
-              (acc, bpKey) => ({
-                ...acc,
-                [breakpoints[bpKey]]: {
-                  fontSize: type.scale[bpKey][fontSize],
-                },
-              }),
-              {}
-            ),
+            fontSize: [
+              type.scale.sm[fontSize],
+              type.scale.md[fontSize],
+              type.scale.lg[fontSize],
+            ],
           },
           css,
         ]}

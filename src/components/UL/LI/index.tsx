@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import applySpacing from "../../../utils/applySpacing";
 import Icon from "../../Icon";
 import Text from "../../Text";
 import Theme from "../../Theme";
@@ -10,8 +9,6 @@ export interface Props extends ViewProps {
   iconName?: string;
   color?: string;
   fontSize?: number;
-  paddingY?: number;
-  paddingX?: number;
   children?: React.ReactNode | React.ReactNode[];
 }
 
@@ -44,12 +41,9 @@ const LI: React.SFC<Props> = ({
         <Text
           color={color}
           fontSize={fontSize}
-          css={{
-            paddingTop: applySpacing(s, paddingY),
-            paddingBottom: applySpacing(s, paddingY),
-            paddingLeft: applySpacing(s, 4),
-            paddingRight: applySpacing(s, paddingX),
-          }}
+          paddingY={paddingY}
+          paddingLeft={4}
+          paddingRight={paddingX}
         >
           {children}
         </Text>
