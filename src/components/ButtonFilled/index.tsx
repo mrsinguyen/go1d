@@ -1,14 +1,11 @@
-import { Interpolation } from "emotion";
 import * as React from "react";
 import { isDark } from "../../foundations";
 import { Colors } from "../../foundations/foundation-types";
 import Button, { ButtonProps } from "../Button";
 import Theme from "../Theme";
 
-export interface Props extends ButtonProps {
-  children?: React.ReactNode;
+export interface ButtonFilledProps extends ButtonProps {
   color?: string;
-  css?: Interpolation;
 }
 
 const textColor = {
@@ -20,12 +17,12 @@ const textColor = {
 const getTextColor = (color: string, colors: Colors) =>
   textColor[color] || isDark(colors[color]);
 
-const ButtonFilled: React.SFC<Props> = ({
+const ButtonFilled: React.SFC<ButtonFilledProps> = ({
   color = "background",
   children,
   css,
   ...props
-}) => (
+}: ButtonFilledProps) => (
   <Theme.Consumer>
     {({ colors, shadows }) => (
       <Button

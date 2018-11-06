@@ -40,5 +40,5 @@ releaseVersion: 0.0.32
 ```
 
 ```!jsx
-<ComponentDoc component={TextInput} />
+<ComponentDoc component="TextInputProps" />
 ```

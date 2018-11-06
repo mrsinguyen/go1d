@@ -1,21 +1,20 @@
 import * as React from "react";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface PillProps extends ViewProps {
   color?: string;
-  children: React.ReactNode;
   textColor?: string;
   fontSize?: number;
 }
 
-const Pill: React.SFC<Props> = ({
+const Pill: React.SFC<PillProps> = ({
   color = "faded",
   textColor = "default",
   children,
   fontSize,
   ...props
-}: Props) => {
+}: PillProps) => {
   return (
     <View
       display="inline-flex"

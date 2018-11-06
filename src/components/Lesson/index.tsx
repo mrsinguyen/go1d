@@ -4,9 +4,9 @@ import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface LessonProps extends ViewProps {
   title?: string;
   type?: string;
   duration?: number;
@@ -30,12 +30,12 @@ export const typeIconDic = {
   event: "Calendar",
 };
 
-const Lesson: React.SFC<Props> = ({
+const Lesson: React.SFC<LessonProps> = ({
   title,
   type,
   duration,
   ...props
-}: Props) => (
+}: LessonProps) => (
   <Theme.Consumer>
     {({ colors }) => (
       <View

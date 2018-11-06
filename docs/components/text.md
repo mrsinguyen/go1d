@@ -21,5 +21,5 @@ Try out the props below.
 ```
 
 ```!jsx
-<ComponentDoc component={Text} />
+<ComponentDoc component="TextProps" />
 ```

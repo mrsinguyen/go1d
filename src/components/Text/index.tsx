@@ -5,11 +5,10 @@ import {
   Leading,
   Tracking,
 } from "../../foundations/foundation-types";
-import Base, { Props as BaseProps } from "../Base";
+import Base, { BaseProps } from "../Base";
 import Theme from "../Theme";
 
-export interface Props extends BaseProps {
-  element?: string;
+export interface TextProps extends BaseProps {
   display?: DisplayProperty | DisplayProperty[];
   fontWeight?: FontWeight;
   fontFamily?: string;
@@ -19,10 +18,9 @@ export interface Props extends BaseProps {
   color?: string;
   textTransform?: TextTransformProperty | TextTransformProperty[];
   letterSpacing?: Tracking;
-  css?: any;
 }
 
-const Text: React.SFC<Props> = ({
+const Text: React.SFC<TextProps> = ({
   element = "span",
   display,
   fontWeight,
@@ -36,7 +34,7 @@ const Text: React.SFC<Props> = ({
   textTransform,
   css,
   ...props
-}: Props) => (
+}: TextProps) => (
   <Theme.Consumer>
     {({ colors, type, breakpoints, transitions }) => (
       <Base

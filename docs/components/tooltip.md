@@ -42,5 +42,5 @@ Need to add both the ref and getEventProps to the component you want the tooltip
 ```
 
 ```!jsx
-<ComponentDoc component={Tooltip} />
+<ComponentDoc component="TooltipProps" />
 ```

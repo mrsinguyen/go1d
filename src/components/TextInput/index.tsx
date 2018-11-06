@@ -3,7 +3,7 @@ import * as React from "react";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import Icon from "../Icon";
-import Text, { Props as TextProps } from "../Text";
+import Text, { TextProps } from "../Text";
 import Theme from "../Theme";
 import View from "../View";
 

@@ -27,3 +27,7 @@ This component will default to producing an anchor tag or a custom link componen
   </Link>
 </Provider>
 ```
+
+```!jsx
+<ComponentDoc component="LinkProps" />
+```

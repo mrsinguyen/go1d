@@ -1,16 +1,16 @@
 import * as React from "react";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
 import * as Icons from "../Icons";
 
-export interface Props extends ViewProps {
+export interface IconProps extends ViewProps {
   name: string;
   color?: string;
   size?: number;
 }
 
-const Icon: React.SFC<Props> = ({ name, size, ...props }: Props) => {
+const Icon: React.SFC<IconProps> = ({ name, size, ...props }: IconProps) => {
   const IconComponent = Icons[name];
   if (!IconComponent) {
     return null;

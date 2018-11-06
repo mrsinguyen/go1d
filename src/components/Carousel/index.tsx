@@ -2,7 +2,7 @@ import * as TWEEN from "@tweenjs/tween.js";
 import * as React from "react";
 import ContainerDimensions from "react-container-dimensions";
 
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
 import foundations from "../../foundations";
 import ButtonFilled from "../ButtonFilled";
@@ -21,11 +21,11 @@ interface BreakpointProps {
   lg?: StandardProps;
 }
 
-export interface Props extends StandardProps {
+export interface CarouselProps extends StandardProps {
   Breakpoints?: BreakpointProps;
 }
 
-class Carousel extends React.Component<Props, any> {
+class Carousel extends React.Component<CarouselProps, any> {
   public static defaultProps = {
     slidesToShow: 1,
     gutter: 2,
@@ -293,7 +293,7 @@ class Carousel extends React.Component<Props, any> {
   }
 }
 
-const ExportCarousel: React.SFC<Props> = (props: Props) => (
+const ExportCarousel: React.SFC<CarouselProps> = (props: CarouselProps) => (
   <ContainerDimensions>
     {Params => {
       let size = "lg";

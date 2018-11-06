@@ -116,3 +116,7 @@ Copy for actions on the dropdown menu should follow general action content guide
 - Be clear and distinct
 - Use similar labels for similar actions
 - Use active rather than passive voice
+
+```!jsx
+<ComponentDoc component="MoreMenuProps" />
+```

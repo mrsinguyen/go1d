@@ -4,9 +4,9 @@ import foundations from "../../foundations";
 import ButtonMinimal from "../ButtonMinimal";
 import Portal from "../Portal";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface ModalProps extends ViewProps {
   title?: string;
   children?: React.ReactNode;
   isOpen?: boolean;
@@ -15,7 +15,7 @@ export interface Props extends ViewProps {
   disableBackgroundClose?: boolean;
 }
 
-class Modal extends React.Component<Props, any> {
+class Modal extends React.Component<ModalProps, any> {
   public componentDidMount() {
     if (this.props.onRequestClose && this.props.disableKeyBindings !== true) {
       document.addEventListener("keydown", this.detectEscape);

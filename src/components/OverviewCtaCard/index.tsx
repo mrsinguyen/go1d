@@ -7,9 +7,9 @@ import ButtonMinimal from "../ButtonMinimal";
 import Dropdown from "../Dropdown";
 import Icon from "../Icon";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface OverviewCtaCardProps extends ViewProps {
   backgroundImage?: string;
   likes?: number;
   dislikes?: number;
@@ -49,7 +49,7 @@ const renderFunction = (item, index, getItemProps) => (
 
 const itemToString = item => (item ? item.title : "");
 
-const OverviewCtaCard: React.SFC<Props> = ({
+const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
   children,
   backgroundImage,
   likes = 0,
@@ -63,7 +63,7 @@ const OverviewCtaCard: React.SFC<Props> = ({
   duration,
   subtitle,
   ...props
-}: Props) => (
+}: OverviewCtaCardProps) => (
   <View
     boxShadow="soft"
     backgroundColor="background"

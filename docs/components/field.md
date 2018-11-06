@@ -45,5 +45,5 @@ Field is an extension of Formik's Field component https://jaredpalmer.com/formik
 ```
 
 ```!jsx
-<ComponentDoc component={Field} />
+<ComponentDoc component="FieldProps" />
 ```

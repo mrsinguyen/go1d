@@ -2,15 +2,20 @@ import * as React from "react";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface AvatarProps extends ViewProps {
   fullName?: string;
   size?: number;
   src?: string;
 }
 
-const Avatar: React.SFC<Props> = ({ src, fullName, size = 6, ...props }) => {
+const Avatar: React.SFC<AvatarProps> = ({
+  src,
+  fullName,
+  size = 6,
+  ...props
+}: AvatarProps) => {
   const names = `${fullName}`.split(" ");
   const displayName = `${names[0].charAt(0)}${
     names.length > 1 ? names[names.length - 1].charAt(0) : ""

@@ -7,9 +7,10 @@ import Theme from "../Theme";
 type PaddingProperty = Globals | number;
 type MarginProperty = Globals | "auto" | number | null;
 
-export interface Props {
+export interface BaseProps {
   element?: string | React.ComponentType;
   children?: React.ReactNode;
+  innerRef?: any;
   padding?: PaddingProperty | PaddingProperty[];
   paddingX?: PaddingProperty | PaddingProperty[];
   paddingY?: PaddingProperty | PaddingProperty[];
@@ -47,7 +48,7 @@ const styleReset: Interpolation = {
   outline: 0,
 };
 
-const Base: React.SFC<Props> = ({
+const Base: React.SFC<BaseProps> = ({
   element: Element = "div",
   children,
   innerRef,
@@ -68,7 +69,7 @@ const Base: React.SFC<Props> = ({
   marginLeft = marginX,
   css = [],
   ...props
-}: Props) => (
+}: BaseProps) => (
   <Theme.Consumer>
     {({ spacing: s, mq }) => (
       <Element

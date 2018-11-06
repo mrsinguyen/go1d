@@ -4,22 +4,21 @@ import { tint } from "../../foundations";
 import ButtonMinimal from "../ButtonFilled";
 import Icon from "../Icon";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface BannerProps extends ViewProps {
   type: "success" | "warning" | "danger";
-  children: React.ReactNode;
   close?: ((evt: React.SyntheticEvent) => void);
   floating?: boolean;
 }
 
-const Banner: React.SFC<Props> = ({
+const Banner: React.SFC<BannerProps> = ({
   type,
   children,
   close,
   floating,
   ...props
-}: Props) => {
+}: BannerProps) => {
   const iconType = type.charAt(0).toUpperCase() + type.slice(1);
   const tintLevel = type === "success" ? 0.1 : type === "warning" ? 0.2 : 0.2;
   return (

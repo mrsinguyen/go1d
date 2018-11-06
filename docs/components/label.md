@@ -25,5 +25,5 @@ Portal Name
 ```
 
 ```!jsx
-<ComponentDoc component={Label} />
+<ComponentDoc component="LabelProps" />
 ```

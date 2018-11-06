@@ -11,15 +11,14 @@ import {
 import * as React from "react";
 import { opacify } from "../../foundations";
 import { Opacities, Shadows, ZIndex } from "../../foundations/foundation-types";
-import Base, { Props as BaseProps } from "../Base";
+import Base, { BaseProps } from "../Base";
 import Theme, { DarkMode, LightMode } from "../Theme";
 
 type WidthProperty = Globals | "auto" | number | string | null;
 type HeightProperty = Globals | "auto" | number | string | null;
 type FlexBasisProperty = Globals | "auto" | number | string | null;
 
-export interface Props extends BaseProps {
-  element?: string | React.ComponentType;
+export interface ViewProps extends BaseProps {
   mode?: "light" | "dark";
   display?: DisplayProperty | DisplayProperty[];
   flexDirection?: FlexDirectionProperty | FlexDirectionProperty[];
@@ -49,7 +48,6 @@ export interface Props extends BaseProps {
   borderBottom?: number | number[];
   borderLeft?: number | number[];
   transition?: string;
-  css?: any;
 }
 
 const modeComponents = {
@@ -65,7 +63,7 @@ function getWidth(n) {
   return isNaN(n) ? n : n > 1 ? n : n * 100 + "%";
 }
 
-const View: React.SFC<Props> = ({
+const View: React.SFC<ViewProps> = ({
   element = "div",
   mode,
   display = "flex",
@@ -99,7 +97,7 @@ const View: React.SFC<Props> = ({
   transition = "subtle",
   css,
   ...props
-}: Props) => {
+}: ViewProps) => {
   const Wrapper = mode ? modeComponents[mode] : React.Fragment;
   return (
     <Wrapper>

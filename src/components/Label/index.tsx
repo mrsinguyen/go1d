@@ -1,17 +1,16 @@
 import * as React from "react";
 import Icon from "../Icon";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface LabelProps extends ViewProps {
   htmlFor?: string;
   statusText?: string;
   statusColor?: string;
   statusIcon?: string;
-  children?: React.ReactNode;
 }
 
-const Label: React.SFC<Props> = ({
+const Label: React.SFC<LabelProps> = ({
   htmlFor,
   children,
   statusText,

@@ -3,9 +3,9 @@ import * as React from "react";
 
 import Label from "../Label";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface FieldProps extends ViewProps {
   label: string;
   id?: string;
   name: string;
@@ -19,10 +19,9 @@ export interface Props extends ViewProps {
   statusIcon?: string;
 
   component?: string | React.ComponentType<any> | React.ComponentType<void>;
-  children?: React.ReactNode;
 }
 
-const Field: React.SFC<Props> = ({
+const Field: React.SFC<FieldProps> = ({
   component,
   children,
   description,
@@ -38,7 +37,7 @@ const Field: React.SFC<Props> = ({
   statusIcon,
   validate,
   ...props
-}: Props) => {
+}: FieldProps) => {
   const formikProps = {
     name,
     value,

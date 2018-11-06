@@ -3,24 +3,23 @@ import * as React from "react";
 import ButtonFilled from "../ButtonFilled";
 import Container from "../Container";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface EmptyStateProps extends ViewProps {
   title?: string;
   description?: string;
-  children?: React.ReactNode;
   actionText?: string;
   action?: ((evt: React.SyntheticEvent) => void);
 }
 
-const EmptyState: React.SFC<Props> = ({
+const EmptyState: React.SFC<EmptyStateProps> = ({
   title,
   description,
   actionText,
   action,
   children,
   ...props
-}: Props) => (
+}: EmptyStateProps) => (
   <Container>
     <View
       backgroundColor="background"

@@ -49,5 +49,5 @@ Helpful Resources
 
 
 ```!jsx
-<ComponentDoc component={Form} />
+<ComponentDoc component="FormProps" />
 ```

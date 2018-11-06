@@ -26,5 +26,5 @@ releaseVersion: 0.0.71
 
 
 ```!jsx
-<ComponentDoc component={Checkbox} />
+<ComponentDoc component="CheckboxProps" />
 ```

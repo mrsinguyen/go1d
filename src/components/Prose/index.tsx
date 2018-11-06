@@ -1,17 +1,17 @@
 import * as React from "react";
 import * as SanitizeHTML from "sanitize-html";
-import Text, { Props as TextProps } from "../Text";
+import Text, { TextProps } from "../Text";
 
-export interface Props extends TextProps {
+export interface ProseProps extends TextProps {
   HTML?: string;
 }
 
-const Prose: React.SFC<Props> = ({
+const Prose: React.SFC<ProseProps> = ({
   HTML,
   fontSize = 3,
   lineHeight = "paragraph",
   ...props
-}: Props) => (
+}: ProseProps) => (
   <Text
     fontSize={fontSize}
     lineHeight={lineHeight}
