@@ -13,5 +13,5 @@ releaseVersion: 0.0.56
 ```
 
 ```!jsx
-<ComponentDoc component={TextArea} />
+<ComponentDoc component="TextAreaProps" />
 ```

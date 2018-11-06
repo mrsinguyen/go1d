@@ -4,7 +4,7 @@ import { LinkContext } from "../Provider";
 import Theme from "../Theme";
 import View from "../View";
 
-export interface Props {
+export interface LinkProps {
   children: React.ReactNode;
   css?: any;
   href: any;
@@ -16,7 +16,7 @@ const Link = ({
   css,
   hoverFocusColor = "accent",
   ...props
-}: Props) => (
+}: LinkProps) => (
   <Theme.Consumer>
     {({ colors }) => (
       <LinkContext.Consumer>

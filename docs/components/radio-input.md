@@ -30,5 +30,5 @@ releaseVersion: 0.0.56
 
 ## Radio Input
 ```!jsx
-<ComponentDoc component={RadioInput} />
+<ComponentDoc component="RadioInputProps" />
 ```

@@ -4,11 +4,11 @@ import { get } from "lodash";
 import TextInput, { TextInputProps } from "../TextInput";
 import View from "../View";
 
-export interface Props extends TextInputProps {
+export interface InputSuffixProps extends TextInputProps {
   suffixValue: React.ReactNode;
 }
 
-class InputSuffix extends React.Component<Props, any> {
+class InputSuffix extends React.Component<InputSuffixProps, any> {
   constructor(props) {
     super(props);
   }

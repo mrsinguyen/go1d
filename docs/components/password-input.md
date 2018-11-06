@@ -36,5 +36,5 @@ releaseVersion: 0.0.72
 ```
 
 ```!jsx
-<ComponentDoc component={PasswordInput} />
+<ComponentDoc component="PasswordInputProps" />
 ```

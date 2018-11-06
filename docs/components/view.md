@@ -36,5 +36,5 @@ Responsive Examples
 ```
 
 ```!jsx
-<ComponentDoc component={View} />
+<ComponentDoc component="ViewProps" />
 ```

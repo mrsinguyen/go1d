@@ -16,9 +16,9 @@ import Icon from "../Icon";
 import TR from "../Table/TR";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface DataTableProps extends ViewProps {
   /** The hieght of a row. When using autoRowHeight, you can supply this for a more accurate initial estimate */
   rowHeight?: number;
   /** The total number of rows that can be loaded. Used for autoloading. */
@@ -63,7 +63,7 @@ export interface Props extends ViewProps {
   scrollElement?: any;
 }
 
-class DataTable extends React.Component<Props, {}> {
+class DataTable extends React.Component<DataTableProps, {}> {
   public listEl: List;
   public header: HTMLElement;
 

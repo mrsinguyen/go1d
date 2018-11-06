@@ -2,7 +2,7 @@ import * as React from "react";
 import safeInvoke from "../../utils/safeInvoke";
 import Base from "../Base";
 import Icon from "../Icon";
-import Text, { Props as TextProps } from "../Text";
+import Text, { TextProps } from "../Text";
 import Theme from "../Theme";
 import View from "../View";
 

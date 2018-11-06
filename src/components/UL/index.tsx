@@ -1,17 +1,13 @@
 import * as React from "react";
 
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface ULProps extends ViewProps {
   iconName?: string;
-  color?: string;
   fontSize?: number;
-  paddingY?: number;
-  paddingX?: number;
-  children?: React.ReactNode | React.ReactNode[];
 }
 
-const UL: React.SFC<Props> = ({
+const UL: React.SFC<ULProps> = ({
   iconName = "Check",
   color,
   fontSize = 2,
@@ -19,7 +15,7 @@ const UL: React.SFC<Props> = ({
   paddingX = 6,
   children,
   ...props
-}: Props) => (
+}: ULProps) => (
   <View
     element="ul"
     paddingY={paddingY}

@@ -20,5 +20,5 @@ releaseVersion: 0.0.16
 ```
 
 ```!jsx
-<ComponentDoc component={Container} />
+<ComponentDoc component="ContainerProps" />
 ```

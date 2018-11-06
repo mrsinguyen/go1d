@@ -48,10 +48,10 @@ releaseVersion: 0.0.73
 
 ### Props for UL
 ```!jsx
-<ComponentDoc component={UL} />
+<ComponentDoc component="ULProps" />
 ```
 
 ### Props for LI
 ```!jsx
-<ComponentDoc component={LI} />
+<ComponentDoc component="LIProps" />
 ```

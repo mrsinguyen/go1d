@@ -121,5 +121,5 @@ Note that Breakpoints are controlled by the width of their parent component not 
 ```
 
 ```!jsx
-<ComponentDoc component={Carousel} />
+<ComponentDoc component="CarouselProps" />
 ```

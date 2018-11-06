@@ -1,7 +1,7 @@
 import * as React from "react";
 import { spacing } from "../../foundations";
 import Base from "../Base";
-import Text, { Props as TextProps } from "../Text";
+import Text, { TextProps } from "../Text";
 import View from "../View";
 
 export interface RadioInputProps extends TextProps {

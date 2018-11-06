@@ -2,20 +2,18 @@ import * as React from "react";
 
 import { colors } from "../../foundations";
 import Button from "../Button";
-import Select from "../Select";
+import Select, { SelectProps } from "../Select";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View from "../View";
 
-export interface Props extends ViewProps {
-  options?: Array<{ value: string; label: string }>;
-  disabled?: boolean;
+export interface MultiSelectProps extends SelectProps {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
   label?: string | React.ReactChild;
 }
 
-class MultiSelect extends React.Component<Props, any> {
+class MultiSelect extends React.Component<MultiSelectProps, any> {
   public state = {
     Selected: [],
     closeOnSelect: true,

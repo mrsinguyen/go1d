@@ -27,7 +27,7 @@ Define size with the size prop. This uses font sizing to determine the size, so 
 ```
 
 ```!jsx
-<ComponentDoc component={Icon} />
+<ComponentDoc component="IconProps" />
 ```
 
 ### Icon Types

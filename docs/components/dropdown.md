@@ -135,5 +135,5 @@ Offset can be used to customise the placement of the dropdown, for the syntax pl
 
 
 ```!.jsx
-<ComponentDoc component={Dropdown} />
+<ComponentDoc component="DropdownProps" />
 ```

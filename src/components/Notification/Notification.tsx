@@ -1,13 +1,10 @@
 import * as React from "react";
 import posed from "react-pose";
 
-// import ButtonMinimal from "../ButtonMinimal";
-// import Icon from "../Icon";
 import Banner from "../Banner";
-import Theme from "../Theme";
-import { Props as ViewProps } from "../View";
+import { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface NotificationProps extends ViewProps {
   id: string;
   type: "success" | "warning" | "danger";
   message?: React.ReactChild;
@@ -23,7 +20,7 @@ const Trans = posed.div({
   alive: { opacity: 1, marginTop: "10px", transition: { duration: 300 } },
 });
 
-class Notification extends React.Component<Props, any> {
+class Notification extends React.Component<NotificationProps, any> {
   public static defaultProps = {
     lifetime: 3000,
     offset: 0,
@@ -71,17 +68,11 @@ class Notification extends React.Component<Props, any> {
     const { message, type } = this.props;
 
     return (
-      <Theme.Consumer>
-        {({ colors }) => (
-          <React.Fragment>
-            <Trans pose={this.state.alive ? "alive" : "dead"}>
-              <Banner type={type} close={this.close} floating={true}>
-                {message}
-              </Banner>
-            </Trans>
-          </React.Fragment>
-        )}
-      </Theme.Consumer>
+      <Trans pose={this.state.alive ? "alive" : "dead"}>
+        <Banner type={type} close={this.close} floating={true}>
+          {message}
+        </Banner>
+      </Trans>
     );
   }
 }

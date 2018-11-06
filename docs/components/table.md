@@ -62,7 +62,7 @@ The table component takes in two props, rows and headers and then automatically 
 ```
 
 ```!jsx
-<ComponentDoc component={Table} />
+<ComponentDoc component="TableProps" />
 ```
 
 # Table Header Cell

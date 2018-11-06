@@ -3,16 +3,14 @@ import * as React from "react";
 import Icon from "../../Icon";
 import Text from "../../Text";
 import Theme from "../../Theme";
-import View, { Props as ViewProps } from "../../View";
+import View, { ViewProps } from "../../View";
 
-export interface Props extends ViewProps {
+export interface LIProps extends ViewProps {
   iconName?: string;
-  color?: string;
   fontSize?: number;
-  children?: React.ReactNode | React.ReactNode[];
 }
 
-const LI: React.SFC<Props> = ({
+const LI: React.SFC<LIProps> = ({
   iconName = "Check",
   children,
   fontSize = 2,
@@ -20,7 +18,7 @@ const LI: React.SFC<Props> = ({
   paddingX = 0,
   color,
   ...props
-}: Props) => (
+}: LIProps) => (
   <Theme.Consumer>
     {({ spacing: s }) => (
       <View

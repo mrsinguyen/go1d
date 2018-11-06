@@ -15,3 +15,7 @@ releaseVersion: 0.0.36
     suffixValue="test.com"
 />
 ```
+
+```!jsx
+<ComponentDoc component="InputSuffixProps" />
+```

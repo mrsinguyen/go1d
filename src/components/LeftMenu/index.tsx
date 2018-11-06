@@ -4,12 +4,11 @@ import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface LeftMenuProps extends ViewProps {
   showMenuButton?: boolean;
   onMenuButtonClick?: () => void;
-  children: React.ReactNode | React.ReactNode[];
   title: string;
 }
 
@@ -21,13 +20,13 @@ const menuTransition = {
   openedMenu: "242px",
 };
 
-const LeftMenu: React.SFC<Props> = ({
+const LeftMenu: React.SFC<LeftMenuProps> = ({
   showMenuButton = false,
   onMenuButtonClick,
   children,
   title,
   ...props
-}: Props) => (
+}: LeftMenuProps) => (
   <Theme.Consumer>
     {({ colors, animation }) => (
       <View

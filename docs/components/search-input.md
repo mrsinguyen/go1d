@@ -60,5 +60,5 @@ releaseVersion: 0.0.36
 ```
 
 ```!jsx
-<ComponentDoc component={SearchInput} />
+<ComponentDoc component="SearchInputProps" />
 ```

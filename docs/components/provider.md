@@ -40,5 +40,5 @@ Provider is a component that allows for the specification of whether the child c
 ```
 
 ```!jsx
-<ComponentDoc component={Provider} />
+<ComponentDoc component="ProviderProps" />
 ```

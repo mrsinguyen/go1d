@@ -49,5 +49,5 @@ releaseVersion: 0.0.41
 ```
 
 ```!jsx
-<ComponentDoc component={OverviewCtaCard} />
+<ComponentDoc component="OverviewCtaCardProps" />
 ```

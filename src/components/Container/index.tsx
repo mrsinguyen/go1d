@@ -1,14 +1,17 @@
 import * as React from "react";
 
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface ContainerProps extends ViewProps {
   contain?: "narrow" | "normal" | "wide" | "full";
-  children: React.ReactNode;
 }
 
-const Container = ({ contain = "full", children, ...props }: Props) => (
+const Container: React.SFC<ContainerProps> = ({
+  contain = "full",
+  children,
+  ...props
+}: ContainerProps) => (
   <Theme.Consumer>
     {({ type }) => (
       <View

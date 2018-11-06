@@ -38,5 +38,5 @@ No Toggle
 ```
 
 ```!jsx
-<ComponentDoc component={CourseModule} />
+<ComponentDoc component="CourseModuleProps" />
 ```

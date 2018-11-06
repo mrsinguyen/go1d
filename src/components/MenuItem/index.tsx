@@ -4,24 +4,23 @@ import Icon from "../Icon";
 import Link from "../Link";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface MenuItemProps extends ViewProps {
   collapsed?: boolean;
   active?: boolean;
   iconName: string;
   href: string;
-  children: React.ReactNode | React.ReactNode[];
 }
 
-const MenuItem: React.SFC<Props> = ({
+const MenuItem: React.SFC<MenuItemProps> = ({
   collapsed = false,
   active = false,
   children,
   iconName,
   href,
   ...props
-}: Props) => (
+}: MenuItemProps) => (
   <Theme.Consumer>
     {({ colors, animation }) => (
       <Link

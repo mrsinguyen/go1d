@@ -44,5 +44,5 @@ releaseVersion: 0.0.1
 ```
 
 ```!jsx
-<ComponentDoc component={Pill} />
+<ComponentDoc component="PillProps" />
 ```

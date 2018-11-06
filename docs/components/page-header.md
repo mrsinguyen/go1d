@@ -38,5 +38,5 @@ A container for the header of a page, it contains the menu open button and then 
 ```
 
 ```!jsx
-<ComponentDoc component={PageHeader} />
+<ComponentDoc component="PageHeaderProps" />
 ```

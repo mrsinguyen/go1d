@@ -45,5 +45,5 @@ Setting auto row height to true means you dont have to set the row height manual
 ```
 
 ```!jsx
-<ComponentDoc component={DataTable} />
+<ComponentDoc component="DataTableProps" />
 ```
