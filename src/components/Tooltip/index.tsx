@@ -8,7 +8,7 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View from "../View";
 
-export interface Props {
+export interface TooltipProps {
   placement?: "top" | "right" | "bottom" | "left";
   mode?: "hover" | "click" | "always";
   tip: React.ReactNode;
@@ -79,7 +79,7 @@ function generateArrowCSS(p, s, colors): Interpolation {
   };
 }
 
-class Tooltip extends React.Component<Props, any> {
+class Tooltip extends React.Component<TooltipProps, any> {
   public static defaultProps = {
     placement: "top",
     mode: "hover",
@@ -165,6 +165,7 @@ class Tooltip extends React.Component<Props, any> {
                       margin={3}
                       transition="none"
                       boxShadow="soft"
+                      zIndex="tooltip"
                       role="tooltip"
                       data-testid="tooltip"
                     >

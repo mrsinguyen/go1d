@@ -50,15 +50,3 @@ releaseVersion: 0.0.29
 
 </React.Fragment>
 ```
-
-```!jsx
-<ComponentDoc component={Notification} />
-```
-
-```!jsx
-<ComponentDoc component={Notifications} />
-```
-
-```!jsx
-<ComponentDoc component={NotificationContainer} />
-```

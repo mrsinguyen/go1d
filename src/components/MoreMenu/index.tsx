@@ -7,7 +7,7 @@ import Icon from "../Icon";
 import Theme from "../Theme";
 import DropdownMenuItem, { Item as DropdownItem } from "./DropdownMenuItem";
 
-export interface Props extends ButtonProps {
+export interface MoreMenuProps extends ButtonProps {
   isButtonFilled?: boolean;
   itemList: DropdownItem[];
 }
@@ -18,7 +18,7 @@ interface State {
 
 const itemToString = (item: DropdownItem) => (item ? item.title : "");
 
-class MoreMenu extends React.Component<Props, State> {
+class MoreMenu extends React.Component<MoreMenuProps, State> {
   public static defaultProps = {
     isButtonFilled: true,
   };
@@ -36,7 +36,7 @@ class MoreMenu extends React.Component<Props, State> {
       size,
       marginLeft: "auto",
     };
-    const icon = <Icon name="Ellipsis" size={4} color="subtle" />;
+    const icon = <Icon name="Ellipsis" size={4} color="muted" />;
 
     return (
       <Theme.Consumer>
@@ -64,7 +64,7 @@ class MoreMenu extends React.Component<Props, State> {
                     ":hover, :focus": {
                       background: "none",
                       svg: {
-                        color: colors.accent,
+                        color: colors.subtle,
                       },
                     },
                     paddingRight: 0,

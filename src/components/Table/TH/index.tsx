@@ -3,7 +3,7 @@ import * as React from "react";
 import ButtonMinimal from "../../ButtonMinimal";
 import Icon from "../../Icon";
 import Text from "../../Text";
-import View, { Props as ViewProps } from "../../View";
+import View, { ViewProps } from "../../View";
 
 interface TableHeaderCellProps extends ViewProps {
   text: string;

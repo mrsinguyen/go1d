@@ -1,10 +1,10 @@
-import { Interpolation } from "emotion";
 import { get } from "lodash";
 import * as React from "react";
+import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
 import Link from "../Link";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
 export interface ButtonProps extends ViewProps {
   size?: "lg" | "md" | "sm";
@@ -12,9 +12,7 @@ export interface ButtonProps extends ViewProps {
   iconColor?: string;
   backgroundColor?: string;
   iconName?: string;
-  fontWeight?: string;
-  css?: Interpolation;
-  children?: React.ReactNode;
+  fontWeight?: FontWeight;
   onClick?: ((evt: React.SyntheticEvent) => void);
   href?: any;
 }
@@ -30,6 +28,7 @@ const Button: React.SFC<ButtonProps> = ({
   onClick,
   href,
   iconColor = color,
+  type = "button",
   ...props
 }: ButtonProps) => (
   <View
@@ -44,6 +43,7 @@ const Button: React.SFC<ButtonProps> = ({
     borderRadius={2}
     onClick={onClick}
     href={href}
+    type={type}
     css={[
       {
         cursor: "pointer",

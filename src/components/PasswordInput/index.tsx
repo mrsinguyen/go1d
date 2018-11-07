@@ -3,11 +3,11 @@ import ButtonMinimal from "../ButtonMinimal";
 import Text from "../Text";
 import TextInput, { TextInputProps } from "../TextInput";
 
-interface PasswordInput extends TextInputProps {
+export interface PasswordInputProps extends TextInputProps {
   toggleableDisplay?: boolean;
 }
 
-class PasswordInput extends React.Component<TextInputProps, any> {
+class PasswordInput extends React.Component<PasswordInputProps, any> {
   public static displayName = "PasswordInput";
   public static defaultProps = {
     toggleableDisplay: true,

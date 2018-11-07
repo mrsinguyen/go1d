@@ -5,9 +5,9 @@ import formatDuration from "../../utils/durationFormatter";
 import Container from "../Container";
 import Icon from "../Icon";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface OverviewHeroProps extends ViewProps {
   title: string;
   subtitle?: React.ReactNode;
   backgroundImage?: string;
@@ -20,7 +20,7 @@ export interface Props extends ViewProps {
 
 const MobileDisplayBreak = "@media(max-width: 740px)";
 
-const OverviewHero: React.SFC<Props> = ({
+const OverviewHero: React.SFC<OverviewHeroProps> = ({
   children,
   backgroundImage,
   title,
@@ -33,7 +33,7 @@ const OverviewHero: React.SFC<Props> = ({
   css,
   color = "contrast",
   ...props
-}: Props) => (
+}: OverviewHeroProps) => (
   <View flexDirection="column">
     <View
       paddingX={8}

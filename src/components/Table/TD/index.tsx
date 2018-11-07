@@ -1,5 +1,5 @@
 import * as React from "react";
-import View, { Props as ViewProps } from "../../View";
+import View, { ViewProps } from "../../View";
 
 const TD = ({ children, ...props }: ViewProps) => {
   const { width, ...otherProps } = props;

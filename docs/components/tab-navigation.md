@@ -71,5 +71,5 @@ releaseVersion: 0.0.62
 
 ## Tab
 ```!jsx
-<ComponentDoc component={Tab} />
+<ComponentDoc component="TabProps" />
 ```

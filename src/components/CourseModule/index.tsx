@@ -3,16 +3,16 @@ import * as React from "react";
 import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface CourseModuleProps extends ViewProps {
   title: string;
   duration?: number;
   collapsible?: boolean;
   defaultOpen?: boolean;
 }
 
-class CourseModule extends React.Component<Props, any> {
+class CourseModule extends React.Component<CourseModuleProps, any> {
   public static defaultProps = {
     defaultOpen: true,
     collapsible: true,

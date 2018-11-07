@@ -1,11 +1,10 @@
 import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
-import foundations from "../../foundations";
 import Portal from "../Portal";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface DropdownProps extends ViewProps {
   children: ((params: any) => React.ReactNode);
   itemList: any;
   renderFunction: ((
@@ -33,7 +32,7 @@ export interface Props extends ViewProps {
   offset?: string | number;
 }
 
-const Dropdown = ({
+const Dropdown: React.SFC<DropdownProps> = ({
   children,
   itemList,
   renderFunction,
@@ -42,7 +41,7 @@ const Dropdown = ({
   placement,
   offset,
   ...props
-}: Props) => (
+}: DropdownProps) => (
   <Downshift itemToString={itemToString}>
     {({
       getItemProps,
@@ -81,9 +80,7 @@ const Dropdown = ({
                       innerRef={ref}
                       transition="none"
                       paddingY={3}
-                      css={{
-                        zIndex: foundations.zIndex.dropdown,
-                      }}
+                      zIndex="dropdown"
                       {...props}
                     >
                       {itemList.map((item, i) =>

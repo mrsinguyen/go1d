@@ -1,16 +1,16 @@
 import * as React from "react";
 
 import { autobind } from "../../utils/decorators";
-import Field, { Props as FieldProps } from "../Field";
+import Field, { FieldProps } from "../Field";
 import InputSuffix from "../InputSuffix";
 import Text from "../Text";
 
-export interface Props extends FieldProps {
+export interface PortalUrlFieldProps extends FieldProps {
   isAvailable?: boolean;
   suffixValue?: string;
 }
 
-class PortalUrlField extends React.Component<Props, any> {
+class PortalUrlField extends React.Component<PortalUrlFieldProps, any> {
   public static displayName = "PortalUrlField";
 
   @autobind

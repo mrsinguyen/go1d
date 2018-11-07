@@ -6,9 +6,9 @@ import Icon from "../Icon";
 import Link from "../Link";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface PageHeaderProps extends ViewProps {
   title: string;
   subtitle?: React.ReactNode;
   backgroundColor?: string;
@@ -18,7 +18,7 @@ export interface Props extends ViewProps {
   breadcrumbTitle?: string;
 }
 
-const PageHeader: React.SFC<Props> = ({
+const PageHeader: React.SFC<PageHeaderProps> = ({
   children,
   padding,
   backgroundColor = "background",
@@ -29,7 +29,7 @@ const PageHeader: React.SFC<Props> = ({
   breadcrumbHref,
   breadcrumbTitle,
   ...props
-}: Props) => (
+}: PageHeaderProps) => (
   <Theme.Consumer>
     {({ spacing, animation }) => (
       <View

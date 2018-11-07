@@ -1,16 +1,13 @@
 import * as React from "react";
-
-import { Interpolation } from "emotion";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface CourseSlatProps extends ViewProps {
   courseImage?: string;
-  css?: Interpolation;
   title?: string;
   description?: string;
   author?: string;
@@ -32,7 +29,7 @@ const backgroundStyles = (colors, passive) => {
   return styles;
 };
 
-const CourseSlat: React.SFC<Props> = ({
+const CourseSlat: React.SFC<CourseSlatProps> = ({
   courseImage,
   css,
   title,
@@ -45,7 +42,7 @@ const CourseSlat: React.SFC<Props> = ({
   typeIcon,
   passive,
   ...props
-}: Props) => (
+}: CourseSlatProps) => (
   <Theme.Consumer>
     {({ spacing, breakpoints, colors }) => {
       return (

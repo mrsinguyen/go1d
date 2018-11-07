@@ -25,5 +25,5 @@ releaseVersion: 0.0.23
 ```
 
 ```!jsx
-<ComponentDoc component={Modal} />
+<ComponentDoc component="ModalProps" />
 ```

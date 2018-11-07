@@ -11,7 +11,6 @@ module.exports = {
                 test: /\.tsx?$/,     
                 use: [
                     require.resolve("ts-loader"),
-                    require.resolve("react-docgen-typescript-loader"),
                 ], 
             }
         ]

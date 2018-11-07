@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import Theme from "../../Theme";
-import View, { Props } from "../../View";
+import View, { ViewProps } from "../../View";
 
-const TR = ({ children, css, ...viewProps }: Props) => (
+const TR = ({ children, css, ...viewProps }: ViewProps) => (
   <Theme.Consumer>
     {({ spacing }) => (
       <View

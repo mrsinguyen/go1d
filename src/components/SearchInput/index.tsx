@@ -4,7 +4,8 @@ import safeInvoke from "../../utils/safeInvoke";
 import ButtonMinimal from "../ButtonMinimal";
 import TextInput, { TextInputProps } from "../TextInput";
 
-export interface Props extends TextInputProps {
+export interface SearchInputProps extends TextInputProps {
+  element?: any;
   onSubmit: ((
     search: string,
     event: React.SyntheticEvent<HTMLElement>
@@ -12,7 +13,7 @@ export interface Props extends TextInputProps {
   clearable?: boolean;
 }
 
-class SearchInput extends React.Component<Props, any> {
+class SearchInput extends React.Component<SearchInputProps, any> {
   public state = {
     value: "",
   };

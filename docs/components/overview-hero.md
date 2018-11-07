@@ -71,5 +71,5 @@ An overview container for a hero page
 ```
 
 ```!jsx
-<ComponentDoc component={OverviewHero} />
+<ComponentDoc component="OverviewHeroProps" />
 ```

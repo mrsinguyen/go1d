@@ -3,17 +3,16 @@ import { darken } from "../../foundations";
 import Button, { ButtonProps } from "../Button";
 import Theme from "../Theme";
 
-export interface Props extends ButtonProps {
+export interface ButtonMinimalProps extends ButtonProps {
   color?: string;
-  children?: React.ReactNode;
 }
 
-const ButtonMinimal: React.SFC<Props> = ({
+const ButtonMinimal: React.SFC<ButtonMinimalProps> = ({
   color = "subtle",
   children,
   css,
   ...props
-}: Props) => (
+}: ButtonMinimalProps) => (
   <Theme.Consumer>
     {({ colors = { faded: undefined, muted: undefined } }) => (
       <Button

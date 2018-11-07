@@ -40,5 +40,5 @@ releaseVersion: 0.0.36
 
 
 ```!jsx
-<ComponentDoc component={Banner} />
+<ComponentDoc component="BannerProps" />
 ```

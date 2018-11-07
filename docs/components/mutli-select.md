@@ -35,5 +35,5 @@ Searchable Multi Select Field
 ```
 
 ```!jsx
-<ComponentDoc component={MultiSelect} />
+<ComponentDoc component="MultiSelectProps" />
 ```

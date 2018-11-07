@@ -33,5 +33,5 @@ Searchable Select Field
 ```
 
 ```!jsx
-<ComponentDoc component={Select} />
+<ComponentDoc component="SelectProps" />
 ```

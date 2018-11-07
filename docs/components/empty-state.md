@@ -16,5 +16,5 @@ releaseVersion: 0.0.26
 
 
 ```!jsx
-<ComponentDoc component={EmptyState} />
+<ComponentDoc component="EmptyStateProps" />
 ```

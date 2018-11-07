@@ -21,5 +21,5 @@ A container for the main content of a page with a background pulled in either vi
 ```
 
 ```!jsx
-<ComponentDoc component={PageBody} />
+<ComponentDoc component="PageBodyProps" />
 ```

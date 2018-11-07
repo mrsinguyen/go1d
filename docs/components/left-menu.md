@@ -23,5 +23,5 @@ A collapsible menu for navigation
 ```
 
 ```!jsx
-<ComponentDoc component={LeftMenu} />
+<ComponentDoc component="LeftMenuProps" />
 ```

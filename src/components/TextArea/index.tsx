@@ -1,7 +1,11 @@
 import * as React from "react";
 import TextInput, { TextInputProps } from "../TextInput";
 
-class TextArea extends React.Component<TextInputProps, any> {
+export interface TextAreaProps extends TextInputProps {
+  multiline?: number;
+}
+
+class TextArea extends React.Component<TextAreaProps, any> {
   public static displayName = "TextArea";
 
   public static defaultProps = {
@@ -13,10 +17,12 @@ class TextArea extends React.Component<TextInputProps, any> {
     return (
       <TextInput
         type="textarea"
-        css={{
-          resize: "vertical",
-          ...(css as object),
-        }}
+        css={[
+          {
+            resize: "vertical",
+          },
+          css,
+        ]}
         {...props}
       />
     );

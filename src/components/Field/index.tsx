@@ -3,9 +3,9 @@ import * as React from "react";
 
 import Label from "../Label";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface FieldProps extends ViewProps {
   label: string;
   id?: string;
   name: string;
@@ -19,10 +19,9 @@ export interface Props extends ViewProps {
   statusIcon?: string;
 
   component?: string | React.ComponentType<any> | React.ComponentType<void>;
-  children?: React.ReactNode;
 }
 
-const Field: React.SFC<Props> = ({
+const Field: React.SFC<FieldProps> = ({
   component,
   children,
   description,
@@ -38,7 +37,7 @@ const Field: React.SFC<Props> = ({
   statusIcon,
   validate,
   ...props
-}: Props) => {
+}: FieldProps) => {
   const formikProps = {
     name,
     value,
@@ -50,7 +49,11 @@ const Field: React.SFC<Props> = ({
       {({ field, form }) => {
         let node = null;
         let message = null;
-        if (form.errors && form.errors[field.name]) {
+        if (
+          form.errors &&
+          form.errors[field.name] &&
+          form.touched[field.name] // Only show error for touched fields //
+        ) {
           message = form.errors[field.name];
         }
         if (component) {
@@ -65,8 +68,8 @@ const Field: React.SFC<Props> = ({
             ...props,
           });
         }
-
-        if (!statusText) {
+        // this is not an unnecessary check of touched. Otherwise the status text won't get updated. //
+        if (!statusText || form.touched[field.name]) {
           if (
             form.errors &&
             form.errors[field.name] &&
@@ -74,10 +77,11 @@ const Field: React.SFC<Props> = ({
           ) {
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
-            statusText = required ? "Required" : "Invalid";
+            statusText =
+              required && field.value === "" ? "Required" : "Invalid"; // we should show Required only if it is empty, otherwise show invalid //
           } else {
             statusColor = statusColor ? statusColor : "subtle";
-            statusText = !required && "Optional";
+            statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
           }
         }
 

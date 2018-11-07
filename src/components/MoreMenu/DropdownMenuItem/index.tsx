@@ -1,7 +1,5 @@
 import * as React from "react";
-import ButtonMinimal, {
-  Props as ButtonMinimalProps,
-} from "../../ButtonMinimal";
+import ButtonMinimal, { ButtonMinimalProps } from "../../ButtonMinimal";
 import Text from "../../Text";
 
 export interface Item extends ButtonMinimalProps {

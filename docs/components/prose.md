@@ -24,5 +24,5 @@ Does not allow banned attributes
 ```
 
 ```!jsx
-<ComponentDoc component={Prose} />
+<ComponentDoc component="ProseProps" />
 ```

@@ -1,67 +1,53 @@
 import {
+  AlignItemsProperty,
+  DisplayProperty,
   FlexDirectionProperty,
   FlexWrapProperty,
   Globals,
+  JustifyContentProperty,
   OverflowProperty,
   PositionProperty,
 } from "csstype";
-import { Interpolation } from "emotion";
 import * as React from "react";
 import { opacify } from "../../foundations";
-import applySpacing from "../../utils/applySpacing";
-import Base, { Props as BaseProps } from "../Base";
+import { Opacities, Shadows, ZIndex } from "../../foundations/foundation-types";
+import Base, { BaseProps } from "../Base";
 import Theme, { DarkMode, LightMode } from "../Theme";
 
-type MarginProperty = Globals | "auto" | number | null;
-type PaddingProperty = Globals | number;
+type WidthProperty = Globals | "auto" | number | string | null;
+type HeightProperty = Globals | "auto" | number | string | null;
+type FlexBasisProperty = Globals | "auto" | number | string | null;
 
-export interface Props extends BaseProps {
-  element?: string | React.ComponentType;
+export interface ViewProps extends BaseProps {
   mode?: "light" | "dark";
-  display?: string;
-  flexDirection?: FlexDirectionProperty;
-  flexWrap?: FlexWrapProperty;
-  alignItems?: string;
-  justifyContent?: string;
-  flexGrow?: number;
-  flexShrink?: number;
-  flexBasis?: number | string;
-  position?: PositionProperty;
-  overflow?: OverflowProperty;
-  opacity?: number | string;
-  // Reset margins by default
-  margin?: MarginProperty;
-  marginX?: MarginProperty;
-  marginY?: MarginProperty;
-  marginTop?: MarginProperty;
-  marginBottom?: MarginProperty;
-  marginRight?: MarginProperty;
-  marginLeft?: MarginProperty;
-  padding?: PaddingProperty;
-  paddingX?: PaddingProperty;
-  paddingY?: PaddingProperty;
-  paddingTop?: PaddingProperty;
-  paddingBottom?: PaddingProperty;
-  paddingRight?: PaddingProperty;
-  paddingLeft?: PaddingProperty;
+  display?: DisplayProperty | DisplayProperty[];
+  flexDirection?: FlexDirectionProperty | FlexDirectionProperty[];
+  flexWrap?: FlexWrapProperty | FlexWrapProperty[];
+  alignItems?: AlignItemsProperty | AlignItemsProperty[];
+  justifyContent?: JustifyContentProperty | JustifyContentProperty[];
+  flexGrow?: number | number[];
+  flexShrink?: number | number[];
+  flexBasis?: FlexBasisProperty | FlexBasisProperty[];
+  position?: PositionProperty | PositionProperty[];
+  overflow?: OverflowProperty | OverflowProperty[];
+  opacity?: Opacities | "";
   color?: string;
   backgroundColor?: string;
-  backgroundOpacity?: number | string;
+  backgroundOpacity?: Opacities | "";
   borderRadius?: number;
-  width?: number | string;
-  minHeight?: number | string;
-  height?: number | string;
-  maxWidth?: number | string;
-  zIndex?: number;
-  boxShadow?: string;
+  width?: WidthProperty | WidthProperty[];
+  minHeight?: HeightProperty | HeightProperty[];
+  height?: HeightProperty | HeightProperty[];
+  maxWidth?: WidthProperty | WidthProperty[];
+  zIndex?: ZIndex | number | "";
+  boxShadow?: Shadows | "";
   borderColor?: string;
-  border?: number;
-  borderTop?: number;
-  borderRight?: number;
-  borderBottom?: number;
-  borderLeft?: number;
+  border?: number | number[];
+  borderTop?: number | number[];
+  borderRight?: number | number[];
+  borderBottom?: number | number[];
+  borderLeft?: number | number[];
   transition?: string;
-  css?: Interpolation;
 }
 
 const modeComponents = {
@@ -69,7 +55,15 @@ const modeComponents = {
   dark: DarkMode,
 };
 
-const View: React.SFC<Props> = ({
+function getWidth(n) {
+  if (Array.isArray(n)) {
+    return n.map(getWidth);
+  }
+
+  return isNaN(n) ? n : n > 1 ? n : n * 100 + "%";
+}
+
+const View: React.SFC<ViewProps> = ({
   element = "div",
   mode,
   display = "flex",
@@ -83,21 +77,6 @@ const View: React.SFC<Props> = ({
   position,
   overflow,
   opacity,
-  // Reset margins by default
-  margin = 0,
-  marginX = margin,
-  marginY = margin,
-  marginTop = marginY,
-  marginBottom = marginY,
-  marginRight = marginX,
-  marginLeft = marginX,
-  padding,
-  paddingX = padding,
-  paddingY = padding,
-  paddingTop = paddingY,
-  paddingBottom = paddingY,
-  paddingRight = paddingX,
-  paddingLeft = paddingX,
   borderColor,
   border = 0,
   borderTop = border,
@@ -118,12 +97,19 @@ const View: React.SFC<Props> = ({
   transition = "subtle",
   css,
   ...props
-}: Props) => {
+}: ViewProps) => {
   const Wrapper = mode ? modeComponents[mode] : React.Fragment;
   return (
     <Wrapper>
       <Theme.Consumer>
-        {({ spacing: s, colors, shadows, transitions, opacities }) => (
+        {({
+          spacing: s,
+          colors,
+          shadows,
+          transitions,
+          opacities,
+          zIndex: zi,
+        }) => (
           <Base
             element={element}
             css={[
@@ -134,33 +120,26 @@ const View: React.SFC<Props> = ({
                 flexDirection,
                 flexWrap,
                 flexGrow,
+                flexBasis: getWidth(flexBasis),
                 flexShrink,
-                flexBasis,
                 position,
                 overflow,
                 opacity: opacities[opacity],
                 height,
-                width,
-                maxWidth,
-                zIndex,
-                marginTop: applySpacing(s, marginTop),
-                marginBottom: applySpacing(s, marginBottom),
-                marginRight: applySpacing(s, marginRight),
-                marginLeft: applySpacing(s, marginLeft),
-                paddingTop: applySpacing(s, paddingTop),
-                paddingBottom: applySpacing(s, paddingBottom),
-                paddingRight: applySpacing(s, paddingRight),
-                paddingLeft: applySpacing(s, paddingLeft),
+                width: getWidth(width),
+                maxWidth: getWidth(maxWidth),
+                zIndex: zi[zIndex] || zIndex,
                 // fix flexbox bugs
                 minHeight,
                 minWidth: 0,
                 color: colors[color] || color,
-                backgroundColor: opacities[backgroundOpacity]
-                  ? opacify(
-                      colors[backgroundColor],
-                      opacities[backgroundOpacity]
-                    )
-                  : colors[backgroundColor],
+                backgroundColor:
+                  opacities[backgroundOpacity] < 1
+                    ? opacify(
+                        colors[backgroundColor],
+                        opacities[backgroundOpacity]
+                      )
+                    : colors[backgroundColor],
                 borderRadius: s[borderRadius],
                 borderStyle: "solid",
                 borderTopWidth: borderTop,

@@ -1,14 +1,19 @@
 import * as React from "react";
 
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 import TR from "./TR";
 
-export interface Props extends ViewProps {
+export interface TableProps extends ViewProps {
   header?: React.ReactNodeArray;
   rows: React.ReactNodeArray;
 }
 
-const Table = ({ header, rows, css, ...props }: Props) => (
+const Table: React.SFC<TableProps> = ({
+  header,
+  rows,
+  css,
+  ...props
+}: TableProps) => (
   <View
     element="div"
     display="block"

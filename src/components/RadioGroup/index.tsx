@@ -2,7 +2,7 @@ import * as React from "react";
 import safeInvoke from "../../utils/safeInvoke";
 import RadioInput from "../RadioInput";
 import { RadioInputProps } from "../RadioInput";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
 export interface RadioGroupProps extends ViewProps {
   id?: string;

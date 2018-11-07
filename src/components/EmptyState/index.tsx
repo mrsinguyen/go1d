@@ -3,24 +3,23 @@ import * as React from "react";
 import ButtonFilled from "../ButtonFilled";
 import Container from "../Container";
 import Text from "../Text";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
+export interface EmptyStateProps extends ViewProps {
   title?: string;
   description?: string;
-  children?: React.ReactNode;
   actionText?: string;
   action?: ((evt: React.SyntheticEvent) => void);
 }
 
-const EmptyState: React.SFC<Props> = ({
+const EmptyState: React.SFC<EmptyStateProps> = ({
   title,
   description,
   actionText,
   action,
   children,
   ...props
-}: Props) => (
+}: EmptyStateProps) => (
   <Container>
     <View
       backgroundColor="background"
@@ -29,7 +28,7 @@ const EmptyState: React.SFC<Props> = ({
       borderRadius={2}
       {...props}
     >
-      <Text element="h1" fontSize={4} fontWeight="600">
+      <Text element="h1" fontSize={4} fontWeight="semibold">
         {title}
       </Text>
       <View textAlign="center" marginY={6}>

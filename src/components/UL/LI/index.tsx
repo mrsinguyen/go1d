@@ -1,21 +1,16 @@
 import * as React from "react";
 
-import applySpacing from "../../../utils/applySpacing";
 import Icon from "../../Icon";
 import Text from "../../Text";
 import Theme from "../../Theme";
-import View, { Props as ViewProps } from "../../View";
+import View, { ViewProps } from "../../View";
 
-export interface Props extends ViewProps {
+export interface LIProps extends ViewProps {
   iconName?: string;
-  color?: string;
   fontSize?: number;
-  paddingY?: number;
-  paddingX?: number;
-  children?: React.ReactNode | React.ReactNode[];
 }
 
-const LI: React.SFC<Props> = ({
+const LI: React.SFC<LIProps> = ({
   iconName = "Check",
   children,
   fontSize = 2,
@@ -23,7 +18,7 @@ const LI: React.SFC<Props> = ({
   paddingX = 0,
   color,
   ...props
-}: Props) => (
+}: LIProps) => (
   <Theme.Consumer>
     {({ spacing: s }) => (
       <View
@@ -44,12 +39,9 @@ const LI: React.SFC<Props> = ({
         <Text
           color={color}
           fontSize={fontSize}
-          css={{
-            paddingTop: applySpacing(s, paddingY),
-            paddingBottom: applySpacing(s, paddingY),
-            paddingLeft: applySpacing(s, 4),
-            paddingRight: applySpacing(s, paddingX),
-          }}
+          paddingY={paddingY}
+          paddingLeft={4}
+          paddingRight={paddingX}
         >
           {children}
         </Text>

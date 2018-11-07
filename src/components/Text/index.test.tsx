@@ -17,10 +17,10 @@ it("renders without crashing with all props", () => {
   render(
     <Text
       element="h2"
-      fontWeight="900"
+      fontWeight="semibold"
       fontFamily="Georgia, serif"
       fontStyle="italic"
-      lineHeight={2}
+      lineHeight="ui"
       fontSize={4}
       color="subtle"
       css={styles}

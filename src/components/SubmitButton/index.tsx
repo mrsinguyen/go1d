@@ -1,14 +1,9 @@
 import { connect, FormikContext } from "formik";
 import * as React from "react";
-import { ButtonProps } from "../Button";
-import ButtonFilled from "../ButtonFilled";
-
-export interface Props extends ButtonProps {
-  children?: React.ReactNode;
-}
+import ButtonFilled, { ButtonFilledProps } from "../ButtonFilled";
 
 class SubmitButton extends React.Component<
-  Props & { formik: FormikContext<any> }
+  ButtonFilledProps & { formik: FormikContext<any> }
 > {
   public render() {
     const { formik, children, ...props } = this.props;
@@ -26,6 +21,6 @@ class SubmitButton extends React.Component<
   }
 }
 
-export default connect<Props, Props & { formik: FormikContext<any> }>(
+export default connect<ButtonFilledProps & { formik: FormikContext<any> }>(
   SubmitButton
 );

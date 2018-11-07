@@ -36,5 +36,5 @@ releaseVersion: 0.0.3
 
 
 ```!jsx
-<ComponentDoc component={CourseSlat} />
+<ComponentDoc component="CourseSlatProps" />
 ```

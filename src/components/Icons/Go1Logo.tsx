@@ -1,13 +1,8 @@
 import * as React from "react";
-import { Props as ViewProps } from "../View";
 
-interface Props extends ViewProps {
-  name: string;
-  color?: string;
-  size?: number;
-}
-
-const Go1Logo: React.SFC<Props> = (props: Props) => (
+const Go1Logo: React.SFC<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>
+) => (
   <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
     <path
       fillRule="evenodd"

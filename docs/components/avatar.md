@@ -35,5 +35,5 @@ A component that displays an avatar.
 
 
 ```!jsx
-<ComponentDoc component={Avatar} />
+<ComponentDoc component="AvatarProps" />
 ```

@@ -1,21 +1,17 @@
 import * as React from "react";
 
 import Container from "../Container";
-import { Props as ViewProps } from "../View";
+import { ViewProps } from "../View";
 
-export interface Props extends ViewProps {
-  children: React.ReactNode;
-  padding?: number;
-  paddingX?: number;
-  paddingY?: number;
+export interface PageBodyProps extends ViewProps {
   backgroundColor?: string;
 }
 
-const PageBody: React.SFC<Props> = ({
+const PageBody: React.SFC<PageBodyProps> = ({
   children,
   backgroundColor = "soft",
   ...props
-}: Props) => (
+}: PageBodyProps) => (
   <Container
     contain="full"
     backgroundColor={backgroundColor}

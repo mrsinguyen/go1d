@@ -4,12 +4,12 @@ import Base from "../Base";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
-import View, { Props as ViewProps } from "../View";
+import View, { ViewProps } from "../View";
 import Input from "./internals/Input";
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
 
-export interface Props extends ViewProps {
+export interface SelectProps extends ViewProps {
   options?: Array<{ value: string; label: string }>;
   disabled?: boolean;
   backgroundColor?: string;
@@ -22,7 +22,7 @@ export interface Props extends ViewProps {
   size?: "sm" | "md";
 }
 
-class Select extends React.Component<Props, any> {
+class Select extends React.Component<SelectProps, any> {
   public mounted;
 
   public inputRef: HTMLElement = null;
@@ -52,7 +52,7 @@ class Select extends React.Component<Props, any> {
     };
   }
 
-  public componentDidUpdate(prevProps: Props, prevState) {
+  public componentDidUpdate(prevProps: SelectProps, prevState) {
     const { disabled, closeOnSelect } = this.props;
     const { isFocused, value } = this.state;
 
