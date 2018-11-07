@@ -49,7 +49,11 @@ const Field: React.SFC<FieldProps> = ({
       {({ field, form }) => {
         let node = null;
         let message = null;
-        if (form.errors && form.errors[field.name]) {
+        if (
+          form.errors &&
+          form.errors[field.name] &&
+          form.touched[field.name] // Only show error for touched fields //
+        ) {
           message = form.errors[field.name];
         }
         if (component) {
@@ -64,8 +68,8 @@ const Field: React.SFC<FieldProps> = ({
             ...props,
           });
         }
-
-        if (!statusText) {
+        // this is not an unnecessary check of touched. Otherwise the status text won't get updated. //
+        if (!statusText || form.touched[field.name]) {
           if (
             form.errors &&
             form.errors[field.name] &&
@@ -73,10 +77,11 @@ const Field: React.SFC<FieldProps> = ({
           ) {
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
-            statusText = required ? "Required" : "Invalid";
+            statusText =
+              required && field.value === "" ? "Required" : "Invalid"; // we should show Required only if it is empty, otherwise show invalid //
           } else {
             statusColor = statusColor ? statusColor : "subtle";
-            statusText = !required && "Optional";
+            statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
           }
         }
 
