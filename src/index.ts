@@ -20,6 +20,7 @@ export {
   default as PageHeader,
   PageHeaderProps,
 } from "./components/PageHeader";
+export { default as PageTitle, PageTitleProps } from "./components/PageTitle";
 export { default as MenuItem, MenuItemProps } from "./components/MenuItem";
 export { default as LeftMenu, LeftMenuProps } from "./components/LeftMenu";
 export { default as Container, ContainerProps } from "./components/Container";
