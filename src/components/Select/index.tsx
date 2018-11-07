@@ -367,6 +367,7 @@ class Select extends React.Component<Props, any> {
       onKeyDown,
       onKeyUp,
       closeOnSelect,
+      error, // Do not pass down
       size = "sm",
       id,
       ...props
