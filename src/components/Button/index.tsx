@@ -28,6 +28,7 @@ const Button: React.SFC<ButtonProps> = ({
   onClick,
   href,
   iconColor = color,
+  type = "button",
   ...props
 }: ButtonProps) => (
   <View
@@ -42,6 +43,7 @@ const Button: React.SFC<ButtonProps> = ({
     borderRadius={2}
     onClick={onClick}
     href={href}
+    type={type}
     css={[
       {
         cursor: "pointer",
