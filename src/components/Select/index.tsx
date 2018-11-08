@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import foundations from "../../foundations";
 import Base from "../Base";
 import Icon from "../Icon";
 import Text from "../Text";
@@ -502,7 +503,7 @@ class Select extends React.Component<SelectProps, any> {
               boxShadow="distant"
               backgroundColor="background"
               paddingY={3}
-              zIndex={5}
+              zIndex={foundations.zIndex.dropdown}
             >
               {this.props.searchable && (
                 <View paddingX={4}>
