@@ -25,8 +25,9 @@ class Checkbox extends React.Component<CheckboxProps, any> {
 
   public handleOnChange = event => {
     const { Selected } = this.state;
-    const { onChange, name } = this.props;
-    const NewValue = !Selected;
+    const { onChange, name, value } = this.props;
+    const selected = value === undefined ? Selected : value;
+    const NewValue = !selected;
 
     this.setState({
       Selected: NewValue,
@@ -56,6 +57,8 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       ...props
     } = this.props;
 
+    const selected = value === undefined ? Selected : value;
+
     return (
       <Theme.Consumer>
         {({ spacing }) => (
@@ -69,7 +72,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               }}
             >
               <View
-                borderColor={Selected ? "accent" : "faded"}
+                borderColor={selected ? "accent" : "faded"}
                 backgroundColor="background"
                 borderRadius={2}
                 alignItems="center"
@@ -81,7 +84,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                   borderWidth: 1,
                 }}
               >
-                {Selected && <Icon color="accent" name="Check" />}
+                {selected && <Icon color="accent" name="Check" />}
               </View>
               <Text
                 color="contrast"
@@ -101,7 +104,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               type="checkbox"
               name={name}
               disabled={disabled}
-              value={Selected}
+              value={selected}
               css={{
                 position: "absolute",
                 left: -9999,

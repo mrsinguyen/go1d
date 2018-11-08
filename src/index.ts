@@ -103,3 +103,7 @@ export { default as Carousel, CarouselProps } from "./components/Carousel";
 export { default as UL } from "./components/UL";
 export { default as LI } from "./components/UL/LI";
 export { default as PasswordInput } from "./components/PasswordInput";
+export {
+  DataTableSelectableProps,
+  default as DataTableSelectable,
+} from "./components/DataTableSelectable";

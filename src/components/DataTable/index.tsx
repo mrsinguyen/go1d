@@ -30,7 +30,7 @@ export interface DataTableProps extends ViewProps {
   */
   header?: React.ReactNodeArray;
   /** A string to display the total number of results */
-  total?: string;
+  total?: React.ReactNode;
   /** Used to scroll directly to a row. When using autoRowHeight, the height wont be populated yet, so it is important to also specify a rowHeight */
   scrollToIndex?: number;
   /** *Experimental* Automatically measures the row height. Due to the measurement method, this is not suggested for data sets of over 250 items */
@@ -144,10 +144,12 @@ class DataTable extends React.Component<DataTableProps, {}> {
       <Theme.Consumer>
         {({ zIndex, spacing }) => (
           <React.Fragment>
-            {total && (
+            {total && typeof total === "string" ? (
               <View marginBottom={4}>
                 <Text fontSize={3}>{total}</Text>
               </View>
+            ) : (
+              total
             )}
             <View
               display="block"
