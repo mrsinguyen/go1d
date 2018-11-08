@@ -37,8 +37,11 @@ class Select extends React.Component<SelectProps, any> {
 
     if (props.defaultValue || props.value) {
       const Value = props.value || props.defaultValue;
+      const Search = props.options.find(Option => Option.value === Value);
 
-      OptionSelected = props.options.find(Option => Option.value === Value);
+      if (Search) {
+        OptionSelected = Search;
+      }
     }
 
     this.state = {
