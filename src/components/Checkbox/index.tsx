@@ -30,9 +30,8 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     const { onChange, name, value, checked } = this.props;
     const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
     const newValue = !currentCheckedState;
-
     this.setState({
-      checked: newValue,
+      checkedState: newValue,
     });
 
     safeInvoke(onChange, {
@@ -83,7 +82,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               {...props}
             >
               <View
-                borderColor={checked ? "accent" : "faded"}
+                borderColor={currentCheckedState ? "accent" : "faded"}
                 backgroundColor="background"
                 borderRadius={2}
                 alignItems="center"
@@ -95,7 +94,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                   borderWidth: 1,
                 }}
               >
-                {checked && <Icon color="accent" name="Check" />}
+                {currentCheckedState && <Icon color="accent" name="Check" />}
               </View>
               <Text
                 color="contrast"
