@@ -20,6 +20,7 @@ export {
   default as PageHeader,
   PageHeaderProps,
 } from "./components/PageHeader";
+export { default as PageTitle, PageTitleProps } from "./components/PageTitle";
 export { default as MenuItem, MenuItemProps } from "./components/MenuItem";
 export { default as LeftMenu, LeftMenuProps } from "./components/LeftMenu";
 export { default as Container, ContainerProps } from "./components/Container";
@@ -103,3 +104,7 @@ export { default as Carousel, CarouselProps } from "./components/Carousel";
 export { default as UL } from "./components/UL";
 export { default as LI } from "./components/UL/LI";
 export { default as PasswordInput } from "./components/PasswordInput";
+export {
+  DataTableSelectableProps,
+  default as DataTableSelectable,
+} from "./components/DataTableSelectable";
