@@ -9,7 +9,7 @@ export interface PageBodyProps extends ViewProps {
 
 const PageBody: React.SFC<PageBodyProps> = ({
   children,
-  backgroundColor = "soft",
+  backgroundColor = "faint",
   ...props
 }: PageBodyProps) => (
   <Container
