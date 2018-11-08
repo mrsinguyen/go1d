@@ -78,7 +78,7 @@ class TextInput extends React.Component<TextInputProps, any> {
       return "accent";
     }
 
-    return borderColor ? borderColor : "faded";
+    return borderColor ? borderColor : "soft";
   }
 
   public render() {
@@ -106,7 +106,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             element="label"
             borderRadius={borderRadius}
             backgroundColor="background"
-            paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
+            paddingX={get({ lg: 5, md: 4, sm: 1 }, size)}
             border={1}
             borderColor={this.getBorderColor()}
             boxShadow="inner"
@@ -130,7 +130,7 @@ class TextInput extends React.Component<TextInputProps, any> {
               type={inputType}
               rows={multiline}
               lineHeight="ui"
-              fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
+              fontSize={get({ lg: 4, md: 3, sm: 1 }, size)}
               paddingY={get({ lg: 4, md: 3, sm: 1 }, size)}
               color="inherit"
               onFocus={this.handleFocus}

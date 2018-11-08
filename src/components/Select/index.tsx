@@ -411,6 +411,10 @@ class Select extends React.Component<SelectProps, any> {
         paddingY: 4,
         fontSize: 2,
       },
+      lg: {
+        paddingY: 3,
+        fontSize: 3,
+      },
     };
 
     const FilteredOptions = this.getFilteredOptions() || [];
@@ -436,9 +440,7 @@ class Select extends React.Component<SelectProps, any> {
               {...props}
               css={{
                 border: "1px solid",
-                borderColor: this.state.isFocused
-                  ? colors.accent
-                  : "transparent",
+                borderColor: this.state.isFocused ? colors.accent : colors.soft,
                 ...((css as object) || {}),
               }}
             >
