@@ -87,7 +87,7 @@ class DataTableSelectable extends React.Component<
         >
           <Checkbox
             name={String(props.index)}
-            value={selected}
+            checked={selected}
             onChange={this.updateRows}
           />
         </TD>
@@ -134,12 +134,12 @@ class DataTableSelectable extends React.Component<
   }
 
   @autobind
-  public updateRows(evt: { target: { name: string; value: boolean } }) {
+  public updateRows(evt: { target: { name: string; checked: boolean } }) {
     const updateObject = this.state[
       this.state.invertSelection ? "unselectedItems" : "selectedItems"
     ];
 
-    if (evt.target.value) {
+    if (evt.target.checked) {
       updateObject[this.state.invertSelection ? "delete" : "add"](
         parseInt(evt.target.name, 10)
       );
@@ -210,7 +210,7 @@ class DataTableSelectable extends React.Component<
           !!selected ? (
             <Checkbox
               name="SelectAll"
-              value={this.state.allSelected}
+              checked={this.state.allSelected}
               onChange={this.onAllSelectChange}
               disabled={disabled}
             />
