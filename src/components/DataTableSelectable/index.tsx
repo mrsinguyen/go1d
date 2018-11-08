@@ -28,7 +28,7 @@ export interface DataTableSelectableProps extends DataTableProps {
   ) => void;
 
   /** Text to go on the main action button */
-  mainActionText?: React.ReactNode;
+  mainActionText?: string;
 
   /** A mapping of row numbers to id. Usually this takes the form of the function row => data[row].id */
   mapRowToId?: (row: number) => number;
@@ -252,7 +252,7 @@ class DataTableSelectable extends React.Component<
                     iconName={mainIconName}
                     iconColor="success"
                   >
-                    {`${mainActionText} ${selected === 0 ? " all" : ""}`}
+                    {`${mainActionText} ${selected === 0 ? "all" : ""}`}
                   </ButtonFilled>
                 )}
                 {!!selected && (
