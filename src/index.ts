@@ -97,6 +97,7 @@ export {
   RadioGroupProps,
 } from "./components/RadioGroup";
 export { default as TabNavigation } from "./components/TabNavigation";
+export { default as CheckboxGroup } from "./components/CheckboxGroup";
 export { default as Checkbox, CheckboxProps } from "./components/Checkbox";
 export { default as Tab, TabProps } from "./components/Tab";
 export { default as Carousel, CarouselProps } from "./components/Carousel";

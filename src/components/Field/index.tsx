@@ -60,6 +60,8 @@ const Field: React.SFC<FieldProps> = ({
           node = React.createElement(component as any, {
             ref: inputRef,
             ...field,
+            // use "initialValues" provided through Form, default to value attribute, if none is provided use empty string to avoid "A component is changing an uncontrolled input of type number to be controlled" errors //
+            value: field.value ? field.value : value ? value : "",
             form,
             disabled: disabled || form.status === "disabled",
             id: id || field.name,
@@ -78,7 +80,9 @@ const Field: React.SFC<FieldProps> = ({
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
             statusText =
-              required && field.value === "" ? "Required" : "Invalid"; // we should show Required only if it is empty, otherwise show invalid //
+              required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
+                ? "Required"
+                : "Invalid";
           } else {
             statusColor = statusColor ? statusColor : "subtle";
             statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //

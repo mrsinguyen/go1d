@@ -1,7 +1,5 @@
-import { wrap } from "popmotion/lib/transformers";
 import * as React from "react";
 import { cleanup, render } from "react-testing-library";
-import Checkbox from "../Checkbox";
 import TD from "../Table/TD";
 import TR from "../Table/TR";
 import DataTableSelectable from "./";
@@ -59,23 +57,23 @@ it("renders without crashing with optional props", () => {
     expect(button).toBeDefined();
   }
 
-  ref.current.updateRows({ target: { name: "0", value: true } });
+  ref.current.updateRows({ target: { name: "0", checked: true } });
   expect(Array.from(ref.current.state.selectedItems)).toEqual([0]);
 
-  ref.current.updateRows({ target: { name: "0", value: false } });
+  ref.current.updateRows({ target: { name: "0", checked: false } });
   expect(Array.from(ref.current.state.selectedItems)).toEqual([]);
 
   ref.current.onAllSelectChange();
   expect(ref.current.state.allSelected).toBe(true);
   expect(ref.current.state.invertSelection).toBe(true);
 
-  ref.current.updateRows({ target: { name: "1", value: false } });
+  ref.current.updateRows({ target: { name: "1", checked: false } });
   expect(ref.current.state.allSelected).toBe(false);
   expect(ref.current.state.invertSelection).toBe(true);
   expect(Array.from(ref.current.state.selectedItems)).toEqual([]);
   expect(Array.from(ref.current.state.unselectedItems)).toEqual([1]);
 
-  ref.current.updateRows({ target: { name: "1", value: true } });
+  ref.current.updateRows({ target: { name: "1", checked: true } });
   expect(ref.current.state.allSelected).toBe(false);
   expect(ref.current.state.invertSelection).toBe(true);
   expect(Array.from(ref.current.state.selectedItems)).toEqual([]);
@@ -83,8 +81,8 @@ it("renders without crashing with optional props", () => {
 
   expect(mainAction).toBeCalledTimes(0);
 
-  ref.current.updateRows({ target: { name: "1", value: false } });
-  const resp = ref.current.triggerAction();
+  ref.current.updateRows({ target: { name: "1", checked: false } });
+  ref.current.triggerAction();
 
   expect(mainAction).toBeCalled();
   expect(mainAction).toBeCalledWith({
