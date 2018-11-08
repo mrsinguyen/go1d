@@ -80,7 +80,9 @@ const Field: React.SFC<FieldProps> = ({
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
             statusText =
-              required && field.value === "" ? "Required" : "Invalid"; // we should show Required only if it is empty, otherwise show invalid //
+              required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
+                ? "Required"
+                : "Invalid";
           } else {
             statusColor = statusColor ? statusColor : "subtle";
             statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
