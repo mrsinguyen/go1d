@@ -20,14 +20,16 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     super(props);
     this.state = {
       randomId: `RadioInput_${Math.random()}`,
-      checked: typeof props.checked !== "undefined" ? props.checked : false,
+      checkedState:
+        typeof props.checked !== "undefined" ? props.checked : false,
     };
   }
 
   public handleOnChange = event => {
-    const { checked } = this.state;
-    const { onChange, name, value } = this.props;
-    const newValue = !checked;
+    const { checkedState } = this.state;
+    const { onChange, name, value, checked } = this.props;
+    const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
+    const newValue = !currentCheckedState;
 
     this.setState({
       checked: newValue,
@@ -43,7 +45,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
   };
 
   public render() {
-    const { randomId, checked } = this.state;
+    const { randomId, checkedState } = this.state;
 
     const {
       name,
@@ -51,6 +53,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       value,
       children,
       label,
+      checked,
       error, // Do not pass
       onChange, // Do not pass
       marginX,
@@ -61,6 +64,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       ...props
     } = this.props;
 
+    const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
     return (
       <Theme.Consumer>
         {({ spacing }) => (
@@ -112,7 +116,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               name={name}
               disabled={disabled}
               value={value}
-              checked={checked}
+              checked={currentCheckedState}
               css={{
                 position: "absolute",
                 left: -9999,
