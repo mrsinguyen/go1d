@@ -36,8 +36,9 @@ const Button: React.SFC<ButtonProps> = ({
     flexDirection="row"
     alignItems="center"
     justifyContent="space-between"
-    paddingY={get({ lg: 4, md: 3, sm: 1 }, size)}
-    paddingX={get({ lg: 5, md: 3, sm: 1 }, size)}
+    height={get({ lg: 48, md: 40, sm: 32 }, size)}
+    paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}
+    paddingX={get({ lg: 5, md: 4, sm: 4 }, size)}
     backgroundColor={backgroundColor}
     color={color}
     borderRadius={2}
@@ -60,7 +61,7 @@ const Button: React.SFC<ButtonProps> = ({
       <Icon
         name={iconName}
         size={get({ lg: 3, md: 2, sm: 1 }, size)}
-        marginRight={children && get({ lg: 4, md: 3, sm: 1 }, size)}
+        marginRight={children && get({ lg: 4, md: 3, sm: 3 }, size)}
         color={iconColor}
       />
     )}

@@ -66,6 +66,8 @@ const Banner: React.SFC<BannerProps> = ({
               height="1.05rem"
               onClick={close}
               data-testid="close"
+              paddingX={1}
+              paddingY={1}
             >
               <Icon name="Cross" color={type} />
             </ButtonMinimal>

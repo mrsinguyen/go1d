@@ -8,54 +8,62 @@ import View from "../View";
 
 export interface CheckboxProps extends TextProps {
   id?: string;
-  name: string;
-  value?: boolean;
+  name?: string;
+  label?: string;
+  value?: string;
+  checked?: boolean;
   disabled?: boolean;
 }
 
 class Checkbox extends React.Component<CheckboxProps, any> {
   constructor(props) {
     super(props);
-
     this.state = {
-      RandomID: `RadioInput_${Math.random()}`,
-      Selected: typeof props.value !== "undefined" ? props.value : false,
+      randomId: `RadioInput_${Math.random()}`,
+      checkedState:
+        typeof props.checked !== "undefined" ? props.checked : false,
     };
   }
 
   public handleOnChange = event => {
-    const { Selected } = this.state;
-    const { onChange, name } = this.props;
-    const NewValue = !Selected;
-
+    const { checkedState } = this.state;
+    const { onChange, name, value, checked } = this.props;
+    const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
+    const newValue = !currentCheckedState;
     this.setState({
-      Selected: NewValue,
+      checkedState: newValue,
     });
 
     safeInvoke(onChange, {
       target: {
         name,
-        value: NewValue,
+        value: newValue ? value : "",
+        checked: newValue,
       },
     });
   };
 
   public render() {
-    const { RandomID, Selected } = this.state;
+    const { randomId, checkedState } = this.state;
 
     const {
       name,
-      id = RandomID,
+      id = randomId,
       value,
-      RadioGroup,
       children,
       label,
+      checked,
       error, // Do not pass
       onChange, // Do not pass
+      marginX,
+      marginY,
+      marginTop,
+      marginBottom,
       disabled = false,
       ...props
     } = this.props;
 
+    const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
     return (
       <Theme.Consumer>
         {({ spacing }) => (
@@ -64,12 +72,17 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               element="label"
               htmlFor={id}
               flexDirection="row"
+              marginX={marginX}
+              marginY={marginY}
+              marginTop={marginTop}
+              marginBottom={marginBottom}
               css={{
                 cursor: "pointer",
               }}
+              {...props}
             >
               <View
-                borderColor={Selected ? "accent" : "faded"}
+                borderColor={currentCheckedState ? "accent" : "faded"}
                 backgroundColor="background"
                 borderRadius={2}
                 alignItems="center"
@@ -81,7 +94,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                   borderWidth: 1,
                 }}
               >
-                {Selected && <Icon color="accent" name="Check" />}
+                {currentCheckedState && <Icon color="accent" name="Check" />}
               </View>
               <Text
                 color="contrast"
@@ -101,7 +114,8 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               type="checkbox"
               name={name}
               disabled={disabled}
-              value={Selected}
+              value={value}
+              checked={currentCheckedState}
               css={{
                 position: "absolute",
                 left: -9999,

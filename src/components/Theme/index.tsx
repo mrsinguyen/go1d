@@ -16,3 +16,11 @@ export const DarkMode = props => (
 );
 
 export default Theme;
+
+export const withTheme = Component => {
+  return props => (
+    <Theme.Consumer>
+      {value => <Component {...props} theme={value} />}
+    </Theme.Consumer>
+  );
+};

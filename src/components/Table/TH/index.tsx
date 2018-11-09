@@ -6,7 +6,7 @@ import Text from "../../Text";
 import View, { ViewProps } from "../../View";
 
 interface TableHeaderCellProps extends ViewProps {
-  text: string;
+  text: React.ReactNode;
 
   /** The sort keyword that is currently ineffect. Used to determine whether to show the sort chevron */
   currentSort?: string;
@@ -23,7 +23,6 @@ interface TableHeaderCellProps extends ViewProps {
 
 const TableHeaderCell: React.SFC<TableHeaderCellProps> = ({
   text,
-  css,
   sort,
   direction,
   currentSort,
@@ -34,7 +33,7 @@ const TableHeaderCell: React.SFC<TableHeaderCellProps> = ({
   return (
     <View
       element="div"
-      display="block"
+      flexDirection="row"
       alignItems="center"
       paddingY={3}
       paddingX={3}

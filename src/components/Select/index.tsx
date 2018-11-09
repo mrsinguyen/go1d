@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import foundations from "../../foundations";
 import Base from "../Base";
 import Icon from "../Icon";
 import Text from "../Text";
@@ -36,8 +37,11 @@ class Select extends React.Component<SelectProps, any> {
 
     if (props.defaultValue || props.value) {
       const Value = props.value || props.defaultValue;
+      const Search = props.options.find(Option => Option.value === Value);
 
-      OptionSelected = props.options.find(Option => Option.value === Value);
+      if (Search) {
+        OptionSelected = Search;
+      }
     }
 
     this.state = {
@@ -504,7 +508,7 @@ class Select extends React.Component<SelectProps, any> {
               boxShadow="distant"
               backgroundColor="background"
               paddingY={3}
-              zIndex={5}
+              zIndex={foundations.zIndex.dropdown}
             >
               {this.props.searchable && (
                 <View paddingX={4}>

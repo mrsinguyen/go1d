@@ -97,9 +97,14 @@ export {
   RadioGroupProps,
 } from "./components/RadioGroup";
 export { default as TabNavigation } from "./components/TabNavigation";
+export { default as CheckboxGroup } from "./components/CheckboxGroup";
 export { default as Checkbox, CheckboxProps } from "./components/Checkbox";
 export { default as Tab, TabProps } from "./components/Tab";
 export { default as Carousel, CarouselProps } from "./components/Carousel";
 export { default as UL } from "./components/UL";
 export { default as LI } from "./components/UL/LI";
 export { default as PasswordInput } from "./components/PasswordInput";
+export {
+  DataTableSelectableProps,
+  default as DataTableSelectable,
+} from "./components/DataTableSelectable";

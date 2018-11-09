@@ -21,6 +21,4 @@ class SubmitButton extends React.Component<
   }
 }
 
-export default connect<ButtonFilledProps & { formik: FormikContext<any> }>(
-  SubmitButton
-);
+export default connect<ButtonFilledProps>(SubmitButton);
