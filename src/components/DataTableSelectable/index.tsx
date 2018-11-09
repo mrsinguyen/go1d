@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ListRowProps } from "react-virtualized";
 import { autobind } from "../../utils/decorators";
-import safeInvoke from "../../utils/safeInvoke";
 import Checkbox from "../Checkbox";
 import DataTable, { DataTableProps } from "../DataTable";
 import TD from "../Table/TD";
