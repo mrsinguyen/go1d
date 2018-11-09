@@ -36,6 +36,7 @@ const Field: React.SFC<FieldProps> = ({
   statusColor = "subtle",
   statusIcon,
   validate,
+  manualValidation,
   ...props
 }: FieldProps) => {
   const formikProps = {
@@ -56,6 +57,9 @@ const Field: React.SFC<FieldProps> = ({
         ) {
           message = form.errors[field.name];
         }
+        if (manualValidation) {
+          message = manualValidation;
+        }
         if (component) {
           node = React.createElement(component as any, {
             ref: inputRef,
@@ -73,12 +77,16 @@ const Field: React.SFC<FieldProps> = ({
           if (
             form.errors &&
             form.errors[field.name] &&
-            form.touched[field.name]
+            form.touched[field.name] ||
+            manualValidation
           ) {
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
-            statusText =
-              required && field.value === "" ? "Required" : "Invalid"; // we should show Required only if it is empty, otherwise show invalid //
+            // only redeclare statusText if not already provided
+            if (!statusText) {
+              statusText =
+                required && field.value === "" ? "Required" : "Invalid"; // we should show Required only if it is empty, otherwise show invalid //
+            }
           } else {
             statusColor = statusColor ? statusColor : "subtle";
             statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
