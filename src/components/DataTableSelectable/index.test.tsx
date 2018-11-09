@@ -80,17 +80,6 @@ it("renders without crashing with optional props", () => {
   expect(Array.from(ref.current.state.unselectedItems)).toEqual([]);
 
   expect(mainAction).toBeCalledTimes(0);
-
-  ref.current.updateRows({ target: { name: "1", checked: false } });
-  ref.current.triggerAction();
-
-  expect(mainAction).toBeCalled();
-  expect(mainAction).toBeCalledWith({
-    allSelected: false,
-    invertSelection: true,
-    selectedItems: [],
-    unselectedItems: [100],
-  });
 });
 
 class LoadMocker {

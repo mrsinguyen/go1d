@@ -2,15 +2,11 @@ import * as React from "react";
 import { ListRowProps } from "react-virtualized";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
-import ButtonFilled from "../ButtonFilled";
-import ButtonMinimal from "../ButtonMinimal";
 import Checkbox from "../Checkbox";
 import DataTable, { DataTableProps } from "../DataTable";
 import TD from "../Table/TD";
 import TH from "../Table/TH";
-import Text from "../Text";
 import Theme from "../Theme";
-import View from "../View";
 
 interface RowRendererProps extends ListRowProps {
   checkBox: React.ReactNode;
@@ -35,6 +31,17 @@ export interface DataTableSelectableProps extends DataTableProps {
   rowRenderer: (props: RowRendererProps) => React.ReactNode;
   disabled?: boolean;
   mainIconName?: string;
+  prefixRow?: (
+    SelectedCount: number,
+    SelectedData: {
+      selectedItems: number[];
+      unselectedItems: number[];
+      allSelected: boolean;
+      invertSelection: boolean;
+      totalResults: number;
+    },
+    clearSelection: () => void
+  ) => React.ReactNode;
 }
 
 interface State {
@@ -117,23 +124,6 @@ class DataTableSelectable extends React.Component<
   }
 
   @autobind
-  public triggerAction() {
-    const selected = this.state.invertSelection
-      ? this.props.rowCount - this.state.unselectedItems.size
-      : this.state.selectedItems.size;
-    safeInvoke(this.props.mainAction, {
-      allSelected: this.state.allSelected,
-      invertSelection: selected === 0 || this.state.invertSelection,
-      selectedItems: Array.from(this.state.selectedItems).map(row =>
-        this.props.mapRowToId(row)
-      ),
-      unselectedItems: Array.from(this.state.unselectedItems).map(row =>
-        this.props.mapRowToId(row)
-      ),
-    });
-  }
-
-  @autobind
   public updateRows(evt: { target: { name: string; checked: boolean } }) {
     const updateObject = this.state[
       this.state.invertSelection ? "unselectedItems" : "selectedItems"
@@ -193,12 +183,21 @@ class DataTableSelectable extends React.Component<
       header,
       mainActionText,
       mainIconName,
+      rowCount,
+      prefixRow,
       ...props
     } = this.props;
 
-    const selected = this.state.invertSelection
-      ? props.rowCount - this.state.unselectedItems.size
-      : this.state.selectedItems.size;
+    const {
+      invertSelection,
+      unselectedItems,
+      selectedItems,
+      allSelected,
+    } = this.state;
+
+    const selected = invertSelection
+      ? rowCount - unselectedItems.size
+      : selectedItems.size;
 
     const headerWithSelectAll = [
       <TH
@@ -222,50 +221,32 @@ class DataTableSelectable extends React.Component<
       ...(header || []),
     ];
 
-    const text = !!selected ? (
-      <React.Fragment>
-        <Text fontSize={3}>{`${selected} selected `}</Text>
-        <Text fontSize={3} color="subtle">{`of ${props.rowCount}`}</Text>
-      </React.Fragment>
-    ) : (
-      <Text fontSize={3}>{total}</Text>
-    );
-
     return (
       <Theme.Consumer>
         {({ colors }) => (
           <DataTable
             {...props}
             ref={this.ref}
+            rowCount={rowCount}
             rowRenderer={this.rowRenderer(colors.highlight)}
             header={headerWithSelectAll}
             total={
-              <View marginBottom={4} flexDirection="row" alignItems="center">
-                <View marginRight={4} flexDirection="row">
-                  {text}
-                </View>
-                {mainAction && (
-                  <ButtonFilled
-                    onClick={this.triggerAction}
-                    marginRight={3}
-                    size="sm"
-                    iconName={mainIconName}
-                    iconColor="success"
-                  >
-                    {`${mainActionText} ${selected === 0 ? "all" : ""}`}
-                  </ButtonFilled>
-                )}
-                {!!selected && (
-                  <ButtonMinimal
-                    onClick={this.clearSelection}
-                    size="sm"
-                    backgroundColor="transparent"
-                    iconName="Close"
-                  >
-                    Clear Selection
-                  </ButtonMinimal>
-                )}
-              </View>
+              typeof prefixRow === "function" &&
+              prefixRow(
+                selected,
+                {
+                  totalResults: rowCount,
+                  allSelected,
+                  invertSelection: selected === 0 || invertSelection,
+                  selectedItems: Array.from(selectedItems).map(row =>
+                    this.props.mapRowToId(row)
+                  ),
+                  unselectedItems: Array.from(unselectedItems).map(row =>
+                    this.props.mapRowToId(row)
+                  ),
+                },
+                this.clearSelection
+              )
             }
           />
         )}
