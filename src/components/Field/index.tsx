@@ -86,14 +86,17 @@ const Field: React.SFC<FieldProps> = ({
             statusColor = "danger";
             // only redeclare statusText if not already provided
             if (!statusText) {
-                statusText =
-                  required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
-                    ? "Required"
-                    : "Invalid";
+              statusText =
+                required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
+                  ? "Required"
+                  : "Invalid";
             }
           } else {
-            statusColor = statusColor ? statusColor : "subtle";
-            statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
+            // only remove if not declared upscope
+            if (!statusText) {
+              statusColor = statusColor ? statusColor : "subtle";
+              statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
+            }
           }
         }
 
