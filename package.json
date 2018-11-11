@@ -40,7 +40,7 @@
     "libreact": "^2.1.0",
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.0",
-    "react": "^16.4.1",
+    "react": "^16.5.2",
     "react-container-dimensions": "^1.4.1",
     "react-docgen": "^2.21.0",
     "react-popper": "^1.0.2",
