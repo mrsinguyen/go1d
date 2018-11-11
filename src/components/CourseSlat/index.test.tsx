@@ -43,3 +43,22 @@ it("renders passive course slats", () => {
     />
   );
 });
+
+it("should render author as passed component", () => {
+  const testRenderer = () => <p>Hello</p>;
+  const author = () => <div>Foo</div>;
+  render(
+    <CourseSlat
+      courseImage="#"
+      title="Master sourdough in a week"
+      description="Despite general improvements in workplace health and safety"
+      author={author}
+      duration={4}
+      actionRender={testRenderer}
+      contentRender={testRenderer}
+      type="Course"
+      typeIcon="Course"
+      passive={true}
+    />
+  );
+});
