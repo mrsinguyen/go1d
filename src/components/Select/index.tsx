@@ -57,7 +57,7 @@ class Select extends React.Component<SelectProps, any> {
   }
 
   public componentDidUpdate(prevProps: SelectProps, prevState) {
-    const { disabled, closeOnSelect } = this.props;
+    const { disabled, closeOnSelect, value: valueProp, options } = this.props;
     const { isFocused, value } = this.state;
 
     if (isFocused && !disabled && prevState.value !== value && !closeOnSelect) {
@@ -66,6 +66,29 @@ class Select extends React.Component<SelectProps, any> {
           this.focusInput();
         }
       }, 0);
+    }
+
+    if (prevProps.value || valueProp) {
+      if (valueProp !== prevProps.value) {
+        const CloseOnSelect =
+          typeof closeOnSelect !== "undefined" ? closeOnSelect : true;
+
+        let SelectedOption = options.find(Option => Option.value === valueProp);
+
+        if (typeof SelectedOption === "undefined") {
+          SelectedOption = {
+            label: null,
+            value: null,
+          };
+        }
+
+        this.setState({
+          value: SelectedOption.value,
+          label: SelectedOption.label,
+          closeOverride: CloseOnSelect,
+          overrideFocusClose: !CloseOnSelect,
+        });
+      }
     }
   }
 
