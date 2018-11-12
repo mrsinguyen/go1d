@@ -36,7 +36,7 @@ const Field: React.SFC<FieldProps> = ({
   statusColor = "subtle",
   statusIcon,
   validate,
-  manualValidation,
+  errorMessage,
   ...props
 }: FieldProps) => {
   const formikProps = {
@@ -56,8 +56,8 @@ const Field: React.SFC<FieldProps> = ({
         ) {
           message = form.errors[field.name];
         }
-        if (manualValidation) {
-          message = manualValidation;
+        if (errorMessage) {
+          message = errorMessage;
         }
         if (component) {
           node = React.createElement(component as any, {
@@ -85,7 +85,7 @@ const Field: React.SFC<FieldProps> = ({
             form.errors &&
             form.errors[field.name] &&
             form.touched[field.name] ||
-            manualValidation
+            errorMessage
           ) {
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
