@@ -44,7 +44,6 @@ const Field: React.SFC<FieldProps> = ({
     value,
     validate,
   };
-
   return (
     <FormikField {...formikProps}>
       {({ field, form }) => {
@@ -74,6 +73,12 @@ const Field: React.SFC<FieldProps> = ({
             ...props,
           });
         }
+
+        // component can get into a recursive state where a previous error prevents the status from being updated, check for that here
+        if ((statusText === "Invalid" || statusText === "Required") && !form.errors[field.name]) {
+          statusText = "";
+        }
+        
         // this is not an unnecessary check of touched. Otherwise the status text won't get updated. //
         if (!statusText || form.touched[field.name]) {
           if (
@@ -96,10 +101,7 @@ const Field: React.SFC<FieldProps> = ({
             if (!statusText) {
               statusColor = statusColor ? statusColor : "subtle";
               statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
-            } else {
-              // explicitly clear the status text if none of the above conditions are met
-              statusText = "";
-            }
+            } 
           }
         }
         
