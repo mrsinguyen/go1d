@@ -10,7 +10,7 @@ export interface CourseSlatProps extends ViewProps {
   courseImage?: string;
   title?: string;
   description?: string;
-  author?: string;
+  author?: string | (() => React.ReactChild);
   duration?: number;
   actionRender?: () => React.ReactChild;
   contentRender?: () => React.ReactChild;
@@ -144,9 +144,13 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
               <View flexDirection="row" marginBottom={3}>
                 {author && (
                   <View paddingRight={5}>
-                    <Text color="subtle" fontSize={1}>
-                      {author}
-                    </Text>
+                    {typeof author === "string" ? (
+                      <Text color="subtle" fontSize={1}>
+                        {author}
+                      </Text>
+                    ) : (
+                      author()
+                    )}
                   </View>
                 )}
                 {duration && (
