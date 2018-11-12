@@ -8,6 +8,7 @@ export interface CheckboxGroupProps extends ViewProps {
   name: string;
   value?: string[];
   disabled?: boolean;
+  error?: boolean;
   options: CheckboxProps[];
 }
 
@@ -65,6 +66,7 @@ class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
                 onChange={this.handleOnChange(Option.value)}
                 name={name}
                 disabled={disabled}
+                error={error}
                 checked={values.some(itemValue => itemValue === Option.value)}
                 {...Option}
               />

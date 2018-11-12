@@ -13,6 +13,7 @@ export interface CheckboxProps extends TextProps {
   value?: string;
   checked?: boolean;
   disabled?: boolean;
+  error?: boolean;
 }
 
 class Checkbox extends React.Component<CheckboxProps, any> {
@@ -42,6 +43,19 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       },
     });
   };
+
+  public getBorderColor(currentCheckedState) {
+    const { error } = this.props;
+
+    if (error) {
+      return "danger";
+    }
+    if (currentCheckedState) {
+      return "accent";
+    }
+
+    return "faded";
+  }
 
   public render() {
     const { randomId, checkedState } = this.state;
@@ -82,7 +96,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               {...props}
             >
               <View
-                borderColor={currentCheckedState ? "accent" : "faded"}
+                borderColor={this.getBorderColor(currentCheckedState)}
                 backgroundColor="background"
                 borderRadius={2}
                 alignItems="center"
