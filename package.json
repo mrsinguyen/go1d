@@ -33,6 +33,7 @@
     "@tweenjs/tween.js": "^17.2.0",
     "@types/events": "^1.2.0",
     "@types/react-virtualized": "^9.18.7",
+    "@types/webfontloader": "^1.6.29",
     "color": "^3.0.0",
     "downshift": "^3.1.1",
     "emotion": "^9.2.4",
@@ -49,7 +50,8 @@
     "react-transition-group": "^2.4.0",
     "react-virtualized": "^9.20.1",
     "recompose": "^0.27.1",
-    "sanitize-html": "^1.19.1"
+    "sanitize-html": "^1.19.1",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@compositor/kit": "^1.0.43",
@@ -96,12 +98,6 @@
       {
         "name": "twitter:card",
         "content": "GO1 Design System"
-      }
-    ],
-    "links": [
-      {
-        "rel": "stylesheet",
-        "href": "https://fonts.googleapis.com/css?family=Muli:400,400i,600,700"
       }
     ]
   },
