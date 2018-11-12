@@ -80,7 +80,7 @@ const PageHeader: React.SFC<PageHeaderProps> = ({
             </ButtonMinimal>
           </Transition>
         </View>
-        <View>
+        <View maxWidth="75%">
           {breadcrumbTitle &&
             breadcrumbHref && (
               <Link href={breadcrumbHref}>
@@ -95,7 +95,16 @@ const PageHeader: React.SFC<PageHeaderProps> = ({
                 </View>
               </Link>
             )}
-          <Text element="h1" fontWeight="semibold" fontSize={5}>
+          <Text
+            element="h1"
+            fontWeight="semibold"
+            fontSize={5}
+            css={{
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
             {title}
           </Text>
           {subtitle}
