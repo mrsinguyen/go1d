@@ -96,10 +96,13 @@ const Field: React.SFC<FieldProps> = ({
             if (!statusText) {
               statusColor = statusColor ? statusColor : "subtle";
               statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
+            } else {
+              // explicitly clear the status text if none of the above conditions are met
+              statusText = "";
             }
           }
         }
-
+        
         return (
           <View paddingBottom={2}>
             <Label
