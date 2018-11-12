@@ -2,7 +2,6 @@ import { css } from "emotion";
 import * as React from "react";
 import { render } from "react-testing-library";
 import PageTitle from "./index";
-import Text from "./index";
 
 it("renders without crashing without any optional props", () => {
   render(<PageTitle title="Test" />);
