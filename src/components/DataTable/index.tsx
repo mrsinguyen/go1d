@@ -19,6 +19,8 @@ import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 
 export interface DataTableProps extends ViewProps {
+  /** Component shown if there is no results */
+  emptyState?: React.ReactNode;
   /** The hieght of a row. When using autoRowHeight, you can supply this for a more accurate initial estimate */
   rowHeight?: number;
   /** The total number of rows that can be loaded. Used for autoloading. */
@@ -112,6 +114,7 @@ class DataTable extends React.Component<DataTableProps, {}> {
       header,
       total,
       css,
+      emptyState,
       autoRowHeight,
       infiniteLoad,
       isRowLoaded,
@@ -212,6 +215,9 @@ class DataTable extends React.Component<DataTableProps, {}> {
                               </div>
                             )}
                           </AutoSizer>
+                          {emptyState && rowCount <= 0 && (
+                            emptyState
+                          )}
                         </View>
                         {!hideScrollButton &&
                           scrollTop > 0 && (
