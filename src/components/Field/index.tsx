@@ -36,6 +36,7 @@ const Field: React.SFC<FieldProps> = ({
   statusColor = "subtle",
   statusIcon,
   validate,
+  errorMessage,
   ...props
 }: FieldProps) => {
   const formikProps = {
@@ -43,7 +44,6 @@ const Field: React.SFC<FieldProps> = ({
     value,
     validate,
   };
-
   return (
     <FormikField {...formikProps}>
       {({ field, form }) => {
@@ -55,6 +55,9 @@ const Field: React.SFC<FieldProps> = ({
           form.touched[field.name] // Only show error for touched fields //
         ) {
           message = form.errors[field.name];
+        }
+        if (errorMessage) {
+          message = errorMessage;
         }
         if (component) {
           node = React.createElement(component as any, {
@@ -70,25 +73,38 @@ const Field: React.SFC<FieldProps> = ({
             ...props,
           });
         }
+
+        // component can get into a recursive state where a previous error prevents the status from being updated, check for that here
+        if ((statusText === "Invalid" || statusText === "Required") && !form.errors[field.name]) {
+          statusText = "";
+        }
+        
         // this is not an unnecessary check of touched. Otherwise the status text won't get updated. //
         if (!statusText || form.touched[field.name]) {
           if (
             form.errors &&
             form.errors[field.name] &&
-            form.touched[field.name]
+            form.touched[field.name] ||
+            errorMessage
           ) {
             statusIcon = statusIcon ? statusIcon : null;
             statusColor = "danger";
-            statusText =
-              required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
-                ? "Required"
-                : "Invalid";
+            // only redeclare statusText if not already provided
+            if (!statusText) {
+              statusText =
+                required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
+                  ? "Required"
+                  : "Invalid";
+            }
           } else {
-            statusColor = statusColor ? statusColor : "subtle";
-            statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
+            // only remove if not declared upscope
+            if (!statusText) {
+              statusColor = statusColor ? statusColor : "subtle";
+              statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
+            } 
           }
         }
-
+        
         return (
           <View paddingBottom={2}>
             <Label
