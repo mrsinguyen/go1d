@@ -136,6 +136,7 @@ class TextInput extends React.Component<TextInputProps, any> {
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
               disabled={disabled}
+              size="1"
               {...props}
               data-testid="inputElement"
               css={{
