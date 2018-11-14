@@ -116,3 +116,7 @@ export {
   FeaturedTagProps,
   default as FeaturedTag,
 } from "./components/FeaturedTag";
+export {
+  CTACardProps,
+  default as CTACard,
+} from "./components/CTACard";
