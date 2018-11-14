@@ -11,7 +11,7 @@ import Input from "./internals/Input";
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
 
 export interface SelectProps extends ViewProps {
-  options?: Array<{ value: string; label: string }>;
+  options?: Array<{ value?: string; label: string; optgroup?: boolean; values?: Array<{ value: string; label: string; }> }>;
   disabled?: boolean;
   backgroundColor?: string;
   color?: string;
@@ -22,6 +22,21 @@ export interface SelectProps extends ViewProps {
   closeOnSelect?: boolean;
   size?: "sm" | "md";
 }
+
+const Sizes = {
+  sm: {
+    paddingY: 3,
+    fontSize: 1,
+  },
+  md: {
+    paddingY: 4,
+    fontSize: 2,
+  },
+  lg: {
+    paddingY: 3,
+    fontSize: 3,
+  },
+};
 
 class Select extends React.Component<SelectProps, any> {
   public mounted;
@@ -73,7 +88,21 @@ class Select extends React.Component<SelectProps, any> {
         const CloseOnSelect =
           typeof closeOnSelect !== "undefined" ? closeOnSelect : true;
 
-        let SelectedOption = options.find(Option => Option.value === valueProp);
+        const ReducedOptions = options.reduce((Sum, Option) => {
+          if (Option.optgroup) {
+            return [
+              ...Sum,
+              ...Option.values,
+            ];
+          }
+    
+          return [
+            ...Sum,
+            Option,
+          ];
+        }, []);
+
+        let SelectedOption = ReducedOptions.find(Option => Option.value === valueProp);
 
         if (typeof SelectedOption === "undefined") {
           SelectedOption = {
@@ -200,18 +229,31 @@ class Select extends React.Component<SelectProps, any> {
   // Keyboard Handler
   public focusOption(direction: FocusDirection = "first") {
     const FilteredOptions = this.getFilteredOptions();
+    const ReducedOptions = FilteredOptions.reduce((Sum, Option) => {
+      if (Option.optgroup) {
+        return [
+          ...Sum,
+          ...Option.values,
+        ];
+      }
+
+      return [
+        ...Sum,
+        Option,
+      ];
+    }, []);
     let { focusedOptionIndex } = this.state;
 
     if (direction === "open") {
       this.setState({
         focusedOptionIndex,
-        focusedValue: FilteredOptions[focusedOptionIndex],
+        focusedValue: ReducedOptions[focusedOptionIndex],
         closeOverride: false,
       });
       return;
     }
 
-    if (!FilteredOptions.length || FilteredOptions.length === 0) {
+    if (!ReducedOptions.length || ReducedOptions.length === 0) {
       return;
     }
     let nextFocus = 0; // handles 'first'
@@ -224,16 +266,16 @@ class Select extends React.Component<SelectProps, any> {
       nextFocus =
         focusedOptionIndex > 0
           ? focusedOptionIndex - 1
-          : FilteredOptions.length - 1;
+          : ReducedOptions.length - 1;
     } else if (direction === "down") {
-      nextFocus = (focusedOptionIndex + 1) % FilteredOptions.length;
+      nextFocus = (focusedOptionIndex + 1) % ReducedOptions.length;
     } else if (direction === "last") {
-      nextFocus = FilteredOptions.length - 1;
+      nextFocus = ReducedOptions.length - 1;
     }
 
     this.setState({
       focusedOptionIndex: nextFocus,
-      focusedValue: FilteredOptions[nextFocus],
+      focusedValue: ReducedOptions[nextFocus],
       closeOverride: false,
     });
   }
@@ -368,42 +410,44 @@ class Select extends React.Component<SelectProps, any> {
 
     if (searchable) {
       if (searchValue !== "") {
-        return options.filter(Option =>
-          Option.label.toLowerCase().includes(searchValue.toLowerCase())
-        );
+        return options.reduce((sum, Option) => {
+          if (Option.optgroup) {
+            const subOptions = Option.values.filter(subOption => subOption.label.toLowerCase().includes(searchValue.toLowerCase()));
+
+            if (subOptions.length > 0) {
+              return [
+                ...sum,
+                {
+                  ...Option,
+                  values: subOptions
+                }
+              ]
+            }
+          } else {
+            if (Option.label.toLowerCase().includes(searchValue.toLowerCase())) {
+              return [
+                ...sum,
+                Option,
+              ]
+            }
+          }
+          return sum;
+        }, []);
       }
     }
 
     return options;
   };
 
-  public render() {
-    const {
-      options = [],
-      disabled,
-      name,
-      onChange,
-      css,
-      backgroundColor = "background",
-      color = "default",
-      activeOptions = [],
-      textOverride,
-      defaultText = "Please Select",
-      children,
-      searchable,
-      onKeyDown,
-      onKeyUp,
-      closeOnSelect,
-      error, // Do not pass down
-      size = "sm",
-      id,
-      ...props
-    } = this.props;
-
+  public renderOption = ({
+    Option, 
+    Index, 
+    selectState: {activeOptions, size, colors}, 
+    child,
+  }) => {
     const {
       value: SelectedValue,
       focusedOptionIndex,
-      searchValue,
     } = this.state;
 
     const getOptionBackground = (Index, Option) => {
@@ -429,20 +473,69 @@ class Select extends React.Component<SelectProps, any> {
       return null;
     };
 
-    const Sizes = {
-      sm: {
-        paddingY: 3,
-        fontSize: 1,
-      },
-      md: {
-        paddingY: 4,
-        fontSize: 2,
-      },
-      lg: {
-        paddingY: 3,
-        fontSize: 3,
-      },
-    };
+    return (
+      <View
+        width={"100%"}
+        paddingY={4}
+        paddingX={child ? 6 : 4}
+        key={Option.label + "_" + Option.value + "_" + Index}
+        onMouseDown={this.handleValueSelect(
+          Option.label,
+          Option.value
+        )}
+        backgroundColor={getOptionBackground(Index, Option)}
+        css={
+          getOptionBackground(Index, Option) !== "accent"
+            ? {
+                "&:hover": {
+                  background: colors.highlight,
+                  color: colors.default,
+                  cursor: "pointer",
+                },
+              }
+            : {}
+        }
+      >
+        <Text
+          fontSize={Sizes[size].fontSize}
+          color={
+            getOptionBackground(Index, Option) === "accent"
+              ? "background"
+              : "default"
+          }
+        >
+          {Option.label}
+        </Text>
+      </View>
+    )
+  }
+
+  public render() {
+    const {
+      options = [],
+      disabled,
+      name,
+      onChange,
+      css,
+      backgroundColor = "background",
+      color = "default",
+      activeOptions = [],
+      textOverride,
+      defaultText = "Please Select",
+      children,
+      searchable,
+      onKeyDown,
+      onKeyUp,
+      closeOnSelect,
+      error, // Do not pass down
+      size = "sm",
+      id,
+      ...props
+    } = this.props;
+
+    const {
+      searchValue,
+    } = this.state;
 
     const FilteredOptions = this.getFilteredOptions() || [];
     const isVisible = this.state.isFocused && !this.state.closeOverride;
@@ -550,42 +643,48 @@ class Select extends React.Component<SelectProps, any> {
                 </View>
               )}
               {isVisible && (
-                <View>
-                  {FilteredOptions.map((Option, Index) => (
-                    <View
-                      width={"100%"}
-                      paddingY={4}
-                      paddingX={4}
-                      key={Option.label + "_" + Option.value + "_" + Index}
-                      onMouseDown={this.handleValueSelect(
-                        Option.label,
-                        Option.value
-                      )}
-                      backgroundColor={getOptionBackground(Index, Option)}
-                      css={
-                        getOptionBackground(Index, Option) !== "accent"
-                          ? {
-                              "&:hover": {
-                                background: colors.highlight,
-                                color: colors.default,
-                                cursor: "pointer",
-                              },
-                            }
-                          : {}
-                      }
-                    >
-                      <Text
-                        fontSize={Sizes[size].fontSize}
-                        color={
-                          getOptionBackground(Index, Option) === "accent"
-                            ? "background"
-                            : "default"
+                <View marginTop={this.props.searchable ? 4 : 0}>
+                  {FilteredOptions.map((Option, OptIndex) => {
+                    if (Option.optgroup) {
+                      const CurrentOffset = FilteredOptions.reduce((Sum, OptGroup, CurrentIndex) => {
+                        if (OptIndex > CurrentIndex) {
+                          return Sum + OptGroup.values.length;
                         }
-                      >
-                        {Option.label}
-                      </Text>
-                    </View>
-                  ))}
+                        return Sum;
+                      }, 0);
+  
+                      return (
+                        <View
+                          width={"100%"}
+                          key={`${Option.label}_${OptIndex}`}
+                        > 
+                          <View
+                            width={"100%"}
+                            paddingY={4}
+                            paddingX={4}
+                            backgroundColor="faint"
+                          >
+                            <Text color="subtle">{Option.label}</Text>
+                          </View>
+                          <View>
+                            {Option.values.map((Option, Index) => this.renderOption({
+                              Option, 
+                              Index: Index + CurrentOffset, 
+                              selectState: { activeOptions, size, colors },
+                              child: true,
+                            }))}
+                          </View>
+                        </View>
+                      );
+                    } else {
+                      return this.renderOption({
+                        Option, 
+                        Index: OptIndex,
+                        selectState: { activeOptions, size, colors },
+                        child: false,
+                      });
+                    }
+                  })}
                 </View>
               )}
             </View>

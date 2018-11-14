@@ -19,8 +19,33 @@ const Options = [
   },
 ];
 
+const Optgroups = [
+  {
+    label: "Opt group",
+    optgroup: true,
+    values: [
+      {
+        label: "test",
+        value: "test",
+      },
+      {
+        label: "test 1",
+        value: "test 1",
+      },
+      {
+        label: "test 2",
+        value: "test 2",
+      },
+    ]
+  }
+];
+
 it("renders without crashing without any optional props", () => {
   render(<Select options={Options} />);
+});
+
+it("renders without crashing without any optional props", () => {
+  render(<Select options={Optgroups} />);
 });
 
 it("renders without crashing some optional props", () => {
