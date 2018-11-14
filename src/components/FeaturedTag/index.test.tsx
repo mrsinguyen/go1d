@@ -18,6 +18,7 @@ it("renders without crashing with all props passed to it", () => {
       backgroundColor="accent"
       iconName="Check"
       onClick={ActionMock}
+      passive={false}
     >
       Hello World!
     </FeaturedTag>
