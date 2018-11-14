@@ -108,3 +108,7 @@ export {
   DataTableSelectableProps,
   default as DataTableSelectable,
 } from "./components/DataTableSelectable";
+export {
+  CourseCardProps,
+  default as CourseCard,
+} from "./components/CourseCard";

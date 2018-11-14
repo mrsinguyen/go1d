@@ -75,16 +75,19 @@ const Field: React.SFC<FieldProps> = ({
         }
 
         // component can get into a recursive state where a previous error prevents the status from being updated, check for that here
-        if ((statusText === "Invalid" || statusText === "Required") && !form.errors[field.name]) {
+        if (
+          (statusText === "Invalid" || statusText === "Required") &&
+          !form.errors[field.name]
+        ) {
           statusText = "";
         }
-        
+
         // this is not an unnecessary check of touched. Otherwise the status text won't get updated. //
         if (!statusText || form.touched[field.name]) {
           if (
-            form.errors &&
-            form.errors[field.name] &&
-            form.touched[field.name] ||
+            (form.errors &&
+              form.errors[field.name] &&
+              form.touched[field.name]) ||
             errorMessage
           ) {
             statusIcon = statusIcon ? statusIcon : null;
@@ -101,10 +104,10 @@ const Field: React.SFC<FieldProps> = ({
             if (!statusText) {
               statusColor = statusColor ? statusColor : "subtle";
               statusText = !required ? "Optional" : ""; // Once error has been corrected for required fields, remove status text //
-            } 
+            }
           }
         }
-        
+
         return (
           <View paddingBottom={2}>
             <Label

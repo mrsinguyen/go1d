@@ -237,6 +237,7 @@ class Carousel extends React.Component<CarouselProps, any> {
                 innerRef={SlideRef}
                 maxWidth={`${100 / slidesToShow}%`}
                 paddingX={foundations.spacing[gutter]}
+                marginY={1}
                 css={{
                   ":first-child": {
                     paddingLeft: 0,

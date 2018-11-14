@@ -215,9 +215,7 @@ class DataTable extends React.Component<DataTableProps, {}> {
                               </div>
                             )}
                           </AutoSizer>
-                          {emptyState && rowCount <= 0 && (
-                            emptyState
-                          )}
+                          {emptyState && rowCount <= 0 && emptyState}
                         </View>
                         {!hideScrollButton &&
                           scrollTop > 0 && (
