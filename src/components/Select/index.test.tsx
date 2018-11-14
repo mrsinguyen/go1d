@@ -19,8 +19,47 @@ const Options = [
   },
 ];
 
+const Optgroups = [
+  {
+    label: "Opt group",
+    optgroup: true,
+    values: [
+      {
+        label: "foo",
+        value: "test",
+      },
+      {
+        label: "test 1",
+        value: "test 1",
+      },
+      {
+        label: "test 2",
+        value: "test 2",
+      },
+    ],
+  },
+  {
+    label: "Opt group other",
+    optgroup: true,
+    values: [
+      {
+        label: "foo",
+        value: "test",
+      },
+    ],
+  },
+];
+
 it("renders without crashing without any optional props", () => {
   render(<Select options={Options} />);
+});
+
+it("renders without crashing with optgroups and default value", () => {
+  render(<Select options={Optgroups} searchable={true} defaultValue="test" />);
+});
+
+it("renders without crashing with default value", () => {
+  render(<Select options={Options} searchable={true} defaultValue="test" />);
 });
 
 it("renders without crashing some optional props", () => {
@@ -233,6 +272,27 @@ it("Can select a filtered option", () => {
   const ChangeMock = jest.fn();
   const { getByTestId } = render(
     <Select options={Options} searchable={true} onChange={ChangeMock} />
+  );
+
+  fireEvent.mouseDown(getByTestId("primarySection"));
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "2",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "ArrowDown",
+  });
+  fireEvent.keyDown(getByTestId("primarySection"), {
+    key: "Enter",
+  });
+
+  expect(ChangeMock.mock.calls.length).toBe(1);
+  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 2");
+});
+
+it("Can select a filtered option with optgroups", () => {
+  const ChangeMock = jest.fn();
+  const { getByTestId } = render(
+    <Select options={Optgroups} searchable={true} onChange={ChangeMock} />
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
