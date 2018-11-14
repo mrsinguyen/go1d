@@ -11,7 +11,12 @@ import Input from "./internals/Input";
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
 
 export interface SelectProps extends ViewProps {
-  options?: Array<{ value?: string; label: string; optgroup?: boolean; values?: Array<{ value: string; label: string; }> }>;
+  options?: Array<{
+    value?: string;
+    label: string;
+    optgroup?: boolean;
+    values?: Array<{ value: string; label: string }>;
+  }>;
   disabled?: boolean;
   backgroundColor?: string;
   color?: string;
@@ -90,19 +95,15 @@ class Select extends React.Component<SelectProps, any> {
 
         const ReducedOptions = options.reduce((Sum, Option) => {
           if (Option.optgroup) {
-            return [
-              ...Sum,
-              ...Option.values,
-            ];
+            return [...Sum, ...Option.values];
           }
-    
-          return [
-            ...Sum,
-            Option,
-          ];
+
+          return [...Sum, Option];
         }, []);
 
-        let SelectedOption = ReducedOptions.find(Option => Option.value === valueProp);
+        let SelectedOption = ReducedOptions.find(
+          Option => Option.value === valueProp
+        );
 
         if (typeof SelectedOption === "undefined") {
           SelectedOption = {
@@ -231,16 +232,10 @@ class Select extends React.Component<SelectProps, any> {
     const FilteredOptions = this.getFilteredOptions();
     const ReducedOptions = FilteredOptions.reduce((Sum, Option) => {
       if (Option.optgroup) {
-        return [
-          ...Sum,
-          ...Option.values,
-        ];
+        return [...Sum, ...Option.values];
       }
 
-      return [
-        ...Sum,
-        Option,
-      ];
+      return [...Sum, Option];
     }, []);
     let { focusedOptionIndex } = this.state;
 
@@ -407,28 +402,28 @@ class Select extends React.Component<SelectProps, any> {
   public getFilteredOptions = () => {
     const { searchValue } = this.state;
     const { searchable, options } = this.props;
-
     if (searchable) {
       if (searchValue !== "") {
         return options.reduce((sum, Option) => {
           if (Option.optgroup) {
-            const subOptions = Option.values.filter(subOption => subOption.label.toLowerCase().includes(searchValue.toLowerCase()));
+            const subOptions = Option.values.filter(subOption =>
+              subOption.label.toLowerCase().includes(searchValue.toLowerCase())
+            );
 
             if (subOptions.length > 0) {
               return [
                 ...sum,
                 {
                   ...Option,
-                  values: subOptions
-                }
-              ]
+                  values: subOptions,
+                },
+              ];
             }
           } else {
-            if (Option.label.toLowerCase().includes(searchValue.toLowerCase())) {
-              return [
-                ...sum,
-                Option,
-              ]
+            if (
+              Option.label.toLowerCase().includes(searchValue.toLowerCase())
+            ) {
+              return [...sum, Option];
             }
           }
           return sum;
@@ -440,31 +435,28 @@ class Select extends React.Component<SelectProps, any> {
   };
 
   public renderOption = ({
-    Option, 
-    Index, 
-    selectState: {activeOptions, size, colors}, 
+    Option,
+    Index,
+    selectState: { activeOptions, size, colors },
     child,
   }) => {
-    const {
-      value: SelectedValue,
-      focusedOptionIndex,
-    } = this.state;
+    const { value: SelectedValue, focusedOptionIndex } = this.state;
 
-    const getOptionBackground = (Index, Option) => {
+    const getOptionBackground = (index, option) => {
       let ActiveValues = [SelectedValue];
 
       if (activeOptions) {
         ActiveValues = activeOptions;
       }
 
-      if (Index === focusedOptionIndex) {
+      if (index === focusedOptionIndex) {
         return "highlight";
       }
 
       if (
         Array.prototype.find.call(
           ActiveValues,
-          Element => Element === Option.value
+          Element => Element === option.value
         )
       ) {
         return "accent";
@@ -479,10 +471,7 @@ class Select extends React.Component<SelectProps, any> {
         paddingY={4}
         paddingX={child ? 6 : 4}
         key={Option.label + "_" + Option.value + "_" + Index}
-        onMouseDown={this.handleValueSelect(
-          Option.label,
-          Option.value
-        )}
+        onMouseDown={this.handleValueSelect(Option.label, Option.value)}
         backgroundColor={getOptionBackground(Index, Option)}
         css={
           getOptionBackground(Index, Option) !== "accent"
@@ -507,8 +496,8 @@ class Select extends React.Component<SelectProps, any> {
           {Option.label}
         </Text>
       </View>
-    )
-  }
+    );
+  };
 
   public render() {
     const {
@@ -533,9 +522,7 @@ class Select extends React.Component<SelectProps, any> {
       ...props
     } = this.props;
 
-    const {
-      searchValue,
-    } = this.state;
+    const { searchValue } = this.state;
 
     const FilteredOptions = this.getFilteredOptions() || [];
     const isVisible = this.state.isFocused && !this.state.closeOverride;
@@ -646,18 +633,21 @@ class Select extends React.Component<SelectProps, any> {
                 <View marginTop={this.props.searchable ? 4 : 0}>
                   {FilteredOptions.map((Option, OptIndex) => {
                     if (Option.optgroup) {
-                      const CurrentOffset = FilteredOptions.reduce((Sum, OptGroup, CurrentIndex) => {
-                        if (OptIndex > CurrentIndex) {
-                          return Sum + OptGroup.values.length;
-                        }
-                        return Sum;
-                      }, 0);
-  
+                      const CurrentOffset = FilteredOptions.reduce(
+                        (Sum, OptGroup, CurrentIndex) => {
+                          if (OptIndex > CurrentIndex) {
+                            return Sum + OptGroup.values.length;
+                          }
+                          return Sum;
+                        },
+                        0
+                      );
+
                       return (
                         <View
                           width={"100%"}
                           key={`${Option.label}_${OptIndex}`}
-                        > 
+                        >
                           <View
                             width={"100%"}
                             paddingY={4}
@@ -667,18 +657,20 @@ class Select extends React.Component<SelectProps, any> {
                             <Text color="subtle">{Option.label}</Text>
                           </View>
                           <View>
-                            {Option.values.map((Option, Index) => this.renderOption({
-                              Option, 
-                              Index: Index + CurrentOffset, 
-                              selectState: { activeOptions, size, colors },
-                              child: true,
-                            }))}
+                            {Option.values.map((option, index) =>
+                              this.renderOption({
+                                Option: option,
+                                Index: index + CurrentOffset,
+                                selectState: { activeOptions, size, colors },
+                                child: true,
+                              })
+                            )}
                           </View>
                         </View>
                       );
                     } else {
                       return this.renderOption({
-                        Option, 
+                        Option,
                         Index: OptIndex,
                         selectState: { activeOptions, size, colors },
                         child: false,
