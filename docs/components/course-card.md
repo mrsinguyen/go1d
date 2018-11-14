@@ -1,7 +1,7 @@
 ---
-title: Course Slat
+title: Course Card
 status: ready
-releaseVersion: 0.0.3
+releaseVersion: 0.2.15
 ---
 
 ## Examples
