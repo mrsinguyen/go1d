@@ -112,3 +112,7 @@ export {
   CourseCardProps,
   default as CourseCard,
 } from "./components/CourseCard";
+export {
+  FeaturedTagProps,
+  default as FeaturedTag,
+} from "./components/FeaturedTag";
