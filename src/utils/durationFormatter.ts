@@ -1,5 +1,6 @@
 function formatDuration(minutes: number): string {
   let output = "";
+  let unit = "";
   if (minutes) {
     // In case a formatted string is passed in here
     if (isNaN(minutes)) {
@@ -7,15 +8,18 @@ function formatDuration(minutes: number): string {
     }
     if (minutes >= 1440) {
       const days = Math.floor(minutes / 1440);
-      output += days > 0 ? `${days} day ` : "";
+      unit = days > 1 ? "days" : "day";
+      output += days > 0 ? `${days} ${unit} ` : "";
       minutes %= 1440;
     }
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
-      output += hours > 0 ? `${hours} hr ` : "";
+      unit = hours > 1 ? "hrs" : "hr";
+      output += hours > 0 ? `${hours} ${unit} ` : "";
       minutes %= 60;
     }
-    output += minutes > 0 ? `${minutes} min` : "";
+    unit = minutes > 1 ? "mins" : "min";
+    output += minutes > 0 ? `${minutes} ${unit}` : "";
   }
   return output.trim();
 }
