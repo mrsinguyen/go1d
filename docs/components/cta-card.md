@@ -1,0 +1,38 @@
+---
+title: CTA Card
+status: ready
+releaseVersion: 0.2.18
+---
+
+## Examples
+
+An example use case of the GO1 Price Packaging on the website
+```.jsx
+<View padding={5} backgroundColor="soft">
+  <CTACard
+    iconImage="https://res.cloudinary.com/go1/image/upload/v1542240162/ojaevw3frdaiji5zzmf3.png"
+    subtitle="Up to 20 learners"
+    buttonText="Button"
+    buttonColor="accent"
+    description="<center><b>$25 flat</b> / month</center>"
+  />
+</View>
+```
+
+An example use case is Content provider Card on the GO1 Website
+```.jsx
+<View padding={5} backgroundColor="background">
+  <CTACard 
+    iconImage="https://res.cloudinary.com/go1/image/upload/v1542240162/ojaevw3frdaiji5zzmf3.png"
+    title="Pay per use"
+    backgroundColor="soft"
+    description="Sell your courses through the GO1 course marketplace directly to consumers.<br/><br/>You receive 70% of the purchase price from all sales."
+    buttonText="Button"
+  />
+</View>
+```
+
+
+```!jsx
+<ComponentDoc component="CTACard" />
+```

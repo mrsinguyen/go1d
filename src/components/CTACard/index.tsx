@@ -1,4 +1,5 @@
 import * as React from "react";
+import ButtonFilled from "../ButtonFilled";
 import Prose from "../Prose";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
@@ -9,7 +10,8 @@ export interface CTACardProps extends ViewProps {
   subtitle?: string;
   description?: string;
   buttonText?: string;
-  buttonColour?: string;
+  buttonColor?: string;
+  onActionClick?: ((evt: React.SyntheticEvent) => void);
 }
 
 const CTACard: React.SFC<CTACardProps> = ({
@@ -18,8 +20,9 @@ const CTACard: React.SFC<CTACardProps> = ({
   subtitle,
   description,
   buttonText,
-  buttonColour = "",
+  buttonColor = "background",
   backgroundColor = "background",
+  onActionClick,
   ...props
 }: CTACardProps) => (
   <View
@@ -27,9 +30,19 @@ const CTACard: React.SFC<CTACardProps> = ({
     borderRadius={3}
     backgroundColor={backgroundColor}
     maxWidth={385}
+    width="100%"
+    {...props}
   >
-    <View padding={4}>
-      {iconImage && <img width={60} src={iconImage} />}
+    <View
+      paddingY={6}
+      paddingX={3}
+      alignItems="center"
+      justifyContent="center"
+      minHeight={160}
+    >
+      {iconImage && (
+        <View paddingBottom={5} element="img" width={60} src={iconImage} />
+      )}
       {title && (
         <Text
           fontSize={4}
@@ -41,8 +54,8 @@ const CTACard: React.SFC<CTACardProps> = ({
         </Text>
       )}
     </View>
-    <View borderColor="faded" borderBottom={1} borderTop={1} paddingY={5}>
-      {subtitle && (
+    {subtitle && (
+      <View borderColor="faded" borderTop={1} paddingY={5}>
         <Text
           fontSize={4}
           css={{
@@ -51,9 +64,18 @@ const CTACard: React.SFC<CTACardProps> = ({
         >
           {subtitle}
         </Text>
+      </View>
+    )}
+    <View padding={7} borderColor="faded" borderTop={1}>
+      {description && <Prose HTML={description} />}
+    </View>
+    <View paddingTop={7} paddingBottom={6} paddingX={7}>
+      {buttonText && (
+        <ButtonFilled size="lg" onClick={onActionClick} justifyContent="center" color={buttonColor}>
+          {buttonText}
+        </ButtonFilled>
       )}
     </View>
-    <View>{description && <Prose HTML={description} />}</View>
   </View>
 );
 
