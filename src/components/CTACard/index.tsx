@@ -1,5 +1,4 @@
 import * as React from "react";
-import ButtonFilled from "../ButtonFilled";
 import Prose from "../Prose";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
@@ -9,9 +8,8 @@ export interface CTACardProps extends ViewProps {
   title?: string;
   subtitle?: string;
   description?: string;
-  buttonText?: string;
-  buttonColor?: string;
-  onActionClick?: ((evt: React.SyntheticEvent) => void);
+  button?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const CTACard: React.SFC<CTACardProps> = ({
@@ -19,10 +17,9 @@ const CTACard: React.SFC<CTACardProps> = ({
   title,
   subtitle,
   description,
-  buttonText,
-  buttonColor = "background",
+  button,
+  children,
   backgroundColor = "background",
-  onActionClick,
   ...props
 }: CTACardProps) => (
   <View
@@ -68,13 +65,10 @@ const CTACard: React.SFC<CTACardProps> = ({
     )}
     <View padding={7} borderColor="faded" borderTop={1}>
       {description && <Prose HTML={description} />}
+      {children}
     </View>
     <View paddingTop={7} paddingBottom={6} paddingX={7}>
-      {buttonText && (
-        <ButtonFilled size="lg" onClick={onActionClick} justifyContent="center" color={buttonColor}>
-          {buttonText}
-        </ButtonFilled>
-      )}
+      {button}
     </View>
   </View>
 );
