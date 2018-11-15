@@ -15,7 +15,11 @@ const Prose: React.SFC<ProseProps> = ({
   <Text
     fontSize={fontSize}
     lineHeight={lineHeight}
-    dangerouslySetInnerHTML={{ __html: SanitizeHTML(HTML) }}
+    dangerouslySetInnerHTML={{
+      __html: SanitizeHTML(HTML, {
+        allowedTags: SanitizeHTML.defaults.allowedTags.concat(["center"]),
+      }),
+    }}
     {...props}
   />
 );
