@@ -12,7 +12,7 @@ interface StandardProps extends ViewProps {
   slidesToShow?: number;
   gutter?: number;
   clickScrollAmount?: number; // Number of slides that move on next click
-  slideAnimationDuration?: 300;
+  slideAnimationDuration?: number;
 }
 
 interface BreakpointProps {
@@ -22,7 +22,7 @@ interface BreakpointProps {
 }
 
 export interface CarouselProps extends StandardProps {
-  Breakpoints?: BreakpointProps;
+  breakpoints?: BreakpointProps;
 }
 
 class Carousel extends React.Component<CarouselProps, any> {
