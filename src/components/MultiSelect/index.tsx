@@ -10,14 +10,19 @@ export interface MultiSelectProps extends SelectProps {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
+  defaultValue?: string[];
   label?: string | React.ReactChild;
 }
 
 class MultiSelect extends React.Component<MultiSelectProps, any> {
-  public state = {
-    Selected: [],
-    closeOnSelect: true,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      Selected: props.defaultValue || [],
+      closeOnSelect: true,
+    };  
+  }
 
   public handleChange = event => {
     const { onChange } = this.props;
