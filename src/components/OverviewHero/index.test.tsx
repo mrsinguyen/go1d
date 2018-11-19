@@ -26,3 +26,22 @@ it("renders without crashing with all props", () => {
     </OverviewHero>
   );
 });
+
+it("renders without children wrapper", () => {
+  render(
+    <OverviewHero
+      title={<h1>Title</h1>}
+      backgroundImage="example.jpg"
+      subtitle={<div>Subtitle</div>}
+      breadcrumb={<div>Subtitle</div>}
+      contentWidth="wide"
+      author="GO1 Team"
+      duration={4}
+      ctaCard={<div />}
+      childrenWrapper={false}
+      childrenWrapperCss={``}
+    >
+      <div>test content</div>
+    </OverviewHero>
+  );
+});

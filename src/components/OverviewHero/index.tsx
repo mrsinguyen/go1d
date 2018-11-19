@@ -8,7 +8,7 @@ import Text from "../Text";
 import View, { ViewProps } from "../View";
 
 export interface OverviewHeroProps extends ViewProps {
-  title: string;
+  title: string | React.ReactNode;
   subtitle?: React.ReactNode;
   backgroundImage?: string;
   breadcrumb?: React.ReactNode;
@@ -16,6 +16,8 @@ export interface OverviewHeroProps extends ViewProps {
   author?: React.ReactNode;
   duration?: number;
   ctaCard?: React.ReactNode;
+  childrenWrapper?: boolean;
+  childrenWrapperCss?: any;
 }
 
 const MobileDisplayBreak = "@media(max-width: 740px)";
@@ -32,6 +34,8 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
   ctaCard,
   css,
   color = "contrast",
+  childrenWrapper = true,
+  childrenWrapperCss,
   ...props
 }: OverviewHeroProps) => (
   <View flexDirection="column">
@@ -126,9 +130,13 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
             </View>
           )}
           <View marginY={2}>
-            <Text element="h1" fontSize={5}>
-              {title}
-            </Text>
+            {typeof title === "string" ? (
+              <Text element="h1" fontSize={5}>
+                {title}
+              </Text>
+            ) : (
+              title
+            )}
           </View>
           <Text fontSize={2}>{subtitle}</Text>
           <View flexDirection="row" marginTop={5} alignItems="center">
@@ -185,36 +193,41 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
           paddingLeft: foundations.spacing[5],
           paddingTop: foundations.spacing[3],
         },
+        ...childrenWrapperCss,
       }}
     >
-      <Container
-        contain={contentWidth ? contentWidth : "wide"}
-        paddingX={4}
-        flexDirection="row"
-        alignItems="flex-start"
-      >
-        <View
-          maxWidth={700}
-          width="calc(100% - 360px)"
-          css={{
-            [MobileDisplayBreak]: {
-              width: "100%",
-            },
-          }}
+      {childrenWrapper ? (
+        <Container
+          contain={contentWidth ? contentWidth : "wide"}
+          paddingX={4}
+          flexDirection="row"
+          alignItems="flex-start"
         >
           <View
-            maxWidth="calc(75vw - 360px)"
+            maxWidth={700}
+            width="calc(100% - 360px)"
             css={{
               [MobileDisplayBreak]: {
                 width: "100%",
-                maxWidth: "100%",
               },
             }}
           >
-            {children}
+            <View
+              maxWidth="calc(75vw - 360px)"
+              css={{
+                [MobileDisplayBreak]: {
+                  width: "100%",
+                  maxWidth: "100%",
+                },
+              }}
+            >
+              {children}
+            </View>
           </View>
-        </View>
-      </Container>
+        </Container>
+      ) : (
+        children
+      )}
     </View>
   </View>
 );

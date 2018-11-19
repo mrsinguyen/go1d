@@ -21,7 +21,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
     this.state = {
       Selected: props.defaultValue || [],
       closeOnSelect: true,
-    };  
+    };
   }
 
   public handleChange = event => {

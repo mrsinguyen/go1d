@@ -17,6 +17,7 @@ it("renders without crashing with all available props", () => {
       dislikes={20}
       enrolled={1000}
       ctaButton={<ButtonFilled>Test</ButtonFilled>}
+      metaData={<div>Foo</div>}
     >
       <div>Test content</div>
     </OverviewCtaCard>
