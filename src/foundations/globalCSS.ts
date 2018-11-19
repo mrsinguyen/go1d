@@ -1,19 +1,28 @@
 import { injectGlobal } from "emotion";
-import { load as loadWebFont } from "webfontloader";
+import * as FontFaceObserver from "fontfaceobserver";
 import { type } from "./index";
+
+const isServer =
+  typeof window === "undefined" || typeof document === "undefined";
 
 export function globalCSS() {
   fontCSS();
   resetCSS();
 }
 
-export function fontCSS(config = {}) {
-  loadWebFont({
-    google: {
-      families: ["Muli:400,400i,600,700"],
-    },
-    ...config,
-  });
+export function fontCSS() {
+  if (isServer) {
+    return;
+  }
+
+  const link = document.createElement("link");
+  link.href = "https://fonts.googleapis.com/css?family=Muli:400,400i,600,700";
+  link.rel = "stylesheet";
+
+  document.head.appendChild(link);
+
+  const muli = new FontFaceObserver("Muli");
+  return muli.load();
 }
 
 export function resetCSS() {
