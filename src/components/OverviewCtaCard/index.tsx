@@ -19,6 +19,7 @@ export interface OverviewCtaCardProps extends ViewProps {
     title: string;
     onClick: ((evt: React.SyntheticEvent) => void);
   }>;
+  metaData?: React.ReactNode;
 }
 
 const MobileDisplayBreak = "@media(max-width: 740px)";
@@ -55,6 +56,7 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
   likes = 0,
   dislikes = 0,
   enrolled = 0,
+  metaData,
   ctaButton,
   actions,
   breadcrumb,
@@ -191,6 +193,7 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
           <Text fontSize={2}>{enrolled} enrolled</Text>
         </View>
       )}
+      {metaData}
       <View
         borderBottom={1}
         borderColor="soft"

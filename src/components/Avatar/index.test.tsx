@@ -11,7 +11,7 @@ it("renders without crashing", () => {
 });
 
 it("renders initials when no url is given", () => {
-  const wrapper = render(<Avatar fullName="first last" />);
+  const wrapper = render(<Avatar fullName="first last" iconName="User" />);
   expect(wrapper.container.children.length).toBe(1);
   expect(wrapper.container.children[0].children.length).toBe(1);
   expect(wrapper.container.children[0].children[0].tagName).toBe("SPAN");

@@ -8,12 +8,14 @@ export interface AvatarProps extends ViewProps {
   fullName?: string;
   size?: number;
   src?: string;
+  iconName?: string;
 }
 
 const Avatar: React.SFC<AvatarProps> = ({
   src,
   fullName,
   size = 6,
+  iconName = "User",
   ...props
 }: AvatarProps) => {
   const names = `${fullName}`.split(" ");
@@ -65,7 +67,7 @@ const Avatar: React.SFC<AvatarProps> = ({
           ) : (
             <View alignItems="center">
               <Icon
-                name="User"
+                name={iconName}
                 size={constrainedSize <= 3 ? 1 : constrainedSize - 1}
                 color="subtle"
               />
