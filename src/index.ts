@@ -1,4 +1,5 @@
 export { default as foundations, generateTheme } from "./foundations";
+export { globalCSS, fontCSS, resetCSS } from "./foundations/globalCSS";
 
 export { default as Theme } from "./components/Theme";
 export { default as Base, BaseProps } from "./components/Base";

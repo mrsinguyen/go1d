@@ -5,17 +5,19 @@ import {
   ScopeProvider,
 } from "@compositor/x0/components";
 import { Flipflop } from "libreact/lib/Flipflop";
-import { css } from "emotion";
 import { Provider as RebassProvider } from "rebass";
 import { Link } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 import * as systemScope from "../src";
 import * as docsScope from "./_src/components";
 import foundations from "../src/foundations";
+import { globalCSS } from "../src/foundations/globalCSS";
 import SidebarLayout from "./_src/components/SidebarLayout";
 import RoutesContext from "./_src/components/RoutesProvider";
 import Provider from "../src/components/Provider";
 import Theme from "../src/components/Theme";
+
+globalCSS();
 
 const navOrder = ["", "/foundations", "/components", "/patterns"];
 
