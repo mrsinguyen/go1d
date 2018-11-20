@@ -54,6 +54,18 @@ A component that displays a list of media items.
 </MediaList>
 ```
 
+### MediaList without full props and custom spacing
+```.jsx
+<MediaList marginBottom="50">
+    <Media image="https://i.imgur.com/Ee55uvc.jpg" imageSize="6" scaleSize="2" title="Media Item 1" titleSize="3" subTitle="Media sub title 1" subTitleSize="3" subTitleMarginTop="8" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."descriptionMarginTop="8"></Media>
+    <Media image="https://i.imgur.com/Ee55uvc.jpg" imageSize="6" scaleSize="2" title="Media Item 2" titleSize="3" subTitle="Media sub title 2" subTitleSize="3" subTitleMarginTop="8" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." descriptionMarginTop="8"></Media>
+    <Media image="https://i.imgur.com/Ee55uvc.jpg" imageSize="6" scaleSize="2" title="Media Item 3" titleSize="3" subTitle="Media sub title 3" subTitleSize="3" subTitleMarginTop="8" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." descriptionMarginTop="8"></Media>
+    <Media image="https://i.imgur.com/Ee55uvc.jpg" imageSize="6" scaleSize="2" title="Media Item 4" titleSize="3" subTitle="Media sub title 4" subTitleSize="3" subTitleMarginTop="8" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." descriptionMarginTop="8"></Media>
+    <Media image="https://i.imgur.com/Ee55uvc.jpg" imageSize="6" scaleSize="2" title="Media Item 5" titleSize="3" subTitle="Media sub title 5" subTitleSize="3" subTitleMarginTop="8" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." descriptionMarginTop="8"></Media>
+    <Media image="https://i.imgur.com/Ee55uvc.jpg" imageSize="6" scaleSize="2" title="Media Item 5" titleSize="3" subTitle="Media sub title 6" subTitleSize="3" subTitleMarginTop="8" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." descriptionMarginTop="8"></Media>
+</MediaList>
+```
+
 ### Props for MediaList
 ```!jsx
 <ComponentDoc component="MediaListProps" />
