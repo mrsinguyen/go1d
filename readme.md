@@ -1,11 +1,11 @@
 # GO1D [![build status](https://code.go1.com.au/apps/GO1D/badges/master/build.svg)](https://code.go1.com.au/apps/GO1D/commits/master) [![coverage report](https://code.go1.com.au/apps/GO1D/badges/master/coverage.svg)](https://code.go1.com.au/apps/GO1D/commits/master)
 
 ## Overview
-Go1 Design System 
+GO1 Design System
 
 ## Maintainers
 * Luke Brooker (luke.brooker@go1.com)
-* Stephen Mudra (stephen.mudra@go1.com) 
+* Stephen Mudra (stephen.mudra@go1.com)
 
 ## INSTALLATION
 ```sh
@@ -14,7 +14,7 @@ yarn install
 ```
 
 ### USING GO1D IN A REACT PROJECT
-To get go1d components and styling in your react project, do the following 
+To get GO1D components and styling in your react project, do the following
 
 * If you are using yarn:
 ```sh
@@ -53,12 +53,12 @@ Now open a new tab in Chrome and go to `about:inspect`
 ### Setup
 - Clone both repos. This assumes they are in the same directory
 - install dependencies of both in their repos via yarn or npm
-- in GO1D repo run `yarn run npm:dev` 
+- in GO1D repo run `yarn run npm:dev`
 - in another tab run inside content loader folder `npm link ../GO1D/build` (On Windows you might need to stop yarn in GO1D depo, you also have to relink every time you used yarn to add or update a package)
 - inside content loader run `yarn start`
 
 ### Starting
-- in GO1D repo run `yarn run npm:dev` 
+- in GO1D repo run `yarn run npm:dev`
 - inside content loader run `yarn start`
 
 
