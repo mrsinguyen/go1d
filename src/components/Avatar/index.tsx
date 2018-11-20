@@ -7,6 +7,7 @@ import View, { ViewProps } from "../View";
 export interface AvatarProps extends ViewProps {
   fullName?: string;
   size?: number;
+  scaleSize?: number;
   src?: string;
   iconName?: string;
 }
@@ -15,6 +16,7 @@ const Avatar: React.SFC<AvatarProps> = ({
   src,
   fullName,
   size = 6,
+  scaleSize = 1,
   iconName = "User",
   ...props
 }: AvatarProps) => {
@@ -44,8 +46,12 @@ const Avatar: React.SFC<AvatarProps> = ({
               (acc, bpKey) => ({
                 ...acc,
                 [breakpoints[bpKey]]: {
-                  width: type.scale[bpKey][logoSize] || type.scale[bpKey][1],
-                  height: type.scale[bpKey][logoSize] || type.scale[bpKey][1],
+                  width:
+                    scaleSize *
+                    (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
+                  height:
+                    scaleSize *
+                    (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
                 },
               }),
               {}
@@ -90,9 +96,11 @@ const Avatar: React.SFC<AvatarProps> = ({
                     ...acc,
                     [breakpoints[bpKey]]: {
                       width:
-                        type.scale[bpKey][logoSize] || type.scale[bpKey][1],
+                        scaleSize *
+                        (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
                       height:
-                        type.scale[bpKey][logoSize] || type.scale[bpKey][1],
+                        scaleSize *
+                        (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
                     },
                   }),
                   {}
