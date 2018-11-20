@@ -9,9 +9,17 @@ export interface MediaProps extends ViewProps {
   imageSize?: number;
   scaleSize?: number;
   iconName?: string;
+
   title?: string;
+  titleSize?: number;
+
   subTitle?: string;
+  subTitleSize?: number;
+  subTitleMarginTop?: number;
+
   description?: string;
+  descriptionSize?: number;
+  descriptionMarginTop?: number;
 }
 
 const Media: React.SFC<MediaProps> = ({
@@ -19,23 +27,24 @@ const Media: React.SFC<MediaProps> = ({
   imageSize,
   scaleSize,
   iconName,
+
   title,
+  titleSize,
+
   subTitle,
+  subTitleSize,
+  subTitleMarginTop,
+
   description,
+  descriptionSize,
+  descriptionMarginTop,
+
   children,
   fontSize = 2,
-  marginBottom = 5,
-  paddingY = fontSize < 3 ? fontSize + 1 : 4,
-  paddingX = 0,
   color,
   ...props
 }: MediaProps) => (
-  <View
-    color={color}
-    fontSize={fontSize}
-    marginBottom={marginBottom}
-    {...props}
-  >
+  <View color={color} fontSize={fontSize} {...props}>
     <View flexDirection="row" alignItems="center">
       {(image || title) && (
         <View paddingRight={5}>
@@ -52,21 +61,27 @@ const Media: React.SFC<MediaProps> = ({
       <View flexGrow={1} flexShrink={1}>
         {title && (
           <View>
-            <Text fontSize={3} fontWeight="semibold">
+            <Text fontSize={titleSize || fontSize} fontWeight="semibold">
               {title}
             </Text>
           </View>
         )}
 
         {subTitle && (
-          <View marginTop={2}>
-            <Text color="muted">{subTitle}</Text>
+          <View marginTop={subTitleMarginTop || 2}>
+            <Text
+              color="muted"
+              fontWeight="semibold"
+              fontSize={subTitleSize || fontSize}
+            >
+              {subTitle}
+            </Text>
           </View>
         )}
 
         {description && (
-          <View marginTop={2}>
-            <Text>{description}</Text>
+          <View marginTop={descriptionMarginTop || 2}>
+            <Text fontSize={descriptionSize || fontSize}>{description}</Text>
           </View>
         )}
 
