@@ -101,18 +101,15 @@ class Carousel extends React.Component<CarouselProps, any> {
   public handleScrollFinished = () => {
     if (this.slideRefs.length > 0) {
       // Set the CurrentSlide when the user is finished scrolling
-      const { gutter } = this.props;
-
       const Slider: any = this.sliderContainerRef.current;
-      const SliderScroll = Slider.scrollLeft + foundations.spacing[gutter];
+      const SliderScroll = Slider.scrollLeft;
 
-      let Selected = this.slideRefs.findIndex((Ref, Index) => {
-        // WARNING - INDEXED FROM 1
+      let Selected = this.slideRefs.findIndex(Ref => {
         const CurrentRef = Ref.current;
 
         if (
-          SliderScroll <= CurrentRef.offsetLeft &&
-          SliderScroll < SliderScroll + CurrentRef.offsetWidth
+          SliderScroll >= CurrentRef.offsetLeft &&
+          SliderScroll < CurrentRef.offsetLeft + CurrentRef.offsetWidth
         ) {
           return true;
         }
@@ -120,8 +117,8 @@ class Carousel extends React.Component<CarouselProps, any> {
         return false;
       });
 
-      if (Selected < 1) {
-        Selected = 1;
+      if (Selected < 0) {
+        Selected = 0;
       }
 
       let FinishedScrolling = false;
@@ -136,7 +133,7 @@ class Carousel extends React.Component<CarouselProps, any> {
         FinishedScrolling = true;
       }
 
-      const CurrentSlide = this.slideRefs[Selected - 1].current;
+      const CurrentSlide = this.slideRefs[Selected].current;
 
       if (CurrentSlide.offsetLeft < SliderScroll && !FinishedScrolling) {
         // Snap to a start position
@@ -144,14 +141,14 @@ class Carousel extends React.Component<CarouselProps, any> {
           CurrentSlide.offsetLeft + CurrentSlide.offsetWidth / 2 <
           SliderScroll
         ) {
-          this.scrollToIndex(Selected)();
+          this.scrollToIndex(Selected + 1)();
         } else {
-          this.scrollToIndex(Selected - 1)();
+          this.scrollToIndex(Selected)();
         }
       }
 
       this.setState({
-        currentSlide: Selected - 1,
+        currentSlide: Selected,
         finishedScrolling: FinishedScrolling,
       });
     }
@@ -236,7 +233,7 @@ class Carousel extends React.Component<CarouselProps, any> {
               <View
                 innerRef={SlideRef}
                 maxWidth={`${100 / slidesToShow}%`}
-                paddingX={foundations.spacing[gutter]}
+                paddingX={foundations.spacing[gutter] / 2}
                 marginY={1}
                 css={{
                   ":first-child": {

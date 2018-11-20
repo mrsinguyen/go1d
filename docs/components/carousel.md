@@ -15,28 +15,62 @@ Note that Breakpoints are controlled by the width of their parent component not 
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#7732bb",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#047cc0",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#e3bc13",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
+    backgroundColor: "#db7c00",
+  }} />
+</Carousel>
+```
+
+### Full Width ones
+```.jsx
+<Carousel width={800}>
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 900,
+    backgroundColor: "#7732bb",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 900,
+    backgroundColor: "#047cc0",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 900,
+    backgroundColor: "#e3bc13",
+  }} />
+  <View css={{
+    height: 200,
+    minWidth: 150,
+    maxWidth: '100%',
+    width: 900,
     backgroundColor: "#db7c00",
   }} />
 </Carousel>
@@ -59,28 +93,28 @@ Note that Breakpoints are controlled by the width of their parent component not 
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#7732bb",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#047cc0",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#e3bc13",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#db7c00",
   }} />
 </Carousel>
@@ -93,28 +127,28 @@ Note that Breakpoints are controlled by the width of their parent component not 
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#7732bb",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#047cc0",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#e3bc13",
   }} />
   <View css={{
     height: 200,
     minWidth: 150,
     maxWidth: '100%',
-    width: 400,
+    width: 425,
     backgroundColor: "#db7c00",
   }} />
 </Carousel>
