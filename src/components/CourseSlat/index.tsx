@@ -123,6 +123,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
             {title && (
               <Text
                 fontSize={3}
+                fontWeight="semibold"
                 css={{
                   marginBottom: 8,
                   overflow: "hidden",
@@ -134,6 +135,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     display: "-webkit-box",
+                    fontSize: foundations.type.scale["sm"][2],
                   },
                 }}
               >
@@ -141,7 +143,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
               </Text>
             )}
             {(duration || author) && (
-              <View flexDirection="row" marginBottom={3}>
+              <View flexDirection="row" marginBottom={3} flexWrap="wrap">
                 {author && (
                   <View paddingRight={5}>
                     {typeof author === "string" ? (
