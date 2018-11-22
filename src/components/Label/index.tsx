@@ -42,9 +42,9 @@ const Label: React.SFC<LabelProps> = ({
           <Text
             fontSize={1}
             color={statusColor}
+            fontWeight="semibold"
             css={{ 
               textTransform: "uppercase",
-              fontWeight: 600,
             }}
           >
             {statusText}
