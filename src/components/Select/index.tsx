@@ -543,11 +543,17 @@ class Select extends React.Component<SelectProps, any> {
               paddingX={4}
               boxShadow={this.state.isFocused ? "strong" : "soft"}
               backgroundColor={backgroundColor}
+              border={1}
+              borderColor={
+                backgroundColor
+                  ? backgroundColor
+                  : this.state.isFocused
+                    ? colors.accent
+                    : colors.soft
+              }
               onMouseDown={this.onMenuMouseDown}
               {...props}
               css={{
-                border: "1px solid",
-                borderColor: this.state.isFocused ? colors.accent : colors.soft,
                 ...((css as object) || {}),
               }}
             >
