@@ -26,7 +26,7 @@ const Label: React.SFC<LabelProps> = ({
       paddingBottom={2}
       {...props}
     >
-      <Text element="label" fontWeight="semibold" htmlFor={htmlFor}>
+      <Text element="label" fontWeight="semibold" color="default" htmlFor={htmlFor}>
         {children}
       </Text>
       {statusText && (
@@ -42,7 +42,10 @@ const Label: React.SFC<LabelProps> = ({
           <Text
             fontSize={1}
             color={statusColor}
-            css={{ textTransform: "uppercase" }}
+            css={{ 
+              textTransform: "uppercase",
+              fontWeight: 600,
+            }}
           >
             {statusText}
           </Text>

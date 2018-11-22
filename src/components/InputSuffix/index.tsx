@@ -41,9 +41,14 @@ class InputSuffix extends React.Component<InputSuffixProps, any> {
           css={{
             borderTopRightRadius: "4px",
             borderBottomRightRadius: "4px",
+            fontWeight: 600,
           }}
         >
-          {suffixValue}
+          <View 
+            marginTop={1}
+          >
+            {suffixValue}
+          </View>
         </View>
       </View>
     );
