@@ -51,7 +51,7 @@ const FeaturedTag: React.SFC<FeaturedTagProps> = ({
         onClick={onClick}
         boxShadow="crisp"
         type={type}
-        width={get({ lg: 256, md: 256, sm: 175 }, size)}
+        width={get({ lg: 256, md: 256, sm: 176 }, size)}
         css={{
           ...(css as object),
           ...backgroundStyles(colors, passive),
@@ -69,7 +69,7 @@ const FeaturedTag: React.SFC<FeaturedTagProps> = ({
         <Text
           lineHeight="ui"
           fontWeight={"semibold"}
-          fontSize={get({ lg: 3, md: 3, sm: 2 }, size)}
+          fontSize={get({ lg: 2, md: 2, sm: 2 }, size)}
           color="inherit"
           css={{
             textAlign: "center",

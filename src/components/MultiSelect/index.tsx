@@ -88,6 +88,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
       options,
       label,
       id = `MultiSelect_${Math.random()}`,
+      defaultText = "Please Select",
       ...props
     } = this.props;
     const { closeOnSelect } = this.state;
@@ -116,7 +117,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
         );
       }
 
-      return "Please Select";
+      return defaultText;
     };
 
     return (
