@@ -135,7 +135,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     display: "-webkit-box",
-                    fontSize: foundations.type.scale["sm"][2],
+                    fontSize: foundations.type.scale.sm[2],
                   },
                 }}
               >
