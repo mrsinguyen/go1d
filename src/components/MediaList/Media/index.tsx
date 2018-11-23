@@ -48,13 +48,26 @@ const Media: React.SFC<MediaProps> = ({
     <View flexDirection="row" alignItems="center">
       {(image || title) && (
         <View paddingRight={5}>
-          <Avatar
-            src={image}
-            size={imageSize}
-            scaleSize={scaleSize}
-            fullName={title}
-            iconName={iconName}
-          />
+          {image && (
+            <Avatar
+              src={image}
+              size={imageSize}
+              scaleSize={scaleSize}
+              fullName={title}
+              iconName={iconName}
+              backgroundColor="transparent"
+            />
+          )}
+
+          {!image && (
+            <Avatar
+              src={image}
+              size={imageSize}
+              scaleSize={scaleSize}
+              fullName={title}
+              iconName={iconName}
+            />
+          )}
         </View>
       )}
 
