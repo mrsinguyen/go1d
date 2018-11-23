@@ -104,7 +104,11 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                   left: 10,
                 }}
               >
-                {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
+                {typeIcon && (
+                  <View paddingRight={2}>
+                    <Icon name={typeIcon} />
+                  </View>
+                )}
                 {type && (
                   <Text color="background" fontSize={1}>
                     {type.toUpperCase()}
@@ -145,7 +149,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
             {(duration || author) && (
               <View flexDirection="row" marginBottom={3} flexWrap="wrap">
                 {author && (
-                  <View paddingRight={5}>
+                  <View paddingRight={3}>
                     {typeof author === "string" ? (
                       <Text color="subtle" fontSize={1}>
                         {author}
@@ -160,7 +164,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                     <Icon
                       name="Clock"
                       size={1}
-                      color="subtle"
+                      color="muted"
                       marginRight={2}
                       marginTop={1}
                     />

@@ -34,7 +34,7 @@ const Sizes = {
     fontSize: 1,
   },
   md: {
-    paddingY: 4,
+    paddingY: 3,
     fontSize: 2,
   },
   lg: {
