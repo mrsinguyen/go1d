@@ -77,6 +77,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
               position: "relative",
               height: 142,
               width: 221,
+              maxWidth: "100%",
             }}
           >
             {!courseImage && (
