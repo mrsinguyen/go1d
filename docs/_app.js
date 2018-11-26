@@ -60,7 +60,7 @@ const App = ({ routes, ...props }) => (
           theme={{
             fonts: {
               sans: foundations.type.family.sansSerif,
-              mono: foundations.type.family.code,
+              mono: foundations.type.family.mono,
             },
             fontSizes: foundations.type.scale.lg,
             fontWeights: foundations.type.weight,
