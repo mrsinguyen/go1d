@@ -31,21 +31,21 @@ export interface BaseProps {
 }
 
 const styleReset: Interpolation = {
-  // margin: 0,
-  // padding: 0,
-  // textDecoration: "none",
-  // color: "inherit",
-  // border: "none",
-  // textAlign: "inherit",
-  // fontWeight: "inherit",
-  // fontFamily: "inherit",
-  // WebkitFontSmoothing: "antialiased",
-  // MozOsxFontSmoothing: "grayscale",
-  // textSizeAdjust: "100%",
-  // textRendering: "optimizeLegibility",
-  // appearance: "none",
-  // boxSizing: "border-box",
-  // outline: 0,
+  margin: 0,
+  padding: 0,
+  textDecoration: "none",
+  color: "inherit",
+  border: "none",
+  textAlign: "inherit",
+  fontWeight: "inherit",
+  fontFamily: "inherit",
+  WebkitFontSmoothing: "antialiased",
+  MozOsxFontSmoothing: "grayscale",
+  textSizeAdjust: "100%",
+  textRendering: "optimizeLegibility",
+  appearance: "none",
+  boxSizing: "border-box",
+  outline: 0,
 };
 
 const Base: React.SFC<BaseProps> = ({
@@ -60,7 +60,7 @@ const Base: React.SFC<BaseProps> = ({
   paddingRight = paddingX,
   paddingLeft = paddingX,
   // Reset margins by default
-  margin,
+  margin = 0,
   marginX = margin,
   marginY = margin,
   marginTop = marginY,
