@@ -78,7 +78,7 @@ const View: React.SFC<ViewProps> = ({
   overflow,
   opacity,
   borderColor,
-  border = 0,
+  border,
   borderTop = border,
   borderRight = border,
   borderBottom = border,

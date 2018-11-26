@@ -8,7 +8,11 @@ lead: GO1D uses colors purposefully to communicate how things function in the in
 
 Our accent blue is used extensively throughout GO1 to guide the user by highlighting the most important functionality. The accent colour is also the colour that is replaced through theming.
 
-<small>Note: Our current accent colour has accessibility issues. We are working to amend this but in the meantime, add text shadows when necessary to ameliorate the problem.</small>
+```!jsx
+<Banner type="warning">
+Note: Our current accent colour has accessibility issues. We are working to amend this but in the meantime, add text shadows when necessary to ameliorate the problem.
+</Banner>
+```
 
 ```!jsx
 <Colors colors={["accent"]} />

@@ -41,9 +41,16 @@ to translate the `href` prop to `to`
 ReactDOM.render(<Provider linkComponent={Link}><App /></Provider>, domNode);
 ```
 
-### Main Components
+### Using Components
 With GO1D you wont need to write much CSS if any at all as all the customisation is controlled via props on the components. 
+The props on the components will ensure consistent spacing, sizing and colours across all GO1 Applications.
 
-The most fundamental component for building a UI is the View Component.
+#### [View](components/view)
+The most fundamental component for building a UI is the View Component. The View component uses flex box to define the layout.
 
-All Text should be wrapped in a Text Component
+#### [Text](components/text)
+All Text should be wrapped in a Text Component. The Text component handles font and includes some responsive capabilities out of the box.
+
+#### [Colors](foundations/colors)
+When specifying colors in GO1D components use the names listed on the Colors page. 
+This will ensure all colours are consistent across GO1 Applications as well as any tweaks or changes update everywhere.
