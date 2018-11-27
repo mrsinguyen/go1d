@@ -131,14 +131,16 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
           )}
           <View marginY={2}>
             {typeof title === "string" ? (
-              <Text element="h1" fontSize={5}>
+              <Text element="h1" fontSize={6} fontWeight="bold">
                 {title}
               </Text>
             ) : (
               title
             )}
           </View>
-          <Text fontSize={2}>{subtitle}</Text>
+          <Text fontSize={3} fontWeight="semibold">
+            {subtitle}
+          </Text>
           <View flexDirection="row" marginTop={5} alignItems="center">
             {author && (
               <View flexDirection="row" alignItems="center" marginRight={5}>
@@ -161,6 +163,7 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
           flexGrow={1}
           mode="light"
           justifyContent="flex-start"
+          alignItems="flex-end"
           css={{
             position: "relative",
             background: "transparent",
