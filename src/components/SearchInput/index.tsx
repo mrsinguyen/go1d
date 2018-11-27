@@ -36,6 +36,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     const Key = event.key;
     switch (Key) {
       case "Enter":
+        event.target.blur();
         safeInvoke(onSubmit, this.state.value, event);
         event.preventDefault();
         break;
