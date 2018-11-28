@@ -9,6 +9,8 @@ export interface LinkProps {
   css?: any;
   href: any;
   hoverFocusColor?: string;
+  // Allow for custom link props
+  [key: string]: any;
 }
 
 const Link = ({
