@@ -189,8 +189,8 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
     <View paddingX={5} paddingTop={0} paddingBottom={5}>
       {enrolled > 0 && (
         <View marginY={3} flexDirection="row" alignItems="center">
-          <Avatar size={2} marginRight={2} backgroundColor="highlight" />
-          <Text fontSize={2}>{enrolled} enrolled</Text>
+          <Avatar size={3} marginRight={3} backgroundColor="faded" />
+          <Text fontSize={2} color="subtle">{enrolled} enrolled</Text>
         </View>
       )}
       {metaData}
