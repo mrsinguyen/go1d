@@ -143,16 +143,16 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
           </Text>
           <View flexDirection="row" marginTop={5} alignItems="center">
             {author && (
-              <View flexDirection="row" alignItems="center" marginRight={5}>
-                <Text fontSize={3} color="default">
+              <View flexDirection="row" alignItems="center" marginRight={7}>
+                <Text fontWeight="semibold" fontSize={3} color="contrast">
                   {author}
                 </Text>
               </View>
             )}
             {duration && (
               <View flexDirection="row" alignItems="center">
-                <Icon name="Clock" color="subtle" marginRight={3} />
-                <Text fontSize={3} color="default">
+                <Icon name="Clock" color="default" marginRight={3} />
+                <Text fontWeight="semibold" fontSize={3} color="contrast">
                   {formatDuration(duration)}
                 </Text>
               </View>

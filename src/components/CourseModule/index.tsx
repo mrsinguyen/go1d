@@ -43,30 +43,32 @@ class CourseModule extends React.Component<CourseModuleProps, any> {
     const { isOpen } = this.state;
 
     return (
-      <View {...props}>
+      <View paddingX={4} {...props}>
         <View flexDirection="row" justifyContent="space-between">
-          <Text fontSize={4} fontWeight="semibold">
+          <Text fontSize={3} fontWeight="semibold">
             {title}
           </Text>
           <View flexDirection="row" alignItems="center">
             {duration && (
               <View flexDirection="row" alignItems="center">
-                <Icon size={3} color="subtle" paddingRight={3} name="Clock" />
-                <Text fontSize={2} css={{ textTransform: "uppercase" }}>
+                <View paddingRight={2} >
+                  <Icon size={1} color="muted" name="Clock" />
+                </View>
+                <Text fontSize={2}>
                   {formatDuration(duration)}
                 </Text>
               </View>
             )}
             {collapsible && (
               <View
-                marginLeft={6}
+                marginLeft={4}
                 onClick={this.toggleHidden}
                 data-testid="ToggleButton"
                 css={{
                   cursor: "pointer",
                 }}
               >
-                <Icon size={3} name={isOpen ? "ChevronUp" : "ChevronDown"} />
+                <Icon color="subtle" size={1} name={isOpen ? "ChevronUp" : "ChevronDown"} />
               </View>
             )}
           </View>

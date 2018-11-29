@@ -5,6 +5,7 @@ import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
+import foundations from "../../foundations";
 
 export interface LessonProps extends ViewProps {
   title?: string;
@@ -47,17 +48,17 @@ const Lesson: React.SFC<LessonProps> = ({
         }}
         {...props}
       >
-        <View paddingY={5} paddingLeft={5}>
+        <View paddingY={5} justifyContent="center">
           {type && (
             <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />
           )}
         </View>
-        <View paddingY={4} paddingX={4}>
+        <View paddingY={5} paddingX={4}>
           {title && (
             <Text
               fontSize={2}
               css={{
-                marginBottom: 5,
+                marginBottom: foundations.spacing[1],
               }}
             >
               {title}
@@ -66,6 +67,7 @@ const Lesson: React.SFC<LessonProps> = ({
           <Text
             color="subtle"
             fontSize={1}
+            fontWeight="semibold"
             css={{ textTransform: "uppercase" }}
           >
             {type}

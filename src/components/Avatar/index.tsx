@@ -66,7 +66,7 @@ const Avatar: React.SFC<AvatarProps> = ({
             <Text
               color={props.color || "subtle"}
               css={{ textTransform: "uppercase" }}
-              fontSize={constrainedSize <= 3 ? 1 : constrainedSize - 1}
+              fontSize={constrainedSize <= 2 ? 1 : constrainedSize - 1}
             >
               {displayName}
             </Text>
@@ -74,7 +74,7 @@ const Avatar: React.SFC<AvatarProps> = ({
             <View alignItems="center">
               <Icon
                 name={iconName}
-                size={constrainedSize <= 3 ? 1 : constrainedSize - 1}
+                size={constrainedSize <= 2 ? 1 : constrainedSize - 1}
                 color="subtle"
               />
             </View>
