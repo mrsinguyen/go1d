@@ -1,11 +1,11 @@
 import * as React from "react";
 
+import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
-import foundations from "../../foundations";
 
 export interface LessonProps extends ViewProps {
   title?: string;
