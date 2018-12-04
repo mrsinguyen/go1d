@@ -56,6 +56,7 @@ export { default as List } from "./List";
 export { default as Lock } from "./Lock";
 export { default as Logout } from "./Logout";
 export { default as Lti } from "./Lti";
+export { default as Mail } from "./Mail";
 export { default as Map } from "./Map";
 export { default as MapPin } from "./MapPin";
 export { default as Mastercard } from "./Mastercard";
