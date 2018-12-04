@@ -51,12 +51,10 @@ class CourseModule extends React.Component<CourseModuleProps, any> {
           <View flexDirection="row" alignItems="center">
             {duration && (
               <View flexDirection="row" alignItems="center">
-                <View paddingRight={2} >
+                <View paddingRight={2}>
                   <Icon size={1} color="muted" name="Clock" />
                 </View>
-                <Text fontSize={2}>
-                  {formatDuration(duration)}
-                </Text>
+                <Text fontSize={2}>{formatDuration(duration)}</Text>
               </View>
             )}
             {collapsible && (
@@ -68,7 +66,11 @@ class CourseModule extends React.Component<CourseModuleProps, any> {
                   cursor: "pointer",
                 }}
               >
-                <Icon color="subtle" size={1} name={isOpen ? "ChevronUp" : "ChevronDown"} />
+                <Icon
+                  color="subtle"
+                  size={1}
+                  name={isOpen ? "ChevronUp" : "ChevronDown"}
+                />
               </View>
             )}
           </View>
