@@ -12,7 +12,8 @@ releaseVersion: 0.0.3
   title="Master sourdough in a week" 
   description="Despite general improvements in workplace health and safety over the past the risk of sourdough related injuries are still insurmountable for most"
   author="Bob Bobberson"
-  time="1 hr"
+  authorAvatar="http://lorempixel.com/48/48/people"
+  duration="60"
   type="Course"
   typeIcon="Course"
 />
@@ -22,7 +23,7 @@ releaseVersion: 0.0.3
   title="Master sourdough in a week" 
   description="Despite general improvements in workplace health and safety over the past the risk of sourdough related injuries are still insurmountable for most"
   author="Bob Bobberson"
-  time="4 mins"
+  duration="4"
   actionRender={() => (
       <View flexDirection="row">
       <Icon name="Import" marginRight={3} color="accent" />
