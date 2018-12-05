@@ -10,7 +10,7 @@ All text in our apps should be wrapped in a Text component.
 Try out the props below.
 
 ```.jsx
-<Prose HTML="<b>This is bold text</b>" />
+<Prose HTML="<h2>Heading 2</h2><b>This is bold text</b>" />
 ```
 
 Does not allow banned tags such as script
