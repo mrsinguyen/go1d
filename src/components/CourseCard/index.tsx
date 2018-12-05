@@ -75,7 +75,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
               backgroundImage: courseImage ? `url(${courseImage})` : undefined,
               backgroundSize: "cover",
               position: "relative",
-              height: 142,
+              height: 128,
               width: 221,
               maxWidth: "100%",
             }}
@@ -117,7 +117,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
             <View
               flexDirection="row"
               justifyContent="space-between"
-              paddingBottom={3}
+              paddingBottom={2}
             >
               {title && (
                 <Text
@@ -167,18 +167,18 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                 )}
             </View>
             {author && (
-              <View paddingBottom={3}>
-                <Text fontSize={1} color="light">
+              <View paddingBottom={2}>
+                <Text fontSize={1} color="subtle">
                   {author}
                 </Text>
               </View>
             )}
             {duration && (
-              <View flexDirection="row">
+              <View flexDirection="row" paddingTop={3}>
                 <Icon
                   name="Clock"
                   size={1}
-                  color="subtle"
+                  color="muted"
                   marginRight={2}
                   marginTop={1}
                 />
