@@ -24,7 +24,7 @@ const Prose: React.SFC<ProseProps> = ({
         ]),
         allowedAttributes: {
           ...SanitizeHTML.defaults.allowedAttributes,
-          img: ["alt", "title"],
+          img: ["alt", "src", "title"],
         },
       }),
     }}
