@@ -1,6 +1,7 @@
 import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
+import Avatar from "../Avatar";
 import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -11,6 +12,7 @@ export interface CourseSlatProps extends ViewProps {
   title?: string;
   description?: string;
   author?: string | (() => React.ReactChild);
+  authorAvatar?: string;
   duration?: number;
   actionRender?: () => React.ReactChild;
   contentRender?: () => React.ReactChild;
@@ -41,6 +43,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
   type,
   typeIcon,
   passive,
+  authorAvatar,
   ...props
 }: CourseSlatProps) => (
   <Theme.Consumer>
@@ -148,6 +151,11 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
             )}
             {(duration || author) && (
               <View flexDirection="row" marginBottom={3} flexWrap="wrap">
+                {authorAvatar && (
+                  <View paddingRight={3}>
+                    <Avatar src={authorAvatar} size={1} />
+                  </View>
+                )}
                 {author && (
                   <View paddingRight={3}>
                     {typeof author === "string" ? (
