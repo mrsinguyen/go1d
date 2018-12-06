@@ -63,11 +63,11 @@ const CTACard: React.SFC<CTACardProps> = ({
         </Text>
       </View>
     )}
-    <View padding={7} borderColor="faded" borderTop={1}>
+    <View paddingTop={7} paddingX={7} minHeight={90} borderColor="faded" borderTop={1}>
       {description && <Prose HTML={description} />}
       {children}
     </View>
-    <View paddingTop={7} paddingBottom={6} paddingX={7}>
+    <View paddingY={6} paddingX={7}>
       {button}
     </View>
   </View>
