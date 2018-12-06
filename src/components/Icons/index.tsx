@@ -51,7 +51,7 @@ export { default as Incomplete } from "./Incomplete";
 export { default as Info } from "./Info";
 export { default as Interactive } from "./Interactive";
 export { default as Learning } from "./Learning";
-export { default as Linkedin } from "./Linkedin";
+export { default as LinkedIn } from "./LinkedIn";
 export { default as List } from "./List";
 export { default as Lock } from "./Lock";
 export { default as Logout } from "./Logout";
