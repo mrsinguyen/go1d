@@ -1,17 +1,17 @@
 import * as React from "react";
 
-const Linkedin: React.SFC<React.SVGProps<SVGSVGElement>> = (
+const LinkedIn: React.SFC<React.SVGProps<SVGSVGElement>> = (
   props: React.SVGProps<SVGSVGElement>
 ) => (
   <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
     <path
       fillRule="evenodd"
-      d="M10.8 6.2a3.7 3.7 0 0 0-3.7 3.7v4.4h1.8V9.9a1.9 1.9 0 0 1 3.8 0v4.4h1.8V9.9a3.7 3.7 0 0 0-3.7-3.7zm0-1a4.7 4.7 0 0 0-4.7 4.7v4.9a.5.5 0 0 0 .5.5h2.8a.5.5 0 0 0 .5-.5V9.9a.9.9 0 0 1 1.8 0v4.9a.5.5 0 0 0 .5.5H15a.5.5 0 0 0 .5-.5V9.9a4.7 4.7 0 0 0-4.7-4.7zM.5 6.4a.5.5 0 0 1 .5-.5h2.8a.5.5 0 0 1 .5.5v8.4a.5.5 0 0 1-.5.5H1a.5.5 0 0 1-.5-.5V6.4zm1 .5v7.4h1.8V6.9H1.5zM2.4 2a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8zm-1.9.9a1.9 1.9 0 1 1 3.8 0 1.9 1.9 0 0 1-3.8 0z"
+      d="M10.99 5.92a3.95 3.95 0 0 0-3.95 3.95v4.7h1.92v-4.7a2.03 2.03 0 1 1 4.05 0v4.7h1.92v-4.7A3.95 3.95 0 0 0 11 5.92zm0-1.07a5.01 5.01 0 0 0-5.02 5.02v5.22c0 .3.24.54.54.54h2.98c.3 0 .54-.24.54-.54V9.87a.96.96 0 0 1 1.92 0v5.22c0 .3.24.54.53.54h2.99c.3 0 .53-.24.53-.54V9.87a5.01 5.01 0 0 0-5.01-5.02zM0 6.14c0-.3.24-.54.53-.54h2.99c.3 0 .53.24.53.54v8.96c0 .29-.24.53-.53.53H.53A.53.53 0 0 1 0 15.1V6.14zm1.07.53v7.9h1.92v-7.9H1.07zm.96-5.23a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zM0 2.4a2.03 2.03 0 1 1 4.05 0A2.03 2.03 0 0 1 0 2.4z"
       clipRule="evenodd"
     />
   </svg>
 );
 
-Linkedin.displayName = "IconLinkedin";
+LinkedIn.displayName = "IconLinkedIn";
 
-export default Linkedin;
+export default LinkedIn;
