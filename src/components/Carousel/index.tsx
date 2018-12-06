@@ -28,7 +28,7 @@ export interface CarouselProps extends StandardProps {
 class Carousel extends React.Component<CarouselProps, any> {
   public static defaultProps = {
     slidesToShow: 1,
-    gutter: 2,
+    gutter: 3,
     clickScrollAmount: 1,
   };
   public timer = null;
@@ -233,9 +233,10 @@ class Carousel extends React.Component<CarouselProps, any> {
               <View
                 innerRef={SlideRef}
                 maxWidth={`${100 / slidesToShow}%`}
-                paddingX={foundations.spacing[gutter] / 2}
                 marginY={1}
                 css={{
+                  paddingLeft: foundations.spacing[gutter] / 2,
+                  paddingRight: foundations.spacing[gutter] / 2,
                   ":first-child": {
                     paddingLeft: 0,
                   },
@@ -264,6 +265,10 @@ class Carousel extends React.Component<CarouselProps, any> {
               borderRadius: "50%",
               top: "calc(50% - 16px)",
               left: -16,
+
+              [foundations.breakpoints.sm]: {
+                display: "none",
+              },
             }}
           />
         )}
@@ -283,6 +288,10 @@ class Carousel extends React.Component<CarouselProps, any> {
                 borderRadius: "50%",
                 top: "calc(50% - 16px)",
                 right: -16,
+
+                [foundations.breakpoints.sm]: {
+                  display: "none",
+                },
               }}
             />
           )}
