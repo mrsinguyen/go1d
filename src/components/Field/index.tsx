@@ -37,6 +37,8 @@ const Field: React.SFC<FieldProps> = ({
   statusIcon,
   validate,
   errorMessage,
+  hideStatus,
+  hideLabel,
   ...props
 }: FieldProps) => {
   const formikProps = {
@@ -109,14 +111,16 @@ const Field: React.SFC<FieldProps> = ({
 
         return (
           <View paddingBottom={2}>
-            <Label
-              htmlFor={id || field.name}
-              statusText={statusText}
-              statusColor={statusColor}
-              statusIcon={statusIcon}
-            >
-              {label}
-            </Label>
+            {!hideLabel &&
+              <Label
+                htmlFor={id || field.name}
+                statusText={hideStatus ? null : statusText}
+                statusColor={statusColor}
+                statusIcon={statusIcon}
+              >
+                {label}
+              </Label>
+            }
             <View paddingBottom={2}>{node}</View>
             {message && (
               <View paddingBottom={2}>
