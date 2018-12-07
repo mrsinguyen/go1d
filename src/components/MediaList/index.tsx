@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import foundations from "../../foundations";
 import { breakpoints } from "../../foundations";
 import View, { ViewProps } from "../View";
 
@@ -96,6 +97,9 @@ const MediaList: React.SFC<MediaListProps> = ({
           marginBottom,
           [breakpoints.md]: {
             paddingRight: 20,
+          },
+          [breakpoints.sm]: {
+            marginBottom: foundations.spacing[5],
           },
         },
       });

@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import foundations from "../../../foundations";
 import Avatar from "../../Avatar";
 import Text from "../../Text";
 import View, { ViewProps } from "../../View";
@@ -47,7 +48,14 @@ const Media: React.SFC<MediaProps> = ({
   <View color={color} fontSize={fontSize} {...props}>
     <View flexDirection="row" alignItems="center">
       {(image || title) && (
-        <View paddingRight={5}>
+        <View
+          paddingRight={5}
+          css={{
+            [foundations.breakpoints.sm]: {
+              paddingRight: foundations.spacing[4],
+            },
+          }}
+        >
           {image && (
             <Avatar
               src={image}
@@ -81,7 +89,14 @@ const Media: React.SFC<MediaProps> = ({
         )}
 
         {subTitle && (
-          <View marginTop={subTitleMarginTop || 2}>
+          <View
+            marginTop={subTitleMarginTop || 2}
+            css={{
+              [foundations.breakpoints.sm]: {
+                marginTop: foundations.spacing[3],
+              },
+            }}
+          >
             <Text
               color="muted"
               fontWeight="semibold"
@@ -93,7 +108,14 @@ const Media: React.SFC<MediaProps> = ({
         )}
 
         {description && (
-          <View marginTop={descriptionMarginTop || 2}>
+          <View
+            marginTop={descriptionMarginTop || 2}
+            css={{
+              [foundations.breakpoints.sm]: {
+                marginTop: foundations.spacing[3],
+              },
+            }}
+          >
             <Text fontSize={descriptionSize || fontSize}>{description}</Text>
           </View>
         )}
