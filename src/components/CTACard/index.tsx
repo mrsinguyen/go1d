@@ -66,7 +66,7 @@ const CTACard: React.SFC<CTACardProps> = ({
     )}
     <View
       paddingTop={7}
-      paddingX={7}
+      paddingX={6}
       minHeight={90}
       flexGrow={1}
       borderColor="faded"
