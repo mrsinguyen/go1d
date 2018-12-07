@@ -111,7 +111,7 @@ const Field: React.SFC<FieldProps> = ({
 
         return (
           <View paddingBottom={2}>
-            {!hideLabel &&
+            {!hideLabel && (
               <Label
                 htmlFor={id || field.name}
                 statusText={hideStatus ? null : statusText}
@@ -120,7 +120,7 @@ const Field: React.SFC<FieldProps> = ({
               >
                 {label}
               </Label>
-            }
+            )}
             <View paddingBottom={2}>{node}</View>
             {message && (
               <View paddingBottom={2}>
