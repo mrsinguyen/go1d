@@ -66,7 +66,7 @@ const Avatar: React.SFC<AvatarProps> = ({
             <Text
               color={props.color || "subtle"}
               css={{ textTransform: "uppercase" }}
-              fontSize={constrainedSize <= 2 ? 1 : constrainedSize - 1}
+              fontSize={constrainedSize <= 3 ? 1 : constrainedSize - 2}
             >
               {displayName}
             </Text>

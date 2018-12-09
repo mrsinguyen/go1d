@@ -26,7 +26,7 @@ A component that displays an avatar.
 
 ### Avatar with a different size
 ```.jsx
-<Avatar fullName="Leslie Knope" size={4} />
+<Avatar fullName="Willy Wonka" size={4} />
 ```
 ### Avatar with different colors
 ```.jsx
