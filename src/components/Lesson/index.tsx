@@ -11,6 +11,7 @@ export interface LessonProps extends ViewProps {
   title?: string;
   type?: string;
   duration?: number;
+  author?: string;
 }
 
 export const typeIconDic = {
@@ -27,6 +28,8 @@ export const typeIconDic = {
   text: "Text",
   video: "Video",
   workshop: "Course",
+  course: "Course",
+  award: "Award",
   lti: "Lti",
   event: "Calendar",
 };
@@ -35,6 +38,7 @@ const Lesson: React.SFC<LessonProps> = ({
   title,
   type,
   duration,
+  author,
   ...props
 }: LessonProps) => (
   <Theme.Consumer>
@@ -71,8 +75,10 @@ const Lesson: React.SFC<LessonProps> = ({
             css={{ textTransform: "uppercase" }}
           >
             {type}
-            {type && duration && " • "}
-            {duration && formatDuration(duration)}
+            {type && author && " • "}
+            {author}
+            {type && !!duration && " • "}
+            {!!duration && formatDuration(duration)}
           </Text>
         </View>
       </View>
