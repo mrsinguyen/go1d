@@ -3,7 +3,6 @@ import { ButtonProps } from "../Button";
 import ButtonFilled from "../ButtonFilled";
 import ButtonMinimal from "../ButtonMinimal";
 import Dropdown from "../Dropdown";
-import Icon from "../Icon";
 import Theme from "../Theme";
 import DropdownMenuItem, { Item as DropdownItem } from "./DropdownMenuItem";
 
@@ -36,7 +35,6 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
       size,
       marginLeft: "auto",
     };
-    const icon = <Icon name="Ellipsis" size={4} color="muted" />;
 
     return (
       <Theme.Consumer>
@@ -51,32 +49,20 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
             {({ ref, getToggleButtonProps }) =>
               isButtonFilled ? (
                 <ButtonFilled
+                  iconName="Ellipsis"
                   {...buttonProps}
                   {...getToggleButtonProps()}
                   innerRef={ref}
                   {...props}
-                >
-                  {icon}
-                </ButtonFilled>
+                />
               ) : (
                 <ButtonMinimal
-                  css={{
-                    ":hover, :focus": {
-                      background: "none",
-                      svg: {
-                        color: colors.subtle,
-                      },
-                    },
-                    paddingRight: 0,
-                  }}
-                  paddingX={0}
+                  iconName="Ellipsis"
                   innerRef={ref}
                   {...buttonProps}
                   {...getToggleButtonProps()}
                   {...props}
-                >
-                  {icon}
-                </ButtonMinimal>
+                />
               )
             }
           </Dropdown>

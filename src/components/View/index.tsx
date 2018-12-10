@@ -56,6 +56,9 @@ const modeComponents = {
 };
 
 function getWidth(n) {
+  if (!n) {
+    return null;
+  }
   if (Array.isArray(n)) {
     return n.map(getWidth);
   }

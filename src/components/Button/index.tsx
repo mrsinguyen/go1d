@@ -1,4 +1,3 @@
-import { get } from "lodash";
 import * as React from "react";
 import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
@@ -10,12 +9,40 @@ export interface ButtonProps extends ViewProps {
   size?: "lg" | "md" | "sm";
   color?: string;
   iconColor?: string;
+  round?: boolean;
   backgroundColor?: string;
   iconName?: string;
   fontWeight?: FontWeight;
   onClick?: ((evt: React.SyntheticEvent) => void);
   href?: any;
 }
+
+const sizeStyles = {
+  lg: {
+    height: 48,
+    paddingY: 3,
+    paddingX: 5,
+    typeScale: 3,
+    iconOnlyScale: 4,
+    iconMarginRight: 4,
+  },
+  md: {
+    height: 40,
+    paddingY: 3,
+    paddingX: 4,
+    typeScale: 2,
+    iconOnlyScale: 3,
+    iconMarginRight: 3,
+  },
+  sm: {
+    height: 32,
+    paddingY: 2,
+    paddingX: 4,
+    typeScale: 1,
+    iconOnlyScale: 2,
+    iconMarginRight: 3,
+  },
+};
 
 const Button: React.SFC<ButtonProps> = ({
   size = "md",
@@ -25,56 +52,68 @@ const Button: React.SFC<ButtonProps> = ({
   children,
   fontWeight = "semibold",
   css,
+  round,
   onClick,
   href,
   iconColor = color,
   type = "button",
   ...props
-}: ButtonProps) => (
-  <View
-    element={href ? Link : "button"}
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    height={get({ lg: 48, md: 40, sm: 32 }, size)}
-    paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}
-    paddingX={get({ lg: 5, md: 4, sm: 4 }, size)}
-    backgroundColor={backgroundColor}
-    color={color}
-    borderRadius={2}
-    onClick={onClick}
-    href={href}
-    type={type}
-    css={[
-      {
-        cursor: "pointer",
-        "&:disabled": {
-          opacity: 0.5,
-          pointerEvents: "none",
+}: ButtonProps) => {
+  const {
+    height,
+    paddingY,
+    paddingX,
+    typeScale,
+    iconOnlyScale,
+    iconMarginRight,
+  } = sizeStyles[size];
+  return (
+    <View
+      element={href ? Link : "button"}
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="center"
+      height={height}
+      width={!children && height}
+      paddingY={paddingY}
+      paddingX={children && paddingX}
+      backgroundColor={backgroundColor}
+      color={color}
+      borderRadius={round ? 8 : 2}
+      onClick={onClick}
+      href={href}
+      type={type}
+      css={[
+        {
+          cursor: "pointer",
+          "&:disabled": {
+            opacity: 0.5,
+            pointerEvents: "none",
+          },
         },
-      },
-      css,
-    ]}
-    {...props}
-  >
-    {iconName && (
-      <Icon
-        name={iconName}
-        size={get({ lg: 3, md: 2, sm: 1 }, size)}
-        marginRight={children && get({ lg: 4, md: 3, sm: 3 }, size)}
-        color={iconColor}
-      />
-    )}
-    <Text
-      lineHeight="ui"
-      fontWeight={fontWeight}
-      fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
-      color="inherit"
+        css,
+      ]}
+      {...props}
     >
-      {children}
-    </Text>
-  </View>
-);
+      {iconName && (
+        <Icon
+          name={iconName}
+          size={children ? typeScale : iconOnlyScale}
+          marginRight={children && iconMarginRight}
+          color={iconColor}
+        />
+      )}
+      <Text
+        lineHeight="ui"
+        fontWeight={fontWeight}
+        fontSize={typeScale}
+        color="inherit"
+      >
+        {children}
+      </Text>
+    </View>
+  );
+};
 
 Button.displayName = "Button";
 

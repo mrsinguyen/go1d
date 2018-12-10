@@ -258,14 +258,11 @@ class Carousel extends React.Component<CarouselProps, any> {
             data-testid="leftNavigationButton"
             iconName="ChevronLeft"
             position="absolute"
-            height={32}
-            width={32}
+            round={true}
             justifyContent="center"
             css={{
-              borderRadius: "50%",
-              top: "calc(50% - 16px)",
-              left: -16,
-
+              top: "calc(50% - 20px)",
+              left: -20,
               [foundations.breakpoints.sm]: {
                 display: "none",
               },
@@ -281,13 +278,11 @@ class Carousel extends React.Component<CarouselProps, any> {
               data-testid="rightNavigationButton"
               iconName="ChevronRight"
               position="absolute"
-              height={32}
-              width={32}
               justifyContent="center"
+              round={true}
               css={{
-                borderRadius: "50%",
-                top: "calc(50% - 16px)",
-                right: -16,
+                top: "calc(50% - 20px)",
+                right: -20,
 
                 [foundations.breakpoints.sm]: {
                   display: "none",

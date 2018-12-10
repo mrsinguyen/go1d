@@ -102,12 +102,8 @@ class Modal extends React.Component<ModalProps, any> {
               <ButtonMinimal
                 onClick={onRequestClose}
                 iconName="Cross"
-                size="lg"
-                css={{
-                  // Issue with overrides
-                  paddingRight: foundations.spacing[5],
-                  paddingLeft: foundations.spacing[5],
-                }}
+                round={true}
+                marginLeft={4}
               />
             )}
             <View flexGrow={1} flexShrink={1}>

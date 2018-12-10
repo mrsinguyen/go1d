@@ -25,6 +25,12 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonFilled color='accent'>Call to action</ButtonFilled>
 ```
 
+### Filled Icon only button in success colour and round
+
+```.jsx
+<ButtonFilled round={true} color="success" iconName="Check" />
+```
+
 ### Filled button in danger colour
 
 ```.jsx
