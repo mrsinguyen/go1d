@@ -167,7 +167,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                     )}
                   </View>
                 )}
-                {duration && (
+                {!!duration && (
                   <View flexDirection="row">
                     <Icon
                       name="Clock"
