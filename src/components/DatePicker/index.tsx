@@ -1,0 +1,354 @@
+import { get } from "lodash";
+import * as Moment from "moment";
+import * as React from "react";
+import { SingleDatePicker } from "react-dates";
+import "react-dates/initialize";
+import { autobind } from "../../utils/decorators";
+import safeInvoke from "../../utils/safeInvoke";
+import ButtonMinimal from "../ButtonMinimal";
+import Icon from "../Icon";
+import Text from "../Text";
+import Theme from "../Theme";
+import View, { ViewProps } from "../View";
+import "./css";
+
+export interface DatePickerProps extends ViewProps {
+  onChange?: ({ startDate, endDate }) => void;
+  children?: any;
+  id: string;
+  size?: "lg" | "md" | "sm";
+  date?: Date;
+  time?: boolean;
+}
+
+export interface DatePickerState {
+  date: Moment.Moment;
+  focused: boolean;
+  timeFocused: boolean;
+  minute: string;
+  hour: string;
+}
+
+Moment.updateLocale("en", { weekdaysMin: "S_M_T_W_T_F_S".split("_") });
+
+class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
+  public static defaultProps = {
+    size: "md",
+    date: new Date(),
+    disabled: false,
+  };
+  constructor(props) {
+    super(props);
+
+    const date = Moment(props.date);
+
+    this.state = {
+      date,
+      focused: false,
+      timeFocused: false,
+      minute: date.format("mm"),
+      hour: date.format("hh"),
+    };
+  }
+
+  @autobind
+  public handleFocus(evt: React.FocusEvent<any>) {
+    this.setState({
+      timeFocused: true,
+    });
+
+    safeInvoke(this.props.onFocus, evt);
+  }
+
+  @autobind
+  public handleBlur(evt: React.FocusEvent<any>) {
+    this.setState({
+      timeFocused: false,
+      hour: this.state.date.format("hh"),
+      minute: this.state.date.format("mm"),
+    });
+
+    safeInvoke(this.props.onBlur, evt);
+  }
+
+  @autobind
+  public changeHour(evt: React.SyntheticEvent<HTMLInputElement>) {
+    const value = evt.currentTarget.value.substring(0, 2);
+    let hour = parseInt(value, 10);
+    if (hour) {
+      if (hour > 13 || hour < 0) {
+        hour = Math.min(Math.max(hour, 0), 12) % 12;
+      } else {
+        hour = hour % 12;
+      }
+      if (this.state.date.get("hour") >= 12) {
+        hour += 12;
+      }
+      const date = this.state.date;
+      date.hour(hour);
+      this.setState({
+        date,
+        hour: `${
+          parseInt(value, 10) < 13 && parseInt(value, 10) > 0
+            ? value
+            : hour % 12 || 12
+        }`,
+      });
+      safeInvoke(this.props.onChange, date);
+    } else {
+      // allows clearing the field
+      this.setState({ hour: value });
+    }
+  }
+
+  @autobind
+  public changeMinute(evt: React.SyntheticEvent<HTMLInputElement>) {
+    const value = evt.currentTarget.value.substring(0, 2);
+    // We add 60 so the mod will work as js implements mod like -1 % 60 = -1 instead of 59
+    let minute = (parseInt(evt.currentTarget.value, 10) + 60) % 60 || 0;
+    if (minute) {
+      if (minute > 60 || minute < 0) {
+        minute = Math.min(Math.max(minute, 0), 60) % 60;
+      }
+      const date = this.state.date;
+      date.minute(minute);
+      this.setState({
+        date,
+        minute:
+          parseInt(value, 10) < 60 && parseInt(value, 10) > 0
+            ? value
+            : minute.toString(),
+      });
+      safeInvoke(this.props.onChange, date);
+    } else {
+      this.setState({ minute: value });
+    }
+  }
+
+  @autobind
+  public changeMerridian() {
+    const date = this.state.date;
+    date.hour((date.get("hour") + 12) % 24);
+    this.setState({ date });
+    safeInvoke(this.props.onChange, date);
+  }
+
+  @autobind
+  public onDateChange(date: Moment.Moment) {
+    this.setState({ date });
+    safeInvoke(this.props.onChange, date);
+  }
+
+  @autobind
+  public getBorderColor() {
+    const { timeFocused } = this.state;
+
+    if (timeFocused) {
+      return "accent";
+    }
+
+    return "soft";
+  }
+
+  @autobind
+  public onFocusChange(focus: { focused: boolean }) {
+    const { focused } = focus;
+    this.setState({ focused });
+  }
+
+  @autobind
+  public render() {
+    const {
+      id,
+      size,
+      date,
+      onChange,
+      disabled,
+      ...remainingProps
+    } = this.props;
+    return (
+      <Theme.Consumer>
+        {({ colors, spacing, shadows, transitions, type }) => (
+          <View
+            flexDirection="row"
+            display="flex"
+            css={[
+              {
+                ".DateInput": {
+                  margin: 0,
+                  padding: 0,
+                  background: "transparent",
+                  position: "relative",
+                  display: "inline-block",
+                  width: get({ lg: "120px", md: "100px", sm: "90px" }, size),
+                  verticalAlign: "middle",
+                },
+                "td.CalendarDay, td.CalendarDay__selected": {
+                  border: 0,
+                  "border-radius": "100%",
+                  "vertical-align": "middle",
+                  ":hover, :focus, :active": {
+                    "background-color": colors.accent,
+                    color: colors.background,
+                  },
+                },
+                "td.CalendarDay__selected": {
+                  "background-color": colors.accent,
+                },
+                ".CalendarMonth_caption": {
+                  "padding-bottom": `${spacing[7]}px`,
+                },
+                ".DayPicker__withBorder": {
+                  "box-shadow":
+                    "0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07)",
+                  "border-radius": `${spacing[2]}px`,
+                },
+                ".SingleDatePickerInput": {
+                  "border-radius": `${spacing[2]}px`,
+                  "box-shadow": shadows.inner,
+                  "border-color": colors.soft,
+                  transition: transitions.subtle,
+                  padding: `0 ${spacing[4]}px`,
+                  "&:hover, &:focus": {
+                    "border-color": colors.accent,
+                  },
+                },
+                ".SingleDatePicker_picker": {
+                  "box-shadow": shadows.strong,
+                },
+                ".DateInput_input, .DateInput_input__focused": {
+                  "padding-top": `${
+                    spacing[get({ lg: 4, md: 3, sm: 1 }, size)]
+                  }px`,
+                  "padding-bottom": `${
+                    spacing[get({ lg: 4, md: 3, sm: 1 }, size)]
+                  }px`,
+                  "padding-right": 0,
+                },
+                ".CalendarDay, .DateInput_input, .DayPicker_weekHeader_li": {
+                  "font-size": `${
+                    type.scale[size][get({ lg: 3, md: 2, sm: 1 }, size)]
+                  }px`,
+                },
+                ".DayPickerNavigation_button, .CalendarMonth_caption": {
+                  padding: `${spacing[5]}px`,
+                  "padding-bottom": `${spacing[7]}px`,
+                },
+              },
+            ]}
+          >
+            <SingleDatePicker
+              date={this.state.date}
+              onDateChange={this.onDateChange}
+              focused={this.state.focused}
+              onFocusChange={this.onFocusChange}
+              id={id}
+              numberOfMonths={1}
+              hideKeyboardShortcutsPanel={true}
+              weekDayFormat="dd"
+              inputIconPosition="after"
+              displayFormat="DD/MM/YYYY"
+              navNext={<Icon name="ChevronRight" size={2} color="subtle" />}
+              navPrev={<Icon name="ChevronLeft" size={2} color="subtle" />}
+              verticalSpacing={5}
+              verticalHeight={7}
+              horizontalMonthPadding={0}
+              customInputIcon={
+                <Icon
+                  name="Calendar"
+                  size={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  color="subtle"
+                />
+              }
+              {...remainingProps}
+            />
+            {this.props.time && (
+              <View
+                element="label"
+                marginLeft={3}
+                backgroundColor="background"
+                paddingX={get({ lg: 5, md: 4, sm: 1 }, size)}
+                border={1}
+                borderColor={this.getBorderColor()}
+                boxShadow="inner"
+                flexDirection="row"
+                alignItems="center"
+                htmlFor={id}
+                css={[{ "border-radius": `${spacing[2]}px` }]}
+                opacity={disabled ? "disabled" : null}
+              >
+                <Text
+                  id={id}
+                  element="input"
+                  type="number"
+                  lineHeight="ui"
+                  fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  paddingY={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  paddingLeft={get({ lg: 0, md: 0, sm: 2 }, size)}
+                  color="inherit"
+                  value={this.state.hour}
+                  onFocus={this.handleFocus}
+                  onBlur={this.handleBlur}
+                  disabled={disabled}
+                  onChange={this.changeHour}
+                  data-testid="inputElement"
+                  css={{
+                    // get rid of default styles
+                    width: "1.5em",
+                    background: 0,
+                    border: 0,
+                    flexGrow: 1,
+                  }}
+                />
+                <Text
+                  lineHeight="ui"
+                  marginRight={1}
+                  fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  paddingY={get({ lg: 3, md: 2, sm: 1 }, size)}
+                >
+                  :
+                </Text>
+                <Text
+                  id={id}
+                  element="input"
+                  type="number"
+                  lineHeight="ui"
+                  fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  paddingY={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  color="inherit"
+                  value={this.state.minute}
+                  onFocus={this.handleFocus}
+                  onBlur={this.handleBlur}
+                  disabled={disabled}
+                  onChange={this.changeMinute}
+                  data-testid="inputElement"
+                  css={{
+                    // get rid of default styles
+                    width: "1.5em",
+                    background: 0,
+                    border: 0,
+                    flexGrow: 1,
+                  }}
+                />
+                <ButtonMinimal
+                  size={size}
+                  fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  paddingY={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  width="2em"
+                  color="default"
+                  disabled={disabled}
+                  onFocus={this.handleFocus}
+                  onBlur={this.handleBlur}
+                  onClick={this.changeMerridian}
+                >
+                  {this.state.date.format("A")}
+                </ButtonMinimal>
+              </View>
+            )}
+          </View>
+        )}
+      </Theme.Consumer>
+    );
+  }
+}
+export default DatePicker;
