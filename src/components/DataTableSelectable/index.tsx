@@ -88,6 +88,7 @@ class DataTableSelectable extends React.Component<
         <TD
           key={-1}
           width="30px"
+          flexShrink={0}
           flexGrow={0}
           css={{ "box-sizing": "content-box" }}
         >
@@ -203,6 +204,7 @@ class DataTableSelectable extends React.Component<
         key={-1}
         width="30px"
         flexGrow={0}
+        flexShrink={0}
         css={{ "box-sizing": "content-box" }}
         text={
           !!selected ? (

@@ -2,14 +2,14 @@ import * as React from "react";
 import View, { ViewProps } from "../../View";
 
 const TD = ({ children, ...props }: ViewProps) => {
-  const { width, ...otherProps } = props;
+  const { width, flexShrink, ...otherProps } = props;
   return (
     <View
       element="div"
       paddingX={3}
       flexBasis={width || 0}
       flexGrow={1}
-      flexShrink={1}
+      flexShrink={flexShrink !== undefined ? flexShrink : 1}
       borderBottom={1}
       borderColor="divide"
       display="flex"
