@@ -17,7 +17,8 @@ export interface DatePickerProps extends ViewProps {
   children?: any;
   id: string;
   size?: "lg" | "md" | "sm";
-  date?: Date;
+  defaultValue?: Date | number;
+  value?: Date | number;
   time?: boolean;
 }
 
@@ -34,13 +35,27 @@ Moment.updateLocale("en", { weekdaysMin: "S_M_T_W_T_F_S".split("_") });
 class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
   public static defaultProps = {
     size: "md",
-    date: new Date(),
+    defaultValue: new Date(),
     disabled: false,
   };
+
+  public static getDerivedStateFromProps(
+    nextProps: DatePickerProps,
+    prevState: DatePickerState
+  ) {
+    const date = nextProps.value ? Moment(nextProps.value) : prevState.date;
+
+    return {
+      date,
+      minute: date.format("mm"),
+      hour: date.format("hh"),
+    };
+  }
+
   constructor(props) {
     super(props);
 
-    const date = Moment(props.date);
+    const date = Moment(props.value || props.defaultValue);
 
     this.state = {
       date,
@@ -49,6 +64,17 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
       minute: date.format("mm"),
       hour: date.format("hh"),
     };
+  }
+
+  @autobind
+  public onChange(date: Moment.Moment) {
+    safeInvoke(this.props.onChange, {
+      target: {
+        value: date.unix() * 1000,
+        name: this.props.name,
+        id: this.props.id,
+      },
+    });
   }
 
   @autobind
@@ -94,7 +120,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
             : hour % 12 || 12
         }`,
       });
-      safeInvoke(this.props.onChange, date);
+      this.onChange(date);
     } else {
       // allows clearing the field
       this.setState({ hour: value });
@@ -119,7 +145,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
             ? value
             : minute.toString(),
       });
-      safeInvoke(this.props.onChange, date);
+      this.onChange(date);
     } else {
       this.setState({ minute: value });
     }
@@ -130,13 +156,18 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
     const date = this.state.date;
     date.hour((date.get("hour") + 12) % 24);
     this.setState({ date });
-    safeInvoke(this.props.onChange, date);
+    this.onChange(date);
   }
 
   @autobind
   public onDateChange(date: Moment.Moment) {
-    this.setState({ date });
-    safeInvoke(this.props.onChange, date);
+    const dateWithTime = this.props.time
+      ? date
+          .hour(this.state.date.get("hour"))
+          .minute(this.state.date.get("minute"))
+      : date;
+    this.setState({ date: dateWithTime });
+    this.onChange(date);
   }
 
   @autobind
@@ -164,8 +195,12 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
       date,
       onChange,
       disabled,
+      time,
+      defaultValue,
+      value,
       ...remainingProps
     } = this.props;
+
     return (
       <Theme.Consumer>
         {({ colors, spacing, shadows, transitions, type }) => (

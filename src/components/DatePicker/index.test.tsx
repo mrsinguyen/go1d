@@ -12,7 +12,7 @@ it("renders with minimal props", () => {
 it("renders and handles changes", () => {
   const date = new Date("2018-12-17T20:10:00");
   const ref: React.RefObject<DatePicker> = React.createRef();
-  render(<DatePicker ref={ref} id="dp" date={date} />);
+  render(<DatePicker ref={ref} id="dp" defaultValue={date} />);
 
   const m = moment(date);
 
@@ -37,7 +37,7 @@ it("renders and handles changes", () => {
 it("renders and handles edge changes", () => {
   const date = new Date("2018-12-17T20:10:00");
   const ref: React.RefObject<DatePicker> = React.createRef();
-  render(<DatePicker ref={ref} id="dp" date={date} />);
+  render(<DatePicker ref={ref} id="dp" defaultValue={date} />);
 
   const m = moment(date);
 
