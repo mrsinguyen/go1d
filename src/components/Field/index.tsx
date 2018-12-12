@@ -1,12 +1,13 @@
 import { Field as FormikField } from "formik";
 import * as React from "react";
 
+import safeInvoke from "../../utils/safeInvoke";
 import Label from "../Label";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
 
 export interface FieldProps extends ViewProps {
-  label: string;
+  label?: string;
   id?: string;
   name: string;
   value?: any;
@@ -39,6 +40,7 @@ const Field: React.SFC<FieldProps> = ({
   errorMessage,
   hideStatus,
   hideLabel,
+  onChange,
   ...props
 }: FieldProps) => {
   const formikProps = {
@@ -51,6 +53,7 @@ const Field: React.SFC<FieldProps> = ({
       {({ field, form }) => {
         let node = null;
         let message = null;
+
         if (
           form.errors &&
           form.errors[field.name] &&
@@ -62,6 +65,11 @@ const Field: React.SFC<FieldProps> = ({
           message = errorMessage;
         }
         if (component) {
+          const newOnChange = e => {
+            field.onChange(e);
+            return safeInvoke(onChange, e);
+          };
+
           node = React.createElement(component as any, {
             ref: inputRef,
             ...field,
@@ -71,6 +79,7 @@ const Field: React.SFC<FieldProps> = ({
             id: id || field.name,
             children,
             error: !!message,
+            onChange: newOnChange,
             ...props,
           });
         }
