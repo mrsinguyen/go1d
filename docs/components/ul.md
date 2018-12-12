@@ -34,7 +34,7 @@ releaseVersion: 0.0.73
 
 ```.jsx
 <UL iconName="Success">
-    <LI>Parent Icon</LI>
+    <LI iconColor="success">Parent Icon</LI>
     <LI iconName="Star">Star Icon</LI>
     <LI iconName="StarOutline">StarOutline Icon</LI>
     <LI iconName="Tag">Tag Icon</LI>
