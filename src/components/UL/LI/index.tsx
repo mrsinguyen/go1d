@@ -7,11 +7,13 @@ import View, { ViewProps } from "../../View";
 
 export interface LIProps extends ViewProps {
   iconName?: string;
+  iconColor?: string;
   fontSize?: number;
 }
 
 const LI: React.SFC<LIProps> = ({
   iconName = "Check",
+  iconColor = "accent",
   children,
   fontSize = 2,
   paddingY = fontSize < 3 ? fontSize + 1 : 4,
@@ -33,7 +35,7 @@ const LI: React.SFC<LIProps> = ({
       >
         {iconName && (
           <View marginY={paddingY} paddingTop={2} paddingLeft={paddingX}>
-            <Icon name={iconName} color="accent" size={fontSize} />
+            <Icon name={iconName} color={iconColor} size={fontSize} />
           </View>
         )}
         <Text
