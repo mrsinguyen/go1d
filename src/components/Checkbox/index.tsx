@@ -10,13 +10,17 @@ export interface CheckboxProps extends TextProps {
   id?: string;
   name?: string;
   label?: string;
-  value?: string;
+  value?: string | boolean;
   checked?: boolean;
   disabled?: boolean;
   error?: boolean;
 }
 
 class Checkbox extends React.Component<CheckboxProps, any> {
+  public static defaultProps = {
+    value: true,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +42,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     safeInvoke(onChange, {
       target: {
         name,
-        value: newValue ? value : "",
+        value: newValue ? (value === "" ? true : value) : false,
         checked: newValue,
       },
     });
@@ -63,7 +67,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     const {
       name,
       id = randomId,
-      value,
+      value: propValue,
       children,
       label,
       checked,
@@ -76,6 +80,8 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       disabled = false,
       ...props
     } = this.props;
+
+    const value = propValue === "" ? true : propValue;
 
     const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
     return (
