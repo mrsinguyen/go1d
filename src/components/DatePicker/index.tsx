@@ -47,8 +47,6 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
 
     return {
       date,
-      minute: date.format("mm"),
-      hour: date.format("hh"),
     };
   }
 
@@ -132,18 +130,19 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
     const value = evt.currentTarget.value.substring(0, 2);
     // We add 60 so the mod will work as js implements mod like -1 % 60 = -1 instead of 59
     let minute = (parseInt(evt.currentTarget.value, 10) + 60) % 60 || 0;
-    if (minute) {
+
+    if (value !== "") {
       if (minute > 60 || minute < 0) {
         minute = Math.min(Math.max(minute, 0), 60) % 60;
+      } else {
+        minute = minute % 60;
       }
       const date = this.state.date;
+
       date.minute(minute);
       this.setState({
         date,
-        minute:
-          parseInt(value, 10) < 60 && parseInt(value, 10) > 0
-            ? value
-            : minute.toString(),
+        minute: minute.toString(),
       });
       this.onChange(date);
     } else {
