@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const LinkedIn: React.SFC<React.SVGProps<SVGSVGElement>> = (
+const Linkedin: React.SFC<React.SVGProps<SVGSVGElement>> = (
   props: React.SVGProps<SVGSVGElement>
 ) => (
   <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
@@ -12,6 +12,6 @@ const LinkedIn: React.SFC<React.SVGProps<SVGSVGElement>> = (
   </svg>
 );
 
-LinkedIn.displayName = "IconLinkedIn";
+Linkedin.displayName = "IconLinkedin";
 
-export default LinkedIn;
+export default Linkedin;
