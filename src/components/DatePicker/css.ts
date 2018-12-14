@@ -642,7 +642,6 @@ export function DatePickerCSS() {
     border: 0;
     border-top: 0;
     border-right: 0;
-    border-bottom: 2px solid transparent;
     border-left: 0;
     border-radius: 0
   }

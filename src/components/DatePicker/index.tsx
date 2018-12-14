@@ -68,7 +68,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
   public onChange(date: Moment.Moment) {
     safeInvoke(this.props.onChange, {
       target: {
-        value: date.unix() * 1000,
+        value: date && date.unix() * 1000,
         name: this.props.name,
         id: this.props.id,
       },
@@ -97,26 +97,26 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
 
   @autobind
   public changeHour(evt: React.SyntheticEvent<HTMLInputElement>) {
-    const value = evt.currentTarget.value.substring(0, 2);
+    const value = evt.currentTarget.value.substring(0, 2).replace(/\D/g, "");
     let hour = parseInt(value, 10);
-    if (hour) {
-      if (hour > 13 || hour < 0) {
-        hour = Math.min(Math.max(hour, 0), 12) % 12;
+
+    if (value !== "") {
+      if (hour < 0 || hour > 12) {
+        hour = 12;
       } else {
-        hour = hour % 12;
+        hour = hour % 13;
       }
-      if (this.state.date.get("hour") >= 12) {
-        hour += 12;
-      }
+
       const date = this.state.date;
-      date.hour(hour);
+      date.hour(
+        this.state.date.get("hour") >= 12 ? (hour % 12) + 12 : hour % 12
+      );
       this.setState({
         date,
-        hour: `${
+        hour:
           parseInt(value, 10) < 13 && parseInt(value, 10) > 0
             ? value
-            : hour % 12 || 12
-        }`,
+            : hour.toString(),
       });
       this.onChange(date);
     } else {
@@ -127,10 +127,9 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
 
   @autobind
   public changeMinute(evt: React.SyntheticEvent<HTMLInputElement>) {
-    const value = evt.currentTarget.value.substring(0, 2);
+    const value = evt.currentTarget.value.substring(0, 2).replace(/\D/g, "");
     // We add 60 so the mod will work as js implements mod like -1 % 60 = -1 instead of 59
     let minute = (parseInt(evt.currentTarget.value, 10) + 60) % 60 || 0;
-
     if (value !== "") {
       if (minute > 60 || minute < 0) {
         minute = Math.min(Math.max(minute, 0), 60) % 60;
@@ -142,7 +141,10 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
       date.minute(minute);
       this.setState({
         date,
-        minute: minute.toString(),
+        minute:
+          parseInt(value, 10) < 60 && parseInt(value, 10) >= 0
+            ? value
+            : minute.toString(),
       });
       this.onChange(date);
     } else {
@@ -159,7 +161,43 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
   }
 
   @autobind
+  public handleKeys(evt: any) {
+    let value = null;
+    switch (evt.keyCode) {
+      // Up Arrow
+      case 38:
+        evt.preventDefault();
+        value = parseInt(evt.currentTarget.value, 10) + 1;
+        break;
+      // Down Arrow
+      case 40:
+        evt.preventDefault();
+        value = parseInt(evt.currentTarget.value, 10) - 1;
+        break;
+    }
+
+    if (value !== null) {
+      if (evt.target.name === "hour") {
+        value = value % 13 || (evt.keyCode === 38 ? 1 : 12);
+        this.changeHour({
+          currentTarget: {
+            value: value < 10 ? `0${value}` : value.toString(),
+          },
+        } as any);
+      } else {
+        value = (value + 60) % 60;
+        this.changeMinute({
+          currentTarget: { value: value < 10 ? `0${value}` : value.toString() },
+        } as any);
+      }
+    }
+  }
+
+  @autobind
   public onDateChange(date: Moment.Moment) {
+    if (!date) {
+      return;
+    }
     const dateWithTime = this.props.time
       ? date
           .hour(this.state.date.get("hour"))
@@ -314,11 +352,13 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
                 <Text
                   id={id}
                   element="input"
-                  type="number"
+                  type="text"
+                  name="hour"
                   lineHeight="ui"
                   fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
                   paddingY={get({ lg: 3, md: 2, sm: 1 }, size)}
                   paddingLeft={get({ lg: 0, md: 0, sm: 2 }, size)}
+                  onKeyDown={this.handleKeys}
                   color="inherit"
                   value={this.state.hour}
                   onFocus={this.handleFocus}
@@ -345,10 +385,12 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
                 <Text
                   id={id}
                   element="input"
-                  type="number"
+                  type="text"
+                  name="minute"
                   lineHeight="ui"
                   fontSize={get({ lg: 3, md: 2, sm: 1 }, size)}
                   paddingY={get({ lg: 3, md: 2, sm: 1 }, size)}
+                  onKeyDown={this.handleKeys}
                   color="inherit"
                   value={this.state.minute}
                   onFocus={this.handleFocus}
@@ -374,6 +416,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
                   onFocus={this.handleFocus}
                   onBlur={this.handleBlur}
                   onClick={this.changeMerridian}
+                  backgroundColor="transparent"
                 >
                   {this.state.date.format("A")}
                 </ButtonMinimal>
