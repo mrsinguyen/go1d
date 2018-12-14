@@ -154,23 +154,12 @@ class Carousel extends React.Component<CarouselProps, any> {
 
       const CurrentSlide = this.slideRefs[Selected].current;
 
-      if (this.props.size === "lg") {
-        if (CurrentSlide.offsetLeft < SliderScroll && !FinishedScrolling) {
-          // Snap to a start position
-          if (
-            CurrentSlide.offsetLeft + CurrentSlide.offsetWidth / 2 <
-            SliderScroll
-          ) {
-            Selected = Selected + 1;
-            this.scrollToIndex(Selected)();
-          } else {
-            this.scrollToIndex(Selected)();
-          }
-        }
-      } else {
-        const Delta = SliderScroll - this.initialSliderOffset;
-
-        if (Delta > 0) {
+      if (CurrentSlide.offsetLeft < SliderScroll && !FinishedScrolling) {
+        // Snap to a start position
+        if (
+          CurrentSlide.offsetLeft + CurrentSlide.offsetWidth / 2 <
+          SliderScroll
+        ) {
           Selected = Selected + 1;
           this.scrollToIndex(Selected)();
         } else {
@@ -251,6 +240,8 @@ class Carousel extends React.Component<CarouselProps, any> {
           width="100%"
           data-testid="ScrollableCarousel"
           css={{
+            // "-webkit-overflow-scrolling": "touch",
+            WebkitOverflowScrolling: "touch",
             overflowX: "auto",
             "::-webkit-scrollbar": {
               width: 0,
