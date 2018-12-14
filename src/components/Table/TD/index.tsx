@@ -2,9 +2,11 @@ import * as React from "react";
 import View, { ViewProps } from "../../View";
 
 const TD = ({ children, ...props }: ViewProps) => {
-  const { width = "100%", flexShrink, ...otherProps } = props;
-  const defaultShrink =
-    typeof width === "string" && width.substr(-1) === "%" ? 1 : 0;
+  const {
+    width = "100%",
+    flexShrink = typeof width === "string" && width.substr(-1) === "%" ? 1 : 0,
+    ...otherProps
+  } = props;
 
   return (
     <View
@@ -12,7 +14,7 @@ const TD = ({ children, ...props }: ViewProps) => {
       paddingX={3}
       flexBasis={width || 0}
       flexGrow={0}
-      flexShrink={flexShrink !== undefined ? flexShrink : defaultShrink}
+      flexShrink={flexShrink}
       borderBottom={1}
       borderColor="divide"
       display="flex"
