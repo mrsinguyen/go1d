@@ -39,11 +39,15 @@ class Carousel extends React.Component<CarouselProps, any> {
     currentSlide: 0,
     finishedScrolling: true,
   };
+  private slideTween;
+  private ignoreScroll = false;
+  private initialSliderOffset = null;
 
   public componentDidMount() {
     if (this.sliderContainerRef) {
       const Element: any = this.sliderContainerRef.current;
       Element.addEventListener("scroll", this.handleScrollTimer, false);
+      Element.addEventListener("touchmove", this.handleScrollTimer, false);
     }
   }
 
@@ -87,15 +91,29 @@ class Carousel extends React.Component<CarouselProps, any> {
     if (this.sliderContainerRef) {
       const Element: any = this.sliderContainerRef.current;
       Element.removeEventListener("scroll", this.handleScrollTimer, false);
+      Element.removeEventListener("touchmove", this.handleScrollTimer, false);
     }
   }
 
   public handleScrollTimer = () => {
-    if (this.timer !== null) {
-      clearTimeout(this.timer);
-    }
+    if (!this.ignoreScroll) {
+      if (this.timer !== null) {
+        clearTimeout(this.timer);
+      }
 
-    this.timer = setTimeout(this.handleScrollFinished, 150);
+      if (this.slideTween) {
+        this.slideTween.stop();
+      }
+
+      if (this.initialSliderOffset === null && this.sliderContainerRef) {
+        const Slider: any = this.sliderContainerRef.current;
+        this.initialSliderOffset = Slider.scrollLeft;
+      }
+
+      this.timer = setTimeout(this.handleScrollFinished, 150);
+    } else {
+      this.ignoreScroll = false;
+    }
   };
 
   public handleScrollFinished = () => {
@@ -128,6 +146,7 @@ class Carousel extends React.Component<CarouselProps, any> {
       const LastSlideCurrent = LastSlide.current;
       const LastSlideRightEdge =
         LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
+
       if (LastSlideRightEdge <= SliderRightEdge) {
         // Cannot scroll further right
         FinishedScrolling = true;
@@ -135,17 +154,31 @@ class Carousel extends React.Component<CarouselProps, any> {
 
       const CurrentSlide = this.slideRefs[Selected].current;
 
-      if (CurrentSlide.offsetLeft < SliderScroll && !FinishedScrolling) {
-        // Snap to a start position
-        if (
-          CurrentSlide.offsetLeft + CurrentSlide.offsetWidth / 2 <
-          SliderScroll
-        ) {
-          this.scrollToIndex(Selected + 1)();
+      if (this.props.size === "lg") {
+        if (CurrentSlide.offsetLeft < SliderScroll && !FinishedScrolling) {
+          // Snap to a start position
+          if (
+            CurrentSlide.offsetLeft + CurrentSlide.offsetWidth / 2 <
+            SliderScroll
+          ) {
+            Selected = Selected + 1;
+            this.scrollToIndex(Selected)();
+          } else {
+            this.scrollToIndex(Selected)();
+          }
+        }
+      } else {
+        const Delta = SliderScroll - this.initialSliderOffset;
+
+        if (Delta > 0) {
+          Selected = Selected + 1;
+          this.scrollToIndex(Selected)();
         } else {
           this.scrollToIndex(Selected)();
         }
       }
+
+      this.initialSliderOffset = null;
 
       this.setState({
         currentSlide: Selected,
@@ -181,21 +214,22 @@ class Carousel extends React.Component<CarouselProps, any> {
 
       requestAnimationFrame(animate);
 
-      new TWEEN.Tween(coords)
+      this.slideTween = new TWEEN.Tween(coords)
         .to({ x: ElementOffset, y: 0 }, slideAnimationDuration)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(() => {
+          this.ignoreScroll = true;
           Slider.scrollTo(coords.x, 0);
         })
         .onComplete(() => {
           allowAnimationPropogation = false;
         })
         .start();
-
-      this.setState(prevState => ({
-        currentSlide: prevState.currentSlide + 1,
-      }));
     }
+
+    this.setState({
+      currentSlide: Index,
+    });
   };
 
   public render() {
@@ -261,11 +295,9 @@ class Carousel extends React.Component<CarouselProps, any> {
             round={true}
             justifyContent="center"
             css={{
-              top: "calc(50% - 20px)",
+              borderRadius: "50%",
+              top: "calc(50% - 16px)",
               left: -20,
-              [foundations.breakpoints.sm]: {
-                display: "none",
-              },
             }}
           />
         )}
@@ -281,12 +313,9 @@ class Carousel extends React.Component<CarouselProps, any> {
               justifyContent="center"
               round={true}
               css={{
-                top: "calc(50% - 20px)",
+                borderRadius: "50%",
+                top: "calc(50% - 16px)",
                 right: -20,
-
-                [foundations.breakpoints.sm]: {
-                  display: "none",
-                },
               }}
             />
           )}
