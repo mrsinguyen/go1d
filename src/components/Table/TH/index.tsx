@@ -29,7 +29,12 @@ const TableHeaderCell: React.SFC<TableHeaderCellProps> = ({
   sortAction,
   ...props
 }: TableHeaderCellProps) => {
-  const { width, ...otherProps } = props;
+  const {
+    width = "100%",
+    flexShrink = typeof width === "string" && width.substr(-1) === "%" ? 1 : 0,
+    ...otherProps
+  } = props;
+
   return (
     <View
       element="div"
@@ -38,8 +43,8 @@ const TableHeaderCell: React.SFC<TableHeaderCellProps> = ({
       paddingY={3}
       paddingX={3}
       flexBasis={width || 0}
-      flexGrow={1}
-      flexShrink={1}
+      flexGrow={0}
+      flexShrink={flexShrink}
       borderBottom={1}
       borderColor="divide"
       {...otherProps}
