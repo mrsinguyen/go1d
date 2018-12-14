@@ -11,11 +11,17 @@ it("renders without crashing without any optional props", () => {
 it("renders without crashing with all props passed to it", () => {
   const RequestCloseMock = () => jest.fn();
 
-  render(
+  const { unmount } = render(
     <Modal title="title" isOpen={true} onRequestClose={RequestCloseMock}>
       <React.Fragment>Hello World!</React.Fragment>
     </Modal>
   );
+
+  expect(document.body.className).toMatch(/css-/);
+
+  unmount();
+
+  expect(document.body.className).toBe("");
 });
 
 it("escape closes the modal", () => {
@@ -86,4 +92,31 @@ it("clicking background closes the modal", () => {
   fireEvent.click(getByTestId("backgroundOverlay"));
 
   expect(RequestCloseMock.mock.calls.length).toBe(0);
+});
+
+it("should close modal when clicking backdrop", () => {
+  const RequestCloseMock = jest.fn();
+
+  const { getByTestId } = render(
+    <Modal
+      title="title"
+      disableBackgroundClose={false}
+      isOpen={true}
+      onRequestClose={RequestCloseMock}
+    >
+      <React.Fragment>Hello World</React.Fragment>
+    </Modal>
+  );
+
+  const modal = getByTestId("modal");
+
+  const mouseDownEvent = document.createEvent("MouseEvents");
+  mouseDownEvent.initEvent("mousedown", true, true);
+  modal.dispatchEvent(mouseDownEvent);
+
+  const clickEvent = document.createEvent("MouseEvents");
+  clickEvent.initEvent("click", true, true);
+  modal.dispatchEvent(clickEvent);
+
+  expect(RequestCloseMock).toHaveBeenCalledTimes(1);
 });
