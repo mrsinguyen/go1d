@@ -247,9 +247,6 @@ class Carousel extends React.Component<CarouselProps, any> {
               height: 0,
               background: "transparent",
             },
-            [foundations.breakpoints.sm]: {
-              overflowX: "auto",
-            },
             ...(css as object),
           }}
         >
