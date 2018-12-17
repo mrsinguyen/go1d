@@ -190,6 +190,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
           closeOnSelect={closeOnSelect}
+          showCheckboxes={true}
           id={id}
           {...props}
         />
