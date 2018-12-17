@@ -4,11 +4,14 @@ import ButtonFilled from "../ButtonFilled";
 import ButtonMinimal from "../ButtonMinimal";
 import Dropdown from "../Dropdown";
 import Theme from "../Theme";
+import View from "../View";
 import DropdownMenuItem, { Item as DropdownItem } from "./DropdownMenuItem";
 
 export interface MoreMenuProps extends ButtonProps {
-  isButtonFilled?: boolean;
   itemList: DropdownItem[];
+  loading?: boolean;
+  loader?: React.ReactElement<any>;
+  isButtonFilled?: boolean;
 }
 
 interface State {
@@ -28,7 +31,15 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
   }
 
   public render() {
-    const { isButtonFilled, itemList, size, ...props } = this.props;
+    const {
+      loading = false,
+      loader,
+      isButtonFilled,
+      itemList,
+      size,
+      ...props
+    } = this.props;
+
     const buttonProps = {
       paddingX: 4,
       "aria-label": "open menu",
@@ -36,12 +47,18 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
       marginLeft: "auto",
     };
 
+    const Loader = () => (
+      <View key={1} paddingX={4} paddingY={3}>
+        {loader}
+      </View>
+    );
+
     return (
       <Theme.Consumer>
         {({ colors, spacing }) => (
           <Dropdown
-            itemList={itemList}
-            renderFunction={DropdownMenuItem}
+            itemList={loading ? [{ title: "loader" }] : itemList}
+            renderFunction={loading ? Loader : DropdownMenuItem}
             itemToString={itemToString}
             placement="bottom-end"
             offset={isButtonFilled && `0, ${spacing[2]}, 0, 0`}
@@ -57,6 +74,7 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
                 />
               ) : (
                 <ButtonMinimal
+                  data-testid="toggle"
                   iconName="Ellipsis"
                   innerRef={ref}
                   {...buttonProps}
