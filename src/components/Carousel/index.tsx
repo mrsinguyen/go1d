@@ -242,6 +242,9 @@ class Carousel extends React.Component<CarouselProps, any> {
           css={{
             WebkitOverflowScrolling: "touch",
             overflowX: "auto",
+            [foundations.breakpoints.lg]: {
+              overflowX: "hidden",
+            },
             "::-webkit-scrollbar": {
               width: 0,
               height: 0,
