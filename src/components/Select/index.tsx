@@ -4,6 +4,7 @@ import foundations from "../../foundations";
 import Base from "../Base";
 import Icon from "../Icon";
 import Text from "../Text";
+import Checkbox from "../Checkbox";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 import Input from "./internals/Input";
@@ -25,6 +26,7 @@ export interface SelectProps extends ViewProps {
   onChange?: ({ target }) => void;
   name?: string;
   closeOnSelect?: boolean;
+  showCheckboxes?: boolean;
   size?: "sm" | "md";
 }
 
@@ -173,13 +175,15 @@ class Select extends React.Component<SelectProps, any> {
   }
 
   public handleOnBlur = () => {
+    const { closeOnSelect } = this.props;
+
     this.setState(OldState => ({
-      isFocused: OldState.overrideFocusClose ? true : false,
+      isFocused: OldState.overrideFocusClose && closeOnSelect ? true : false,
       focusedOptionIndex: null,
       focusedValue: null,
       searchValue: "",
-      overrideFocusClose: false,
       closeOverride: false,
+      overrideFocusClose: false,
     }));
 
     this.onMenuClose();
@@ -440,19 +444,16 @@ class Select extends React.Component<SelectProps, any> {
     selectState: { activeOptions, size, colors },
     child,
   }) => {
+    
     const { value: SelectedValue, focusedOptionIndex } = this.state;
-
     const getOptionBackground = (index, option) => {
       let ActiveValues = [SelectedValue];
-
       if (activeOptions) {
         ActiveValues = activeOptions;
       }
-
       if (index === focusedOptionIndex) {
         return "highlight";
       }
-
       if (
         Array.prototype.find.call(
           ActiveValues,
@@ -461,9 +462,52 @@ class Select extends React.Component<SelectProps, any> {
       ) {
         return "accent";
       }
-
       return null;
     };
+    const getActive = (option) => {
+      let ActiveValues = [SelectedValue];
+      if (activeOptions) {
+        ActiveValues = activeOptions;
+      }
+      if (
+        Array.prototype.find.call(
+          ActiveValues,
+          Element => Element === option.value
+        )
+      ) {
+        return true;
+      }
+      return false;
+    };
+
+    if (this.props.showCheckboxes) {
+      return (
+        <View
+          width={"100%"}
+          paddingY={4}
+          paddingX={child ? 6 : 4}
+          key={Option.label + "_" + Option.value + "_" + Index}
+          onMouseDown={this.handleValueSelect(Option.label, Option.value)}
+          backgroundColor={(Index === focusedOptionIndex) ? "highlight" : null}
+          flexDirection="row"
+          css={{
+            "&:hover": {
+              background: colors.highlight,
+              color: colors.default,
+              cursor: "pointer",
+            },
+            overflow: 'hidden',
+          }}
+        >
+          <Checkbox checked={getActive(Option)} id={`check_${Option.label}`} value="" />
+          <Text
+            fontSize={Sizes[size].fontSize}
+          >
+            {Option.label}
+          </Text>
+        </View>
+      );
+    }
 
     return (
       <View
@@ -516,6 +560,7 @@ class Select extends React.Component<SelectProps, any> {
       onKeyDown,
       onKeyUp,
       closeOnSelect,
+      showCheckboxes,
       error, // Do not pass down
       size = "sm",
       id,
