@@ -1,4 +1,5 @@
 import * as React from "react";
+import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import ButtonMinimal from "../ButtonMinimal";
 import Dropdown from "../Dropdown";
@@ -21,11 +22,12 @@ export interface CourseCardProps extends ViewProps {
   itemList?: DropdownItem[];
 }
 
-const backgroundStyles = (colors, passive) => {
+const hoverStyle = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
-      background: `${colors.gradients.darkWarmOverlay}, ${colors.background}`,
+      boxShadow: foundations.shadows.soft,
+      transform: "translateY(-1px)",
     };
   }
   return styles;
@@ -60,7 +62,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
               textDecoration: "none",
               width: 221,
             },
-            backgroundStyles(colors, passive),
+            hoverStyle(colors, passive),
           ]}
           {...props}
         >
