@@ -240,11 +240,14 @@ class Carousel extends React.Component<CarouselProps, any> {
           width="100%"
           data-testid="ScrollableCarousel"
           css={{
-            // "-webkit-overflow-scrolling": "touch",
             WebkitOverflowScrolling: "touch",
             overflowX: "auto",
+            [foundations.breakpoints.lg]: {
+              overflowX: "hidden",
+            },
             "::-webkit-scrollbar": {
               width: 0,
+              height: 0,
               background: "transparent",
             },
             ...(css as object),
@@ -287,7 +290,7 @@ class Carousel extends React.Component<CarouselProps, any> {
             justifyContent="center"
             css={{
               borderRadius: "50%",
-              top: "calc(50% - 16px)",
+              top: "calc(50% - 20px)",
               left: -20,
             }}
           />
@@ -305,7 +308,7 @@ class Carousel extends React.Component<CarouselProps, any> {
               round={true}
               css={{
                 borderRadius: "50%",
-                top: "calc(50% - 16px)",
+                top: "calc(50% - 20px)",
                 right: -20,
               }}
             />

@@ -101,7 +101,7 @@ class TextInput extends React.Component<TextInputProps, any> {
 
     return (
       <Theme.Consumer>
-        {({ spacing: s }) => (
+        {({ spacing: s, colors }) => (
           <View
             element="label"
             borderRadius={borderRadius}
@@ -145,6 +145,10 @@ class TextInput extends React.Component<TextInputProps, any> {
                 background: 0,
                 border: 0,
                 flexGrow: 1,
+                "::placeholder": {
+                  color: colors.contrast,
+                  opacity: 0.5,
+                },
               }}
             />
             {suffixNode}
