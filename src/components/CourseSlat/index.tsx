@@ -21,11 +21,12 @@ export interface CourseSlatProps extends ViewProps {
   passive?: boolean;
 }
 
-const backgroundStyles = (colors, passive) => {
+const hoverStyle = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
-      background: `${colors.gradients.darkWarmOverlay}, ${colors.background}`,
+      boxShadow: foundations.shadows.soft,
+      transform: "translateY(-1px)",
     };
   }
   return styles;
@@ -61,7 +62,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
               overflow: "hidden",
               textDecoration: "none",
             },
-            backgroundStyles(colors, passive),
+            hoverStyle(colors, passive),
           ]}
           {...props}
         >
