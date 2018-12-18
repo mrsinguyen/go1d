@@ -72,17 +72,13 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
 
   @autobind
   public onChange(date: Moment.Moment) {
-    if (date) {
-      safeInvoke(this.props.onChange, {
-        target: {
-          value: date && date.unix() * 1000,
-          name: this.props.name,
-          id: this.props.id,
-        },
-      });
-    } else {
-      safeInvoke(this.props.onChange, null);
-    }
+    safeInvoke(this.props.onChange, {
+      target: {
+        value: date ? date.valueOf() : null,
+        name: this.props.name,
+        id: this.props.id,
+      },
+    });
   }
 
   @autobind
@@ -250,6 +246,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
       time,
       defaultValue,
       value,
+      allowBlank,
       ...remainingProps
     } = this.props;
 
@@ -261,6 +258,9 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
             display="flex"
             css={[
               {
+                ".SingleDatePicker": {
+                  opacity: disabled ? 0.5 : 1,
+                },
                 ".DateInput": {
                   margin: 0,
                   padding: 0,
@@ -351,6 +351,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
                   color="subtle"
                 />
               }
+              disabled={disabled}
               {...remainingProps}
             />
             {this.props.time && (

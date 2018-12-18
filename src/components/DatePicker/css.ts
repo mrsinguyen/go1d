@@ -61,9 +61,6 @@ export function DatePickerCSS() {
   .SingleDatePickerInput__rtl {
     direction: rtl
   }
-  .SingleDatePickerInput__disabled {
-    background-color: #f2f2f2
-  }
   .SingleDatePickerInput__block {
     display: block
   }
@@ -627,10 +624,6 @@ export function DatePickerCSS() {
   .DateInput__block {
     width: 100%
   }
-  .DateInput__disabled {
-    background: #f2f2f2;
-    color: #dbdbdb
-  }
   .DateInput_input {
     font-weight: 200;
     font-size: 19px;
@@ -668,10 +661,6 @@ export function DatePickerCSS() {
     border-right: 0;
     border-left: 0
   }
-  .DateInput_input__disabled {
-    background: #f2f2f2;
-    font-style: italic
-  }
   .DateInput_screenReaderMessage {
     border: 0;
     clip: rect(0,0,0,0);
@@ -699,9 +688,6 @@ export function DatePickerCSS() {
   .DateRangePickerInput {
     background-color: #fff;
     display: inline-block
-  }
-  .DateRangePickerInput__disabled {
-    background: #f2f2f2
   }
   .DateRangePickerInput__withBorder {
     border-radius: 2px;
