@@ -10,20 +10,20 @@ A component that displays a datepicker.
 
 ### Basic Datepicker
 ```.jsx
-<DatePicker id="id1" />
+<DatePicker id="id1" allowBlank />
 ```
 
 
 ### Date Supplied
 ```.jsx
-<DatePicker id="id2" date={new Date("2019-06-07")}/>
+<DatePicker id="id2" date={new Date("2019-06-07")} />
 ```
 
 
 
 ### Disabled Datepicker
 ```.jsx
-<DatePicker id="id3" disabled/>
+<DatePicker id="id3" disabled />
 ```
 
 

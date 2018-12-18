@@ -39,8 +39,6 @@ it("renders and handles edge changes", () => {
   const ref: React.RefObject<DatePicker> = React.createRef();
   render(<DatePicker ref={ref} id="dp" defaultValue={date} />);
 
-  const m = moment(date);
-
   if (ref.current) {
     ref.current.changeHour({ currentTarget: { value: "5" } } as any);
     expect(ref.current.state.date.get("hour")).toBe(17);
@@ -56,4 +54,14 @@ it("renders and handles edge changes", () => {
     ref.current.handleBlur({} as any);
     expect(ref.current.state.hour).toBe("12");
   }
+});
+
+it("should display value is blank when value props is empty and allow blank", () => {
+  const date = new Date("2018-12-17T20:10:00");
+  const ref: React.RefObject<DatePicker> = React.createRef();
+  const { container } = render(
+    <DatePicker ref={ref} id="dp" defaultValue={date} allowBlank={true} />
+  );
+
+  expect(container.querySelector("#dp").getAttribute("value")).toBe("");
 });

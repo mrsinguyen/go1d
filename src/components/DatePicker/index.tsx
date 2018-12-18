@@ -20,10 +20,12 @@ export interface DatePickerProps extends ViewProps {
   defaultValue?: Date | number;
   value?: Date | number;
   time?: boolean;
+  allowBlank?: boolean;
 }
 
 export interface DatePickerState {
   date: Moment.Moment;
+  selectedDate?: Moment.Moment;
   focused: boolean;
   timeFocused: boolean;
   minute: string;
@@ -37,6 +39,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
     size: "md",
     defaultValue: new Date(),
     disabled: false,
+    allowBlank: false,
   };
 
   public static getDerivedStateFromProps(
@@ -53,10 +56,13 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
   constructor(props) {
     super(props);
 
-    const date = Moment(props.value || props.defaultValue);
+    const date = props.value
+      ? Moment(props.defaultValue)
+      : Moment(props.value || props.defaultValue);
 
     this.state = {
       date,
+      selectedDate: props.value,
       focused: false,
       timeFocused: false,
       minute: date.format("mm"),
@@ -68,7 +74,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
   public onChange(date: Moment.Moment) {
     safeInvoke(this.props.onChange, {
       target: {
-        value: date && date.unix() * 1000,
+        value: date ? date.valueOf() : null,
         name: this.props.name,
         id: this.props.id,
       },
@@ -195,7 +201,12 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
 
   @autobind
   public onDateChange(date: Moment.Moment) {
+    const { allowBlank } = this.props;
     if (!date) {
+      if (allowBlank) {
+        this.setState({ selectedDate: null });
+        this.onChange(null);
+      }
       return;
     }
     const dateWithTime = this.props.time
@@ -203,7 +214,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
           .hour(this.state.date.get("hour"))
           .minute(this.state.date.get("minute"))
       : date;
-    this.setState({ date: dateWithTime });
+    this.setState({ date: dateWithTime, selectedDate: date });
     this.onChange(date);
   }
 
@@ -235,6 +246,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
       time,
       defaultValue,
       value,
+      allowBlank,
       ...remainingProps
     } = this.props;
 
@@ -246,6 +258,9 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
             display="flex"
             css={[
               {
+                ".SingleDatePicker": {
+                  opacity: disabled ? 0.5 : 1,
+                },
                 ".DateInput": {
                   margin: 0,
                   padding: 0,
@@ -310,7 +325,11 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
             ]}
           >
             <SingleDatePicker
-              date={this.state.date}
+              date={
+                !this.state.selectedDate && this.props.allowBlank
+                  ? null
+                  : this.state.date
+              }
               onDateChange={this.onDateChange}
               focused={this.state.focused}
               onFocusChange={this.onFocusChange}
@@ -332,6 +351,7 @@ class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
                   color="subtle"
                 />
               }
+              disabled={disabled}
               {...remainingProps}
             />
             {this.props.time && (
