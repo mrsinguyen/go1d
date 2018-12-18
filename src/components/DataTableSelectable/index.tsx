@@ -11,7 +11,8 @@ interface RowRendererProps extends ListRowProps {
   checkBox: React.ReactNode;
 }
 
-export interface DataTableSelectableProps extends DataTableProps {
+export interface DataTableSelectableProps
+  extends Pick<DataTableProps, Exclude<keyof DataTableProps, "rowRenderer">> {
   /** Action to take when the button is clicked */
   mainAction?: (
     evt: {
