@@ -25,6 +25,13 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     }
   }
 
+  public componentDidUpdate() {
+    const { value } = this.props;
+    if (value !== this.state.value) {
+      this.setState({ value });
+    }
+  }
+
   public handleChange = (event: React.ChangeEvent<any>) => {
     const { onChange } = this.props;
     this.setState({ value: event.target.value });

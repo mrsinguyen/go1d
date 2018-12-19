@@ -69,7 +69,7 @@ it("Can select multiple items in the dropdown", () => {
     key: "Enter",
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
+    key: "ArrowUp",
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
