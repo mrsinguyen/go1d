@@ -2,9 +2,9 @@ import * as React from "react";
 
 import foundations from "../../foundations";
 import Base from "../Base";
+import Checkbox from "../Checkbox";
 import Icon from "../Icon";
 import Text from "../Text";
-import Checkbox from "../Checkbox";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 import Input from "./internals/Input";
@@ -192,6 +192,7 @@ class Select extends React.Component<SelectProps, any> {
   public handleOnFocus = () => {
     this.setState({
       isFocused: true,
+      closeOverride: false,
     });
 
     this.onMenuOpen();
@@ -218,14 +219,17 @@ class Select extends React.Component<SelectProps, any> {
   // Mouse Handlers
   public onMenuMouseDown = (event: React.SyntheticEvent<HTMLElement>) => {
     const { disabled } = this.props;
+    const isVisible = this.state.isFocused && !this.state.closeOverride;
+
     if (disabled) {
       return;
     }
     event.stopPropagation();
     event.preventDefault();
 
-    if (this.state.isFocused === false) {
+    if (!isVisible) {
       this.focusInput();
+      this.handleOnFocus();
     } else {
       this.blurInput();
     }
@@ -444,7 +448,6 @@ class Select extends React.Component<SelectProps, any> {
     selectState: { activeOptions, size, colors },
     child,
   }) => {
-    
     const { value: SelectedValue, focusedOptionIndex } = this.state;
     const getOptionBackground = (index, option) => {
       let ActiveValues = [SelectedValue];
@@ -464,7 +467,7 @@ class Select extends React.Component<SelectProps, any> {
       }
       return null;
     };
-    const getActive = (option) => {
+    const getActive = option => {
       let ActiveValues = [SelectedValue];
       if (activeOptions) {
         ActiveValues = activeOptions;
@@ -488,7 +491,7 @@ class Select extends React.Component<SelectProps, any> {
           paddingX={child ? 6 : 4}
           key={Option.label + "_" + Option.value + "_" + Index}
           onMouseDown={this.handleValueSelect(Option.label, Option.value)}
-          backgroundColor={(Index === focusedOptionIndex) ? "highlight" : null}
+          backgroundColor={Index === focusedOptionIndex ? "highlight" : null}
           flexDirection="row"
           css={{
             "&:hover": {
@@ -496,15 +499,15 @@ class Select extends React.Component<SelectProps, any> {
               color: colors.default,
               cursor: "pointer",
             },
-            overflow: 'hidden',
+            overflow: "hidden",
           }}
         >
-          <Checkbox checked={getActive(Option)} id={`check_${Option.label}`} value="" />
-          <Text
-            fontSize={Sizes[size].fontSize}
-          >
-            {Option.label}
-          </Text>
+          <Checkbox
+            checked={getActive(Option)}
+            id={`check_${Option.label}`}
+            value=""
+          />
+          <Text fontSize={Sizes[size].fontSize}>{Option.label}</Text>
         </View>
       );
     }
