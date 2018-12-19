@@ -48,7 +48,7 @@ const Sizes = {
 class Select extends React.Component<SelectProps, any> {
   public mounted;
 
-  public inputRef: HTMLElement = null;
+  public inputRef = React.createRef();
   constructor(props) {
     super(props);
 
@@ -169,6 +169,13 @@ class Select extends React.Component<SelectProps, any> {
       isFocused: true,
       closeOverride: false,
     });
+
+    setTimeout(() => {
+      // Focus the filter input after the current call stack.
+      if (this.inputRef.current !== null) {
+        (this.inputRef.current as any).focus();
+      }
+    }, 0);
 
     if (document) {
       document.body.addEventListener("keydown", this.onKeyDown);
@@ -333,7 +340,6 @@ class Select extends React.Component<SelectProps, any> {
     child,
   }) => {
     const { value: SelectedValue, focusedOptionIndex } = this.state;
-
     const { showCheckboxes } = this.props;
 
     const getOptionBackground = (index, option) => {
@@ -558,6 +564,7 @@ class Select extends React.Component<SelectProps, any> {
                           clearable={false}
                           size={size}
                           data-testid="searchFilterInput"
+                          innerRef={this.inputRef}
                           onChange={this.handleFilterChange}
                         />
                       </View>
