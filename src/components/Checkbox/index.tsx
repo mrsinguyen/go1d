@@ -72,6 +72,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       label,
       checked,
       error, // Do not pass
+      fontSize = 2,
       onChange, // Do not pass
       marginX,
       marginY,
@@ -118,6 +119,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               </View>
               <Text
                 color="contrast"
+                fontSize={fontSize}
                 css={{
                   paddingLeft: spacing[3],
                   alignSelf: "center",

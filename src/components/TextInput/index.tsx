@@ -106,7 +106,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             element="label"
             borderRadius={borderRadius}
             backgroundColor="background"
-            paddingX={get({ lg: 5, md: 4, sm: 1 }, size)}
+            paddingX={4}
             border={1}
             borderColor={this.getBorderColor()}
             boxShadow="inner"
@@ -119,7 +119,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             {iconName && (
               <Icon
                 name={iconName}
-                marginRight={get({ lg: 5, md: 3, sm: 1 }, size)}
+                marginRight={4}
                 size={get({ lg: 3, md: 2, sm: 1 }, size)}
                 color="subtle"
               />
@@ -130,15 +130,15 @@ class TextInput extends React.Component<TextInputProps, any> {
               type={inputType}
               rows={multiline}
               lineHeight="ui"
-              fontSize={get({ lg: 4, md: 3, sm: 1 }, size)}
-              paddingY={get({ lg: 4, md: 3, sm: 1 }, size)}
+              fontSize={get({ lg: 4, md: 3, sm: 2 }, size)}
+              paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}
               color="inherit"
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
               disabled={disabled}
               size="1"
-              {...props}
               data-testid="inputElement"
+              {...props}
               css={{
                 // get rid of default styles
                 width: "100%",

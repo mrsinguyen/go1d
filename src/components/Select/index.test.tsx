@@ -69,7 +69,7 @@ it("renders without crashing some optional props", () => {
 it("Can select an item in the dropdown with keyboard - Enter", () => {
   const ChangeMock = jest.fn();
   const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
+    <Select showCheckboxes={true} options={Options} onChange={ChangeMock} />
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
@@ -85,30 +85,6 @@ it("Can select an item in the dropdown with keyboard - Enter", () => {
 
   expect(ChangeMock.mock.calls.length).toBe(1);
   expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
-});
-
-it("Can select an item in the dropdown with keyboard - Space", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowUp",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: " ",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test");
 });
 
 it("Can select an item in the dropdown with keyboard - Tab", () => {
@@ -275,8 +251,10 @@ it("Can select a filtered option", () => {
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "2",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "2",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
@@ -296,8 +274,10 @@ it("Can select a filtered option with optgroups", () => {
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "2",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "2",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
@@ -317,17 +297,18 @@ it("Clear search filter", () => {
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "i",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "i",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "ii",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Clear",
   });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "1",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "1",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
@@ -347,14 +328,18 @@ it("Backspace in search filter", () => {
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "i",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "i",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Backspace",
   });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "1",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "1",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
@@ -374,38 +359,18 @@ it("Delete in search filter", () => {
   );
 
   fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "i",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "i",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "Delete",
   });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "1",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
-});
-
-it("Non Character keys dont show up", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} searchable={true} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Control",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "1",
+  fireEvent.change(getByTestId("searchFilterInput"), {
+    target: {
+      value: "1",
+    },
   });
   fireEvent.keyDown(getByTestId("primarySection"), {
     key: "ArrowDown",
