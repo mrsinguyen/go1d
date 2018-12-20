@@ -1,6 +1,6 @@
 import * as TWEEN from "@tweenjs/tween.js";
 import * as React from "react";
-import ContainerDimensions from "react-container-dimensions";
+import ContainerDimensions from "./internals/ContainerDimensions";
 
 import View, { ViewProps } from "../View";
 
@@ -336,6 +336,11 @@ const ExportCarousel: React.SFC<CarouselProps> = (props: CarouselProps) => (
         // Use the props for the current size
         ...RemainingProps,
         ...(breakpoints[size] || {}),
+        ...(Params.initiated === false
+          ? {
+              slidesToShow: 1,
+            }
+          : {}),
       };
 
       return <Carousel size={size} {...PassProps} />;
