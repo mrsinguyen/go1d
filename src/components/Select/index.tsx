@@ -480,12 +480,12 @@ class Select extends React.Component<SelectProps, any> {
                 pointerEvents: disabled ? "none" : "all",
                 cursor: disabled ? "initial" : "pointer",
               }}
+              boxShadow={this.state.isFocused ? "strong" : "soft"}
               {...props}
             >
               <View
                 borderRadius={2}
                 paddingX={4}
-                boxShadow={this.state.isFocused ? "strong" : "soft"}
                 backgroundColor={backgroundColor}
                 border={1}
                 data-testid="primarySection"
