@@ -16,19 +16,31 @@ export interface SearchInputProps extends TextInputProps {
 class SearchInput extends React.Component<SearchInputProps, any> {
   public state = {
     value: "",
+    lastValueProp: "",
   };
 
   public componentDidMount() {
-    const { value } = this.props;
+    const { value, defaultValue } = this.props;
     if (value) {
-      this.setState({ value });
+      this.setState({
+        value,
+        lastValueProp: value,
+      });
+    } else if (defaultValue) {
+      this.setState({
+        value: defaultValue,
+      });
     }
   }
 
   public componentDidUpdate() {
-    const { value } = this.props;
-    if (value !== this.state.value) {
-      this.setState({ value });
+    const { value: PropValue } = this.props;
+    const { lastValueProp, value: StateValue } = this.state;
+    if (PropValue !== StateValue && lastValueProp !== PropValue) {
+      this.setState({
+        value: PropValue,
+        lastValueProp: PropValue,
+      });
     }
   }
 
