@@ -1,6 +1,7 @@
 import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
+import formatPrice from "../../utils/priceFormatter";
 import Avatar from "../Avatar";
 import Icon from "../Icon";
 import Text from "../Text";
@@ -8,17 +9,19 @@ import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 
 export interface CourseSlatProps extends ViewProps {
-  courseImage?: string;
-  title?: string;
-  description?: string;
+  actionRender?: () => React.ReactChild;
   author?: string | (() => React.ReactChild);
   authorAvatar?: string;
-  duration?: number;
-  actionRender?: () => React.ReactChild;
   contentRender?: () => React.ReactChild;
+  courseImage?: string;
+  currency?: string;
+  description?: string;
+  duration?: number;
+  passive?: boolean;
+  price?: number;
+  title?: string;
   type?: string;
   typeIcon?: string;
-  passive?: boolean;
 }
 
 const hoverStyle = (colors, passive) => {
@@ -33,18 +36,20 @@ const hoverStyle = (colors, passive) => {
 };
 
 const CourseSlat: React.SFC<CourseSlatProps> = ({
+  actionRender,
+  author,
+  authorAvatar,
+  contentRender,
   courseImage,
   css,
-  title,
+  currency,
   description,
-  author,
   duration,
-  actionRender,
-  contentRender,
+  passive,
+  price,
+  title,
   type,
   typeIcon,
-  passive,
-  authorAvatar,
   ...props
 }: CourseSlatProps) => (
   <Theme.Consumer>
@@ -127,79 +132,100 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
             flexShrink={1}
             flexGrow={1}
             width="100%"
+            flexDirection="column"
+            justifyContent="space-between"
           >
-            {title && (
-              <Text
-                fontSize={3}
-                fontWeight="semibold"
-                css={{
-                  marginBottom: 8,
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  [foundations.breakpoints.sm]: {
-                    wordWrap: "break-word",
-                    whiteSpace: "initial",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    display: "-webkit-box",
-                    fontSize: foundations.type.scale.sm[2],
-                  },
-                }}
-              >
-                {title}
-              </Text>
-            )}
-            {(duration || author) && (
-              <View flexDirection="row" marginBottom={3} flexWrap="wrap">
-                {authorAvatar && (
-                  <View paddingRight={3}>
-                    <Avatar src={authorAvatar} size={1} />
-                  </View>
-                )}
-                {author && (
-                  <View paddingRight={3}>
-                    {typeof author === "string" ? (
+            <View>
+              {title && (
+                <Text
+                  fontSize={3}
+                  fontWeight="semibold"
+                  css={{
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    [foundations.breakpoints.sm]: {
+                      wordWrap: "break-word",
+                      whiteSpace: "initial",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      display: "-webkit-box",
+                      fontSize: foundations.type.scale.sm[2],
+                    },
+                  }}
+                >
+                  {title}
+                </Text>
+              )}
+              {(duration || author) && (
+                <View flexDirection="row" marginTop={3} flexWrap="wrap">
+                  {authorAvatar && (
+                    <View paddingRight={3}>
+                      <Avatar src={authorAvatar} size={1} />
+                    </View>
+                  )}
+                  {author && (
+                    <View paddingRight={3}>
+                      {typeof author === "string" ? (
+                        <Text color="subtle" fontSize={1}>
+                          {author}
+                        </Text>
+                      ) : (
+                        author()
+                      )}
+                    </View>
+                  )}
+                  {!!duration && (
+                    <View
+                      flexDirection="row"
+                      css={{
+                        [foundations.breakpoints.sm]: {
+                          display: "none",
+                        },
+                      }}
+                    >
+                      <Icon
+                        name="Clock"
+                        size={1}
+                        color="muted"
+                        marginRight={2}
+                        marginTop={1}
+                      />
                       <Text color="subtle" fontSize={1}>
-                        {author}
+                        {formatDuration(duration)}
                       </Text>
-                    ) : (
-                      author()
-                    )}
-                  </View>
-                )}
-                {!!duration && (
+                    </View>
+                  )}
+                </View>
+              )}
+            </View>
+            <View>
+              {currency &&
+                price && (
                   <View flexDirection="row">
-                    <Icon
-                      name="Clock"
-                      size={1}
-                      color="muted"
-                      marginRight={2}
-                      marginTop={1}
-                    />
-                    <Text color="subtle" fontSize={1}>
-                      {formatDuration(duration)}
+                    <Text color="accent" fontWeight="semibold">
+                      {formatPrice(currency, price)}
                     </Text>
                   </View>
                 )}
-              </View>
-            )}
-            {contentRender && contentRender()}
-            {description && (
-              <Text
-                color="subtle"
-                css={{
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  [foundations.breakpoints.sm]: {
-                    display: "none",
-                  },
-                }}
-              >
-                {description}
-              </Text>
-            )}
+              {contentRender && contentRender()}
+              {description && (
+                <Text
+                  color="subtle"
+                  marginTop={3}
+                  css={{
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    [foundations.breakpoints.sm]: {
+                      display: "none",
+                    },
+                  }}
+                >
+                  {description}
+                </Text>
+              )}
+            </View>
           </View>
           {actionRender && (
             <View
