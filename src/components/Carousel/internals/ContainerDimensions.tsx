@@ -7,12 +7,12 @@ import * as invariant from 'invariant'
 
 interface PassedParams {
   initiated: boolean;
-  top?: Number;
-  right?: Number;
-  bottom?: Number;
-  left?: Number;
-  width?: Number;
-  height?: Number;
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+  width?: number;
+  height?: number;
 }
 
 interface DimensionContainerProps {
