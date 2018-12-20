@@ -118,8 +118,6 @@ export {
   default as FeaturedTag,
 } from "./components/FeaturedTag";
 export { CTACardProps, default as CTACard } from "./components/CTACard";
-export { default as MediaList } from "./components/MediaList";
-export { default as Media } from "./components/MediaList/Media";
 export {
   DatePickerProps,
   default as DatePicker,
