@@ -84,7 +84,6 @@ pages: # NEVER rename this. I must apparently be exactly this to work
     - "tags"
   only:
     - master
-  when: manual
 
 release:npm:
   stage: npm-release
@@ -119,4 +118,4 @@ release:npm:
     - "tags"
   only:
     - master
-  when: manual
+    
