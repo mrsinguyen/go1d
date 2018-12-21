@@ -4,7 +4,7 @@ import Text from "../../Text";
 
 export interface Item extends ButtonMinimalProps {
   title: string;
-  href?: string;
+  href?: any;
   iconName?: string;
   color?: string;
   iconColor?: string;

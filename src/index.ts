@@ -122,3 +122,7 @@ export {
   DatePickerProps,
   default as DatePicker,
 } from "./components/DatePicker";
+export {
+  EditFocusModeHeaderProps,
+  default as EditFocusModeHeader,
+} from "./components/EditFocusModeHeader";
