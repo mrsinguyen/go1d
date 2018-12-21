@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FontWeight } from "../../foundations/foundation-types";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
 
@@ -6,6 +7,7 @@ export interface PillProps extends ViewProps {
   color?: string;
   textColor?: string;
   fontSize?: number;
+  fontWeight?: FontWeight;
 }
 
 const Pill: React.SFC<PillProps> = ({
@@ -13,6 +15,7 @@ const Pill: React.SFC<PillProps> = ({
   textColor = "default",
   children,
   fontSize,
+  fontWeight,
   ...props
 }: PillProps) => {
   return (
@@ -25,7 +28,7 @@ const Pill: React.SFC<PillProps> = ({
       paddingY={2}
       {...props}
     >
-      <Text color={textColor} fontSize={fontSize}>
+      <Text color={textColor} fontSize={fontSize} fontWeight={fontWeight}>
         {children}
       </Text>
     </View>
