@@ -1,5 +1,6 @@
 import { takeRight } from "lodash";
 import * as React from "react";
+import Avatar from "../Avatar";
 import ButtonFilled from "../ButtonFilled";
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
@@ -17,7 +18,7 @@ export interface EditFocusModeHeaderProps {
   title: string;
   subtitle?: string | React.ReactNode;
   avatar?: string;
-  avatarShape?: "square" | "circle";
+  avatarType?: "square" | "circle";
   tabs?: React.ReactNode;
 }
 
@@ -29,7 +30,7 @@ const FocusModeHeader = ({
   subtitle,
   title,
   avatar,
-  avatarShape = "square",
+  avatarType = "square",
   tabs,
 }: EditFocusModeHeaderProps) => (
   <React.Fragment>
@@ -49,13 +50,11 @@ const FocusModeHeader = ({
       <View flexGrow={1} alignItems="center" paddingX={6} flexDirection="row">
         {avatar && (
           <View justifyContent="center" marginRight={4}>
-            <View
-              element="img"
-              height="32px"
-              width="32px"
+            <Avatar
+              iconName="Document"
               src={avatar}
-              alt="avatar"
-              borderRadius={avatarShape === "square" ? 2 : 5}
+              size={3}
+              avatarType={avatarType}
             />
           </View>
         )}

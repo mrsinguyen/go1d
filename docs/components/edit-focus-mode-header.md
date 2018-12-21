@@ -12,7 +12,7 @@ Focus Mode Header is a minimalistic header designed to allow the content of the 
 
 ```.jsx
 <EditFocusModeHeader
-  avatar="https://via.placeholder.com/32"
+  avatar="https://cdn.vox-cdn.com/thumbor/abJntvIS6kRynnDJ-P2eAgZEu1A=/148x0:1768x1080/920x613/filters:focal(148x0:1768x1080)/cdn.vox-cdn.com/uploads/chorus_image/image/46147742/cute-success-kid-1920x1080.0.0.jpg"
   returnHref="#test"
   title="How to Sell"
   subtitle={
@@ -29,7 +29,7 @@ Focus Mode Header is a minimalistic header designed to allow the content of the 
       </View>
       <View marginRight={4}>
         <Pill
-          color="accent"
+          color="faded"
           fontSize={1}
           fontWeight="semibold"
           paddingX={3}
