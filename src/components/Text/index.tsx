@@ -18,6 +18,7 @@ export interface TextProps extends BaseProps {
   color?: string;
   textTransform?: TextTransformProperty | TextTransformProperty[];
   letterSpacing?: Tracking;
+  ellipsis?: boolean;
 }
 
 const Text: React.SFC<TextProps> = ({
@@ -33,6 +34,7 @@ const Text: React.SFC<TextProps> = ({
   textAlign,
   textTransform,
   css,
+  ellipsis = false,
   ...props
 }: TextProps) => (
   <Theme.Consumer>
@@ -53,13 +55,15 @@ const Text: React.SFC<TextProps> = ({
             lineHeight: lineHeight && type.leading[lineHeight],
             transition: transitions.subtle,
             letterSpacing: type.tracking[letterSpacing],
-            whiteSpace: "pre-wrap",
-            wordWrap: "break-word",
             fontSize: [
               type.scale.sm[fontSize],
               type.scale.md[fontSize],
               type.scale.lg[fontSize],
             ],
+            whiteSpace: ellipsis ? "nowrap" : "pre-wrap",
+            textOverflow: ellipsis ? "ellipsis" : "clip",
+            overflow: ellipsis ? "hidden" : "visible",
+            wordWrap: "break-word",
           },
           css,
         ]}
