@@ -1,3 +1,5 @@
+import TagSelector from "./components/TagSelector";
+
 export { default as foundations, generateTheme } from "./foundations";
 export { globalCSS, fontCSS, resetCSS } from "./foundations/globalCSS";
 
@@ -126,3 +128,10 @@ export {
   EditFocusModeHeaderProps,
   default as EditFocusModeHeader,
 } from "./components/EditFocusModeHeader";
+
+export {
+  BaseMultiselectProps,
+  default as BaseMultiselect,
+} from "./components/BaseMultiselect";
+
+export { default as TagSelector } from "./components/TagSelector";
