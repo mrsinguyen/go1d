@@ -211,7 +211,7 @@ class TagSelector extends React.Component<
                   </Reference>
                   {this.state.search !== "" && (
                     <Portal>
-                      <Popper placement={"bottom-end"}>
+                      <Popper placement={"bottom-start"}>
                         {({ ref, style }) => (
                           <View
                             {...getMenuProps({
@@ -228,6 +228,8 @@ class TagSelector extends React.Component<
                               paddingY={3}
                               zIndex="dropdown"
                             >
+                              {// tslint:disable-next-line:no-console
+                              console.log(ref())}
                               {filteredOptions.map((item, i) =>
                                 optionRenderer(item, i, getItemProps)
                               )}
