@@ -22,7 +22,7 @@ export interface EditFocusModeHeaderProps {
   tabs?: React.ReactNode;
 }
 
-const FocusModeHeader = ({
+const EditFocusModeHeader = ({
   returnHref,
   returnOnClick,
   headerSuffixItems,
@@ -47,7 +47,13 @@ const FocusModeHeader = ({
       >
         <Icon name={returnIconName} size={3} />
       </ButtonMinimal>
-      <View flexGrow={1} alignItems="center" paddingX={6} flexDirection="row">
+      <View
+        flexGrow={1}
+        alignItems="center"
+        paddingX={6}
+        flexDirection="row"
+        flexShrink={1}
+      >
         {avatar && (
           <View justifyContent="center" marginRight={4}>
             <Avatar
@@ -58,9 +64,14 @@ const FocusModeHeader = ({
             />
           </View>
         )}
-        <View>
+        <View flexShrink={1}>
           <View marginBottom={1}>
-            <Text fontSize={3} fontWeight="semibold" lineHeight="display">
+            <Text
+              ellipsis={true}
+              fontSize={3}
+              fontWeight="semibold"
+              lineHeight="display"
+            >
               {title}
             </Text>
           </View>
@@ -77,11 +88,8 @@ const FocusModeHeader = ({
             color="accent"
             iconName={headerSuffixItems[0].iconName}
             marginLeft={2}
-            borderBottom={1}
-            borderColor="accent"
-            marginBottom={-1}
             css={{
-              borderBottom: "1px solid accent",
+              marginBottom: "-1px", // can not use marginBottomProp as -2px is too much
               boxShadow: "none",
               ":hover, :focus": {
                 transform: "none",
@@ -123,4 +131,4 @@ const FocusModeHeader = ({
   </React.Fragment>
 );
 
-export default FocusModeHeader;
+export default EditFocusModeHeader;
