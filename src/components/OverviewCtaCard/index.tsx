@@ -76,6 +76,7 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
     zIndex={1}
     css={{
       position: "absolute",
+      right: `${foundations.spacing[0]}px`,
       [MobileDisplayBreak]: {
         position: "relative",
       },
