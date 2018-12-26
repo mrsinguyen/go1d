@@ -73,6 +73,7 @@ const FeaturedTag: React.SFC<FeaturedTagProps> = ({
           color="inherit"
           css={{
             textAlign: "center",
+            width: iconName ? "auto" : "100%",
           }}
         >
           {children}
