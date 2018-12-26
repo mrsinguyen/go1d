@@ -175,7 +175,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                 </Text>
               </View>
             )}
-            {duration && (
+            {!!duration && (
               <View flexDirection="row" paddingTop={3}>
                 <Icon
                   name="Clock"
