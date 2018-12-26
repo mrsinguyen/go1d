@@ -1,11 +1,9 @@
-import Downshift from "downshift";
 import * as React from "react";
-import { Manager, Popper, Reference } from "react-popper";
-import { ButtonMinimal, Theme } from "../..";
+import { ButtonMinimal } from "../..";
 import { autobind } from "../../utils/decorators";
 import BaseMultiselect, { BaseMultiselectProps } from "../BaseMultiselect";
-// import Dropdown from "../Dropdown";
-import Portal from "../Portal";
+
+import safeInvoke from "../../utils/safeInvoke";
 import Text from "../Text";
 import View from "../View";
 
@@ -65,11 +63,53 @@ class TagSelector extends React.Component<
     );
   }
 
-  public renderOption(option: any) {
-    return typeof option === "string" ? (
-      <Text>{option}</Text>
-    ) : (
-      <Text>{option.label}</Text>
+  public createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    const value = this.props.value || this.state.value;
+
+    const referenceValue =
+      (value.length && value[0]) ||
+      (this.props.options.length && this.props.options[0]) ||
+      this.props.valueType === "string"
+        ? "string"
+        : {};
+
+    const newValue =
+      typeof referenceValue === "string"
+        ? evt.currentTarget.dataset.value
+        : {
+            value: evt.currentTarget.dataset.value,
+            label: evt.currentTarget.dataset.value,
+          };
+
+    this.setState({
+      value: [...value, newValue],
+    });
+
+    (evt.currentTarget.value as any) = [...value, newValue];
+    safeInvoke(this.props.onCreate, evt);
+  }
+
+  public renderOption(option: any, creating = false) {
+    if (creating) {
+      return (
+        <ButtonMinimal
+          width="100%"
+          onClick={this.createNewValue}
+          data-value={option}
+          justifyContent="flex-start"
+        >
+          <Text>{option}</Text>
+        </ButtonMinimal>
+      );
+    }
+    return (
+      <ButtonMinimal width="100%" justifyContent="flex-start">
+        {typeof option === "string" ? (
+          <Text>{option}</Text>
+        ) : (
+          <Text>{option.label}</Text>
+        )}
+      </ButtonMinimal>
     );
   }
 
@@ -81,179 +121,64 @@ class TagSelector extends React.Component<
       optionRenderer = this.renderOption,
       options = [],
       disabled,
+      valueType,
     } = this.props;
 
-    const filteredOptions = options.filter(option => {
-      if (typeof option === "string") {
-        return (
-          option.includes(this.state.search) &&
-          !value.find(
-            v =>
-              typeof v === "string"
-                ? v === option
-                : v.value === option || v.label === option
-          )
-        );
-      } else {
-        return (
-          (option.value.includes(this.state.search) ||
-            option.label.includes(this.state.search)) &&
-          !value.find(
-            v =>
-              typeof v === "string"
-                ? v === option.value
-                : v.value === option.value
-          )
-        );
-      }
-    });
-
     return (
-      <Theme.Consumer>
-        {({ colors }) => (
-          <Downshift
-            // tslint:disable-next-line:jsx-no-lambda
-            itemToString={(item: any) =>
-              typeof item === "string" ? item : item.label
-            }
+      <BaseMultiselect
+        // tslint:disable-next-line:jsx-no-lambda
+        customRenderer={Select => (
+          <View
+            position="relative"
+            flexDirection="row"
+            flexWrap="wrap"
+            borderRadius={borderRadius}
+            backgroundColor="background"
+            paddingX={2}
+            paddingY={2}
+            border={1}
+            borderColor={this.getBorderColor()}
+            boxShadow="inner"
+            alignItems="center"
+            htmlFor={id}
+            opacity={disabled ? "disabled" : null}
           >
-            {({
-              getItemProps,
-              getMenuProps,
-              getRootProps,
-              isOpen,
-              ...downshiftParams
-            }) => (
-              <View {...getRootProps({ refKey: "innerRef" })}>
-                <Manager>
-                  <Reference>
-                    {({ ref }) => (
-                      <View
-                        position="relative"
-                        flexDirection="row"
-                        flexWrap="wrap"
-                        borderRadius={borderRadius}
-                        backgroundColor="background"
-                        paddingX={2}
-                        paddingY={2}
-                        border={1}
-                        innerRef={ref}
-                        borderColor={this.getBorderColor()}
-                        boxShadow="inner"
-                        alignItems="center"
-                        htmlFor={id}
-                        opacity={disabled ? "disabled" : null}
-                      >
-                        {value.map(v => (
-                          <View
-                            flexDirection="row"
-                            alignItems="center"
-                            borderRadius={borderRadius}
-                            borderColor={this.props.borderColor || "soft"}
-                            backgroundColor="background"
-                            paddingX={2}
-                            paddingY={2}
-                            marginRight={2}
-                            border={1}
-                            boxShadow="inner"
-                            data-value={typeof v === "string" ? v : v.value}
-                          >
-                            <Text fontSize={2} color="inherit">
-                              {typeof v === "string" ? v : v.label}
-                            </Text>
-                            <ButtonMinimal
-                              marginLeft={2}
-                              iconName="Cross"
-                              size="sm"
-                              round={true}
-                            />
-                          </View>
-                        ))}
-                        <Text
-                          id={id}
-                          element={"input"}
-                          placehlder="Type to "
-                          type={"text"}
-                          lineHeight="ui"
-                          fontSize={2}
-                          paddingY={2}
-                          color="inherit"
-                          onChange={this.inputChange}
-                          onFocus={this.handleFocus}
-                          onBlur={this.handleBlur}
-                          onKeyPress={this.keyPress}
-                          disabled={disabled}
-                          size="1"
-                          data-testid="inputElement"
-                          flexGrow={1}
-                          flexBasis="auto"
-                          css={{
-                            // get rid of default styles
-                            width: "auto",
-                            minWidth: "100px",
-                            background: 0,
-                            border: 0,
-                            flexGrow: 1,
-                            "::placeholder": {
-                              color: colors.contrast,
-                              opacity: 0.5,
-                            },
-                          }}
-                        />
-
-                        <BaseMultiselect
-                          options={options}
-                          value={value}
-                          css={{ display: "none" }}
-                        />
-                      </View>
-                    )}
-                  </Reference>
-                  {this.state.search !== "" && (
-                    <Portal>
-                      <Popper placement={"bottom-start"}>
-                        {({ ref, style }) => (
-                          <View
-                            {...getMenuProps({
-                              refKey: "innerRef",
-                            })}
-                          >
-                            <View
-                              backgroundColor="background"
-                              boxShadow="strong"
-                              borderRadius={3}
-                              style={style}
-                              innerRef={ref}
-                              transition="none"
-                              paddingY={3}
-                              zIndex="dropdown"
-                            >
-                              {// tslint:disable-next-line:no-console
-                              console.log(ref())}
-                              {filteredOptions.map((item, i) =>
-                                optionRenderer(item, i, getItemProps)
-                              )}
-                            </View>
-                          </View>
-                        )}
-                      </Popper>
-                    </Portal>
-                  )}
-                </Manager>
+            {value.map(v => (
+              <View
+                flexDirection="row"
+                alignItems="center"
+                borderRadius={borderRadius}
+                borderColor={this.props.borderColor || "soft"}
+                backgroundColor="background"
+                paddingX={2}
+                paddingY={2}
+                marginRight={2}
+                border={1}
+                boxShadow="inner"
+                data-value={typeof v === "string" ? v : v.value}
+              >
+                <Text fontSize={2} color="inherit">
+                  {typeof v === "string" ? v : v.label}
+                </Text>
+                <ButtonMinimal
+                  marginLeft={2}
+                  iconName="Cross"
+                  size="sm"
+                  round={true}
+                />
               </View>
-            )}
-          </Downshift>
+            ))}
+            {Select}
+          </View>
         )}
-      </Theme.Consumer>
+        value={value}
+        options={options}
+        optionRenderer={optionRenderer}
+        handleFous={this.handleFocus}
+        handleBlur={this.handleBlur}
+        valueType={valueType}
+      />
     );
-  }
-
-  private keyPress(evt: any) {
-    if (evt.which === 13) {
-      evt.preventDefault();
-    } else {
-      // TODO: trigger select or create
-    }
   }
 }
 
