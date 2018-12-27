@@ -13,19 +13,14 @@ export interface BaseMultiselectProps extends BaseProps {
   /**
    * The selected elements of the component. If an object is supplied as options, this will be the value key.
    */
-  value?: string[];
-  options: Array<{ value: string; label: string } | string>;
+  value?: Array<{ value: string; label: string }>;
+  options: Array<{ value: string; label: string }>;
   onChange?: (evt: any) => void;
 
   /**
-   * Optional function to call when a new option is created.
+   * Optional function to call when a new option is created to allow formatting the created object. If not supplied, or no value is returned, both label and value will be set to the text in the box
    */
-  onCreate?: (option: string) => void;
-  /**
-   * Explicitly define what kind of array value is. This will only be used if it cannot be inferred. Defaults to string
-   */
-
-  valueType?: "string" | "object";
+  onCreate?: (option: string) => { value: string; label: string } | void;
 
   /**
    * Whether new options may be created. Defaults to true
@@ -41,7 +36,7 @@ export interface BaseMultiselectProps extends BaseProps {
    * Option rendered. Createable = true means the option is not in the list currently.
    */
   optionRenderer?: (
-    option: { value: string; label: string } | string,
+    option: { value: string; label: string },
     highlightedIndex: any,
     createable?: boolean
   ) => React.ReactNode;
@@ -49,17 +44,16 @@ export interface BaseMultiselectProps extends BaseProps {
 
 interface State {
   search: string;
-  value: Array<{ value: string; label: string } | string>;
+  value: Array<{ value: string; label: string }>;
   focused: boolean;
 }
 
 class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   public static defaultProps = {
-    valueType: "string",
     createable: true,
   };
 
-  public state = {
+  public state: State = {
     search: "",
     value: [],
     focused: false,
@@ -102,10 +96,19 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
   @autobind
   public createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
-    if (this.props.onCreate) {
-      safeInvoke(this.props.onCreate(evt.currentTarget.dataset.value));
-    }
-    this.selectValue(evt);
+    const formattedValue = safeInvoke(
+      this.props.onCreate,
+      evt.currentTarget.dataset.value
+    ) || {
+      value: evt.currentTarget.dataset.value,
+      label: evt.currentTarget.dataset.value,
+    };
+
+    this.selectValue({
+      currentTarget: {
+        dataset: formattedValue,
+      },
+    } as any);
   }
 
   @autobind
@@ -113,20 +116,32 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
     const value = this.props.value || this.state.value;
 
     this.setState({
-      value: [...value, evt.currentTarget.dataset.value],
+      value: [
+        ...value,
+        {
+          value: evt.currentTarget.dataset.value,
+          label: evt.currentTarget.dataset.label,
+        },
+      ],
       search: "",
     });
 
     safeInvoke(this.props.onChange, {
       target: {
         name: this.props.name,
-        value: [...value, evt.currentTarget.dataset.value],
+        value: [
+          ...value,
+          {
+            value: evt.currentTarget.dataset.value,
+            label: evt.currentTarget.dataset.label,
+          },
+        ],
       },
     });
   }
 
   public renderOption(
-    option: { value: string; label: string } | string,
+    option: { value: string; label: string },
     downshiftProps,
     creating = false
   ) {
@@ -139,7 +154,8 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
             : undefined
         }
         onClick={creating ? this.createNewValue : this.selectValue}
-        data-value={typeof option === "string" ? option : option.value}
+        data-value={option.value}
+        data-label={option.label}
         justifyContent="flex-start"
       >
         {this.props.optionRenderer(option, downshiftProps, creating)}
@@ -150,9 +166,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   @autobind
   public handleSelect(option: string) {
     const value = this.props.value || this.state.value;
-    const existingValue = !!value.find(
-      v => (typeof v === "string" ? v !== option : v.value !== option)
-    );
+    const existingValue = !!value.find(v => v.value !== option);
 
     const evtOption = {
       currentTarget: {
@@ -174,10 +188,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
     const value = this.props.value || this.state.value;
     const valueToDelete = evt.currentTarget.dataset.value;
 
-    const newValue = value.filter(
-      v =>
-        typeof v === "string" ? v !== valueToDelete : v.value !== valueToDelete
-    );
+    const newValue = value.filter(v => v.value !== valueToDelete);
 
     this.setState({ value: newValue });
 
@@ -204,61 +215,33 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
       ...props
     } = this.props;
 
-    const filteredOptions = options.filter(option => {
-      if (typeof option === "string") {
-        return (
-          option.includes(this.state.search) &&
-          !value.find(
-            v =>
-              typeof v === "string"
-                ? v === option
-                : v.value === option || v.label === option
-          )
-        );
-      } else {
-        return (
-          (option.value.includes(this.state.search) ||
-            option.label.includes(this.state.search)) &&
-          !value.find(
-            v =>
-              typeof v === "string"
-                ? v === option.value
-                : v.value === option.value
-          )
-        );
-      }
-    });
+    const filteredOptions = options.filter(
+      option =>
+        (option.value.includes(this.state.search) ||
+          option.label.includes(this.state.search)) &&
+        !value.find(v => v.value === option.value)
+    );
 
     const createAvailable =
       this.props.createable &&
       this.state.search !== "" &&
-      !value.find(
-        v =>
-          typeof v === "string"
-            ? v === this.state.search
-            : v.value === this.state.search
-      ) &&
-      !filteredOptions.find(
-        v =>
-          typeof v === "string"
-            ? v === this.state.search
-            : v.value === this.state.search
-      );
+      !value.find(v => v.value === this.state.search) &&
+      !filteredOptions.find(v => v.value === this.state.search);
+
+    const itemToString = (item: any) => item && item.label;
 
     return (
       <Theme.Consumer>
         {({ colors }) => (
           <Downshift
             // tslint:disable-next-line:jsx-no-lambda
-            itemToString={(item: any) =>
-              item && (typeof item === "string" ? item : item.label)
-            }
+            itemToString={itemToString}
             isOpen={
               !this.props.disabled &&
               this.state.focused === true &&
               (filteredOptions.length > 0 || createAvailable)
             }
-            onOuterClick={this.handleClickOuter}
+            // onOuterClick={this.handleClickOuter}
             onSelect={this.handleSelect}
           >
             {({

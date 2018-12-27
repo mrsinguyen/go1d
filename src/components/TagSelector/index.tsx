@@ -6,15 +6,14 @@ import BaseMultiselect, { BaseMultiselectProps } from "../BaseMultiselect";
 import Text from "../Text";
 import View from "../View";
 
-class TagSelector extends React.Component<
-  BaseMultiselectProps,
-  {
-    value: Array<{ value: string; label: string } | string>;
-    isFocused: boolean;
-    search: string;
-  }
-> {
-  public state = {
+interface State {
+  value: Array<{ value: string; label: string }>;
+  isFocused: boolean;
+  search: string;
+}
+
+class TagSelector extends React.Component<BaseMultiselectProps, State> {
+  public state: State = {
     value: [],
     isFocused: false,
     search: "",
@@ -55,7 +54,7 @@ class TagSelector extends React.Component<
 
   @autobind
   public renderOption(
-    option: { value: string; label: string } | string,
+    option: { value: string; label: string },
     downshiftProps,
     creating = false
   ) {
@@ -63,11 +62,8 @@ class TagSelector extends React.Component<
       return <Text>{`Create new tag "${option}"`}</Text>;
     }
 
-    const suppliedValue = typeof option === "string" ? option : option.value;
-
     const optionToRender = this.props.options.find(
-      o =>
-        typeof o === "string" ? suppliedValue === o : o.value === suppliedValue
+      o => o.value === option.value
     );
 
     return (
