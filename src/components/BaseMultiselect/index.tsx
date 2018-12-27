@@ -13,7 +13,7 @@ export interface BaseMultiselectProps extends BaseProps {
   /**
    * The selected elements of the component. If an object is supplied as options, this will be the value key.
    */
-  value: string[];
+  value?: string[];
   options: Array<{ value: string; label: string } | string>;
   onChange?: (evt: any) => void;
 
@@ -25,7 +25,7 @@ export interface BaseMultiselectProps extends BaseProps {
    * Explicitly define what kind of array value is. This will only be used if it cannot be inferred. Defaults to string
    */
 
-  valueType: "string" | "object";
+  valueType?: "string" | "object";
 
   /**
    * Whether new options may be created. Defaults to true
@@ -127,19 +127,46 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
   public renderOption(
     option: { value: string; label: string } | string,
-    highlightedIndex,
+    downshiftProps,
     creating = false
   ) {
     return (
       <ButtonMinimal
         width="100%"
+        backgroundColor={
+          downshiftProps.highlightedIndex === downshiftProps.index
+            ? "faint"
+            : undefined
+        }
         onClick={creating ? this.createNewValue : this.selectValue}
         data-value={typeof option === "string" ? option : option.value}
         justifyContent="flex-start"
       >
-        {this.props.optionRenderer(option, highlightedIndex, creating)}
+        {this.props.optionRenderer(option, downshiftProps, creating)}
       </ButtonMinimal>
     );
+  }
+
+  @autobind
+  public handleSelect(option: string) {
+    const value = this.props.value || this.state.value;
+    const existingValue = !!value.find(
+      v => (typeof v === "string" ? v !== option : v.value !== option)
+    );
+
+    const evtOption = {
+      currentTarget: {
+        dataset: {
+          value: option,
+        },
+      },
+    };
+
+    if (existingValue) {
+      this.selectValue(evtOption as any);
+    } else {
+      this.createNewValue(evtOption as any);
+    }
   }
 
   @autobind
@@ -232,9 +259,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
               (filteredOptions.length > 0 || createAvailable)
             }
             onOuterClick={this.handleClickOuter}
-            // highlightedIndex={-1}
-            // tslint:disable-next-line:no-console
-            onSelect={console.log}
+            onSelect={this.handleSelect}
           >
             {({
               getItemProps,
@@ -243,6 +268,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
               isOpen,
               highlightedIndex,
               getInputProps,
+              selectedItem,
               ...downshiftParams
             }) => (
               <View
@@ -258,10 +284,12 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                             <SelectInput
                               {...props}
                               {...getInputProps()}
+                              parentListeners={{
+                                onChange: this.inputChange,
+                                handleBlur: this.handleBlur,
+                                handleFocus: this.handleFocus,
+                              }}
                               colors={colors}
-                              handleBlur={this.handleBlur}
-                              handleFocus={this.handleFocus}
-                              inputChange={this.inputChange}
                               keyPress={this.keyPress}
                               name={this.props.name}
                               disabled={this.props.disabled}
@@ -272,9 +300,11 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                           <SelectInput
                             {...props}
                             {...getInputProps()}
-                            handleBlur={this.handleBlur}
-                            handleFocus={this.handleFocus}
-                            inputChange={this.inputChange}
+                            parentListeners={{
+                              onChange: this.inputChange,
+                              handleBlur: this.handleBlur,
+                              handleFocus: this.handleFocus,
+                            }}
                             keyPress={this.keyPress}
                             colors={colors}
                             ref={ref}
@@ -316,10 +346,11 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                   {
                                     ...getItemProps({
                                       key: this.state.search,
-                                      index: -1,
+                                      index: 0,
                                       item: this.state.search,
                                     }),
                                     highlightedIndex,
+                                    index: 0,
                                   },
                                   true
                                 )}
@@ -330,9 +361,10 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                       typeof item === "string"
                                         ? item
                                         : item.value,
-                                    index,
+                                    index: createAvailable ? index + 1 : index,
                                     item,
                                   }),
+                                  index: createAvailable ? index + 1 : index,
                                   highlightedIndex,
                                 })
                               )}
@@ -353,9 +385,8 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
   private keyPress(evt: any) {
     if (evt.which === 13) {
+      // Stop the form submitting
       evt.preventDefault();
-    } else {
-      // TODO: trigger select or create
     }
   }
 }
@@ -365,51 +396,61 @@ const SelectInput: React.SFC<any> = ({
   disabled,
   colors,
   ref,
-  handleBlur,
-  handleFocus,
-  inputChange,
+  parentListeners,
   keyPress,
   name,
   value,
   ...props
-}) => (
-  <Text
-    {...props}
-    id={id}
-    element={"input"}
-    placehlder="Type to "
-    type={"text"}
-    lineHeight="ui"
-    fontSize={2}
-    paddingY={2}
-    color="inherit"
-    value={value}
-    // tslint:disable-next-line:jsx-no-lambda
-    onChange={(evt: any) => {
-      inputChange(evt);
-      props.onChange(evt);
-    }}
-    onFocus={handleFocus}
-    onBlur={handleBlur}
-    onKeyPress={keyPress}
-    disabled={disabled}
-    size="1"
-    innerRef={ref || undefined}
-    data-testid="inputElement"
-    name={name}
-    css={{
-      // get rid of default styles
-      width: "auto",
-      minWidth: "100px",
-      background: 0,
-      border: 0,
-      flexGrow: 1,
-      "::placeholder": {
-        color: colors.contrast,
-        opacity: 0.5,
-      },
-    }}
-  />
-);
+}) => {
+  const onChange = (evt: any) => {
+    safeInvoke(parentListeners.onChange, evt);
+    safeInvoke(props.onChange, evt);
+  };
+
+  const handleFocus = (evt: any) => {
+    safeInvoke(parentListeners.handleFocus, evt);
+    safeInvoke(props.handleFocus, evt);
+  };
+  const handleBlur = (evt: any) => {
+    safeInvoke(parentListeners.handleBlur, evt);
+    safeInvoke(props.handleBlur, evt);
+  };
+
+  return (
+    <Text
+      {...props}
+      id={id}
+      element={"input"}
+      placehlder="Type to "
+      type={"text"}
+      lineHeight="ui"
+      fontSize={2}
+      paddingY={2}
+      color="inherit"
+      value={value}
+      onChange={onChange}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onKeyPress={keyPress}
+      disabled={disabled}
+      size="1"
+      innerRef={ref || undefined}
+      data-testid="inputElement"
+      name={name}
+      css={{
+        // get rid of default styles
+        width: "auto",
+        minWidth: "100px",
+        background: 0,
+        border: 0,
+        flexGrow: 1,
+        "::placeholder": {
+          color: colors.contrast,
+          opacity: 0.5,
+        },
+      }}
+    />
+  );
+};
 
 export default BaseMultiselect;

@@ -56,7 +56,7 @@ class TagSelector extends React.Component<
   @autobind
   public renderOption(
     option: { value: string; label: string } | string,
-    highlightedIndex,
+    downshiftProps,
     creating = false
   ) {
     if (creating) {
@@ -153,7 +153,7 @@ class TagSelector extends React.Component<
         value={value}
         options={options}
         optionRenderer={optionRenderer}
-        handleFous={this.handleFocus}
+        handleFocus={this.handleFocus}
         handleBlur={this.handleBlur}
         valueType={valueType}
         {...props}
