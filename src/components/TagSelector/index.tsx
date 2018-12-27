@@ -7,7 +7,7 @@ import Text from "../Text";
 import View from "../View";
 
 interface State {
-  value: Array<{ value: string; label: string }>;
+  value: string[];
   isFocused: boolean;
   search: string;
 }
@@ -53,26 +53,12 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
   }
 
   @autobind
-  public renderOption(
-    option: { value: string; label: string },
-    downshiftProps,
-    creating = false
-  ) {
+  public renderOption(option: string, downshiftProps, creating = false) {
     if (creating) {
       return <Text>{`Create new tag "${option}"`}</Text>;
     }
 
-    const optionToRender = this.props.options.find(
-      o => o.value === option.value
-    );
-
-    return (
-      <Text>
-        {typeof optionToRender === "string"
-          ? optionToRender
-          : optionToRender.label}
-      </Text>
-    );
+    return <Text>{option}</Text>;
   }
 
   @autobind
@@ -108,17 +94,17 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
             marginRight={2}
             border={1}
             boxShadow="inner"
-            data-value={typeof v === "string" ? v : v.value}
+            data-value={v}
           >
             <Text fontSize={2} color="inherit">
-              {typeof v === "string" ? v : v.label}
+              {v}
             </Text>
             <ButtonMinimal
               marginLeft={2}
               iconName="Cross"
               size="sm"
               round={true}
-              data-value={typeof v === "string" ? v : v.value}
+              data-value={v}
               onClick={
                 this.target.current ? this.target.current.handleDelete : null
               }

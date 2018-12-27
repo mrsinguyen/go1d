@@ -13,14 +13,14 @@ export interface BaseMultiselectProps extends BaseProps {
   /**
    * The selected elements of the component. If an object is supplied as options, this will be the value key.
    */
-  value?: Array<{ value: string; label: string }>;
-  options: Array<{ value: string; label: string }>;
+  value?: string[];
+  options: string[];
   onChange?: (evt: any) => void;
 
   /**
-   * Optional function to call when a new option is created to allow formatting the created object. If not supplied, or no value is returned, both label and value will be set to the text in the box
+   * Optional function to call when a new option is created. Returns a promise to allow for asynchronous actions to finish before continuing
    */
-  onCreate?: (option: string) => { value: string; label: string } | void;
+  onCreate?: (option: string) => Promise<any>;
 
   /**
    * Whether new options may be created. Defaults to true
@@ -36,7 +36,7 @@ export interface BaseMultiselectProps extends BaseProps {
    * Option rendered. Createable = true means the option is not in the list currently.
    */
   optionRenderer?: (
-    option: { value: string; label: string },
+    option: string,
     highlightedIndex: any,
     createable?: boolean
   ) => React.ReactNode;
@@ -44,7 +44,7 @@ export interface BaseMultiselectProps extends BaseProps {
 
 interface State {
   search: string;
-  value: Array<{ value: string; label: string }>;
+  value: string[];
   focused: boolean;
 }
 
@@ -95,18 +95,21 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   }
 
   @autobind
-  public createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
-    const formattedValue = safeInvoke(
+  public async createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    const promise = safeInvoke(
       this.props.onCreate,
       evt.currentTarget.dataset.value
-    ) || {
-      value: evt.currentTarget.dataset.value,
-      label: evt.currentTarget.dataset.value,
-    };
+    );
+
+    if (promise) {
+      await promise;
+    }
 
     this.selectValue({
       currentTarget: {
-        dataset: formattedValue,
+        dataset: {
+          value: evt.currentTarget.dataset.value,
+        },
       },
     } as any);
   }
@@ -116,35 +119,19 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
     const value = this.props.value || this.state.value;
 
     this.setState({
-      value: [
-        ...value,
-        {
-          value: evt.currentTarget.dataset.value,
-          label: evt.currentTarget.dataset.label,
-        },
-      ],
+      value: [...value, evt.currentTarget.dataset.value],
       search: "",
     });
 
     safeInvoke(this.props.onChange, {
       target: {
         name: this.props.name,
-        value: [
-          ...value,
-          {
-            value: evt.currentTarget.dataset.value,
-            label: evt.currentTarget.dataset.label,
-          },
-        ],
+        value: [...value, evt.currentTarget.dataset.value],
       },
     });
   }
 
-  public renderOption(
-    option: { value: string; label: string },
-    downshiftProps,
-    creating = false
-  ) {
+  public renderOption(option: string, downshiftProps, creating = false) {
     return (
       <ButtonMinimal
         width="100%"
@@ -154,8 +141,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
             : undefined
         }
         onClick={creating ? this.createNewValue : this.selectValue}
-        data-value={option.value}
-        data-label={option.label}
+        data-value={option}
         justifyContent="flex-start"
       >
         {this.props.optionRenderer(option, downshiftProps, creating)}
@@ -166,7 +152,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   @autobind
   public handleSelect(option: string) {
     const value = this.props.value || this.state.value;
-    const existingValue = !!value.find(v => v.value !== option);
+    const existingValue = !!value.find(v => v !== option);
 
     const evtOption = {
       currentTarget: {
@@ -188,9 +174,9 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
     const value = this.props.value || this.state.value;
     const valueToDelete = evt.currentTarget.dataset.value;
 
-    const newValue = value.filter(v => v.value !== valueToDelete);
+    const newValue = value.filter(v => v !== valueToDelete);
 
-    this.setState({ value: newValue });
+    this.setState({ value: newValue, focused: false });
 
     safeInvoke(this.props.onChange, {
       target: {
@@ -217,31 +203,36 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
     const filteredOptions = options.filter(
       option =>
-        (option.value.includes(this.state.search) ||
-          option.label.includes(this.state.search)) &&
-        !value.find(v => v.value === option.value)
+        option.includes(this.state.search) && !value.find(v => v === option)
     );
 
     const createAvailable =
       this.props.createable &&
       this.state.search !== "" &&
-      !value.find(v => v.value === this.state.search) &&
-      !filteredOptions.find(v => v.value === this.state.search);
+      !value.find(v => v === this.state.search) &&
+      !filteredOptions.find(v => v === this.state.search);
 
-    const itemToString = (item: any) => item && item.label;
+    const itemToString = (item: any) => item;
 
     return (
       <Theme.Consumer>
         {({ colors }) => (
           <Downshift
-            // tslint:disable-next-line:jsx-no-lambda
+            // defaultHighlightedIndex={0}
             itemToString={itemToString}
-            isOpen={
-              !this.props.disabled &&
-              this.state.focused === true &&
-              (filteredOptions.length > 0 || createAvailable)
-            }
-            // onOuterClick={this.handleClickOuter}
+            // defaultIsOpen={true}
+            // isOpen={
+            //   !this.props.disabled &&
+            //   this.state.focused === true &&
+            //   (filteredOptions.length > 0 || createAvailable)
+            // }
+            // tslint:disable-next-line:no-console
+            // onOuterClick={console.log}
+            // tslint:disable
+            // stateReducer={(state, changes) => {
+            //   console.log(state, changes);
+            //   return changes;
+            // }}
             onSelect={this.handleSelect}
           >
             {({
@@ -299,64 +290,65 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                       </View>
                     )}
                   </Reference>
-                  {isOpen && (
-                    <Portal>
-                      <Popper placement={"bottom-start"}>
-                        {({ ref, style }) => (
-                          <View
-                            {...getMenuProps({
-                              refKey: "innerRef",
-                            })}
-                          >
+                  {isOpen &&
+                    !this.props.disabled &&
+                    (filteredOptions.length > 0 || createAvailable) && (
+                      <Portal>
+                        <Popper placement={"bottom-start"}>
+                          {({ ref, style }) => (
                             <View
-                              backgroundColor="background"
-                              boxShadow="strong"
-                              borderRadius={3}
-                              style={{
-                                ...style,
-                                width: this.target.current
-                                  ? this.target.current.offsetWidth
-                                  : "auto",
-                              }}
-                              innerRef={ref}
-                              transition="none"
-                              paddingY={3}
-                              zIndex="dropdown"
+                              {...getMenuProps({
+                                refKey: "innerRef",
+                              })}
                             >
-                              {createAvailable &&
-                                this.renderOption(
-                                  this.state.search,
-                                  {
-                                    ...getItemProps({
-                                      key: this.state.search,
+                              <View
+                                backgroundColor="background"
+                                boxShadow="strong"
+                                borderRadius={3}
+                                style={{
+                                  ...style,
+                                  width: this.target.current
+                                    ? this.target.current.offsetWidth
+                                    : "auto",
+                                }}
+                                innerRef={ref}
+                                transition="none"
+                                paddingY={3}
+                                zIndex="dropdown"
+                              >
+                                {createAvailable &&
+                                  this.renderOption(
+                                    this.state.search,
+                                    {
+                                      ...getItemProps({
+                                        key: this.state.search,
+                                        index: 0,
+                                        item: this.state.search,
+                                      }),
+                                      highlightedIndex,
                                       index: 0,
-                                      item: this.state.search,
+                                    },
+                                    true
+                                  )}
+                                {filteredOptions.map((item, index) =>
+                                  this.renderOption(item, {
+                                    ...getItemProps({
+                                      key: item,
+                                      index: createAvailable
+                                        ? index + 1
+                                        : index,
+                                      item,
                                     }),
-                                    highlightedIndex,
-                                    index: 0,
-                                  },
-                                  true
-                                )}
-                              {filteredOptions.map((item, index) =>
-                                this.renderOption(item, {
-                                  ...getItemProps({
-                                    key:
-                                      typeof item === "string"
-                                        ? item
-                                        : item.value,
                                     index: createAvailable ? index + 1 : index,
-                                    item,
-                                  }),
-                                  index: createAvailable ? index + 1 : index,
-                                  highlightedIndex,
-                                })
-                              )}
+                                    highlightedIndex,
+                                  })
+                                )}
+                              </View>
                             </View>
-                          </View>
-                        )}
-                      </Popper>
-                    </Portal>
-                  )}
+                          )}
+                        </Popper>
+                      </Portal>
+                    )}
                 </Manager>
               </View>
             )}
