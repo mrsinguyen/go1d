@@ -90,6 +90,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
           <ButtonMinimal
             iconName="Cross"
             color="accent"
+            backgroundColor="transparent"
             data-testid="clearButton"
             aria-label="Clear Icon"
             display={clearable && this.state.value ? "block" : "none"}
