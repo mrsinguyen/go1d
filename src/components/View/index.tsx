@@ -59,6 +59,7 @@ function getWidth(n) {
   if (!n) {
     return null;
   }
+
   if (Array.isArray(n)) {
     return n.map(getWidth);
   }
@@ -93,7 +94,7 @@ const View: React.SFC<ViewProps> = ({
   width,
   minHeight = 0,
   height,
-  maxWidth,
+  maxWidth = "100%",
   zIndex,
   boxShadow,
   textAlign = "inherit",
@@ -130,7 +131,7 @@ const View: React.SFC<ViewProps> = ({
                 opacity: opacities[opacity],
                 height,
                 width: getWidth(width),
-                maxWidth: getWidth(maxWidth),
+                maxWidth: maxWidth ? getWidth(maxWidth) : "100%",
                 zIndex: zi[zIndex] || zIndex,
                 // fix flexbox bugs
                 minHeight,

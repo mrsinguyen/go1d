@@ -10,6 +10,7 @@ export interface AvatarProps extends ViewProps {
   scaleSize?: number;
   src?: string;
   iconName?: string;
+  avatarType?: "circle" | "square";
 }
 
 const Avatar: React.SFC<AvatarProps> = ({
@@ -18,6 +19,7 @@ const Avatar: React.SFC<AvatarProps> = ({
   size = 6,
   scaleSize = 1,
   iconName = "User",
+  avatarType = "circle",
   ...props
 }: AvatarProps) => {
   const names = `${fullName}`.split(" ");
@@ -90,7 +92,7 @@ const Avatar: React.SFC<AvatarProps> = ({
                 backgroundSize: "cover",
                 backgroundImage: `url('${src}')`,
                 backgroundPosition: "center",
-                borderRadius: "50%",
+                borderRadius: `${avatarType === "square" ? 3 : "50%"}`,
                 ...Object.keys(breakpoints).reduce(
                   (acc, bpKey) => ({
                     ...acc,
