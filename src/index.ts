@@ -1,5 +1,3 @@
-import TagSelector from "./components/TagSelector";
-
 export { default as foundations, generateTheme } from "./foundations";
 export { globalCSS, fontCSS, resetCSS } from "./foundations/globalCSS";
 

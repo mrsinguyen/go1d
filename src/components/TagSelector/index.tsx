@@ -3,7 +3,6 @@ import { ButtonMinimal } from "../..";
 import { autobind } from "../../utils/decorators";
 import BaseMultiselect, { BaseMultiselectProps } from "../BaseMultiselect";
 
-import safeInvoke from "../../utils/safeInvoke";
 import Text from "../Text";
 import View from "../View";
 
@@ -20,6 +19,8 @@ class TagSelector extends React.Component<
     isFocused: false,
     search: "",
   };
+
+  private target: React.RefObject<BaseMultiselect> = React.createRef();
 
   @autobind
   public inputChange(evt: React.SyntheticEvent<HTMLInputElement>) {
@@ -52,131 +53,110 @@ class TagSelector extends React.Component<
     this.setState({ isFocused: false });
   }
 
-  public createChildren({ ref, getToggleButtonProps }: any) {
+  @autobind
+  public renderOption(
+    option: { value: string; label: string } | string,
+    highlightedIndex,
+    creating = false
+  ) {
+    if (creating) {
+      return <Text>{`Create new tag "${option}"`}</Text>;
+    }
+
+    const suppliedValue = typeof option === "string" ? option : option.value;
+
+    const optionToRender = this.props.options.find(
+      o =>
+        typeof o === "string" ? suppliedValue === o : o.value === suppliedValue
+    );
+
     return (
-      <ButtonMinimal
-        data-testid="toggle"
-        iconName="Ellipsis"
-        innerRef={ref}
-        {...getToggleButtonProps()}
-      />
+      <Text>
+        {typeof optionToRender === "string"
+          ? optionToRender
+          : optionToRender.label}
+      </Text>
     );
   }
 
-  public createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
-    const value = this.props.value || this.state.value;
+  @autobind
+  public renderSelect(Select: React.ReactNode) {
+    const { value = this.state.value, borderRadius, id, disabled } = this.props;
 
-    const referenceValue =
-      (value.length && value[0]) ||
-      (this.props.options.length && this.props.options[0]) ||
-      this.props.valueType === "string"
-        ? "string"
-        : {};
-
-    const newValue =
-      typeof referenceValue === "string"
-        ? evt.currentTarget.dataset.value
-        : {
-            value: evt.currentTarget.dataset.value,
-            label: evt.currentTarget.dataset.value,
-          };
-
-    this.setState({
-      value: [...value, newValue],
-    });
-
-    (evt.currentTarget.value as any) = [...value, newValue];
-    safeInvoke(this.props.onCreate, evt);
-  }
-
-  public renderOption(option: any, creating = false) {
-    if (creating) {
-      return (
-        <ButtonMinimal
-          width="100%"
-          onClick={this.createNewValue}
-          data-value={option}
-          justifyContent="flex-start"
-        >
-          <Text>{option}</Text>
-        </ButtonMinimal>
-      );
-    }
     return (
-      <ButtonMinimal width="100%" justifyContent="flex-start">
-        {typeof option === "string" ? (
-          <Text>{option}</Text>
-        ) : (
-          <Text>{option.label}</Text>
-        )}
-      </ButtonMinimal>
+      <View
+        position="relative"
+        flexDirection="row"
+        flexWrap="wrap"
+        borderRadius={borderRadius}
+        backgroundColor="background"
+        paddingX={2}
+        paddingY={2}
+        border={1}
+        borderColor={this.getBorderColor()}
+        boxShadow="inner"
+        alignItems="center"
+        htmlFor={id}
+        opacity={disabled ? "disabled" : null}
+      >
+        {value.map((v, i) => (
+          <View
+            key={i}
+            flexDirection="row"
+            alignItems="center"
+            borderRadius={borderRadius}
+            borderColor={this.props.borderColor || "soft"}
+            backgroundColor="background"
+            paddingX={2}
+            paddingY={2}
+            marginRight={2}
+            border={1}
+            boxShadow="inner"
+            data-value={typeof v === "string" ? v : v.value}
+          >
+            <Text fontSize={2} color="inherit">
+              {typeof v === "string" ? v : v.label}
+            </Text>
+            <ButtonMinimal
+              marginLeft={2}
+              iconName="Cross"
+              size="sm"
+              round={true}
+              data-value={typeof v === "string" ? v : v.value}
+              onClick={
+                this.target.current ? this.target.current.handleDelete : null
+              }
+            />
+          </View>
+        ))}
+        {Select}
+      </View>
     );
   }
 
   public render() {
     const {
       value = this.state.value,
-      borderRadius,
-      id,
       optionRenderer = this.renderOption,
       options = [],
-      disabled,
       valueType,
+      borderRadius,
+      id,
+      disabled,
+      ...props
     } = this.props;
 
     return (
       <BaseMultiselect
-        // tslint:disable-next-line:jsx-no-lambda
-        customRenderer={Select => (
-          <View
-            position="relative"
-            flexDirection="row"
-            flexWrap="wrap"
-            borderRadius={borderRadius}
-            backgroundColor="background"
-            paddingX={2}
-            paddingY={2}
-            border={1}
-            borderColor={this.getBorderColor()}
-            boxShadow="inner"
-            alignItems="center"
-            htmlFor={id}
-            opacity={disabled ? "disabled" : null}
-          >
-            {value.map(v => (
-              <View
-                flexDirection="row"
-                alignItems="center"
-                borderRadius={borderRadius}
-                borderColor={this.props.borderColor || "soft"}
-                backgroundColor="background"
-                paddingX={2}
-                paddingY={2}
-                marginRight={2}
-                border={1}
-                boxShadow="inner"
-                data-value={typeof v === "string" ? v : v.value}
-              >
-                <Text fontSize={2} color="inherit">
-                  {typeof v === "string" ? v : v.label}
-                </Text>
-                <ButtonMinimal
-                  marginLeft={2}
-                  iconName="Cross"
-                  size="sm"
-                  round={true}
-                />
-              </View>
-            ))}
-            {Select}
-          </View>
-        )}
+        ref={this.target}
+        customRenderer={this.renderSelect}
         value={value}
         options={options}
         optionRenderer={optionRenderer}
         handleFous={this.handleFocus}
         handleBlur={this.handleBlur}
         valueType={valueType}
+        {...props}
       />
     );
   }
