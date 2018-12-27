@@ -151,9 +151,11 @@ class TextInput extends React.Component<TextInputProps, any> {
                 },
               }}
             />
-            <View backgroundColor="transparent" marginRight={4}>
-              {suffixNode}
-            </View>
+            {suffixNode && (
+              <View backgroundColor="transparent" marginRight={4}>
+                {suffixNode}
+              </View>
+            )}
           </View>
         )}
       </Theme.Consumer>
