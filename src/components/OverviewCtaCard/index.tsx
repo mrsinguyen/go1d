@@ -138,14 +138,14 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
       paddingX={5}
       paddingTop={3}
       paddingBottom={4}
-      flexDirection="row"
+      flexDirection="column"
       justifyContent="space-between"
       flexGrow={1}
       flexShrink={2}
       css={{
         display: "none",
         [MobileDisplayBreak]: {
-          display: "block",
+          display: "flex",
         },
       }}
     >
@@ -191,6 +191,8 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
             <Text marginLeft={3} fontSize={1}>pp</Text>
           </View>
         )}
+      {metaData}
+      {children && <View marginTop={3}>{children}</View>}
     </View>
     {ctaButton && (
       <View
