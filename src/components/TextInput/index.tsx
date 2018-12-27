@@ -106,7 +106,6 @@ class TextInput extends React.Component<TextInputProps, any> {
             element="label"
             borderRadius={borderRadius}
             backgroundColor="background"
-            paddingX={4}
             border={1}
             borderColor={this.getBorderColor()}
             boxShadow="inner"
@@ -131,6 +130,7 @@ class TextInput extends React.Component<TextInputProps, any> {
               rows={multiline}
               lineHeight="ui"
               fontSize={get({ lg: 4, md: 3, sm: 2 }, size)}
+              paddingX={4}
               paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}
               color="inherit"
               onFocus={this.handleFocus}
