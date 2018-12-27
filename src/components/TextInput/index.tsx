@@ -118,7 +118,7 @@ class TextInput extends React.Component<TextInputProps, any> {
             {iconName && (
               <Icon
                 name={iconName}
-                marginRight={4}
+                marginLeft={4}
                 size={get({ lg: 3, md: 2, sm: 1 }, size)}
                 color="subtle"
               />
@@ -151,7 +151,9 @@ class TextInput extends React.Component<TextInputProps, any> {
                 },
               }}
             />
-            {suffixNode}
+            <View backgroundColor="transparent" marginRight={4}>
+              {suffixNode}
+            </View>
           </View>
         )}
       </Theme.Consumer>
