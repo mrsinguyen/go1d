@@ -139,19 +139,7 @@ class Carousel extends React.Component<CarouselProps, any> {
         Selected = 0;
       }
 
-      let FinishedScrolling = false;
-
-      const SliderRightEdge = SliderScroll + Slider.offsetWidth;
-      const LastSlide: any = this.slideRefs.slice(-1)[0];
-      const LastSlideCurrent = LastSlide.current;
-      const LastSlideRightEdge =
-        LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
-
-      if (LastSlideRightEdge <= SliderRightEdge) {
-        // Cannot scroll further right
-        FinishedScrolling = true;
-      }
-
+      const FinishedScrolling = this.hasReachedRightEdge();
       const CurrentSlide = this.slideRefs[Selected].current;
 
       if (CurrentSlide.offsetLeft < SliderScroll && !FinishedScrolling) {
@@ -212,6 +200,7 @@ class Carousel extends React.Component<CarouselProps, any> {
         })
         .onComplete(() => {
           allowAnimationPropogation = false;
+          this.checkFinishedScrolling();
         })
         .start();
     }
@@ -316,6 +305,32 @@ class Carousel extends React.Component<CarouselProps, any> {
       </View>
     );
   }
+
+  protected hasReachedRightEdge = () => {
+    if (this.slideRefs.length > 0) {
+      // Set the CurrentSlide when the user is finished scrolling
+      const Slider: any = this.sliderContainerRef.current;
+      const SliderScroll = Slider.scrollLeft;
+      const SliderRightEdge = SliderScroll + Slider.offsetWidth;
+      const LastSlide: any = this.slideRefs.slice(-1)[0];
+      const LastSlideCurrent = LastSlide.current;
+      const LastSlideRightEdge =
+        LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
+
+      if (LastSlideRightEdge <= SliderRightEdge) {
+        // Cannot scroll further right
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  protected checkFinishedScrolling = () => {
+    this.setState({
+      finishedScrolling: this.hasReachedRightEdge(),
+    });
+  };
 }
 
 const ExportCarousel: React.SFC<CarouselProps> = (props: CarouselProps) => (
