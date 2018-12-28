@@ -30,7 +30,10 @@ export interface BaseMultiselectProps extends BaseProps {
   /**
    * Use this to render a view. select is the element containing the text field. Useful if you want the select inside the component
    */
-  customRenderer?: (select: React.ReactElement<any>) => React.ReactElement<any>;
+  customRenderer?: (
+    select: React.ReactElement<any>,
+    labelProps: { [key: string]: any }
+  ) => React.ReactElement<any>;
 
   /**
    * Option rendered. Createable = true means the option is not in the list currently.
@@ -82,7 +85,11 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   }
 
   @autobind
-  public handleClickOuter() {
+  public handleClickOuter(...args) {
+    // tslint:disable-next-line:no-debugger
+    debugger;
+    // tslint:disable-next-line:no-console
+    console.log(args, this.state);
     this.setState({
       search: "",
       focused: false,
@@ -203,14 +210,17 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
     const filteredOptions = options.filter(
       option =>
-        option.includes(this.state.search) && !value.find(v => v === option)
+        option.toLowerCase().includes(this.state.search.toLowerCase()) &&
+        !value.find(v => v.toLowerCase() === option.toLowerCase())
     );
 
     const createAvailable =
       this.props.createable &&
       this.state.search !== "" &&
-      !value.find(v => v === this.state.search) &&
-      !filteredOptions.find(v => v === this.state.search);
+      !value.find(v => v.toLowerCase() === this.state.search.toLowerCase()) &&
+      !filteredOptions.find(
+        v => v.toLowerCase() === this.state.search.toLowerCase()
+      );
 
     const itemToString = (item: any) => item;
 
@@ -221,11 +231,11 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
             // defaultHighlightedIndex={0}
             itemToString={itemToString}
             // defaultIsOpen={true}
-            // isOpen={
-            //   !this.props.disabled &&
-            //   this.state.focused === true &&
-            //   (filteredOptions.length > 0 || createAvailable)
-            // }
+            isOpen={
+              !this.props.disabled &&
+              this.state.focused === true &&
+              (filteredOptions.length > 0 || createAvailable)
+            }
             // tslint:disable-next-line:no-console
             // onOuterClick={console.log}
             // tslint:disable
@@ -234,11 +244,13 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
             //   return changes;
             // }}
             onSelect={this.handleSelect}
+            onStateChange={console.log}
           >
             {({
               getItemProps,
               getMenuProps,
               getRootProps,
+              getLabelProps,
               isOpen,
               highlightedIndex,
               getInputProps,
@@ -268,7 +280,8 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                               name={this.props.name}
                               disabled={this.props.disabled}
                               value={this.state.search}
-                            />
+                            />,
+                            getLabelProps()
                           )
                         ) : (
                           <SelectInput
@@ -292,6 +305,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                   </Reference>
                   {isOpen &&
                     !this.props.disabled &&
+                    this.state.focused &&
                     (filteredOptions.length > 0 || createAvailable) && (
                       <Portal>
                         <Popper placement={"bottom-start"}>

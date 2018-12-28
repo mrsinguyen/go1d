@@ -3,6 +3,7 @@ import { ButtonMinimal } from "../..";
 import { autobind } from "../../utils/decorators";
 import BaseMultiselect, { BaseMultiselectProps } from "../BaseMultiselect";
 
+import safeInvoke from "../../utils/safeInvoke";
 import Text from "../Text";
 import View from "../View";
 
@@ -26,6 +27,15 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
     this.setState({
       search: evt.currentTarget.value,
     });
+  }
+
+  @autobind
+  public onChange(evt) {
+    this.setState({
+      value: evt.target.value,
+    });
+
+    safeInvoke(this.props.onChange, evt);
   }
 
   public getBorderColor() {
@@ -62,11 +72,12 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
   }
 
   @autobind
-  public renderSelect(Select: React.ReactNode) {
+  public renderSelect(Select: React.ReactNode, labelProps: any) {
     const { value = this.state.value, borderRadius, id, disabled } = this.props;
 
     return (
       <View
+        element="label"
         position="relative"
         flexDirection="row"
         flexWrap="wrap"
@@ -80,6 +91,7 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
         alignItems="center"
         htmlFor={id}
         opacity={disabled ? "disabled" : null}
+        {...labelProps}
       >
         {value.map((v, i) => (
           <View
@@ -134,6 +146,7 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
         customRenderer={this.renderSelect}
         value={value}
         options={options}
+        onChange={this.onChange}
         optionRenderer={optionRenderer}
         handleFocus={this.handleFocus}
         handleBlur={this.handleBlur}
