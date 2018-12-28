@@ -37,10 +37,11 @@ class AllIcons extends Component {
             </th>
           </tr>
           {Object.keys(Icons)
-            .filter(name =>
-              filter && filter.length
-                ? name.toLowerCase().includes(filter.toLowerCase())
-                : true
+            .filter(
+              name =>
+                filter && filter.length
+                  ? name.toLowerCase().includes(filter.toLowerCase())
+                  : true
             )
             .map((name, index) => (
               <tr key={index}>

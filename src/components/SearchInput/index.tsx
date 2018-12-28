@@ -75,6 +75,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
       onChange, // prevent it from being passed down to the child
       onKeyDown, // prevent it from being passed down to the child
       value, // prevent it from being passed down to the child
+      defaultValue, // prevent it from being passed down to the child
       clearable = true,
       ...props
     } = this.props;
@@ -89,6 +90,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
           <ButtonMinimal
             iconName="Cross"
             color="accent"
+            backgroundColor="transparent"
             data-testid="clearButton"
             aria-label="Clear Icon"
             display={clearable && this.state.value ? "block" : "none"}
