@@ -147,6 +147,8 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                     [foundations.breakpoints.sm]: {
                       wordWrap: "break-word",
                       whiteSpace: "initial",
+                      lineHeight: 1.2,
+                      maxHeight: "2.4rem",
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",
                       display: "-webkit-box",
