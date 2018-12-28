@@ -20,11 +20,9 @@ export interface OverviewCtaCardProps extends ViewProps {
   currency?: string;
   dislikes?: number;
   enrolled?: number;
-  hideBackgroundImageFrom?: "sm" | "md" | "lg";
   likes?: number;
   metaData?: React.ReactNode;
   price?: number;
-  showBackgroundImageFrom?: "sm" | "md" | "lg";
 }
 
 const MobileDisplayBreak = "@media(max-width: 740px)";
@@ -55,30 +53,6 @@ const renderFunction = (item, index, getItemProps) => (
 
 const itemToString = item => (item ? item.title : "");
 
-const backgroundImageDisplayDirectives = (showFrom, hideFrom) => {
-  let css = {};
-
-  if (showFrom) {
-    css = {
-      display: "none",
-      [foundations.breakpoints[showFrom]]: {
-        display: "inherit",
-      },
-    };
-  }
-
-  if (hideFrom) {
-    css = {
-      ...css,
-      [foundations.breakpoints[hideFrom]]: {
-        display: "none",
-      },
-    };
-  }
-
-  return css;
-};
-
 const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
   actions,
   author,
@@ -90,12 +64,10 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
   dislikes = 0,
   duration,
   enrolled = 0,
-  hideBackgroundImageFrom,
   likes = 0,
   metaData,
   price,
   title,
-  showBackgroundImageFrom,
   subtitle,
   ...props
 }: OverviewCtaCardProps) => (
@@ -128,10 +100,9 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
           : undefined,
         backgroundPosition: "center",
         backgroundSize: "cover",
-        ...backgroundImageDisplayDirectives(
-          showBackgroundImageFrom,
-          hideBackgroundImageFrom
-        ),
+        [MobileDisplayBreak]: {
+          display: "none",
+        },
       }}
     />
     <View

@@ -15,7 +15,8 @@ releaseVersion: 0.0.41
 </View>
 ```
 
-### Overview CTA card with CTA button, showing image only in `md` width
+### Overview CTA card with props and CTA button
+Different properties are displayed in different positions and shown/hidden based on screen width.
 ```.jsx
 <View css={{
   position: "relative",
@@ -23,8 +24,6 @@ releaseVersion: 0.0.41
 }}>
   <OverviewCtaCard
     backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
-    showBackgroundImageFrom="md"
-    hideBackgroundImageFrom="lg"
     title="Cooking with charcoal"
     subtitle={
       <View flexDirection="row" alignItems="center">
