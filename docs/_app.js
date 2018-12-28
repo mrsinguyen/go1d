@@ -34,10 +34,11 @@ const createNav = routes => {
     []
   );
 
-  return nav.map(item =>
-    !item.props.menuTitle && !item.props.title
-      ? item
-      : { ...item, name: item.props.menuTitle || item.props.title }
+  return nav.map(
+    item =>
+      !item.props.menuTitle && !item.props.title
+        ? item
+        : { ...item, name: item.props.menuTitle || item.props.title }
   );
 };
 

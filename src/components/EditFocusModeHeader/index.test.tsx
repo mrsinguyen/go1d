@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cleanup, render } from "react-testing-library";
-import { ButtonFilled, Icon, Pill, Text, View } from "../../index";
+import { Icon, Pill, Text, View } from "../../index";
 import EditFocusModeHeader from "./index";
 
 afterEach(cleanup);
