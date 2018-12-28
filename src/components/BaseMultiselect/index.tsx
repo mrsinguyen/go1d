@@ -4,17 +4,20 @@ import { Manager, Popper, Reference } from "react-popper";
 import { Theme, View } from "../..";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
-import { BaseProps } from "../Base";
 import ButtonMinimal from "../ButtonMinimal";
 import Portal from "../Portal";
 import Text from "../Text";
+import { ViewProps } from "../View";
 
-export interface BaseMultiselectProps extends BaseProps {
+export interface BaseMultiselectProps extends ViewProps {
   /**
    * The selected elements of the component. If an object is supplied as options, this will be the value key.
    */
   value?: string[];
   options: string[];
+
+  onInputChange?: (evt: React.SyntheticEvent<HTMLInputElement>) => void;
+
   onChange?: (evt: any) => void;
 
   /**
@@ -43,6 +46,8 @@ export interface BaseMultiselectProps extends BaseProps {
     highlightedIndex: any,
     createable?: boolean
   ) => React.ReactNode;
+
+  placeholder?: string;
 }
 
 interface State {
@@ -69,6 +74,8 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
     this.setState({
       search: evt.currentTarget.value,
     });
+
+    safeInvoke(this.props.onInputChange, evt);
   }
 
   @autobind
@@ -398,7 +405,6 @@ const SelectInput: React.SFC<any> = ({
       {...props}
       id={id}
       element="input"
-      placeholder="Type to create a new tag"
       type={"text"}
       lineHeight="ui"
       fontSize={2}

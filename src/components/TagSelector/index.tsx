@@ -1,11 +1,11 @@
 import * as React from "react";
 import { ButtonMinimal } from "../..";
 import { autobind } from "../../utils/decorators";
-import BaseMultiselect, { BaseMultiselectProps } from "../BaseMultiselect";
+import BaseMultiselect from "../BaseMultiselect";
 
 import safeInvoke from "../../utils/safeInvoke";
 import Text from "../Text";
-import View from "../View";
+import View, { ViewProps } from "../View";
 
 interface State {
   value: string[];
@@ -13,7 +13,37 @@ interface State {
   search: string;
 }
 
-class TagSelector extends React.Component<BaseMultiselectProps, State> {
+export interface TagSelectorProps extends ViewProps {
+  optionRenderer?: (
+    option: string,
+    downshiftProps: { [key: string]: any },
+    creating?: boolean
+  ) => React.ReactNode;
+
+  /**
+   * The selected elements of the component.
+   */
+  value?: string[];
+  options: string[];
+
+  onInputChange?: (evt: React.SyntheticEvent<HTMLInputElement>) => void;
+
+  onChange?: (evt: any) => void;
+
+  /**
+   * Optional function to call when a new option is created. Returns a promise to allow for asynchronous actions to finish before continuing
+   */
+  onCreate?: (option: string) => Promise<any>;
+
+  /**
+   * Whether new options may be created. Defaults to true
+   */
+  createable?: boolean;
+
+  placeholder?: string;
+}
+
+class TagSelector extends React.Component<TagSelectorProps, State> {
   public state: State = {
     value: [],
     isFocused: false,
@@ -130,7 +160,7 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
 
   public render() {
     const {
-      value = this.state.value,
+      value = this.state.value || [],
       optionRenderer = this.renderOption,
       options = [],
       borderRadius,
@@ -146,6 +176,7 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
         ref={this.target}
         customRenderer={this.renderSelect}
         value={value}
+        placeholder={value && value.length ? "" : "Type to create a tag"}
         options={options}
         onChange={this.onChange}
         optionRenderer={optionRenderer}

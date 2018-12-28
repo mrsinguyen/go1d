@@ -132,4 +132,7 @@ export {
   default as BaseMultiselect,
 } from "./components/BaseMultiselect";
 
-export { default as TagSelector } from "./components/TagSelector";
+export {
+  default as TagSelector,
+  TagSelectorProps,
+} from "./components/TagSelector";
