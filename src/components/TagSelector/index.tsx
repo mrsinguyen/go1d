@@ -133,15 +133,16 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
       value = this.state.value,
       optionRenderer = this.renderOption,
       options = [],
-      valueType,
       borderRadius,
       id,
       disabled,
+      onChange,
       ...props
     } = this.props;
 
     return (
       <BaseMultiselect
+        {...props}
         ref={this.target}
         customRenderer={this.renderSelect}
         value={value}
@@ -150,8 +151,6 @@ class TagSelector extends React.Component<BaseMultiselectProps, State> {
         optionRenderer={optionRenderer}
         handleFocus={this.handleFocus}
         handleBlur={this.handleBlur}
-        valueType={valueType}
-        {...props}
       />
     );
   }

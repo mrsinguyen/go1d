@@ -38,7 +38,7 @@ export interface BaseMultiselectProps extends BaseProps {
   /**
    * Option rendered. Createable = true means the option is not in the list currently.
    */
-  optionRenderer?: (
+  optionRenderer: (
     option: string,
     highlightedIndex: any,
     createable?: boolean
@@ -86,10 +86,6 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
   @autobind
   public handleClickOuter(...args) {
-    // tslint:disable-next-line:no-debugger
-    debugger;
-    // tslint:disable-next-line:no-console
-    console.log(args, this.state);
     this.setState({
       search: "",
       focused: false,
@@ -159,7 +155,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   @autobind
   public handleSelect(option: string) {
     const value = this.props.value || this.state.value;
-    const existingValue = !!value.find(v => v !== option);
+    const existingValue = !!value.find(v => v === option);
 
     const evtOption = {
       currentTarget: {
@@ -228,23 +224,15 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
       <Theme.Consumer>
         {({ colors }) => (
           <Downshift
-            // defaultHighlightedIndex={0}
+            defaultHighlightedIndex={0}
             itemToString={itemToString}
-            // defaultIsOpen={true}
             isOpen={
               !this.props.disabled &&
               this.state.focused === true &&
               (filteredOptions.length > 0 || createAvailable)
             }
-            // tslint:disable-next-line:no-console
-            // onOuterClick={console.log}
-            // tslint:disable
-            // stateReducer={(state, changes) => {
-            //   console.log(state, changes);
-            //   return changes;
-            // }}
+            onOuterClick={this.handleClickOuter}
             onSelect={this.handleSelect}
-            onStateChange={console.log}
           >
             {({
               getItemProps,
@@ -257,16 +245,31 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
               selectedItem,
               ...downshiftParams
             }) => (
-              <View
-                {...getRootProps({ refKey: "innerRef" })}
-                innerRef={this.target}
-              >
-                <Manager>
-                  <Reference>
-                    {({ ref }) => (
-                      <View innerRef={ref}>
-                        {customRenderer ? (
-                          customRenderer(
+              <View {...getRootProps({ refKey: "innerRef" })}>
+                <View innerRef={this.target}>
+                  <Manager>
+                    <Reference>
+                      {({ ref }) => (
+                        <View innerRef={ref}>
+                          {customRenderer ? (
+                            customRenderer(
+                              <SelectInput
+                                {...props}
+                                {...getInputProps()}
+                                parentListeners={{
+                                  onChange: this.inputChange,
+                                  handleBlur: this.handleBlur,
+                                  handleFocus: this.handleFocus,
+                                }}
+                                colors={colors}
+                                keyPress={this.keyPress}
+                                name={this.props.name}
+                                disabled={this.props.disabled}
+                                value={this.state.search}
+                              />,
+                              getLabelProps()
+                            )
+                          ) : (
                             <SelectInput
                               {...props}
                               {...getInputProps()}
@@ -275,95 +278,80 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                 handleBlur: this.handleBlur,
                                 handleFocus: this.handleFocus,
                               }}
-                              colors={colors}
                               keyPress={this.keyPress}
+                              colors={colors}
                               name={this.props.name}
                               disabled={this.props.disabled}
                               value={this.state.search}
-                            />,
-                            getLabelProps()
-                          )
-                        ) : (
-                          <SelectInput
-                            {...props}
-                            {...getInputProps()}
-                            parentListeners={{
-                              onChange: this.inputChange,
-                              handleBlur: this.handleBlur,
-                              handleFocus: this.handleFocus,
-                            }}
-                            keyPress={this.keyPress}
-                            colors={colors}
-                            ref={ref}
-                            name={this.props.name}
-                            disabled={this.props.disabled}
-                            value={this.state.search}
-                          />
-                        )}
-                      </View>
-                    )}
-                  </Reference>
-                  {isOpen &&
-                    !this.props.disabled &&
-                    this.state.focused &&
-                    (filteredOptions.length > 0 || createAvailable) && (
-                      <Portal>
-                        <Popper placement={"bottom-start"}>
-                          {({ ref, style }) => (
-                            <View
-                              {...getMenuProps({
-                                refKey: "innerRef",
-                              })}
-                            >
+                            />
+                          )}
+                        </View>
+                      )}
+                    </Reference>
+                    {isOpen &&
+                      !this.props.disabled &&
+                      this.state.focused &&
+                      (filteredOptions.length > 0 || createAvailable) && (
+                        <Portal>
+                          <Popper placement={"bottom-start"}>
+                            {({ ref, style }) => (
                               <View
-                                backgroundColor="background"
-                                boxShadow="strong"
-                                borderRadius={3}
-                                style={{
-                                  ...style,
-                                  width: this.target.current
-                                    ? this.target.current.offsetWidth
-                                    : "auto",
-                                }}
-                                innerRef={ref}
-                                transition="none"
-                                paddingY={3}
-                                zIndex="dropdown"
+                                {...getMenuProps({
+                                  refKey: "innerRef",
+                                })}
                               >
-                                {createAvailable &&
-                                  this.renderOption(
-                                    this.state.search,
-                                    {
-                                      ...getItemProps({
-                                        key: this.state.search,
+                                <View
+                                  backgroundColor="background"
+                                  boxShadow="strong"
+                                  borderRadius={3}
+                                  style={{
+                                    ...style,
+                                    width: this.target.current
+                                      ? this.target.current.offsetWidth
+                                      : "auto",
+                                  }}
+                                  innerRef={ref}
+                                  transition="none"
+                                  paddingY={3}
+                                  zIndex="dropdown"
+                                >
+                                  {createAvailable &&
+                                    this.renderOption(
+                                      this.state.search,
+                                      {
+                                        ...getItemProps({
+                                          key: this.state.search,
+                                          index: 0,
+                                          item: this.state.search,
+                                        }),
+                                        highlightedIndex,
                                         index: 0,
-                                        item: this.state.search,
+                                      },
+                                      true
+                                    )}
+                                  {filteredOptions.map((item, index) =>
+                                    this.renderOption(item, {
+                                      ...getItemProps({
+                                        key: item,
+                                        index: createAvailable
+                                          ? index + 1
+                                          : index,
+                                        item,
                                       }),
-                                      highlightedIndex,
-                                      index: 0,
-                                    },
-                                    true
-                                  )}
-                                {filteredOptions.map((item, index) =>
-                                  this.renderOption(item, {
-                                    ...getItemProps({
-                                      key: item,
                                       index: createAvailable
                                         ? index + 1
                                         : index,
-                                      item,
-                                    }),
-                                    index: createAvailable ? index + 1 : index,
-                                    highlightedIndex,
-                                  })
-                                )}
+                                      highlightedIndex,
+                                    })
+                                  )}
+                                </View>
                               </View>
-                            </View>
-                          )}
-                        </Popper>
-                      </Portal>
-                    )}
-                </Manager>
+                            )}
+                          </Popper>
+                        </Portal>
+                      )}
+                  </Manager>
+                </View>
               </View>
             )}
           </Downshift>
@@ -409,8 +397,8 @@ const SelectInput: React.SFC<any> = ({
     <Text
       {...props}
       id={id}
-      element={"input"}
-      placehlder="Type to "
+      element="input"
+      placeholder="Type to create a new tag"
       type={"text"}
       lineHeight="ui"
       fontSize={2}
