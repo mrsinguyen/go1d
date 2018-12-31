@@ -1,4 +1,3 @@
-// tslint:disable:jsx-no-lambda
 import * as React from "react";
 import { cleanup, render } from "react-testing-library";
 import TagSelector from "./";
@@ -14,7 +13,7 @@ it("renders without crashing with optional props", () => {
     <TagSelector
       options={["test"]}
       value={["A TAG"]}
-      onChange={() => null}
+      onChange={jest.fn()}
       name="TEST 1"
     />
   );
