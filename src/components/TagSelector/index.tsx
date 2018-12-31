@@ -103,7 +103,12 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
 
   @autobind
   public renderSelect(Select: React.ReactNode, labelProps: any) {
-    const { value = this.state.value, borderRadius, id, disabled } = this.props;
+    const {
+      value = this.state.value,
+      borderRadius = 2,
+      id,
+      disabled,
+    } = this.props;
 
     return (
       <View
@@ -114,6 +119,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
         borderRadius={borderRadius}
         backgroundColor="background"
         paddingX={2}
+        minHeight={45}
         paddingY={2}
         border={1}
         borderColor={this.getBorderColor()}
@@ -131,20 +137,23 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
             borderRadius={borderRadius}
             borderColor={this.props.borderColor || "soft"}
             backgroundColor="background"
-            paddingX={2}
-            paddingY={2}
+            paddingX={4}
+            paddingY={3}
             marginRight={2}
             border={1}
-            boxShadow="inner"
+            boxShadow="crisp"
             data-value={v}
           >
-            <Text fontSize={2} color="inherit">
+            <Text fontSize={1} color="inherit" marginRight={2}>
               {v}
             </Text>
             <ButtonMinimal
               marginLeft={2}
-              iconName="Cross"
+              iconName="Close"
               size="sm"
+              width={16}
+              height={16}
+              paddingY={0}
               round={true}
               data-value={v}
               onClick={
