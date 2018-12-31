@@ -118,7 +118,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
         flexWrap="wrap"
         borderRadius={borderRadius}
         backgroundColor="background"
-        paddingX={2}
+        paddingX={4}
         minHeight={45}
         paddingY={2}
         border={1}
