@@ -126,3 +126,13 @@ export {
   EditFocusModeHeaderProps,
   default as EditFocusModeHeader,
 } from "./components/EditFocusModeHeader";
+
+export {
+  BaseMultiselectProps,
+  default as BaseMultiselect,
+} from "./components/BaseMultiselect";
+
+export {
+  default as TagSelector,
+  TagSelectorProps,
+} from "./components/TagSelector";
