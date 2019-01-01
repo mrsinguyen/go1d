@@ -152,9 +152,7 @@ class TextInput extends React.Component<TextInputProps, any> {
               }}
             />
             {suffixNode && (
-              <View backgroundColor="transparent">
-                {suffixNode}
-              </View>
+              <View backgroundColor="transparent">{suffixNode}</View>
             )}
           </View>
         )}

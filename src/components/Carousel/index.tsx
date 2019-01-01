@@ -1,6 +1,6 @@
 import * as TWEEN from "@tweenjs/tween.js";
 import * as React from "react";
-import * as smoothscroll from 'smoothscroll-polyfill';
+import * as smoothscroll from "smoothscroll-polyfill";
 
 import ContainerDimensions from "./internals/ContainerDimensions";
 
