@@ -38,7 +38,7 @@ Different properties are displayed in different positions and shown/hidden based
     author={
       <View flexDirection="row" alignItems="center">
         <Avatar
-          size={3}
+          size={5}
           src="https://i.imgur.com/Ee55uvc.jpg"
           fullName="Leslie Knope"
           marginRight={3}

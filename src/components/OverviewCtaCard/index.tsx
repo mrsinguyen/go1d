@@ -107,7 +107,7 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
     />
     <View
       paddingX={5}
-      paddingTop={3}
+      paddingTop={5}
       paddingBottom={4}
       flexDirection="column"
       justifyContent="space-between"
@@ -125,17 +125,28 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
           {title}
         </Text>
       )}
-      {subtitle && <View marginTop={3}>{subtitle}</View>}
+      {subtitle && (
+        <View marginTop={3}>
+          <Text fontSize={1} color="subtle">
+            {subtitle}
+          </Text>
+        </View>
+      )}
       {enrolled > 0 && (
         <View marginTop={4} flexDirection="row" alignItems="center">
-          <Avatar size={3} marginRight={3} backgroundColor="faded" />
+          <Avatar size={5} marginRight={3} backgroundColor="faded" />
           <Text fontSize={1} color="subtle">
             {enrolled} enrolled
           </Text>
         </View>
       )}
       {(author || duration) && (
-        <View flexDirection="row" marginTop={4} alignItems="center">
+        <View
+          flexDirection="row"
+          marginTop={4}
+          alignItems="center"
+          flexWrap="wrap"
+        >
           {author && (
             <View flexDirection="row" alignItems="center" marginRight={5}>
               <Text fontSize={1} color="subtle">
@@ -159,7 +170,9 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
             <Text color="default" fontSize={4} fontWeight="semibold">
               {formatPrice(currency, price)}
             </Text>
-            <Text marginLeft={3} fontSize={1}>pp</Text>
+            <Text marginLeft={3} fontSize={1}>
+              pp
+            </Text>
           </View>
         )}
       {metaData}
