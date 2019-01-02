@@ -191,7 +191,8 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
       </Container>
     </View>
     <View
-      padding={8}
+      paddingX={8}
+      paddingY={7}
       css={{
         [MobileDisplayBreak]: {
           paddingRight: foundations.spacing[5],
