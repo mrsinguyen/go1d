@@ -14,7 +14,25 @@ A custom select component
 ]} />
 ```
 
-Select filed with optgroups
+Disabled Select Field
+```.tsx
+<Select options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "stawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} disabled={true} />
+```
+
+Searchable Select Field
+```.tsx
+<Select options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "stawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} searchable={true} />
+```
+
+Select filled with optgroups
 ```.tsx
 <Select options={[
   {
@@ -38,24 +56,29 @@ Select filed with optgroups
 ]} />
 ```
 
-Disabled Select Field
+Select filled with label-less optgroups
 ```.tsx
 <Select options={[
-  { "value": "chocolate", label: "Chocolate" },
-  { "value": "stawberry", label: "Strawberry" },
-  { "value": "vanilla", label: "Vanilla" }
-]} disabled={true} />
+  {
+    label: "",
+    optgroup: true,
+    values: [
+      { "value": "chocolate", label: "Chocolate" },
+      { "value": "stawberry", label: "Strawberry" },
+      { "value": "vanilla", label: "Vanilla" }
+    ]
+  },
+  {
+    label: "",
+    optgroup: true,
+    values: [
+      { "value": "brie", label: "Brie" },
+      { "value": "cheddar", label: "Cheddar" },
+      { "value": "gorgonzola", label: "Gorgonzola" }
+    ]
+  }
+]} />
 ```
-
-Searchable Select Field
-```.tsx
-<Select options={[
-  { "value": "chocolate", label: "Chocolate" },
-  { "value": "stawberry", label: "Strawberry" },
-  { "value": "vanilla", label: "Vanilla" }
-]} searchable={true} />
-```
-
 
 ```!jsx
 <ComponentDoc component="SelectProps" />
