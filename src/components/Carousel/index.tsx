@@ -1,5 +1,7 @@
 import * as TWEEN from "@tweenjs/tween.js";
 import * as React from "react";
+import * as smoothscroll from "smoothscroll-polyfill";
+
 import ContainerDimensions from "./internals/ContainerDimensions";
 
 import View, { ViewProps } from "../View";
@@ -44,6 +46,8 @@ class Carousel extends React.Component<CarouselProps, any> {
   private initialSliderOffset = null;
 
   public componentDidMount() {
+    smoothscroll.polyfill();
+
     if (this.sliderContainerRef) {
       const Element: any = this.sliderContainerRef.current;
       Element.addEventListener("scroll", this.handleScrollTimer, false);
