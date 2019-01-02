@@ -130,23 +130,18 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   }
 
   @autobind
-  public onChange(evt: React.SyntheticEvent<HTMLSelectElement>) {
-    safeInvoke(this.props.onChange, evt);
-  }
-
-  @autobind
   public selectValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
     const value = this.props.value || this.state.value;
 
     this.setState({
-      value: [...value, evt.currentTarget.dataset.value],
+      value: [...value, evt.currentTarget.dataset.value.trim()],
       search: "",
     });
 
     safeInvoke(this.props.onChange, {
       target: {
         name: this.props.name,
-        value: [...value, evt.currentTarget.dataset.value],
+        value: [...value, evt.currentTarget.dataset.value.trim()],
       },
     });
   }
@@ -221,18 +216,41 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
       ...props
     } = this.props;
 
-    const filteredOptions = options.filter(
-      option =>
-        option.toLowerCase().includes(this.state.search.toLowerCase()) &&
-        !value.find(v => v.toLowerCase() === option.toLowerCase())
-    );
+    const formattedSearch = this.state.search.trim().toLowerCase();
+
+    const filteredOptions = options.filter(option => {
+      option = option
+        .toString()
+        .trim()
+        .toLowerCase();
+      return (
+        option.includes(formattedSearch) &&
+        !value.find(
+          v =>
+            v
+              .toString()
+              .trim()
+              .toLowerCase() === option
+        )
+      );
+    });
 
     const createAvailable =
       this.props.createable &&
-      this.state.search !== "" &&
-      !value.find(v => v.toLowerCase() === this.state.search.toLowerCase()) &&
+      this.state.search.trim() !== "" &&
+      !value.find(
+        v =>
+          v
+            .toString()
+            .trim()
+            .toLowerCase() === formattedSearch
+      ) &&
       !filteredOptions.find(
-        v => v.toLowerCase() === this.state.search.toLowerCase()
+        v =>
+          v
+            .toString()
+            .trim()
+            .toLowerCase() === formattedSearch
       );
 
     const itemToString = (item: any) => item;
@@ -334,12 +352,12 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                 >
                                   {createAvailable &&
                                     this.renderOption(
-                                      this.state.search,
+                                      this.state.search.trim(),
                                       {
                                         ...getItemProps({
-                                          key: this.state.search,
+                                          key: formattedSearch,
                                           index: 0,
-                                          item: this.state.search,
+                                          item: formattedSearch,
                                         }),
                                         highlightedIndex,
                                         index: 0,
@@ -347,7 +365,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                       true
                                     )}
                                   {filteredOptions.map((item, index) =>
-                                    this.renderOption(item, {
+                                    this.renderOption(item.toString(), {
                                       ...getItemProps({
                                         key: item,
                                         index: createAvailable
