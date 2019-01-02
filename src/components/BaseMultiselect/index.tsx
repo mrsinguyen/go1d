@@ -88,15 +88,15 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
           },
         } as any);
       });
-    }
-
-    this.selectValue({
-      currentTarget: {
-        dataset: {
-          value,
+    } else {
+      this.selectValue({
+        currentTarget: {
+          dataset: {
+            value,
+          },
         },
-      },
-    } as any);
+      } as any);
+    }
   }
 
   @autobind
