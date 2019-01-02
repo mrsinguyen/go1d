@@ -25,7 +25,7 @@ export interface OverviewCtaCardProps extends ViewProps {
   price?: number;
 }
 
-const MobileDisplayBreak = "@media(max-width: 740px)";
+const MobileDisplayBreak = "@media(max-width: 1023px)";
 
 const renderFunction = (item, index, getItemProps) => (
   <ButtonMinimal
