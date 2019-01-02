@@ -23,30 +23,6 @@ it("renders without crashing with optional props", () => {
   );
 });
 
-it("handles change well", () => {
-  const fn = jest.fn();
-  const ref: React.RefObject<BaseMultiSelect> = React.createRef();
-
-  render(
-    <BaseMultiSelect
-      optionRenderer={option => option}
-      options={["test"]}
-      value={["A TAG"]}
-      onChange={fn}
-      name="TEST 1"
-      ref={ref}
-    />
-  );
-
-  if (ref.current) {
-    const changeEvent = { target: { value: ["Tweezers"] } };
-    ref.current.onChange(changeEvent as any);
-    expect(fn).toBeCalledWith(changeEvent);
-  } else {
-    fail("ref could not be set");
-  }
-});
-
 it("handles input changes well", () => {
   const fn = jest.fn();
   const ref: React.RefObject<BaseMultiSelect> = React.createRef();
