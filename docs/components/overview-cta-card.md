@@ -5,11 +5,11 @@ status: ready
 releaseVersion: 0.0.41
 ---
 
-### Overview CTA card with no props
+### Overview CTA card with no props and no background image
 ```.jsx
 <View css={{
   position: "relative",
-  height: 365,
+  height: 60,
 }}>
   <OverviewCtaCard />
 </View>
@@ -20,7 +20,7 @@ Different properties are displayed in different positions and shown/hidden based
 ```.jsx
 <View css={{
   position: "relative",
-  height: 420,
+  height: 480,
 }}>
   <OverviewCtaCard
     backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
