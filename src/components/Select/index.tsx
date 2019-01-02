@@ -569,50 +569,15 @@ class Select extends React.Component<SelectProps, any> {
                         />
                       </View>
                     )}
-                    <View paddingY={searchable ? 3 : 0}>
+                    <View paddingTop={searchable ? 3 : 0}>
                       {FilteredOptions.map((Option, OptIndex) => {
                         if (Option.optgroup) {
-                          const CurrentOffset = FilteredOptions.reduce(
-                            (Sum, OptGroup, CurrentIndex) => {
-                              if (OptIndex > CurrentIndex) {
-                                return Sum + OptGroup.values.length;
-                              }
-                              return Sum;
-                            },
-                            0
-                          );
-
-                          return (
-                            <View
-                              width={"100%"}
-                              key={`${Option.label}_${OptIndex}`}
-                              css={{
-                                marginTop: searchable ? 0 : spacing[3] * -1,
-                              }}
-                            >
-                              <View
-                                width={"100%"}
-                                paddingY={4}
-                                paddingX={4}
-                                backgroundColor="faint"
-                              >
-                                <Text color="subtle">{Option.label}</Text>
-                              </View>
-                              <View>
-                                {Option.values.map((option, index) =>
-                                  this.renderOption({
-                                    Option: option,
-                                    Index: index + CurrentOffset,
-                                    selectState: {
-                                      activeOptions,
-                                      size,
-                                      colors,
-                                    },
-                                    child: true,
-                                  })
-                                )}
-                              </View>
-                            </View>
+                          return this.renderOptGroup(
+                            FilteredOptions,
+                            Option,
+                            OptIndex,
+                            colors,
+                            size
                           );
                         } else {
                           return this.renderOption({
@@ -678,6 +643,56 @@ class Select extends React.Component<SelectProps, any> {
 
     return options;
   };
+
+  private renderOptGroup(FilteredOptions, Option, OptIndex, colors, size) {
+    const { activeOptions } = this.props;
+    const CurrentOffset = FilteredOptions.reduce(
+      (Sum, OptGroup, CurrentIndex) => {
+        if (OptIndex > CurrentIndex) {
+          return Sum + OptGroup.values.length;
+        }
+        return Sum;
+      },
+      0
+    );
+
+    const emptyLabel = Option.label === "";
+    const padding = emptyLabel ? 0 : 4;
+    const optGroupProps = {
+      backgroundColor: "faint",
+    } as any;
+    if (emptyLabel && OptIndex > 0) {
+      optGroupProps.minHeight = "1px";
+      optGroupProps.backgroundColor = "soft";
+    }
+
+    return (
+      <View width={"100%"} key={`${Option.label}_${OptIndex}`}>
+        <View
+          width={"100%"}
+          paddingY={padding}
+          paddingX={padding}
+          {...optGroupProps}
+        >
+          <Text color="subtle">{Option.label}</Text>
+        </View>
+        <View>
+          {Option.values.map((option, index) =>
+            this.renderOption({
+              Option: option,
+              Index: index + CurrentOffset,
+              selectState: {
+                activeOptions,
+                size,
+                colors,
+              },
+              child: true,
+            })
+          )}
+        </View>
+      </View>
+    );
+  }
 }
 
 export default Select;
