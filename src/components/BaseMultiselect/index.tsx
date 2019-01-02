@@ -70,6 +70,36 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   private target: React.RefObject<any> = React.createRef();
 
   @autobind
+  public createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    const promise = safeInvoke(
+      this.props.onCreate,
+      evt.currentTarget.dataset.value
+    );
+
+    const value = evt.currentTarget.dataset.value;
+
+    if (promise) {
+      promise.then(() => {
+        this.selectValue({
+          currentTarget: {
+            dataset: {
+              value,
+            },
+          },
+        } as any);
+      });
+    }
+
+    this.selectValue({
+      currentTarget: {
+        dataset: {
+          value,
+        },
+      },
+    } as any);
+  }
+
+  @autobind
   public inputChange(evt: React.SyntheticEvent<HTMLInputElement>) {
     this.setState({
       search: evt.currentTarget.value,
@@ -102,26 +132,6 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   @autobind
   public onChange(evt: React.SyntheticEvent<HTMLSelectElement>) {
     safeInvoke(this.props.onChange, evt);
-  }
-
-  @autobind
-  public async createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
-    const promise = safeInvoke(
-      this.props.onCreate,
-      evt.currentTarget.dataset.value
-    );
-
-    if (promise) {
-      await promise;
-    }
-
-    this.selectValue({
-      currentTarget: {
-        dataset: {
-          value: evt.currentTarget.dataset.value,
-        },
-      },
-    } as any);
   }
 
   @autobind
