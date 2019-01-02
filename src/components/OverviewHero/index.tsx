@@ -93,9 +93,11 @@ const OverviewHero: React.SFC<OverviewHeroProps> = ({
             top: 0,
             height: "100%",
             width: "100%",
-            filter: "blur(12px)",
-            backgroundBlendMode: "multiply",
-            transform: "scale(1.2)",
+            [foundations.breakpoints.md]: {
+              filter: "blur(12px)",
+              backgroundBlendMode: "multiply",
+              transform: "scale(1.2)",
+            },
           }}
         />
       </View>
