@@ -20,7 +20,7 @@ export interface OverviewHeroProps extends ViewProps {
   childrenWrapperCss?: any;
 }
 
-const MobileDisplayBreak = "@media(max-width: 740px)";
+const MobileDisplayBreak = "@media(max-width: 1023px)";
 
 const OverviewHero: React.SFC<OverviewHeroProps> = ({
   children,
