@@ -141,27 +141,34 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
         </View>
       )}
       {(author || duration) && (
-        <View
-          flexDirection="row"
-          marginTop={4}
-          alignItems="center"
-          flexWrap="wrap"
-        >
-          {author && (
-            <View flexDirection="row" alignItems="center" marginRight={5}>
-              <Text fontSize={1} color="subtle">
-                {author}
-              </Text>
-            </View>
-          )}
-          {duration && (
-            <View flexDirection="row" alignItems="center">
-              <Icon name="Clock" color="muted" marginRight={3} />
-              <Text fontSize={1} color="subtle" fontWeight="semibold">
-                {formatDuration(duration)}
-              </Text>
-            </View>
-          )}
+        <View marginTop={4}>
+          <View
+            flexDirection="row"
+            alignItems="center"
+            flexWrap="wrap"
+            marginTop={-4}
+          >
+            {author && (
+              <View
+                flexDirection="row"
+                alignItems="center"
+                marginRight={5}
+                marginTop={4}
+              >
+                <Text fontSize={1} color="subtle">
+                  {author}
+                </Text>
+              </View>
+            )}
+            {duration && (
+              <View flexDirection="row" alignItems="center" marginTop={4}>
+                <Icon name="Clock" color="muted" marginRight={3} />
+                <Text fontSize={1} color="subtle" fontWeight="semibold">
+                  {formatDuration(duration)}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
       )}
       {currency &&
