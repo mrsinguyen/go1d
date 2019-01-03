@@ -88,23 +88,25 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
     }}
     {...props}
   >
-    <View
-      backgroundColor="soft"
-      height={230}
-      css={{
-        borderRadius: `${foundations.spacing[2]}px ${
-          foundations.spacing[2]
-        }px 0 0`,
-        backgroundImage: backgroundImage
-          ? `url(${backgroundImage})`
-          : undefined,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        [MobileDisplayBreak]: {
-          display: "none",
-        },
-      }}
-    />
+    {backgroundImage && (
+      <View
+        backgroundColor="soft"
+        height={230}
+        css={{
+          borderRadius: `${foundations.spacing[2]}px ${
+            foundations.spacing[2]
+          }px 0 0`,
+          backgroundImage: backgroundImage
+            ? `url(${backgroundImage})`
+            : undefined,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          [MobileDisplayBreak]: {
+            display: "none",
+          },
+        }}
+      />
+    )}
     <View
       paddingX={5}
       paddingTop={5}
