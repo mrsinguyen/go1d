@@ -357,7 +357,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                         ...getItemProps({
                                           key: formattedSearch,
                                           index: 0,
-                                          item: formattedSearch,
+                                          item: this.state.search.trim(),
                                         }),
                                         highlightedIndex,
                                         index: 0,
