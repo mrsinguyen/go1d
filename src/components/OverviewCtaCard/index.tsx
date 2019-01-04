@@ -174,7 +174,7 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
         </View>
       )}
       {currency &&
-        price && (
+        price > 0 && (
           <View flexDirection="row" alignItems="baseline" marginTop={6}>
             <Text color="default" fontSize={4} fontWeight="semibold">
               {formatPrice(currency, price)}
@@ -273,6 +273,17 @@ const OverviewCtaCard: React.SFC<OverviewCtaCardProps> = ({
       )}
       {metaData}
       {children && <View marginTop={3}>{children}</View>}
+      {currency &&
+        price > 0 && (
+          <View flexDirection="row" alignItems="baseline" marginTop={6}>
+            <Text fontSize={5} fontWeight="semibold">
+              {formatPrice(currency, price)}
+            </Text>
+            <Text marginLeft={3} fontSize={1}>
+              per person
+            </Text>
+          </View>
+        )}
       {ctaButton && (
         <View borderTop={1} borderColor="soft" marginTop={5} paddingTop={5}>
           {ctaButton}

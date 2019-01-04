@@ -203,7 +203,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
             </View>
             <View>
               {currency &&
-                price && (
+                price > 0 && (
                   <View flexDirection="row">
                     <Text color="accent" fontWeight="semibold">
                       {formatPrice(currency, price)}
