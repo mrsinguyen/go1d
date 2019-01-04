@@ -22,12 +22,16 @@ export interface CourseCardProps extends ViewProps {
   itemList?: DropdownItem[];
 }
 
-const hoverStyle = (colors, passive) => {
+const interactiveStyle = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
       boxShadow: foundations.shadows.soft,
+      cursor: "pointer",
       transform: "translateY(-1px)",
+    };
+    styles["&:active"] = {
+      transform: "translateY(1px)",
     };
   }
   return styles;
@@ -62,7 +66,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
               textDecoration: "none",
               width: 221,
             },
-            hoverStyle(colors, passive),
+            interactiveStyle(colors, passive),
           ]}
           {...props}
         >
