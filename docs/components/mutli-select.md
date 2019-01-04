@@ -34,6 +34,26 @@ Searchable Multi Select Field
 ]} searchable={true} />
 ```
 
+
+Multi Select with extra style props 
+```.tsx
+<MultiSelect 
+  label="Favourite" 
+  searchable={true} 
+  defaultValue={["chocolate"]}
+  labelPaddingBottom={5}
+  clearCSS={{
+    height: "50%"
+  }}
+  options={[
+    { "value": "chocolate", label: "Chocolate" },
+    { "value": "stawberry", label: "Strawberry" },
+    { "value": "vanilla", label: "Vanilla" }
+  ]}  
+/>
+```
+
+
 ```!jsx
 <ComponentDoc component="MultiSelectProps" />
 ```
