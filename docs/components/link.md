@@ -17,6 +17,21 @@ This component will default to producing an anchor tag or a custom link componen
 </Link>
 ```
 
+### Link with Text inside
+
+```.jsx
+<Link href="#testing">
+  <Text>Hello world</Text>
+</Link>
+```
+
+### Link with Text with different pseudo element focus color & active color
+
+```.jsx
+<Link href="#testing" hoverFocusColor="success" activeColor="warning">
+  <Text>Hello world</Text>
+</Link>
+```
 
 ### Overriden link
 
