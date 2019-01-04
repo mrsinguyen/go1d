@@ -12,6 +12,8 @@ export interface MultiSelectProps extends SelectProps {
   name?: string;
   defaultValue?: string[];
   label?: string | React.ReactChild;
+  clearCSS?: object;
+  labelPaddingBottom?: number;
 }
 
 class MultiSelect extends React.Component<MultiSelectProps, any> {
@@ -89,6 +91,8 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
       label,
       id = `MultiSelect_${Math.random()}`,
       defaultText = "Please Select",
+      clearCSS,
+      labelPaddingBottom = 3,
       ...props
     } = this.props;
     const { closeOnSelect } = this.state;
@@ -124,7 +128,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
       <React.Fragment>
         <View flexDirection="row">
           {label && (
-            <View paddingBottom={3} paddingRight={4}>
+            <View paddingRight={4} paddingBottom={labelPaddingBottom}>
               {typeof label === "string" ? (
                 <Text element="label" htmlFor={id}>
                   {label}
@@ -152,8 +156,13 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
                 css={{ overflow: "hidden" }}
                 marginLeft={3}
                 marginBottom={3}
+                {...clearCSS}
               >
-                <View backgroundColor="accent" paddingX={3} paddingY={2}>
+                <View
+                  backgroundColor="accent"
+                  paddingX={3}
+                  justifyContent="center"
+                >
                   <Text color="background" fontSize={1}>
                     {this.state.Selected.length}
                   </Text>
