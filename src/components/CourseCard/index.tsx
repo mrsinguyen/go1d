@@ -1,6 +1,7 @@
 import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
+import formatPrice from "../../utils/priceFormatter";
 import ButtonMinimal from "../ButtonMinimal";
 import Dropdown from "../Dropdown";
 import Icon from "../Icon";
@@ -20,6 +21,8 @@ export interface CourseCardProps extends ViewProps {
   typeIcon?: string;
   passive?: boolean;
   itemList?: DropdownItem[];
+  price?: number;
+  currency?: string;
 }
 
 const interactiveStyle = (colors, passive) => {
@@ -50,6 +53,8 @@ const CourseCard: React.SFC<CourseCardProps> = ({
   title,
   type,
   typeIcon,
+  price,
+  currency,
   ...props
 }: CourseCardProps) => (
   <Theme.Consumer>
@@ -119,7 +124,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
               </View>
             )}
           </View>
-          <View padding={4}>
+          <View padding={4} flexGrow={1}>
             <View
               flexDirection="row"
               justifyContent="space-between"
@@ -194,6 +199,12 @@ const CourseCard: React.SFC<CourseCardProps> = ({
               </View>
             )}
             {children && <Text>{children}</Text>}
+            {currency &&
+              price > 0 && (
+                <View flexDirection="row" marginTop="auto" paddingTop={3}>
+                  <Text color="accent">{formatPrice(currency, price)}</Text>
+                </View>
+              )}
           </View>
         </View>
       );
