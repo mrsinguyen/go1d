@@ -1,5 +1,6 @@
 import { get } from "lodash";
 import * as React from "react";
+import foundations from "../../foundations";
 import Icon from "../Icon/index";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -14,11 +15,16 @@ export interface FeaturedTagProps extends ViewProps {
   onClick?: ((evt: React.SyntheticEvent) => void);
 }
 
-const backgroundStyles = (colors, passive) => {
+const interactiveStyles = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
-      background: `${colors.gradients.darkWarmOverlay}, ${colors.background}`,
+      boxShadow: foundations.shadows.soft,
+      cursor: "pointer",
+      transform: "translateY(-1px)",
+    };
+    styles["&:active"] = {
+      transform: "translateY(1px)",
     };
   }
   return styles;
@@ -54,7 +60,7 @@ const FeaturedTag: React.SFC<FeaturedTagProps> = ({
         width={get({ lg: 256, md: 256, sm: 176 }, size)}
         css={{
           ...(css as object),
-          ...backgroundStyles(colors, passive),
+          ...interactiveStyles(colors, passive),
         }}
         {...props}
       >

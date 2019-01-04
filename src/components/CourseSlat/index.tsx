@@ -24,12 +24,16 @@ export interface CourseSlatProps extends ViewProps {
   typeIcon?: string;
 }
 
-const hoverStyle = (colors, passive) => {
+const interactiveStyle = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
       boxShadow: foundations.shadows.soft,
+      cursor: "pointer",
       transform: "translateY(-1px)",
+    };
+    styles["&:active"] = {
+      transform: "translateY(1px)",
     };
   }
   return styles;
@@ -67,7 +71,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
               overflow: "hidden",
               textDecoration: "none",
             },
-            hoverStyle(colors, passive),
+            interactiveStyle(colors, passive),
           ]}
           {...props}
         >

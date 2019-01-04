@@ -42,6 +42,12 @@ Carousel with lots of combinations of Cards
 </View>
 ```
 
+With interactive styles
+```.jsx
+<FeaturedTag passive={false}>
+  Hello World!
+</FeaturedTag>
+```
 
 ```!jsx
 <ComponentDoc component="FeaturedTag" />
