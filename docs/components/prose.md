@@ -20,7 +20,7 @@ Does not allow banned tags such as script
 
 Does not allow banned attributes
 ```.jsx
-<Prose HTML="<a href='#Test' target='_blank' norel='badtag'>Hello World!</a>" />
+<Prose HTML="Hello from the world of <a href='#Test' target='_blank' norel='badtag'>Hello World!</a>" />
 ```
 
 ```!jsx
