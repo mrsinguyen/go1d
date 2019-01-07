@@ -189,8 +189,8 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
         options={options}
         onChange={this.onChange}
         optionRenderer={optionRenderer}
-        handleFocus={this.handleFocus}
-        handleBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
       />
     );
   }

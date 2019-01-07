@@ -136,3 +136,7 @@ export {
   default as TagSelector,
   TagSelectorProps,
 } from "./components/TagSelector";
+export {
+  AuthorSelectorProps,
+  default as AuthorSelector,
+} from "./components/AuthorSelector";
