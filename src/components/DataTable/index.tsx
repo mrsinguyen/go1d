@@ -63,6 +63,7 @@ export interface DataTableProps extends ViewProps {
    */
   hideScrollButton?: boolean;
   scrollElement?: any;
+  isListLoading?: boolean;
 }
 
 class DataTable extends React.Component<DataTableProps, {}> {
@@ -123,6 +124,7 @@ class DataTable extends React.Component<DataTableProps, {}> {
       scrollCallback,
       hideScrollButton,
       scrollElement,
+      isListLoading = false,
       ...viewProps
     } = this.props;
 
@@ -215,7 +217,10 @@ class DataTable extends React.Component<DataTableProps, {}> {
                               </div>
                             )}
                           </AutoSizer>
-                          {emptyState && rowCount <= 0 && emptyState}
+                          {!isListLoading &&
+                            emptyState &&
+                            rowCount <= 0 &&
+                            emptyState}
                         </View>
                         {!hideScrollButton &&
                           scrollTop > 0 && (
