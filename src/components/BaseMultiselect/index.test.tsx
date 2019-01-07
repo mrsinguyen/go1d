@@ -24,7 +24,6 @@ it("renders without crashing with optional props", () => {
 });
 
 it("handles input changes well", () => {
-  const fn = jest.fn();
   const ref: React.RefObject<BaseMultiSelect> = React.createRef();
 
   render(

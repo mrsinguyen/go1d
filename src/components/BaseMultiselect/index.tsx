@@ -21,9 +21,10 @@ export interface BaseMultiselectProps extends ViewProps {
   onChange?: (evt: any) => void;
 
   /**
-   * Optional function to call when a new option is created. Returns a promise to allow for asynchronous actions to finish before continuing
+   * Optional function to call when a new option is created. Returns an optional promise to allow for asynchronous actions to finish before continuing.
+   * Rejecting the promise will not add update the selector's value
    */
-  onCreate?: (option: string) => Promise<any>;
+  onCreate?: (option: string) => Promise<any> | void;
 
   /**
    * Whether new options may be created. Defaults to true
@@ -47,24 +48,37 @@ export interface BaseMultiselectProps extends ViewProps {
     createable?: boolean
   ) => React.ReactNode;
 
+  /**
+   * Setting this to true forces the popup to close when a selection is made
+   */
+  closeOnSelection?: boolean;
+
   placeholder?: string;
+
+  /**
+   * The color for the item selected via keyboard. Defaults to faint
+   */
+  selectedColor?: string;
 }
 
 interface State {
   search: string;
   value: string[];
   focused: boolean;
+  forceClose: boolean;
 }
 
 class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   public static defaultProps = {
     createable: true,
+    closeOnSelection: false,
   };
 
   public state: State = {
     search: "",
     value: [],
     focused: false,
+    forceClose: false,
   };
 
   private target: React.RefObject<any> = React.createRef();
@@ -78,16 +92,23 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
     const value = evt.currentTarget.dataset.value;
 
+    this.setState({
+      forceClose: this.props.closeOnSelection,
+    });
+
     if (promise) {
-      promise.then(() => {
-        this.selectValue({
-          currentTarget: {
-            dataset: {
-              value,
+      promise.then(
+        () => {
+          this.selectValue({
+            currentTarget: {
+              dataset: {
+                value,
+              },
             },
-          },
-        } as any);
-      });
+          } as any);
+        },
+        () => null
+      );
     } else {
       this.selectValue({
         currentTarget: {
@@ -103,6 +124,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   public inputChange(evt: React.SyntheticEvent<HTMLInputElement>) {
     this.setState({
       search: evt.currentTarget.value,
+      forceClose: false,
     });
 
     safeInvoke(this.props.onInputChange, evt);
@@ -112,13 +134,17 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   public handleFocus(evt: React.SyntheticEvent<HTMLInputElement>) {
     this.setState({
       focused: true,
+      forceClose: false,
     });
-    safeInvoke(this.props.handleFocus, evt);
+    safeInvoke(this.props.onFocus, evt);
   }
 
   @autobind
   public handleBlur(evt: React.SyntheticEvent<HTMLInputElement>) {
-    safeInvoke(this.props.handleBlur, evt);
+    this.setState({
+      forceClose: false,
+    });
+    safeInvoke(this.props.onBlur, evt);
   }
 
   @autobind
@@ -134,6 +160,10 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
     const value = this.props.value || this.state.value;
 
     this.setState({
+      forceClose: this.props.closeOnSelection,
+    });
+
+    this.setState({
       value: [...value, evt.currentTarget.dataset.value.trim()],
       search: "",
     });
@@ -147,12 +177,16 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   }
 
   public renderOption(option: string, downshiftProps, creating = false) {
+    const { selectedColor = "faint" } = this.props;
+
     return (
       <ButtonMinimal
         width="100%"
+        height="auto"
+        minHeight="40px"
         backgroundColor={
           downshiftProps.highlightedIndex === downshiftProps.index
-            ? "faint"
+            ? selectedColor
             : undefined
         }
         onClick={creating ? this.createNewValue : this.selectValue}
@@ -168,6 +202,10 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
   public handleSelect(option: string) {
     const value = this.props.value || this.state.value;
     const existingValue = !!value.find(v => v === option);
+
+    this.setState({
+      forceClose: this.props.closeOnSelection,
+    });
 
     const evtOption = {
       currentTarget: {
@@ -209,8 +247,8 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
       optionRenderer,
       options = [],
       disabled,
-      handleFocus,
-      handleBlur,
+      onFocus,
+      onBlur,
       customRenderer,
       createable = true,
       ...props
@@ -264,6 +302,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
             isOpen={
               !this.props.disabled &&
               this.state.focused === true &&
+              !this.state.forceClose &&
               (filteredOptions.length > 0 || createAvailable)
             }
             onOuterClick={this.handleClickOuter}
