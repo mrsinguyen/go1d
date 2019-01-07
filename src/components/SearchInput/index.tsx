@@ -93,7 +93,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
             backgroundColor="transparent"
             data-testid="clearButton"
             aria-label="Clear Icon"
-            display={clearable && this.state.value ? "block" : "none"}
+            display={clearable && this.state.value ? "flex" : "none"}
             onClick={this.handleClear}
           />
         }

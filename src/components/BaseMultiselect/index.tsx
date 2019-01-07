@@ -251,6 +251,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
       onBlur,
       customRenderer,
       createable = true,
+      selectedColor,
       ...props
     } = this.props;
 
