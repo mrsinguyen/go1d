@@ -85,7 +85,14 @@ const Prose: React.SFC<ProseProps> = ({
               allowedAttributes: {
                 ...SanitizeHTML.defaults.allowedAttributes,
                 img: ["alt", "src", "title"],
-                iframe: ["src", "width", "height", "allow", "allowfullscreen", "frameborder"],
+                iframe: [
+                  "src",
+                  "width",
+                  "height",
+                  "allow",
+                  "allowfullscreen",
+                  "frameborder",
+                ],
               },
             }),
           }}
