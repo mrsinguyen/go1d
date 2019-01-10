@@ -41,7 +41,6 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
     } = this.props;
 
     const buttonProps = {
-      paddingX: 4,
       "aria-label": "open menu",
       size,
       marginLeft: "auto",
