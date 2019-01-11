@@ -59,37 +59,40 @@ class Carousel extends React.Component<CarouselProps, any> {
     const { gutter, children } = this.props;
     const { finishedScrolling, currentSlide } = this.state;
 
-    if (typeof children !== "undefined") {
+    if (typeof children !== "undefined" && children !== null) {
       const Slider: any = this.sliderContainerRef.current;
       const SliderScroll = Slider.scrollLeft + foundations.spacing[gutter];
       const LastSlideCurrent = this.slideRefs.slice(-1)[0].current;
-      const LastSlideRightEdge =
-        LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
 
-      if (
-        LastSlideRightEdge <= SliderScroll + Slider.offsetWidth &&
-        process.env.NODE_ENV !== "test"
-      ) {
-        // Test library does not suppport Element widths so this is always true even when it shouldnt be
-        // Cannot scroll further right
-        if (finishedScrolling === false) {
+      if (LastSlideCurrent) {
+        const LastSlideRightEdge =
+          LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
+
+        if (
+          LastSlideRightEdge <= SliderScroll + Slider.offsetWidth &&
+          process.env.NODE_ENV !== "test"
+        ) {
+          // Test library does not suppport Element widths so this is always true even when it shouldnt be
+          // Cannot scroll further right
+          if (finishedScrolling === false) {
+            this.setState({
+              finishedScrolling: true,
+            });
+          }
+        } else {
+          if (finishedScrolling) {
+            this.setState({
+              finishedScrolling: false,
+            });
+          }
+        }
+
+        if (React.Children.toArray(children).length <= currentSlide) {
+          // Incase some caroursel children update
           this.setState({
-            finishedScrolling: true,
+            currentSlide: React.Children.toArray(children).length - 1,
           });
         }
-      } else {
-        if (finishedScrolling) {
-          this.setState({
-            finishedScrolling: false,
-          });
-        }
-      }
-
-      if (React.Children.toArray(children).length <= currentSlide) {
-        // Incase some caroursel children update
-        this.setState({
-          currentSlide: React.Children.toArray(children).length - 1,
-        });
       }
     }
   }
@@ -321,6 +324,11 @@ class Carousel extends React.Component<CarouselProps, any> {
       const SliderRightEdge = SliderScroll + Slider.offsetWidth;
       const LastSlide: any = this.slideRefs.slice(-1)[0];
       const LastSlideCurrent = LastSlide.current;
+
+      if (!LastSlideCurrent) {
+        return false;
+      }
+
       const LastSlideRightEdge =
         LastSlideCurrent.offsetLeft + LastSlideCurrent.offsetWidth;
 
