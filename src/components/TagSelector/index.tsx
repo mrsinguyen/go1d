@@ -1,7 +1,7 @@
 import * as React from "react";
-import { ButtonMinimal } from "../..";
 import { autobind } from "../../utils/decorators";
 import BaseMultiselect from "../BaseMultiselect";
+import ButtonMinimal from "../ButtonMinimal";
 
 import safeInvoke from "../../utils/safeInvoke";
 import Text from "../Text";

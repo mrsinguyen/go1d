@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as SanitizeHTML from "sanitize-html";
-import { Theme } from "../..";
 import Base from "../Base";
 import Text, { TextProps } from "../Text";
+import Theme from "../Theme";
 
 export interface ProseProps extends TextProps {
   HTML?: string;
