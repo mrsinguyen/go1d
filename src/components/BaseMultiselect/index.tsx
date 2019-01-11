@@ -1,13 +1,14 @@
 import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
-import { Theme, View } from "../..";
+
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import ButtonMinimal from "../ButtonMinimal";
 import Portal from "../Portal";
 import Text from "../Text";
-import { ViewProps } from "../View";
+import Theme from "../Theme";
+import View, { ViewProps } from "../View";
 
 export interface BaseMultiselectProps extends ViewProps {
   /**
