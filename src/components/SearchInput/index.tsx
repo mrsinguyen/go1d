@@ -11,6 +11,7 @@ export interface SearchInputProps extends TextInputProps {
     event: React.SyntheticEvent<HTMLElement>
   ) => void);
   clearable?: boolean;
+  onClear?: ((event: React.SyntheticEvent<HTMLElement>) => void);
 }
 
 class SearchInput extends React.Component<SearchInputProps, any> {
@@ -67,9 +68,13 @@ class SearchInput extends React.Component<SearchInputProps, any> {
   };
 
   public handleClear = event => {
-    const { onSubmit } = this.props;
+    const { onClear, onSubmit } = this.props;
     this.setState({ value: "" });
-    safeInvoke(onSubmit, "", event);
+    if (onClear) {
+      safeInvoke(onClear, "", event);
+    } else {
+      safeInvoke(onSubmit, "", event);
+    }
   };
 
   public render() {
