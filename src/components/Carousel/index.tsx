@@ -238,12 +238,12 @@ class Carousel extends React.Component<CarouselProps, any> {
           flexDirection="row"
           width="100%"
           data-testid="ScrollableCarousel"
+          paddingLeft={2}
+          paddingRight={2}
+          paddingBottom={3}
+          marginLeft={-3}
+          marginRight={-3}
           css={{
-            paddingLeft: foundations.spacing[2],
-            paddingRight: foundations.spacing[2],
-            paddingBottom: foundations.spacing[3],
-            marginLeft: `-${foundations.spacing[2]}`,
-            marginRight: `-${foundations.spacing[2]}`,
             WebkitOverflowScrolling: "touch",
             overflowX: "auto",
             [foundations.breakpoints.lg]: {
