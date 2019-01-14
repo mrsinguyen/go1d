@@ -19,11 +19,12 @@ const interactiveStyles = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
-      boxShadow: foundations.shadows.soft,
+      boxShadow: foundations.shadows.strong,
       cursor: "pointer",
       transform: "translateY(-1px)",
     };
     styles["&:active"] = {
+      boxShadow: foundations.shadows.crisp,
       transform: "translateY(1px)",
     };
   }
@@ -59,6 +60,7 @@ const FeaturedTag: React.SFC<FeaturedTagProps> = ({
         type={type}
         width={get({ lg: 256, md: 256, sm: 176 }, size)}
         css={{
+          marginBottom: foundations.spacing[3],
           ...(css as object),
           ...interactiveStyles(colors, passive),
         }}
