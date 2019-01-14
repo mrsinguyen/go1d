@@ -59,6 +59,17 @@ releaseVersion: 0.0.36
 />
 ```
 
+### SearchInput with behaviour on clear and on submit
+```.jsx
+<SearchInput 
+    id="blank" 
+    value="Hold me Thrill me Submit me Clear me"
+    placeholder="Search for courses, videos, interactive lessons, and more..." 
+    onClear={() => {alert("Back in blank!")}}
+    onSubmit={(value) => {alert(`Value: ${value}`)}}
+/>
+```
+
 ```!jsx
 <ComponentDoc component="SearchInputProps" />
 ```
