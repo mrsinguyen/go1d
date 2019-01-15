@@ -11,6 +11,7 @@ import DropdownMenuItem, {
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
+import Skeleton from "./Skeleton";
 
 export interface CourseCardProps extends ViewProps {
   courseImage?: string;
@@ -55,161 +56,170 @@ const CourseCard: React.SFC<CourseCardProps> = ({
   typeIcon,
   price,
   currency,
+  skeleton = false,
   ...props
-}: CourseCardProps) => (
-  <Theme.Consumer>
-    {({ spacing, breakpoints, colors }) => {
-      return (
-        <View
-          borderRadius={2}
-          boxShadow="crisp"
-          color="default"
-          height="100%"
-          css={[
-            {
-              ...((css as object) || {}),
-              textDecoration: "none",
-              width: 221,
-            },
-            interactiveStyle(colors, passive),
-          ]}
-          {...props}
-        >
+}: CourseCardProps) => {
+  if (skeleton) {
+    return <Skeleton />;
+  }
+
+  return (
+    <Theme.Consumer>
+      {({ spacing, colors }) => {
+        return (
           <View
-            padding={3}
-            alignItems="start"
-            backgroundColor="default"
-            backgroundOpacity={courseImage ? "none" : "emptyBackground"}
-            css={{
-              borderRadius: `${spacing[2]}px ${spacing[2]}px 0 0`,
-              overflow: "hidden",
-              backgroundImage: courseImage ? `url(${courseImage})` : undefined,
-              backgroundSize: "cover",
-              position: "relative",
-              height: 128,
-              width: 221,
-              maxWidth: "100%",
-            }}
+            borderRadius={2}
+            boxShadow="crisp"
+            color="default"
+            height="100%"
+            css={[
+              {
+                ...((css as object) || {}),
+                textDecoration: "none",
+                width: 221,
+              },
+              interactiveStyle(colors, passive),
+            ]}
+            {...props}
           >
-            {!courseImage && (
-              <View
-                alignItems="center"
-                justifyContent="center"
-                height="100%"
-                width="100%"
-                opacity="emptyIcon"
-              >
-                <Icon size={7} name="Empty" color="default" />
-              </View>
-            )}
-            {(type || typeIcon) && (
-              <View
-                flexDirection="row"
-                padding={2}
-                borderRadius={1}
-                color="background"
-                backgroundColor="contrast"
-                css={{
-                  position: "absolute",
-                  bottom: 10,
-                  left: 10,
-                }}
-              >
-                {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
-                {type && (
-                  <Text color="background" fontSize={1}>
-                    {type.toUpperCase()}
-                  </Text>
-                )}
-              </View>
-            )}
-          </View>
-          <View padding={4} flexGrow={1}>
             <View
-              flexDirection="row"
-              justifyContent="space-between"
-              paddingBottom={2}
+              padding={3}
+              alignItems="start"
+              backgroundColor="default"
+              backgroundOpacity={courseImage ? "none" : "emptyBackground"}
+              css={{
+                borderRadius: `${spacing[2]}px ${spacing[2]}px 0 0`,
+                overflow: "hidden",
+                backgroundImage: courseImage
+                  ? `url(${courseImage})`
+                  : undefined,
+                backgroundSize: "cover",
+                position: "relative",
+                height: 128,
+                width: 221,
+                maxWidth: "100%",
+              }}
             >
-              {title && (
-                <Text
-                  fontWeight="semibold"
-                  css={{
-                    paddingRight: spacing[3],
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    "-webkit-box-orient": "vertical",
-                    overflow: "hidden",
-                  }}
+              {!courseImage && (
+                <View
+                  alignItems="center"
+                  justifyContent="center"
+                  height="100%"
+                  width="100%"
+                  opacity="emptyIcon"
                 >
-                  {title}
-                </Text>
-              )}
-              {itemList &&
-                itemList.length > 0 && (
-                  <Dropdown
-                    placement="bottom-end"
-                    renderFunction={DropdownMenuItem}
-                    itemToString={itemToString}
-                    itemList={itemList}
-                  >
-                    {({ ref, getToggleButtonProps }) => (
-                      <ButtonMinimal
-                        width={20}
-                        height={20}
-                        backgroundColor="transparent"
-                        css={{
-                          paddingTop: 0,
-                          paddingBottom: 0,
-                          ":hover, :focus": {
-                            background: "none",
-                            svg: {
-                              color: colors.subtle,
-                            },
-                          },
-                          paddingRight: 0,
-                        }}
-                        paddingX={0}
-                        innerRef={ref}
-                        iconName="Ellipsis"
-                        {...getToggleButtonProps()}
-                      />
-                    )}
-                  </Dropdown>
-                )}
-            </View>
-            {author && (
-              <View paddingBottom={2}>
-                <Text fontSize={1} color="subtle">
-                  {author}
-                </Text>
-              </View>
-            )}
-            {!!duration && (
-              <View flexDirection="row" paddingTop={3}>
-                <Icon
-                  name="Clock"
-                  size={1}
-                  color="muted"
-                  marginRight={2}
-                  marginTop={1}
-                />
-                <Text color="subtle" fontSize={1}>
-                  {formatDuration(duration)}
-                </Text>
-              </View>
-            )}
-            {children && <Text>{children}</Text>}
-            {currency &&
-              price > 0 && (
-                <View flexDirection="row" marginTop="auto" paddingTop={3}>
-                  <Text color="accent">{formatPrice(currency, price)}</Text>
+                  <Icon size={7} name="Empty" color="default" />
                 </View>
               )}
+              {(type || typeIcon) && (
+                <View
+                  flexDirection="row"
+                  padding={2}
+                  borderRadius={1}
+                  color="background"
+                  backgroundColor="contrast"
+                  css={{
+                    position: "absolute",
+                    bottom: 10,
+                    left: 10,
+                  }}
+                >
+                  {typeIcon && <Icon paddingRight={1} name={typeIcon} />}
+                  {type && (
+                    <Text color="background" fontSize={1}>
+                      {type.toUpperCase()}
+                    </Text>
+                  )}
+                </View>
+              )}
+            </View>
+            <View padding={4} flexGrow={1}>
+              <View
+                flexDirection="row"
+                justifyContent="space-between"
+                paddingBottom={2}
+              >
+                {title && (
+                  <Text
+                    fontWeight="semibold"
+                    css={{
+                      paddingRight: spacing[3],
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      "-webkit-box-orient": "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {title}
+                  </Text>
+                )}
+                {itemList &&
+                  itemList.length > 0 && (
+                    <Dropdown
+                      placement="bottom-end"
+                      renderFunction={DropdownMenuItem}
+                      itemToString={itemToString}
+                      itemList={itemList}
+                    >
+                      {({ ref, getToggleButtonProps }) => (
+                        <ButtonMinimal
+                          width={20}
+                          height={20}
+                          backgroundColor="transparent"
+                          css={{
+                            paddingTop: 0,
+                            paddingBottom: 0,
+                            ":hover, :focus": {
+                              background: "none",
+                              svg: {
+                                color: colors.subtle,
+                              },
+                            },
+                            paddingRight: 0,
+                          }}
+                          paddingX={0}
+                          innerRef={ref}
+                          iconName="Ellipsis"
+                          {...getToggleButtonProps()}
+                        />
+                      )}
+                    </Dropdown>
+                  )}
+              </View>
+              {author && (
+                <View paddingBottom={2}>
+                  <Text fontSize={1} color="subtle">
+                    {author}
+                  </Text>
+                </View>
+              )}
+              {!!duration && (
+                <View flexDirection="row" paddingTop={3}>
+                  <Icon
+                    name="Clock"
+                    size={1}
+                    color="muted"
+                    marginRight={2}
+                    marginTop={1}
+                  />
+                  <Text color="subtle" fontSize={1}>
+                    {formatDuration(duration)}
+                  </Text>
+                </View>
+              )}
+              {children && <Text>{children}</Text>}
+              {currency &&
+                price > 0 && (
+                  <View flexDirection="row" marginTop="auto" paddingTop={3}>
+                    <Text color="accent">{formatPrice(currency, price)}</Text>
+                  </View>
+                )}
+            </View>
           </View>
-        </View>
-      );
-    }}
-  </Theme.Consumer>
-);
+        );
+      }}
+    </Theme.Consumer>
+  );
+};
 
 export default CourseCard;

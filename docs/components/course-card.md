@@ -69,6 +69,13 @@ Carousel with lots of combinations of Cards
 </View>
 ```
 
+### Skeleton
+```.jsx
+<CourseCard 
+  skeleton={true}
+/>
+```
+
 
 ```!jsx
 <ComponentDoc component="CourseCard" />
