@@ -1,5 +1,5 @@
 import * as React from "react";
-import { darken, opacify } from "../../foundations";
+import { opacify } from "../../foundations";
 import Button, { ButtonProps } from "../Button";
 import Theme from "../Theme";
 
@@ -21,11 +21,11 @@ const ButtonMinimal: React.SFC<ButtonMinimalProps> = ({
           {
             "&:hover, &:focus": {
               backgroundColor: opacify(colors[color], 0.08),
-              color: darken(colors[color], 0.2),
+              color,
             },
             "&:active": {
               backgroundColor: opacify(colors[color], 0.2),
-              color: darken(colors[color], 0.3),
+              color,
             },
           },
           css,
