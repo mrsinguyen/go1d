@@ -28,11 +28,12 @@ const interactiveStyle = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
-      boxShadow: foundations.shadows.soft,
+      boxShadow: foundations.shadows.strong,
       cursor: "pointer",
       transform: "translateY(-1px)",
     };
     styles["&:active"] = {
+      boxShadow: foundations.shadows.crisp,
       transform: "translateY(1px)",
     };
   }
