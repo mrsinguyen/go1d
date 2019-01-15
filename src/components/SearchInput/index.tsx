@@ -81,6 +81,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     const {
       element, // prevent it from being passed down to the child
       onChange, // prevent it from being passed down to the child
+      onClear, // prevent it from being passed down to the child
       onKeyDown, // prevent it from being passed down to the child
       value, // prevent it from being passed down to the child
       defaultValue, // prevent it from being passed down to the child
