@@ -54,6 +54,13 @@ As used on the website
 />
 ```
 
+### Skeleton
+```.jsx
+<CourseSlat 
+  skeleton={true}
+/>
+```
+
 ```!jsx
 <ComponentDoc component="CourseSlatProps" />
 ```
