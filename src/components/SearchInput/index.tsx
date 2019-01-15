@@ -97,7 +97,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
         aria-label="Search Field"
         suffixNode={
           <ButtonMinimal
-            iconName="Cross"
+            iconName="Close"
             color="accent"
             backgroundColor="transparent"
             data-testid="clearButton"
