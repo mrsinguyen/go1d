@@ -543,6 +543,15 @@ class Select extends React.Component<SelectProps, any> {
                   maxHeight: "300px",
                   overflowY: "auto",
                   display: !isVisible ? "none" : "block",
+                  maxWidth: "320px",
+                  minWidth: "220px",
+                  width: "auto",
+                  [foundations.breakpoints.sm]: {
+                    maxWidth: "none",
+                  },
+                  [foundations.breakpoints.md]: {
+                    maxWidth: "none",
+                  },
                 }}
                 data-testid="dropDown"
                 borderRadius={2}

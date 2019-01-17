@@ -7,6 +7,7 @@ import Icon from "../Icon";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
+import Skeleton from "./Skeleton";
 
 export interface CourseSlatProps extends ViewProps {
   actionRender?: () => React.ReactChild;
@@ -28,11 +29,12 @@ const interactiveStyle = (colors, passive) => {
   const styles = { background: `${colors.background}` };
   if (!passive) {
     styles["&:hover, &:focus"] = {
-      boxShadow: foundations.shadows.soft,
+      boxShadow: foundations.shadows.strong,
       cursor: "pointer",
       transform: "translateY(-1px)",
     };
     styles["&:active"] = {
+      boxShadow: foundations.shadows.crisp,
       transform: "translateY(1px)",
     };
   }
@@ -54,202 +56,211 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
   title,
   type,
   typeIcon,
+  skeleton = false,
   ...props
-}: CourseSlatProps) => (
-  <Theme.Consumer>
-    {({ spacing, breakpoints, colors }) => {
-      return (
-        <View
-          borderRadius={2}
-          boxShadow="crisp"
-          flexDirection="row"
-          marginBottom={4}
-          color="default"
-          css={[
-            {
-              ...((css as object) || {}),
-              overflow: "hidden",
-              textDecoration: "none",
-            },
-            interactiveStyle(colors, passive),
-          ]}
-          {...props}
-        >
+}: CourseSlatProps) => {
+  if (skeleton) {
+    return <Skeleton />;
+  }
+
+  return (
+    <Theme.Consumer>
+      {({ spacing, breakpoints, colors }) => {
+        return (
           <View
-            padding={3}
-            alignItems="start"
-            backgroundColor="default"
-            backgroundOpacity={courseImage ? "none" : "emptyBackground"}
-            css={{
-              overflow: "hidden",
-              backgroundImage: courseImage ? `url(${courseImage})` : undefined,
-              backgroundSize: "cover",
-              position: "relative",
-              height: 142,
-              width: 221,
-              [breakpoints.sm]: {
-                height: 130,
-                width: 130,
+            borderRadius={2}
+            boxShadow="crisp"
+            flexDirection="row"
+            marginBottom={4}
+            color="default"
+            css={[
+              {
+                ...((css as object) || {}),
+                overflow: "hidden",
+                textDecoration: "none",
               },
-            }}
+              interactiveStyle(colors, passive),
+            ]}
+            {...props}
           >
-            {!courseImage && (
-              <View
-                alignItems="center"
-                justifyContent="center"
-                height="100%"
-                width="100%"
-                opacity="emptyIcon"
-              >
-                <Icon size={7} name="Empty" color="default" />
-              </View>
-            )}
-            {(type || typeIcon) && (
-              <View
-                flexDirection="row"
-                padding={2}
-                borderRadius={1}
-                color="background"
-                backgroundColor="contrast"
-                css={{
-                  position: "absolute",
-                  bottom: 10,
-                  left: 10,
-                }}
-              >
-                {typeIcon && (
-                  <View paddingRight={2}>
-                    <Icon name={typeIcon} />
-                  </View>
-                )}
-                {type && (
-                  <Text color="background" fontSize={1}>
-                    {type.toUpperCase()}
-                  </Text>
-                )}
-              </View>
-            )}
-          </View>
-          <View
-            paddingY={4}
-            paddingX={5}
-            flexShrink={1}
-            flexGrow={1}
-            width="100%"
-            flexDirection="column"
-            justifyContent="space-between"
-          >
-            <View>
-              {title && (
-                <Text
-                  fontSize={3}
-                  fontWeight="semibold"
+            <View
+              padding={3}
+              alignItems="start"
+              backgroundColor="default"
+              backgroundOpacity={courseImage ? "none" : "emptyBackground"}
+              css={{
+                overflow: "hidden",
+                backgroundImage: courseImage
+                  ? `url(${courseImage})`
+                  : undefined,
+                backgroundSize: "cover",
+                position: "relative",
+                height: 142,
+                width: 221,
+                [breakpoints.sm]: {
+                  height: 130,
+                  width: 130,
+                },
+              }}
+            >
+              {!courseImage && (
+                <View
+                  alignItems="center"
+                  justifyContent="center"
+                  height="100%"
+                  width="100%"
+                  opacity="emptyIcon"
+                >
+                  <Icon size={7} name="Empty" color="default" />
+                </View>
+              )}
+              {(type || typeIcon) && (
+                <View
+                  flexDirection="row"
+                  padding={2}
+                  borderRadius={1}
+                  color="background"
+                  backgroundColor="contrast"
                   css={{
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    [foundations.breakpoints.sm]: {
-                      wordWrap: "break-word",
-                      whiteSpace: "initial",
-                      lineHeight: 1.2,
-                      maxHeight: "2.4rem",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      display: "-webkit-box",
-                      fontSize: foundations.type.scale.sm[2],
-                    },
+                    position: "absolute",
+                    bottom: 10,
+                    left: 10,
                   }}
                 >
-                  {title}
-                </Text>
-              )}
-              {(duration || author) && (
-                <View flexDirection="row" marginTop={3} flexWrap="wrap">
-                  {authorAvatar && (
-                    <View paddingRight={3}>
-                      <Avatar src={authorAvatar} size={1} />
+                  {typeIcon && (
+                    <View paddingRight={2}>
+                      <Icon name={typeIcon} />
                     </View>
                   )}
-                  {author && (
-                    <View paddingRight={3}>
-                      {typeof author === "string" ? (
-                        <Text color="subtle" fontSize={1}>
-                          {author}
-                        </Text>
-                      ) : (
-                        author()
-                      )}
-                    </View>
-                  )}
-                  {!!duration && (
-                    <View
-                      flexDirection="row"
-                      css={{
-                        [foundations.breakpoints.sm]: {
-                          display: "none",
-                        },
-                      }}
-                    >
-                      <Icon
-                        name="Clock"
-                        size={1}
-                        color="muted"
-                        marginRight={2}
-                        marginTop={1}
-                      />
-                      <Text color="subtle" fontSize={1}>
-                        {formatDuration(duration)}
-                      </Text>
-                    </View>
+                  {type && (
+                    <Text color="background" fontSize={1}>
+                      {type.toUpperCase()}
+                    </Text>
                   )}
                 </View>
               )}
             </View>
-            <View>
-              {currency &&
-                price > 0 && (
-                  <View flexDirection="row">
-                    <Text color="accent" fontWeight="semibold">
-                      {formatPrice(currency, price)}
-                    </Text>
+            <View
+              paddingY={4}
+              paddingX={5}
+              flexShrink={1}
+              flexGrow={1}
+              width="100%"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
+              <View>
+                {title && (
+                  <Text
+                    fontSize={3}
+                    fontWeight="semibold"
+                    css={{
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      [foundations.breakpoints.sm]: {
+                        wordWrap: "break-word",
+                        whiteSpace: "initial",
+                        lineHeight: 1.2,
+                        maxHeight: "2.4rem",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        display: "-webkit-box",
+                        fontSize: foundations.type.scale.sm[2],
+                      },
+                    }}
+                  >
+                    {title}
+                  </Text>
+                )}
+                {(duration || author) && (
+                  <View flexDirection="row" marginTop={3} flexWrap="wrap">
+                    {authorAvatar && (
+                      <View paddingRight={3}>
+                        <Avatar src={authorAvatar} size={1} />
+                      </View>
+                    )}
+                    {author && (
+                      <View paddingRight={3}>
+                        {typeof author === "string" ? (
+                          <Text color="subtle" fontSize={1}>
+                            {author}
+                          </Text>
+                        ) : (
+                          author()
+                        )}
+                      </View>
+                    )}
+                    {!!duration && (
+                      <View
+                        flexDirection="row"
+                        css={{
+                          [foundations.breakpoints.sm]: {
+                            display: "none",
+                          },
+                        }}
+                      >
+                        <Icon
+                          name="Clock"
+                          size={1}
+                          color="muted"
+                          marginRight={2}
+                          marginTop={1}
+                        />
+                        <Text color="subtle" fontSize={1}>
+                          {formatDuration(duration)}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 )}
-              {contentRender && contentRender()}
-              {description && (
-                <Text
-                  color="subtle"
-                  marginTop={3}
-                  css={{
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    [foundations.breakpoints.sm]: {
-                      display: "none",
-                    },
-                  }}
-                >
-                  {description}
-                </Text>
-              )}
+              </View>
+              <View>
+                {currency &&
+                  price > 0 && (
+                    <View flexDirection="row">
+                      <Text color="accent" fontWeight="semibold">
+                        {formatPrice(currency, price)}
+                      </Text>
+                    </View>
+                  )}
+                {contentRender && contentRender()}
+                {description && (
+                  <Text
+                    color="subtle"
+                    marginTop={3}
+                    css={{
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      [foundations.breakpoints.sm]: {
+                        display: "none",
+                      },
+                    }}
+                  >
+                    {description}
+                  </Text>
+                )}
+              </View>
             </View>
+            {actionRender && (
+              <View
+                css={{
+                  padding: spacing[5],
+                  paddingLeft: spacing[7],
+                  [breakpoints.sm]: {
+                    padding: spacing[4],
+                  },
+                }}
+              >
+                {actionRender()}
+              </View>
+            )}
           </View>
-          {actionRender && (
-            <View
-              css={{
-                padding: spacing[5],
-                paddingLeft: spacing[7],
-                [breakpoints.sm]: {
-                  padding: spacing[4],
-                },
-              }}
-            >
-              {actionRender()}
-            </View>
-          )}
-        </View>
-      );
-    }}
-  </Theme.Consumer>
-);
+        );
+      }}
+    </Theme.Consumer>
+  );
+};
 
 export default CourseSlat;

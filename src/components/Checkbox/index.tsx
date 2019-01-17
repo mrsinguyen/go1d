@@ -120,6 +120,8 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               <Text
                 color="contrast"
                 fontSize={fontSize}
+                title={label}
+                maxWidth="100%"
                 css={{
                   paddingLeft: spacing[3],
                   alignSelf: "center",

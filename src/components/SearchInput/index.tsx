@@ -11,6 +11,7 @@ export interface SearchInputProps extends TextInputProps {
     event: React.SyntheticEvent<HTMLElement>
   ) => void);
   clearable?: boolean;
+  onClear?: ((event: React.SyntheticEvent<HTMLElement>) => void);
 }
 
 class SearchInput extends React.Component<SearchInputProps, any> {
@@ -67,15 +68,20 @@ class SearchInput extends React.Component<SearchInputProps, any> {
   };
 
   public handleClear = event => {
-    const { onSubmit } = this.props;
+    const { onClear, onSubmit } = this.props;
     this.setState({ value: "" });
-    safeInvoke(onSubmit, "", event);
+    if (onClear) {
+      safeInvoke(onClear, "", event);
+    } else {
+      safeInvoke(onSubmit, "", event);
+    }
   };
 
   public render() {
     const {
       element, // prevent it from being passed down to the child
       onChange, // prevent it from being passed down to the child
+      onClear, // prevent it from being passed down to the child
       onKeyDown, // prevent it from being passed down to the child
       value, // prevent it from being passed down to the child
       defaultValue, // prevent it from being passed down to the child
@@ -91,7 +97,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
         aria-label="Search Field"
         suffixNode={
           <ButtonMinimal
-            iconName="Cross"
+            iconName="Close"
             color="accent"
             backgroundColor="transparent"
             data-testid="clearButton"
