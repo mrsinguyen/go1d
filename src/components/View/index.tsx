@@ -86,7 +86,7 @@ const View: React.SFC<ViewProps> = ({
   borderRight = border,
   borderBottom = border,
   borderLeft = border,
-  color = mode === "dark" ? "default" : "inherit",
+  color = mode ? "default" : "inherit",
   backgroundColor = mode && "background",
   backgroundOpacity,
   borderRadius,
