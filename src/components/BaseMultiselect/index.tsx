@@ -2,6 +2,7 @@ import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
+import { ZIndex } from "../../foundations/foundation-types";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import ButtonMinimal from "../ButtonMinimal";
@@ -60,6 +61,7 @@ export interface BaseMultiselectProps extends ViewProps {
    * The color for the item selected via keyboard. Defaults to faint
    */
   selectedColor?: string;
+  dropdownZindex?: ZIndex | number | "";
 }
 
 interface State {
@@ -253,6 +255,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
       customRenderer,
       createable = true,
       selectedColor,
+      dropdownZindex,
       ...props
     } = this.props;
 
@@ -375,6 +378,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                 {...getMenuProps({
                                   refKey: "innerRef",
                                 })}
+                                overflow="hidden"
                               >
                                 <View
                                   backgroundColor="background"
@@ -385,11 +389,13 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
                                     width: this.target.current
                                       ? this.target.current.offsetWidth
                                       : "auto",
+                                    overflowY: "scroll",
                                   }}
+                                  maxHeight={350}
                                   innerRef={ref}
                                   transition="none"
                                   paddingY={3}
-                                  zIndex="dropdown"
+                                  zIndex={dropdownZindex || "dropdown"}
                                 >
                                   {createAvailable &&
                                     this.renderOption(
@@ -453,6 +459,9 @@ const SelectInput: React.SFC<any> = ({
   keyPress,
   name,
   value,
+  closeOnSelection,
+  onInputChange,
+  dropdownZindex,
   ...props
 }) => {
   const onChange = (evt: any) => {
