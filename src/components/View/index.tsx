@@ -39,6 +39,7 @@ export interface ViewProps extends BaseProps {
   minHeight?: HeightProperty | HeightProperty[];
   height?: HeightProperty | HeightProperty[];
   maxWidth?: WidthProperty | WidthProperty[];
+  maxHeight?: HeightProperty | HeightProperty[];
   zIndex?: ZIndex | number | "";
   boxShadow?: Shadows | "";
   borderColor?: string;
@@ -95,6 +96,7 @@ const View: React.SFC<ViewProps> = ({
   minHeight = 0,
   height,
   maxWidth = "100%",
+  maxHeight = "none",
   zIndex,
   boxShadow,
   textAlign = "inherit",
@@ -132,6 +134,7 @@ const View: React.SFC<ViewProps> = ({
                 height,
                 width: getWidth(width),
                 maxWidth: maxWidth ? getWidth(maxWidth) : "100%",
+                maxHeight: maxHeight ? getWidth(maxHeight) : "none",
                 zIndex: zi[zIndex] || zIndex,
                 // fix flexbox bugs
                 minHeight,

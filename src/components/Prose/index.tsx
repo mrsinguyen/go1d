@@ -53,6 +53,8 @@ const Prose: React.SFC<ProseProps> = ({
               width: "100%",
               position: "absolute",
               bottom: 0,
+              left: 0,
+              right: 0,
               marginBottom: transformMarginBottomFromFont(fontSize),
             },
             "&:active:after": {
