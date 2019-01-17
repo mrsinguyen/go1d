@@ -240,9 +240,8 @@ class Carousel extends React.Component<CarouselProps, any> {
           data-testid="ScrollableCarousel"
           paddingLeft={2}
           paddingRight={2}
-          paddingBottom={3}
-          marginLeft={-3}
-          marginRight={-3}
+          marginLeft={-2}
+          marginRight={-2}
           css={{
             WebkitOverflowScrolling: "touch",
             overflowX: "auto",
