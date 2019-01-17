@@ -5,10 +5,12 @@ import { type } from "./index";
 const isServer =
   typeof window === "undefined" || typeof document === "undefined";
 
-export function globalCSS() {
+const globalCSS = () => {
   fontCSS();
   resetCSS();
 }
+
+export default globalCSS;
 
 export function fontCSS() {
   if (isServer) {
