@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withReducer } from "recompose";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 import { View, Text, Pill } from "../../../src/";
-import Theme, { DarkMode } from "../../../src/components/Theme";
+import Theme from "../../../src/components/Theme";
 
 const unhyphenate = str => str.replace(/(\w)(-)(\w)/g, "$1 $3");
 const upperFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
@@ -28,30 +28,29 @@ const Layout = props => (
 );
 
 const Sidebar = props => (
-  <DarkMode>
-    <Theme.Consumer>
-      {({ colors, breakpoints }) => (
-        <View
-          paddingY={4}
-          backgroundColor="background"
-          color="subtle"
-          {...props}
-          css={{
-            [breakpoints.sm]: {
-              width: "100%",
-            },
-            [breakpoints.md]: {
-              minWidth: 280,
-              position: "fixed",
-              height: "100vh",
-              overflow: "auto",
-              overflowX: "hidden",
-            },
-          }}
-        />
-      )}
-    </Theme.Consumer>
-  </DarkMode>
+  <Theme.Consumer>
+    {({ breakpoints }) => (
+      <View
+        mode="dark"
+        paddingY={4}
+        backgroundColor="background"
+        color="subtle"
+        {...props}
+        css={{
+          [breakpoints.sm]: {
+            width: "100%",
+          },
+          [breakpoints.md]: {
+            minWidth: 280,
+            position: "fixed",
+            height: "100vh",
+            overflow: "auto",
+            overflowX: "hidden",
+          },
+        }}
+      />
+    )}
+  </Theme.Consumer>
 );
 
 const Link = props => (

@@ -13,7 +13,8 @@ import { opacify } from "../../foundations";
 import { Opacities, Shadows, ZIndex } from "../../foundations/foundation-types";
 import applyArray from "../../utils/applyArray";
 import Base, { BaseProps } from "../Base";
-import Theme, { DarkMode, LightMode } from "../Theme";
+import Provider from "../Provider";
+import Theme from "../Theme";
 
 type WidthProperty = Globals | "auto" | number | string | null;
 type HeightProperty = Globals | "auto" | number | string | null;
@@ -53,11 +54,6 @@ export interface ViewProps extends BaseProps {
   transition?: string | string[];
 }
 
-const modeComponents = {
-  light: LightMode,
-  dark: DarkMode,
-};
-
 function applySize(n) {
   if (!n) {
     return null;
@@ -90,7 +86,7 @@ const View: React.SFC<ViewProps> = ({
   borderRight = border,
   borderBottom = border,
   borderLeft = border,
-  color = mode ? "default" : "inherit",
+  color = mode === "dark" ? "default" : "inherit",
   backgroundColor = mode && "background",
   backgroundOpacity,
   borderRadius,
@@ -108,9 +104,8 @@ const View: React.SFC<ViewProps> = ({
   css,
   ...props
 }: ViewProps) => {
-  const Wrapper = mode ? modeComponents[mode] : React.Fragment;
   return (
-    <Wrapper>
+    <Provider mode={mode}>
       <Theme.Consumer>
         {({
           spacing: s,
@@ -167,7 +162,7 @@ const View: React.SFC<ViewProps> = ({
           />
         )}
       </Theme.Consumer>
-    </Wrapper>
+    </Provider>
   );
 };
 

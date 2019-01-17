@@ -14,7 +14,7 @@ it("renders lightmode without crashing", () => {
 
 it("renders darkmode without crashing", () => {
   render(
-    <Provider darkMode={true}>
+    <Provider mode="dark">
       <div>content</div>
     </Provider>
   );

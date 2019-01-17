@@ -12,16 +12,26 @@ export const LinkContext = React.createContext(null);
 
 const Provider = ({
   linkComponent,
-  darkMode,
+  mode,
   accent,
   theme,
   children,
 }: ProviderProps) => (
-  <Theme.Provider value={generateTheme({ darkMode, accent, theme })}>
-    <LinkContext.Provider value={linkComponent}>
-      {children}
-    </LinkContext.Provider>
-  </Theme.Provider>
+  <Theme.Consumer>
+    {({ colors, mode: currentMode }) => (
+      <Theme.Provider
+        value={generateTheme({
+          mode: mode || currentMode,
+          accent: accent || colors.accent,
+          theme,
+        })}
+      >
+        <LinkContext.Provider value={linkComponent}>
+          {children}
+        </LinkContext.Provider>
+      </Theme.Provider>
+    )}
+  </Theme.Consumer>
 );
 
 export default Provider;
