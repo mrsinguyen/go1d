@@ -538,20 +538,22 @@ class Select extends React.Component<SelectProps, any> {
               </View>
               <View
                 css={{
+                  [foundations.breakpoints.sm]: {
+                    width: "100%",
+                  },
+                  [foundations.breakpoints.md]: {
+                    width: "100%",
+                  },
+                  [foundations.breakpoints.lg]: {
+                    maxWidth: "320px",
+                    width: "auto",
+                  },
                   position: "absolute",
                   top: `calc(100% + ${spacing[2]}px)`,
                   maxHeight: "300px",
                   overflowY: "auto",
                   display: !isVisible ? "none" : "block",
-                  maxWidth: "320px",
                   minWidth: "220px",
-                  width: "auto",
-                  [foundations.breakpoints.sm]: {
-                    maxWidth: "none",
-                  },
-                  [foundations.breakpoints.md]: {
-                    maxWidth: "none",
-                  },
                 }}
                 data-testid="dropDown"
                 borderRadius={2}
