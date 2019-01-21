@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import * as React from "react";
 
 import { colors } from "../../foundations";
@@ -24,6 +25,18 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
       Selected: props.defaultValue || [],
       closeOnSelect: true,
     };
+  }
+
+  public componentDidUpdate(prevProps, prevState) {
+    if (isEqual(this.state.Selected.sort(), prevState.Selected.sort())) {
+      const { value } = this.props;
+
+      if (!isEqual(value, prevProps.value)) {
+        this.setState({
+          Selected: value,
+        });
+      }
+    }
   }
 
   public handleChange = event => {
