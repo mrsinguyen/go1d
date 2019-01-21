@@ -1,4 +1,5 @@
 import * as React from "react";
+import foundations from "../../foundations";
 import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
 import Link from "../Link";
@@ -55,7 +56,7 @@ const Button: React.SFC<ButtonProps> = ({
   round,
   onClick,
   href,
-  iconColor = color,
+  iconColor,
   type = "button",
   ...props
 }: ButtonProps) => {
@@ -67,6 +68,7 @@ const Button: React.SFC<ButtonProps> = ({
     iconOnlyScale,
     iconMarginRight,
   } = sizeStyles[size];
+
   return (
     <View
       element={href ? Link : "button"}
@@ -78,17 +80,26 @@ const Button: React.SFC<ButtonProps> = ({
       paddingY={paddingY}
       paddingX={children && paddingX}
       backgroundColor={backgroundColor}
-      color={color}
       borderRadius={round ? 8 : 2}
       onClick={onClick}
       href={href}
       type={type}
+      color={color}
       css={[
         {
           cursor: "pointer",
           "&:disabled": {
             opacity: 0.5,
             pointerEvents: "none",
+          },
+          "svg": {
+            color: iconColor ? foundations.colors[iconColor] : foundations.colors.subtle,
+          },
+          "&:hover, &:focus, &:active": {
+            color: color ? foundations.colors[color] : foundations.colors.accent,
+            "svg": {
+              color: iconColor ? foundations.colors[iconColor] : foundations.colors.accent, 
+            },
           },
         },
         css,
@@ -100,7 +111,6 @@ const Button: React.SFC<ButtonProps> = ({
           name={iconName}
           size={children ? typeScale : iconOnlyScale}
           marginRight={children && iconMarginRight}
-          color={iconColor}
         />
       )}
       <Text
