@@ -1,4 +1,5 @@
 import * as React from "react";
+import foundations from "../../foundations";
 import safeInvoke from "../../utils/safeInvoke";
 import Base from "../Base";
 import Icon from "../Icon";
@@ -125,6 +126,20 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                 css={{
                   paddingLeft: spacing[3],
                   alignSelf: "center",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  [foundations.breakpoints.sm]: {
+                    width: "100%",
+                  },
+                  [foundations.breakpoints.md]: {
+                    width: "100%",
+                  },
+                  [foundations.breakpoints.lg]: {
+                    maxWidth: "320px",
+                    // account for padding
+                    width: "90%",
+                  },
                 }}
               >
                 {label}
