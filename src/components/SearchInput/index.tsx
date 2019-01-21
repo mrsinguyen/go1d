@@ -33,16 +33,14 @@ class SearchInput extends React.Component<SearchInputProps, any> {
       });
     }
   }
-  
+
   public componentDidUpdate(prevProps, prevState) {
     if (this.state.value === prevState.value) {
       const { value } = this.props;
 
-      if (
-        value !== this.state.lastValueProp
-      ) {
+      if (value !== this.state.lastValueProp) {
         this.setState({
-          value: value,
+          value,
           lastValueProp: value,
         });
       }
