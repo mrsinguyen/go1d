@@ -17,7 +17,6 @@ export interface SearchInputProps extends TextInputProps {
 class SearchInput extends React.Component<SearchInputProps, any> {
   public state = {
     value: "",
-    lastValueProp: "",
   };
 
   public componentDidMount() {
@@ -25,7 +24,6 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     if (value) {
       this.setState({
         value,
-        lastValueProp: value,
       });
     } else if (defaultValue) {
       this.setState({
@@ -38,10 +36,9 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     if (this.state.value === prevState.value) {
       const { value } = this.props;
 
-      if (value !== this.state.lastValueProp) {
+      if (prevProps.value && (value !== prevProps.value)) {
         this.setState({
           value,
-          lastValueProp: value,
         });
       }
     }
