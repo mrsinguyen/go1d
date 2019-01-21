@@ -126,7 +126,9 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                 css={{
                   paddingLeft: spacing[3],
                   alignSelf: "center",
-                  overflowWrap: "break-word",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
                   [foundations.breakpoints.sm]: {
                     width: "100%",
                   },
