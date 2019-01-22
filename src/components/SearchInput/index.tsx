@@ -15,8 +15,11 @@ export interface SearchInputProps extends TextInputProps {
 }
 
 class SearchInput extends React.Component<SearchInputProps, any> {
+  private ref: React.RefObject<HTMLInputElement> = React.createRef();
+
   public state = {
     value: "",
+    restoreValue: "",
   };
 
   public componentDidMount() {
@@ -51,12 +54,21 @@ class SearchInput extends React.Component<SearchInputProps, any> {
   };
 
   public handleOnKeyDown = event => {
-    const { onSubmit, onKeyDown } = this.props;
+    const { onSubmit, onKeyDown, innerRef } = this.props;
+    const { value } = this.state;
     const Key = event.key;
+    const Ref = innerRef ? innerRef : this.ref; 
+    
     switch (Key) {
       case "Enter":
-        event.target.blur();
-        safeInvoke(onSubmit, this.state.value, event);
+        if (value && value.trim() !== ""){
+          this.setState({ 
+            restoreValue: value 
+          }, () => {
+              Ref.current.blur();
+              safeInvoke(onSubmit, value, event);
+          });
+        }
         event.preventDefault();
         break;
     }
@@ -64,14 +76,33 @@ class SearchInput extends React.Component<SearchInputProps, any> {
   };
 
   public handleClear = event => {
-    const { onClear, onSubmit } = this.props;
-    this.setState({ value: "" });
+    const { onClear, innerRef } = this.props;
+    const { value } = this.state;
+    this.setState({ 
+      value: "", 
+      restoreValue: value,
+    });
+    
+    const Ref = innerRef ? innerRef : this.ref; 
+    Ref.current.focus();
+
     if (onClear) {
       safeInvoke(onClear, "", event);
-    } else {
-      safeInvoke(onSubmit, "", event);
     }
   };
+
+  public handleBlur = event => {
+    const { onBlur } = this.props;
+    const { value, restoreValue } = this.state;
+
+    if (value && value.trim() === ""){
+      this.setState({ value: restoreValue });
+    }
+
+    if (onBlur) {
+      safeInvoke(onBlur, "", event);
+    } 
+  }
 
   public render() {
     const {
@@ -79,9 +110,11 @@ class SearchInput extends React.Component<SearchInputProps, any> {
       onChange, // prevent it from being passed down to the child
       onClear, // prevent it from being passed down to the child
       onKeyDown, // prevent it from being passed down to the child
+      onBlur, // prevent it from being passed down to the child
       value, // prevent it from being passed down to the child
       defaultValue, // prevent it from being passed down to the child
       clearable = true,
+      innerRef,
       ...props
     } = this.props;
     return (
@@ -90,7 +123,9 @@ class SearchInput extends React.Component<SearchInputProps, any> {
         value={this.state.value}
         onChange={this.handleChange}
         onKeyDown={this.handleOnKeyDown}
+        onBlur={this.handleBlur}
         aria-label="Search Field"
+        innerRef={innerRef ? innerRef : this.ref}
         suffixNode={
           <ButtonMinimal
             iconName="Close"

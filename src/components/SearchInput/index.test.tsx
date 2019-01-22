@@ -38,17 +38,6 @@ it("test onChange", () => {
   expect(onChange.mock.calls.length).toBe(1);
 });
 
-it("submits if onClear is not defined", () => {
-  const onSubmit = jest.fn();
-
-  const { getByTestId } = render(
-    <InputComponent id="test" onSubmit={onSubmit} clearable={true} />
-  );
-
-  fireEvent.click(getByTestId("clearButton"));
-  expect(onSubmit.mock.calls.length).toBe(1);
-});
-
 it("doesn't submit if onClear is defined", () => {
   const onClear = jest.fn();
   const onSubmit = jest.fn();
