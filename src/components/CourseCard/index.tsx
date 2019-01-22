@@ -73,11 +73,11 @@ const CourseCard: React.SFC<CourseCardProps> = ({
             boxShadow="crisp"
             color="default"
             height="100%"
+            width={221}
             css={[
+              css,
               {
-                ...((css as object) || {}),
                 textDecoration: "none",
-                width: 221,
               },
               interactiveStyle(colors, passive),
             ]}
