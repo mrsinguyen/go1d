@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get = require("lodash/get");
 import * as React from "react";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";

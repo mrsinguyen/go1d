@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { get } from "lodash";
+import get = require("lodash/get");
 import TextInput, { TextInputProps } from "../TextInput";
 import View from "../View";
 

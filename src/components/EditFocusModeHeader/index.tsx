@@ -1,4 +1,4 @@
-import { takeRight } from "lodash";
+import takeRight = require("lodash/takeRight");
 import * as React from "react";
 import Avatar from "../Avatar";
 import ButtonFilled from "../ButtonFilled";

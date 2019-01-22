@@ -56,7 +56,7 @@
     "react-transition-group": "^2.4.0",
     "react-virtualized": "^9.20.1",
     "recompose": "^0.27.1",
-    "sanitize-html": "^1.19.1",
+    "sanitize-html": "1.19.2",
     "smoothscroll-polyfill": "^0.4.3"
   },
   "devDependencies": {
@@ -67,6 +67,7 @@
     "@svgr/core": "^3.0.0",
     "@types/color": "^3.0.0",
     "@types/jest": "^23.3.2",
+    "@types/lodash": "^4.14.120",
     "@types/react": "^16.4.13",
     "@types/react-transition-group": "^2.0.14",
     "babel-cli": "^6.26.0",

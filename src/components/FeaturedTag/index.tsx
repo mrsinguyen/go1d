@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get = require("lodash/get");
 import * as React from "react";
 import foundations from "../../foundations";
 import Icon from "../Icon/index";
