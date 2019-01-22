@@ -25,8 +25,8 @@ class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
     const { onChange, name } = this.props;
     const { values } = this.state;
     let newValues = Object.assign([], values);
-    if (event.target.checked) {
-      newValues.push(event.target.value);
+    if (event.target.value) {
+      newValues.push(value);
     } else {
       newValues = values.filter(valueInState => value !== valueInState);
     }
@@ -56,18 +56,18 @@ class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
 
     return (
       <View {...props}>
-        {options.map(Option => {
+        {options.map(({ value, ...Option }) => {
           return (
             <View
               paddingY={2}
               key={`CheckboxInput__${Option.value}__${Option.label}`}
             >
               <Checkbox
-                onChange={this.handleOnChange(Option.value)}
+                onChange={this.handleOnChange(value)}
                 name={name}
                 disabled={disabled}
                 error={error}
-                checked={values.some(itemValue => itemValue === Option.value)}
+                value={values.some(itemValue => itemValue === value)}
                 {...Option}
               />
             </View>

@@ -11,7 +11,7 @@ it("renders without crashing without any optional props", () => {
       options={[
         {
           label: "test",
-          value: "testValue",
+          value: true,
         },
       ]}
     />
@@ -30,6 +30,11 @@ it("Can select", () => {
           label: "test",
           value: "testValue",
           id: "TestID",
+          name: "testradio",
+        },
+        {
+          label: "test",
+          value: "testValue2",
           name: "testradio",
         },
       ]}

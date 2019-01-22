@@ -9,19 +9,32 @@ releaseVersion: 0.0.71
 
 ### Label 
 ```.jsx
-<Checkbox name="Test" value="test" label="Test" />
+<Checkbox name="Test" label="Test" />
 ```
 
 ## Child label
 ```.jsx
-<Checkbox name="Test" value="test" >
+<Checkbox name="Test">
     <Text fontWeight="bold">Test</Text>
 </Checkbox>
 ```
 
 ## Disabled
 ```.jsx
-<Checkbox disabled name="Test" value="test" checked={true} label="Test" />
+<Checkbox disabled name="Test" value={true} label="Test" />
+```
+
+## Checkbox in Field
+```.jsx
+<Form initialValues={{ portalName: true }} onSubmit={(values, actions) => console.log(values, actions)}>
+    <Field
+    component={Checkbox}
+    name="portalName"
+    label="Portal name"
+    description="The name displayed across the site"
+    />
+    <ButtonFilled type="submit" color="accent">Submit</ButtonFilled>
+</Form>
 ```
 
 ### Usage in a CheckboxGroup 

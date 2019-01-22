@@ -15,12 +15,11 @@ export interface SearchInputProps extends TextInputProps {
 }
 
 class SearchInput extends React.Component<SearchInputProps, any> {
-  private ref: React.RefObject<HTMLInputElement> = React.createRef();
-
   public state = {
     value: "",
     restoreValue: "",
   };
+  private ref: React.RefObject<HTMLInputElement> = React.createRef();
 
   public componentDidMount() {
     const { value, defaultValue } = this.props;
@@ -57,17 +56,20 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     const { onSubmit, onKeyDown, innerRef } = this.props;
     const { value } = this.state;
     const Key = event.key;
-    const Ref = innerRef ? innerRef : this.ref; 
-    
+    const Ref = innerRef ? innerRef : this.ref;
+
     switch (Key) {
       case "Enter":
-        if (value && value.trim() !== ""){
-          this.setState({ 
-            restoreValue: value 
-          }, () => {
+        if (value && value.trim() !== "") {
+          this.setState(
+            {
+              restoreValue: value,
+            },
+            () => {
               Ref.current.blur();
               safeInvoke(onSubmit, value, event);
-          });
+            }
+          );
         }
         event.preventDefault();
         break;
@@ -78,12 +80,12 @@ class SearchInput extends React.Component<SearchInputProps, any> {
   public handleClear = event => {
     const { onClear, innerRef } = this.props;
     const { value } = this.state;
-    this.setState({ 
-      value: "", 
+    this.setState({
+      value: "",
       restoreValue: value,
     });
-    
-    const Ref = innerRef ? innerRef : this.ref; 
+
+    const Ref = innerRef ? innerRef : this.ref;
     Ref.current.focus();
 
     if (onClear) {
@@ -95,14 +97,14 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     const { onBlur } = this.props;
     const { value, restoreValue } = this.state;
 
-    if (value && value.trim() === ""){
+    if (value && value.trim() === "") {
       this.setState({ value: restoreValue });
     }
 
     if (onBlur) {
       safeInvoke(onBlur, "", event);
-    } 
-  }
+    }
+  };
 
   public render() {
     const {

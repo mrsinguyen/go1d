@@ -92,13 +92,19 @@ const Button: React.SFC<ButtonProps> = ({
             opacity: 0.5,
             pointerEvents: "none",
           },
-          "svg": {
-            color: iconColor ? foundations.colors[iconColor] : foundations.colors.subtle,
+          svg: {
+            color: iconColor
+              ? foundations.colors[iconColor]
+              : foundations.colors.subtle,
           },
           "&:hover, &:focus, &:active": {
-            color: color ? foundations.colors[color] : foundations.colors.accent,
-            "svg": {
-              color: iconColor ? foundations.colors[iconColor] : foundations.colors.accent, 
+            color: color
+              ? foundations.colors[color]
+              : foundations.colors.accent,
+            svg: {
+              color: iconColor
+                ? foundations.colors[iconColor]
+                : foundations.colors.accent,
             },
           },
         },

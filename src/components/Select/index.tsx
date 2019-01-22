@@ -396,9 +396,8 @@ class Select extends React.Component<SelectProps, any> {
           }}
         >
           <Checkbox
-            checked={getActive(Option)}
+            value={getActive(Option)}
             id={`check_${Option.label}`}
-            value=""
             label={Option.label}
             fontSize={Sizes[size].fontSize}
           />

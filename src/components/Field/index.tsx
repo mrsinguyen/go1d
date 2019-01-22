@@ -1,6 +1,7 @@
 import { Field as FormikField } from "formik";
 import * as React from "react";
 
+import firstDefined from "../../utils/firstDefined";
 import safeInvoke from "../../utils/safeInvoke";
 import Label from "../Label";
 import Text from "../Text";
@@ -74,7 +75,7 @@ const Field: React.SFC<FieldProps> = ({
             ref: inputRef,
             ...field,
             // use "initialValues" provided through Form, default to value attribute, if none is provided use empty string to avoid "A component is changing an uncontrolled input of type number to be controlled" errors //
-            value: field.value ? field.value : value ? value : "",
+            value: firstDefined(field.value, value, ""),
             disabled: disabled || form.status === "disabled",
             id: id || field.name,
             children,

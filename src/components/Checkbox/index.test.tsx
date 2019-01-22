@@ -17,7 +17,7 @@ it("Can select", () => {
       name="TestInput"
       label="test"
       id="foo"
-      checked={true}
+      value={true}
     />
   );
 
