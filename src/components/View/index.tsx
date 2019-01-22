@@ -11,6 +11,7 @@ import {
 import * as React from "react";
 import { opacify } from "../../foundations";
 import { Opacities, Shadows, ZIndex } from "../../foundations/foundation-types";
+import applyArray from "../../utils/applyArray";
 import Base, { BaseProps } from "../Base";
 import Theme, { DarkMode, LightMode } from "../Theme";
 
@@ -30,25 +31,26 @@ export interface ViewProps extends BaseProps {
   flexBasis?: FlexBasisProperty | FlexBasisProperty[];
   position?: PositionProperty | PositionProperty[];
   overflow?: OverflowProperty | OverflowProperty[];
-  opacity?: Opacities | "";
-  color?: string;
-  backgroundColor?: string;
+  opacity?: Opacities | Opacities[] | "";
+  color?: string | string[];
+  backgroundColor?: string | string[];
   backgroundOpacity?: Opacities | "";
-  borderRadius?: number;
+  borderRadius?: number | number[];
   width?: WidthProperty | WidthProperty[];
+  minWidth?: WidthProperty | WidthProperty[];
   minHeight?: HeightProperty | HeightProperty[];
   height?: HeightProperty | HeightProperty[];
   maxWidth?: WidthProperty | WidthProperty[];
   maxHeight?: HeightProperty | HeightProperty[];
-  zIndex?: ZIndex | number | "";
-  boxShadow?: Shadows | "";
-  borderColor?: string;
+  zIndex?: ZIndex | ZIndex[] | number | "";
+  boxShadow?: Shadows | Shadows[] | "";
+  borderColor?: string | string[];
   border?: number | number[];
   borderTop?: number | number[];
   borderRight?: number | number[];
   borderBottom?: number | number[];
   borderLeft?: number | number[];
-  transition?: string;
+  transition?: string | string[];
 }
 
 const modeComponents = {
@@ -56,13 +58,13 @@ const modeComponents = {
   dark: DarkMode,
 };
 
-function getWidth(n) {
+function applySize(n) {
   if (!n) {
     return null;
   }
 
   if (Array.isArray(n)) {
-    return n.map(getWidth);
+    return n.map(applySize);
   }
 
   return isNaN(n) ? n : n > 1 ? n : n * 100 + "%";
@@ -93,7 +95,9 @@ const View: React.SFC<ViewProps> = ({
   backgroundOpacity,
   borderRadius,
   width,
+  // fix flexbox bugs
   minHeight = 0,
+  minWidth = 0,
   height,
   maxWidth = "100%",
   maxHeight = "none",
@@ -126,36 +130,35 @@ const View: React.SFC<ViewProps> = ({
                 flexDirection,
                 flexWrap,
                 flexGrow,
-                flexBasis: getWidth(flexBasis),
+                flexBasis: applySize(flexBasis),
                 flexShrink,
                 position,
                 overflow,
-                opacity: opacities[opacity],
-                height,
-                width: getWidth(width),
-                maxWidth: maxWidth ? getWidth(maxWidth) : "100%",
-                maxHeight: maxHeight ? getWidth(maxHeight) : "none",
-                zIndex: zi[zIndex] || zIndex,
-                // fix flexbox bugs
-                minHeight,
-                minWidth: 0,
-                color: colors[color] || color,
+                opacity: applyArray(opacity, opacities),
+                height: applySize(height),
+                width: applySize(width),
+                maxWidth: maxWidth ? applySize(maxWidth) : "100%",
+                maxHeight: maxHeight ? applySize(maxHeight) : "none",
+                minHeight: applySize(minHeight),
+                minWidth: applySize(minWidth),
+                zIndex: applyArray(zIndex, zi) || zIndex,
+                color: applyArray(color, colors) || color,
                 backgroundColor:
                   opacities[backgroundOpacity] < 1
                     ? opacify(
-                        colors[backgroundColor],
+                        applyArray(backgroundColor, colors),
                         opacities[backgroundOpacity]
                       )
-                    : colors[backgroundColor],
-                borderRadius: s[borderRadius],
+                    : applyArray(backgroundColor, colors),
+                borderRadius: applyArray(borderRadius, s),
                 borderStyle: "solid",
                 borderTopWidth: borderTop,
                 borderRightWidth: borderRight,
                 borderBottomWidth: borderBottom,
                 borderLeftWidth: borderLeft,
-                borderColor: colors[borderColor],
-                boxShadow: shadows[boxShadow],
-                transition: transitions[transition],
+                borderColor: applyArray(borderColor, colors),
+                boxShadow: applyArray(boxShadow, shadows),
+                transition: applyArray(transition, transitions),
                 textAlign,
               },
               css,

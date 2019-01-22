@@ -497,9 +497,7 @@ class Select extends React.Component<SelectProps, any> {
                       : colors.soft
                 }
                 onMouseDown={this.onMenuMouseDown}
-                css={{
-                  ...((css as object) || {}),
-                }}
+                css={css}
               >
                 <View
                   paddingY={Sizes[size].paddingY}

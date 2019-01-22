@@ -1,55 +1,34 @@
 import * as React from "react";
+import Skeleton from "../../Skeleton";
 import View from "../../View";
-import Theme from "../../Theme";
 
 export default () => (
-  <Theme.Consumer>
-    {({ spacing, breakpoints }) => (
-      <View
-        borderRadius={2}
-        boxShadow="crisp"
-        flexDirection="row"
-        marginBottom={4}
-        color="default"
-        backgroundColor="background"
-        width="100%"
-        overflow="hidden"
-      >
-        <View
-          padding={3}
-          css={{
-            height: 142,
-            width: 221,
-            backgroundColor: "#A6C8D0",
-            [breakpoints.sm]: {
-              height: 130,
-              width: 130,
-            },
-          }}
-        />
-        <View padding={5} flexGrow={1}>
-          <View css={{
-            backgroundColor: "#A6C8D0",
-            height: 20,
-            maxWidth: 450,
-            width: "70%",
-            marginBottom: spacing[4],
-          }} />
-          <View css={{
-            backgroundColor: "#CDE2E7",
-            height: 13,
-            maxWidth: 250,
-            width: "50%",
-            marginBottom: spacing[3],
-          }} />
-          <View css={{
-            backgroundColor: "#CDE2E7",
-            height: 13,
-            maxWidth: 215,
-            width: "45%",
-          }} />
-        </View>
-      </View>
-    )}
-  </Theme.Consumer>
-)
+  <View
+    borderRadius={2}
+    boxShadow="crisp"
+    flexDirection="row"
+    marginBottom={4}
+    color="default"
+    backgroundColor="background"
+    width="100%"
+    overflow="hidden"
+  >
+    <Skeleton padding={3} height={[130, 142, 142]} width={[130, 221, 221]} />
+    <View padding={5} flexGrow={1}>
+      <Skeleton fontSize={3} maxWidth={450} width="70%" marginBottom={4} />
+      <Skeleton
+        backgroundColor="faded"
+        fontSize={1}
+        maxWidth={250}
+        width="50%"
+        marginBottom={3}
+      />
+      <Skeleton
+        backgroundColor="faded"
+        fontSize={1}
+        maxWidth={215}
+        width="45%"
+      />
+    </View>
+  </View>
+);

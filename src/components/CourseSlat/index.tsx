@@ -74,8 +74,8 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
             marginBottom={4}
             color="default"
             css={[
+              css,
               {
-                ...((css as object) || {}),
                 overflow: "hidden",
                 textDecoration: "none",
               },
