@@ -95,7 +95,7 @@ class DataTableSelectable extends React.Component<
         >
           <Checkbox
             name={String(props.index)}
-            checked={selected}
+            value={selected}
             onChange={this.updateRows}
           />
         </TD>
@@ -211,7 +211,7 @@ class DataTableSelectable extends React.Component<
           !!selected ? (
             <Checkbox
               name="SelectAll"
-              checked={this.state.allSelected}
+              value={this.state.allSelected}
               onChange={this.onAllSelectChange}
               disabled={disabled}
             />

@@ -10,31 +10,30 @@ export interface CheckboxProps extends TextProps {
   id?: string;
   name?: string;
   label?: string;
-  value?: string | boolean;
-  checked?: boolean;
+  value?: boolean | string;
   disabled?: boolean;
   error?: boolean;
 }
 
-class Checkbox extends React.Component<CheckboxProps, any> {
-  public static defaultProps = {
-    value: true,
-  };
-
+class Checkbox extends React.Component<
+  CheckboxProps,
+  { randomId: string; checkedState: boolean }
+> {
   constructor(props) {
     super(props);
     this.state = {
       randomId: `RadioInput_${Math.random()}`,
-      checkedState:
-        typeof props.checked !== "undefined" ? props.checked : false,
+      checkedState: !!props.value,
     };
   }
 
-  public handleOnChange = event => {
+  public handleOnChange = () => {
     const { checkedState } = this.state;
-    const { onChange, name, value, checked } = this.props;
-    const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
-    const newValue = !currentCheckedState;
+    const { onChange, name, value } = this.props;
+    const newValue = !(value === undefined || value === ""
+      ? checkedState
+      : value);
+
     this.setState({
       checkedState: newValue,
     });
@@ -42,8 +41,9 @@ class Checkbox extends React.Component<CheckboxProps, any> {
     safeInvoke(onChange, {
       target: {
         name,
-        value: newValue ? (value === "" ? true : value) : false,
+        value: newValue,
         checked: newValue,
+        type: "checkbox",
       },
     });
   };
@@ -70,7 +70,6 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       value: propValue,
       children,
       label,
-      checked,
       error, // Do not pass
       fontSize = 2,
       onChange, // Do not pass
@@ -82,9 +81,9 @@ class Checkbox extends React.Component<CheckboxProps, any> {
       ...props
     } = this.props;
 
-    const value = propValue === "" ? true : propValue;
+    const value =
+      propValue === undefined || propValue === "" ? checkedState : propValue;
 
-    const currentCheckedState = checked === undefined ? checkedState : checked; // let parent control check state
     return (
       <Theme.Consumer>
         {({ spacing }) => (
@@ -103,7 +102,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               {...props}
             >
               <View
-                borderColor={this.getBorderColor(currentCheckedState)}
+                borderColor={this.getBorderColor(value)}
                 backgroundColor="background"
                 borderRadius={2}
                 alignItems="center"
@@ -115,7 +114,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                   borderWidth: 1,
                 }}
               >
-                {currentCheckedState && <Icon color="accent" name="Check" />}
+                {value && <Icon color="accent" name="Check" />}
               </View>
               <Text
                 color="contrast"
@@ -123,8 +122,8 @@ class Checkbox extends React.Component<CheckboxProps, any> {
                 title={label}
                 paddingLeft={3}
                 ellipsis={true}
-                width={["100%","100%","90%"]}
-                maxWidth={["100%","100%","320px"]}
+                width={["100%", "100%", "90%"]}
+                maxWidth={["100%", "100%", "320px"]}
                 css={{
                   alignSelf: "center",
                 }}
@@ -141,7 +140,7 @@ class Checkbox extends React.Component<CheckboxProps, any> {
               name={name}
               disabled={disabled}
               value={value}
-              checked={currentCheckedState}
+              checked={value}
               css={{
                 position: "absolute",
                 left: -9999,
