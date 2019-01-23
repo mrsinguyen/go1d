@@ -1,4 +1,4 @@
-import { isFunction } from "lodash";
+import isFunction = require("lodash/isFunction");
 
 function safeInvoke(func, ...args): any {
   if (isFunction(func)) {

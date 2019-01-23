@@ -5,20 +5,22 @@ import {
   Leading,
   Tracking,
 } from "../../foundations/foundation-types";
+import applyArray from "../../utils/applyArray";
 import Base, { BaseProps } from "../Base";
 import Theme from "../Theme";
 
 export interface TextProps extends BaseProps {
   display?: DisplayProperty | DisplayProperty[];
-  fontWeight?: FontWeight;
-  fontFamily?: string;
+  fontWeight?: FontWeight | FontWeight[];
+  fontFamily?: string | string[];
   fontStyle?: string | string[];
-  lineHeight?: Leading;
+  lineHeight?: Leading | Leading[];
   fontSize?: number;
-  color?: string;
+  color?: string | string[];
   textTransform?: TextTransformProperty | TextTransformProperty[];
-  letterSpacing?: Tracking;
+  letterSpacing?: Tracking | Tracking[];
   ellipsis?: boolean;
+  transition?: string | string[];
 }
 
 const Text: React.SFC<TextProps> = ({
@@ -33,8 +35,9 @@ const Text: React.SFC<TextProps> = ({
   color = "inherit",
   textAlign,
   textTransform,
-  css,
+  transition = "subtle",
   ellipsis = false,
+  css,
   ...props
 }: TextProps) => (
   <Theme.Consumer>
@@ -43,27 +46,29 @@ const Text: React.SFC<TextProps> = ({
         element={element}
         css={[
           {
-            color: colors[color] || color,
+            color: applyArray(color, colors) || color,
             fontFamily: fontFamily
-              ? type.family[fontFamily]
+              ? applyArray(fontFamily, type.family)
               : type.family.sansSerif,
             fontStyle,
             display,
             textAlign,
             textTransform,
-            fontWeight: fontWeight && type.weight[fontWeight],
-            lineHeight: lineHeight && type.leading[lineHeight],
-            transition: transitions.subtle,
-            letterSpacing: type.tracking[letterSpacing],
+            fontWeight: applyArray(fontWeight, type.weight),
+            lineHeight: applyArray(lineHeight, type.leading),
+            transition: applyArray(transition, transitions),
+            letterSpacing: applyArray(letterSpacing, type.tracking),
             fontSize: [
               type.scale.sm[fontSize],
               type.scale.md[fontSize],
               type.scale.lg[fontSize],
             ],
-            whiteSpace: ellipsis ? "nowrap" : "pre-wrap",
-            textOverflow: ellipsis ? "ellipsis" : "clip",
-            overflow: ellipsis ? "hidden" : "visible",
             wordWrap: "break-word",
+          },
+          ellipsis && {
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
           },
           css,
         ]}

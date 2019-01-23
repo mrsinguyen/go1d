@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get = require("lodash/get");
 import * as Moment from "moment";
 import * as React from "react";
 import { SingleDatePicker } from "react-dates";

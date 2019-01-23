@@ -1,10 +1,8 @@
 import * as React from "react";
 
-import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import Icon from "../Icon";
 import Text from "../Text";
-import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 
 export interface LessonProps extends ViewProps {
@@ -41,49 +39,35 @@ const Lesson: React.SFC<LessonProps> = ({
   author,
   ...props
 }: LessonProps) => (
-  <Theme.Consumer>
-    {({ colors }) => (
-      <View
-        backgroundColor="background"
-        flexDirection="row"
-        css={{
-          overflow: "hidden",
-          borderBottom: `1px solid ${colors.soft}`,
-        }}
-        {...props}
+  <View
+    backgroundColor="background"
+    flexDirection="row"
+    overflow="hidden"
+    borderBottom={1}
+    borderColor="soft"
+    {...props}
+  >
+    <View paddingY={5} justifyContent="center">
+      {type && <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />}
+    </View>
+    <View paddingY={5} paddingX={4}>
+      {title && (
+        <Text fontSize={2} marginBottom={1}>
+          {title}
+        </Text>
+      )}
+      <Text
+        color="subtle"
+        fontSize={1}
+        fontWeight="semibold"
+        textTransform="uppercase"
       >
-        <View paddingY={5} justifyContent="center">
-          {type && (
-            <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />
-          )}
-        </View>
-        <View paddingY={5} paddingX={4}>
-          {title && (
-            <Text
-              fontSize={2}
-              css={{
-                marginBottom: foundations.spacing[1],
-              }}
-            >
-              {title}
-            </Text>
-          )}
-          <Text
-            color="subtle"
-            fontSize={1}
-            fontWeight="semibold"
-            css={{ textTransform: "uppercase" }}
-          >
-            {type}
-            {type && author && " • "}
-            {author}
-            {type && !!duration && " • "}
-            {!!duration && formatDuration(duration)}
-          </Text>
-        </View>
-      </View>
-    )}
-  </Theme.Consumer>
+        {[type, author, !!duration && formatDuration(duration)]
+          .filter(val => val)
+          .join(" • ")}
+      </Text>
+    </View>
+  </View>
 );
 
 export default Lesson;
