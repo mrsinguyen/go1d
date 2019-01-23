@@ -55,7 +55,7 @@ export interface ViewProps extends BaseProps {
 }
 
 function applySize(n) {
-  if (!n) {
+  if (n === undefined || n === null) {
     return null;
   }
 
