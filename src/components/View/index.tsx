@@ -63,7 +63,11 @@ function applySize(n) {
     return n.map(applySize);
   }
 
-  return isNaN(n) ? n : n > 1 ? n : n * 100 + "%";
+  if (!isNaN(n) && n <= 1 && n > 0) {
+    return n * 100 + "%";
+  }
+
+  return n;
 }
 
 const View: React.SFC<ViewProps> = ({
