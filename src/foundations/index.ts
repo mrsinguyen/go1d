@@ -4,6 +4,7 @@ import {
   Animation,
   ColorArguments,
   Colors,
+  GenerateThemeInput,
   Gradients,
   MappedKey,
   Opacities,
@@ -79,12 +80,12 @@ const baseGreys = {
 
 export const generateColors = ({
   accent = brandAccent,
-  darkMode = false,
+  mode = "light",
 }: ColorArguments = {}): Colors => {
   const accentMix = mix(accent);
 
   const accentGreys = {
-    lightMode: {
+    light: {
       contrast: accentMix(baseGreys.grey9, 0.05),
       default: accentMix(baseGreys.grey8, 0.15),
       subtle: accentMix(baseGreys.grey7, 0.2),
@@ -96,7 +97,7 @@ export const generateColors = ({
       background: baseGreys.grey0,
       transparent: "transparent",
     },
-    darkMode: {
+    dark: {
       contrast: baseGreys.grey0,
       default: accentMix(baseGreys.grey4, 0.15),
       subtle: accentMix(baseGreys.grey6, 0.25),
@@ -110,7 +111,7 @@ export const generateColors = ({
     },
   };
 
-  const themedGreys = darkMode ? accentGreys.darkMode : accentGreys.lightMode;
+  const themedGreys = accentGreys[mode];
 
   const statusColors = {
     highlight: opacify(accent, opacities.highlight),
@@ -122,7 +123,7 @@ export const generateColors = ({
 
   const gradients: MappedKey<Gradients, string> = {
     warmOverlay:
-      "linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%),",
+      "linear-gradient(179.89deg, rgba(255, 255, 239, 0.05) -14.1%, rgba(255, 255, 191, 1e-05) 99.8%)",
     lightWarmOverlay:
       "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)",
     darkWarmOverlay:
@@ -257,10 +258,10 @@ export const breakpoints = {
 
 export const generateTheme = ({
   accent = brandAccent,
-  darkMode = false,
-  theme = {},
-} = {}): Theme => ({
-  colors: generateColors({ accent, darkMode }),
+  mode,
+  theme,
+}: GenerateThemeInput = {}): Theme => ({
+  colors: generateColors({ accent, mode }),
   type,
   spacing,
   shadows,
@@ -270,6 +271,7 @@ export const generateTheme = ({
   opacities,
   animation,
   zIndex,
+  mode,
   ...theme,
 });
 

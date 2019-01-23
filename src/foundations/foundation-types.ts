@@ -48,13 +48,12 @@ export type MappedKey<K extends string, T> = { [P in K]: T };
 
 export interface ColorArguments {
   accent?: string;
-  darkMode?: boolean;
+  mode?: string;
 }
 
 export interface Colors {
   accent: string;
   contrast?: string | number;
-  darkMode?: boolean;
   gradients: MappedKey<Gradients, string>;
   muted: string;
   statuses?: object;
@@ -103,10 +102,11 @@ export interface Theme {
   opacities: MappedKey<Opacities, number>;
   animation: MappedKey<Animation, number>;
   zIndex: MappedKey<ZIndex, number>;
+  mode?: string;
 }
 
 export interface GenerateThemeInput {
   accent?: string;
-  darkMode?: boolean;
+  mode?: string;
   theme?: Theme;
 }
