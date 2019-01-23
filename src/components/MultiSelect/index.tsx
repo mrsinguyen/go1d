@@ -48,6 +48,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
       onChange({
         target: {
           value: NewArray,
+          name: this.props.name,
         },
       });
     }

@@ -210,6 +210,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
                   <Text fontSize={1}>{author.mail}</Text>
                 </View>
                 <ButtonMinimal
+                  disabled={disabled}
                   marginLeft="auto"
                   marginY="auto"
                   iconName="Cross"
@@ -243,6 +244,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
           onBlur={this.handleBlur}
           closeOnSelection={true}
           selectedColor="highlight"
+          disabled={disabled}
         />
       </React.Fragment>
     );
