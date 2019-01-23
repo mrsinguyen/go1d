@@ -1,9 +1,10 @@
 import * as React from "react";
-import foundations from "../../foundations";
 import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
 import Link from "../Link";
+import Provider from "../Provider";
 import Text from "../Text";
+import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 
 export interface ButtonProps extends ViewProps {
@@ -58,6 +59,7 @@ const Button: React.SFC<ButtonProps> = ({
   href,
   iconColor,
   type = "button",
+  mode,
   ...props
 }: ButtonProps) => {
   const {
@@ -70,64 +72,64 @@ const Button: React.SFC<ButtonProps> = ({
   } = sizeStyles[size];
 
   return (
-    <View
-      element={href ? Link : "button"}
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="center"
-      height={height}
-      width={!children && height}
-      paddingY={paddingY}
-      paddingX={children && paddingX}
-      backgroundColor={backgroundColor}
-      borderRadius={round ? 8 : 2}
-      onClick={onClick}
-      href={href}
-      type={type}
-      color={color}
-      css={[
-        {
-          cursor: "pointer",
-          "&:disabled": {
-            opacity: 0.5,
-            pointerEvents: "none",
-          },
-          svg: {
-            color: iconColor
-              ? foundations.colors[iconColor]
-              : foundations.colors.subtle,
-          },
-          "&:hover, &:focus, &:active": {
-            color: color
-              ? foundations.colors[color]
-              : foundations.colors.accent,
-            svg: {
-              color: iconColor
-                ? foundations.colors[iconColor]
-                : foundations.colors.accent,
-            },
-          },
-        },
-        css,
-      ]}
-      {...props}
-    >
-      {iconName && (
-        <Icon
-          name={iconName}
-          size={children ? typeScale : iconOnlyScale}
-          marginRight={children && iconMarginRight}
-        />
-      )}
-      <Text
-        lineHeight="ui"
-        fontWeight={fontWeight}
-        fontSize={typeScale}
-        color="inherit"
-      >
-        {children}
-      </Text>
-    </View>
+    <Provider mode={mode}>
+      <Theme.Consumer>
+        {({ colors }) => (
+          <View
+            element={href ? Link : "button"}
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            height={height}
+            width={!children && height}
+            paddingY={paddingY}
+            paddingX={children && paddingX}
+            backgroundColor={backgroundColor}
+            borderRadius={round ? 8 : 2}
+            onClick={onClick}
+            href={href}
+            type={type}
+            color={color}
+            css={[
+              {
+                cursor: "pointer",
+                "&:disabled": {
+                  opacity: 0.5,
+                  pointerEvents: "none",
+                },
+                svg: {
+                  color: iconColor ? colors[iconColor] : colors.subtle,
+                },
+                "&:hover, &:focus, &:active": {
+                  color: colors[color],
+                  svg: {
+                    color: iconColor ? colors[iconColor] : colors[color],
+                  },
+                },
+              },
+              css,
+            ]}
+            {...props}
+          >
+            {iconName && (
+              <Icon
+                name={iconName}
+                size={children ? typeScale : iconOnlyScale}
+                marginRight={children && iconMarginRight}
+              />
+            )}
+            <Text
+              lineHeight="ui"
+              fontWeight={fontWeight}
+              fontSize={typeScale}
+              color="inherit"
+            >
+              {children}
+            </Text>
+          </View>
+        )}
+      </Theme.Consumer>
+    </Provider>
   );
 };
 
