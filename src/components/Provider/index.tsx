@@ -26,9 +26,13 @@ const Provider = ({
           theme,
         })}
       >
-        <LinkContext.Provider value={linkComponent}>
-          {children}
-        </LinkContext.Provider>
+        {linkComponent !== undefined ? (
+          <LinkContext.Provider value={linkComponent}>
+            {children}
+          </LinkContext.Provider>
+        ) : (
+          children
+        )}
       </Theme.Provider>
     )}
   </Theme.Consumer>
