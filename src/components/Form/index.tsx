@@ -1,8 +1,9 @@
 import { Formik, FormikConfig } from "formik";
 import * as React from "react";
 import { autobind } from "../../utils/decorators";
+import View, { ViewProps } from "../View";
 
-interface InnerFormProps {
+interface InnerFormProps extends ViewProps {
   status: string;
   setStatus: (status?: any) => void;
   onReset: (a: any) => void;
@@ -15,7 +16,9 @@ interface InnerFormProps {
 export interface FormProps extends FormikConfig<any> {
   children?: React.ReactNode;
   disabled?: boolean;
+  formikRef?: any;
   onChange?: (data: any) => void;
+  flexGrow?: number;
 }
 
 export class InternalForm extends React.Component<InnerFormProps, any> {
@@ -60,11 +63,26 @@ export class InternalForm extends React.Component<InnerFormProps, any> {
   }
 
   public render() {
-    const { children } = this.props;
+    const {
+      children,
+      status,
+      setStatus,
+      onReset,
+      disabled,
+      onSubmit,
+      onChange,
+      values,
+      ...props
+    } = this.props;
     return (
-      <form onReset={this.handleReset} onSubmit={this.handleSubmit}>
+      <View
+        element="form"
+        {...props}
+        onReset={this.handleReset}
+        onSubmit={this.handleSubmit}
+      >
         {children}
-      </form>
+      </View>
     );
   }
 }
@@ -73,10 +91,12 @@ const Form: React.SFC<FormProps> = ({
   children,
   disabled,
   onChange,
+  formikRef,
+  flexGrow,
   ...props
 }: FormProps) => {
   return (
-    <Formik {...props}>
+    <Formik ref={formikRef} {...props}>
       {({
         handleSubmit,
         handleReset,
@@ -86,6 +106,7 @@ const Form: React.SFC<FormProps> = ({
         isSubmitting,
       }) => (
         <InternalForm
+          flexGrow={flexGrow}
           onReset={handleReset}
           onSubmit={handleSubmit}
           disabled={disabled || isSubmitting}

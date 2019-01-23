@@ -15,6 +15,8 @@ export interface ModalProps extends ViewProps {
   onRequestClose?: () => void;
   disableKeyBindings?: boolean;
   disableBackgroundClose?: boolean;
+  headerIcon?: string;
+  headerAction?: () => void;
 }
 
 const modalOpenClassName = css`
@@ -114,6 +116,8 @@ class Modal extends React.Component<ModalProps, any> {
       disableBackgroundClose,
       disableKeyBindings,
       children,
+      headerIcon = "Cross",
+      headerAction,
       ...viewProps
     } = this.props;
 
@@ -180,10 +184,10 @@ class Modal extends React.Component<ModalProps, any> {
               borderColor="divide"
               borderBottom={1}
             >
-              {onRequestClose && (
+              {(headerAction || onRequestClose) && (
                 <ButtonMinimal
-                  onClick={this.onClose}
-                  iconName="Cross"
+                  onClick={headerAction || this.onClose}
+                  iconName={headerIcon}
                   round={true}
                   marginLeft={4}
                 />

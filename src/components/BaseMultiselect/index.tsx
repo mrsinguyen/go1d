@@ -101,11 +101,11 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
     if (promise) {
       promise.then(
-        () => {
+        (ret?: any) => {
           this.selectValue({
             currentTarget: {
               dataset: {
-                value,
+                value: ret || value,
               },
             },
           } as any);
