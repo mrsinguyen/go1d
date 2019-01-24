@@ -110,7 +110,13 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
             },
           } as any);
         },
-        () => null
+        (rej?: any) => {
+          if (rej === true) {
+            this.setState({
+              search: "",
+            });
+          }
+        }
       );
     } else {
       this.selectValue({
