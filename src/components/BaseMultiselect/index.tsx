@@ -209,7 +209,7 @@ class BaseMultiselect extends React.Component<BaseMultiselectProps, State> {
 
   @autobind
   public handleSelect(option: string) {
-    const value = this.props.value || this.state.value;
+    const value = this.props.options || [];
     const existingValue = !!value.find(v => v === option);
 
     this.setState({
