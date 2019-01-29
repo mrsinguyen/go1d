@@ -144,3 +144,5 @@ export {
   default as AuthorSelector,
 } from "./components/AuthorSelector";
 export { SkeletonProps, default as Skeleton } from "./components/Skeleton";
+
+export { default as Autocomplete } from "./components/Autocomplete";
