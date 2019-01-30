@@ -111,10 +111,25 @@ class DatePicker extends React.Component<any, any> {
                 },
                 ".CalendarDay": {
                   verticalAlign: "middle",
+                  border: "none",
                 },
                 ".DayPickerNavigation_button, .CalendarMonth_caption": {
                   padding: `${spacing[5]}px`,
                   "padding-bottom": `${spacing[7]}px`,
+                },
+                ".CalendarDay__selected_span": {
+                  background: colors.highlight,
+                  color: colors.default,
+                },
+                ".CalendarDay__selected_start": {
+                  background: colors.accent,
+                  color: colors.background,
+                  borderRadius: "50% 0 0 50%",
+                },
+                ".CalendarDay__selected_end": {
+                  background: colors.accent,
+                  color: colors.background,
+                  borderRadius: "0 50% 50% 0",
                 },
               },
             ]}
