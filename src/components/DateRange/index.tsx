@@ -65,7 +65,7 @@ class DatePicker extends React.Component<any, any> {
                   color: colors.default,
                   overflow: "hidden",
                   borderRadius: spacing[borderRadius],
-                  backgroundColor: color.background,
+                  backgroundColor: colors.background,
                   boxShadow:
                     this.state.focusedInput !== null
                       ? shadows.strong
