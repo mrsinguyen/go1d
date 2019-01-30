@@ -97,7 +97,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     const { onBlur } = this.props;
     const { value, restoreValue } = this.state;
 
-    if (value.trim() === ""){
+    if (value.trim() === "") {
       this.setState({ value: restoreValue });
     }
 
