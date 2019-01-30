@@ -17,14 +17,18 @@ interface AutocompleteProps extends ViewProps {
   onChange: (evt: any) => void;
 }
 
-class Autocomplete extends React.Component<AutocompleteProps> {
-  public state = {
-    text: "",
-    coords: null,
-    options: [],
-    showDropdown: true,
-    selected: false,
-  };
+class Autocomplete extends React.Component<AutocompleteProps, any> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: "",
+      coords: null,
+      options: [],
+      showDropdown: true,
+      selected: false,
+    };
+  }
 
   handleOnChange = event => this.setState({
     text: (event.target as any).value,
@@ -63,6 +67,10 @@ class Autocomplete extends React.Component<AutocompleteProps> {
     const {
       id,
       options,
+      inputProps,
+      dropdownProps,
+      labelProps,
+      ...props
     } = this.props;
 
     const { text, showDropdown, selected } = this.state;
@@ -70,7 +78,7 @@ class Autocomplete extends React.Component<AutocompleteProps> {
     return (
       <Theme.Consumer>
         {({ colors, spacing, shadows }) => (
-          <View>
+          <View {...props}>
             <TextInput 
               id={id}
               onChange={this.handleOnChange}
@@ -80,7 +88,9 @@ class Autocomplete extends React.Component<AutocompleteProps> {
               data-testid="inputElement"
               viewCss={{
                 backgroundColor: selected ? colors.accent : colors.background,
+                borderColor: selected ? colors.accent : colors.soft,
                 boxShadow: selected ? "none" : shadows.inner,
+                ...inputProps.css
               }}
               suffixNode={selected 
                 ? (
@@ -109,6 +119,7 @@ class Autocomplete extends React.Component<AutocompleteProps> {
                 )
                 : null
               }
+              {...inputProps}
             />
             {options && text && showDropdown &&
             <View
@@ -121,16 +132,18 @@ class Autocomplete extends React.Component<AutocompleteProps> {
                 top="40px"
                 position="absolute"
                 zIndex={1001}
+                maxWidth={["none", "none","320px"]}
+                {...dropdownProps}
                 >
                 {options.map((o) => (
                   <Text
-                    maxWidth={["none", "none","320px"]}
                     ellipsis={true}
                     onClick={() => this.selectOption(o)}
                     paddingY={3}
                     paddingX={4}
                     data-testid="locationElement"
                     key={`${o.label}_option`}
+                    {...labelProps}
                     css={{
                       "&:hover, &:active": {
                         backgroundColor: colors.soft,
