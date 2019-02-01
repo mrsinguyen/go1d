@@ -19,6 +19,7 @@ export interface FieldProps extends ViewProps {
   statusText?: string;
   statusColor?: string;
   statusIcon?: string;
+  errorFormat?: (errorMessage: string) => React.ReactNode | string;
 
   component?: string | React.ComponentType<any> | React.ComponentType<void>;
 }
@@ -39,6 +40,7 @@ const Field: React.SFC<FieldProps> = ({
   statusIcon,
   validate,
   errorMessage,
+  errorFormat,
   hideStatus,
   hideLabel,
   onChange,
@@ -65,6 +67,9 @@ const Field: React.SFC<FieldProps> = ({
         if (errorMessage) {
           message = errorMessage;
         }
+
+        message =
+          message && (errorFormat ? safeInvoke(errorFormat, message) : message);
         if (component) {
           const newOnChange = e => {
             field.onChange(e);

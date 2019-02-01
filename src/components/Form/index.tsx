@@ -1,4 +1,5 @@
 import { Formik, FormikConfig } from "formik";
+import { isEqual } from "lodash";
 import * as React from "react";
 import { autobind } from "../../utils/decorators";
 import View, { ViewProps } from "../View";
@@ -23,14 +24,10 @@ export interface FormProps extends FormikConfig<any> {
 
 export class InternalForm extends React.Component<InnerFormProps, any> {
   public componentDidUpdate(prevProps: InnerFormProps) {
-    const { status, setStatus, disabled, values } = this.props;
+    const { status, setStatus, disabled } = this.props;
 
     if ((status === "disabled") !== !!disabled) {
       setStatus(disabled ? "disabled" : null);
-    }
-
-    if (this.props.onChange && prevProps.values !== values) {
-      this.props.onChange({ values: this.props.values });
     }
   }
 
@@ -39,6 +36,19 @@ export class InternalForm extends React.Component<InnerFormProps, any> {
 
     if ((status === "disabled") !== !!disabled) {
       setStatus(disabled ? "disabled" : null);
+    }
+  }
+
+  public componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.onChange &&
+      (!isEqual(nextProps.values, this.props.values) ||
+        !isEqual(nextProps.errors, this.props.errors))
+    ) {
+      nextProps.onChange({
+        values: nextProps.values,
+        errors: nextProps.errors,
+      });
     }
   }
 
@@ -72,6 +82,7 @@ export class InternalForm extends React.Component<InnerFormProps, any> {
       onSubmit,
       onChange,
       values,
+      errors,
       ...props
     } = this.props;
     return (
@@ -104,6 +115,7 @@ const Form: React.SFC<FormProps> = ({
         values,
         setStatus,
         isSubmitting,
+        errors,
       }) => (
         <InternalForm
           flexGrow={flexGrow}
@@ -114,6 +126,7 @@ const Form: React.SFC<FormProps> = ({
           setStatus={setStatus}
           onChange={onChange}
           values={values}
+          errors={errors}
         >
           {children}
         </InternalForm>
