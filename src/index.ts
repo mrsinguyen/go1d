@@ -144,3 +144,4 @@ export {
   default as AuthorSelector,
 } from "./components/AuthorSelector";
 export { SkeletonProps, default as Skeleton } from "./components/Skeleton";
+export { default as Spinner } from "./components/Spinner";
