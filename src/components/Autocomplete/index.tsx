@@ -18,16 +18,13 @@ interface AutocompleteProps extends ViewProps {
 }
 
 class Autocomplete extends React.Component<AutocompleteProps, any> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: "",
-      value: null,
-      options: [],
-      showDropdown: true,
-      selected: false,
-    };
-  }
+  public state = {
+    text: "",
+    value: null,
+    options: [],
+    showDropdown: true,
+    selected: false,
+  };
 
   public handleOnChange = event =>
     this.setState(
