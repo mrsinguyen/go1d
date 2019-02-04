@@ -76,6 +76,7 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
       options,
       inputProps,
       dropdownProps,
+      size = "md",
       labelProps,
       ...props
     } = this.props;
@@ -91,6 +92,7 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
               onChange={this.handleOnChange}
               onClick={this.handleOnClick}
               value={text}
+              size={size}
               color={selected ? colors.background : colors.default}
               data-testid="inputElement"
               viewCss={{
@@ -104,7 +106,7 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
                   <ButtonMinimal
                     borderRadius={10}
                     boxShadow="none"
-                    size="sm"
+                    size={size}
                     height="1.05rem"
                     onClick={this.clear}
                     data-testid="close"
