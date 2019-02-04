@@ -6,12 +6,10 @@ import Icon from "../Icon";
 import Theme from "../Theme";
 import View from "../View";
 
-import { color } from "style-value-types";
 import "../DatePicker/css";
 
 class DatePicker extends React.Component<any, any> {
   public static defaultProps = {
-    size: "md",
     borderRadius: 2,
   };
 
@@ -32,11 +30,25 @@ class DatePicker extends React.Component<any, any> {
     return borderColor ? borderColor : "soft";
   };
 
-  public handleDateChange = ({ startDate, endDate }) =>
+  public handleDateChange = ({ startDate, endDate }) => {   
     this.setState({
       startDate,
       endDate,
     });
+
+    if (startDate === null && endDate === null) {
+      if (this.props.onClear) {
+        this.props.onClear()
+      }
+    }
+
+    if (this.props.onChange) {
+      this.props.onChange({
+        startDate, 
+        endDate,
+      })
+    }
+  }
 
   public handleFocusChange = focusedInput =>
     this.setState({
@@ -47,6 +59,8 @@ class DatePicker extends React.Component<any, any> {
     const {
       borderRadius,
       borderColor, // Do not pass
+      onChange, // Do not pass
+      onClear, // Do not pass
       disabled,
       ...remainingProps
     } = this.props;
@@ -133,7 +147,6 @@ class DatePicker extends React.Component<any, any> {
                 },
               },
             ]}
-            {...remainingProps}
           >
             <DateRangePicker
               numberOfMonths={1}
@@ -164,13 +177,14 @@ class DatePicker extends React.Component<any, any> {
                   <Icon name="ChevronDown" size={3} color="muted" />
                 )
               }
-              startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-              startDateId="start_date_ID" // PropTypes.string.isRequired,
-              endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-              endDateId="end_date_ID" // PropTypes.string.isRequired,
-              onDatesChange={this.handleDateChange} // PropTypes.func.isRequired,
-              focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-              onFocusChange={this.handleFocusChange} // PropTypes.func.isRequired,
+              startDate={this.state.startDate}
+              startDateId="start_date_ID"
+              endDate={this.state.endDate}
+              endDateId="end_date_ID"
+              onDatesChange={this.handleDateChange}
+              focusedInput={this.state.focusedInput}
+              onFocusChange={this.handleFocusChange}
+              {...remainingProps}
             />
           </View>
         )}
