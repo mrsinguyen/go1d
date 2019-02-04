@@ -19,18 +19,7 @@ class DatePicker extends React.Component<any, any> {
     focusedInput: null,
   };
 
-  public getBorderColor = () => {
-    const { focusedInput } = this.state;
-    const { borderColor } = this.props;
-
-    if (focusedInput !== null) {
-      return "accent";
-    }
-
-    return borderColor ? borderColor : "soft";
-  };
-
-  public handleDateChange = ({ startDate, endDate }) => {   
+  public handleDateChange = ({ startDate, endDate }) => {
     this.setState({
       startDate,
       endDate,
@@ -38,17 +27,17 @@ class DatePicker extends React.Component<any, any> {
 
     if (startDate === null && endDate === null) {
       if (this.props.onClear) {
-        this.props.onClear()
+        this.props.onClear();
       }
     }
 
     if (this.props.onChange) {
       this.props.onChange({
-        startDate, 
+        startDate,
         endDate,
-      })
+      });
     }
-  }
+  };
 
   public handleFocusChange = focusedInput =>
     this.setState({
