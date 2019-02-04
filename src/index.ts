@@ -143,5 +143,8 @@ export {
   AuthorSelectorProps,
   default as AuthorSelector,
 } from "./components/AuthorSelector";
+export {
+  default as DateRange,
+} from "./components/DateRange";
 export { SkeletonProps, default as Skeleton } from "./components/Skeleton";
 export { default as Spinner } from "./components/Spinner";
