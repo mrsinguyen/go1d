@@ -51,9 +51,8 @@ const Prose: React.SFC<ProseProps> = ({
                 ? fontSize.map(transformHeightFromFont)
                 : transformHeightFromFont(fontSize),
               background: colors.accent,
-              display: "block",
               width: "100%",
-              position: "absolute",
+              position: "relative",
               bottom: 0,
               left: 0,
               right: 0,
