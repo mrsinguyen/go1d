@@ -8,7 +8,7 @@ import View from "../View";
 
 import "../DatePicker/css";
 
-class DatePicker extends React.Component<any, any> {
+class DateRange extends React.Component<any, any> {
   public static defaultProps = {
     borderRadius: 2,
   };
@@ -16,7 +16,7 @@ class DatePicker extends React.Component<any, any> {
   public state = {
     startDate: null,
     endDate: null,
-    focusedInput: null,
+    focusedInput: "startDate",
   };
 
   public handleDateChange = ({ startDate, endDate }) => {
@@ -82,15 +82,14 @@ class DatePicker extends React.Component<any, any> {
                 ".DateInput_input": {
                   color: colors.default,
                   fontSize: type.scale.md[2],
-                  paddingTop: spacing[3],
-                  paddingLeft: spacing[2],
+                  padding: spacing[3],
+                  paddingLeft: spacing[4],
                   paddingRight: spacing[4],
                   paddingBottom: spacing[3],
-                  textAlign: "center",
+                  textAlign: "left",
                 },
                 "#start_date_ID": {
-                  paddingLeft: spacing[4],
-                  paddingRight: spacing[2],
+                  borderRight: `1px solid ${colors.faded}`,
                 },
                 ".DateRangePickerInput_arrow": {
                   alignSelf: "center",
@@ -120,7 +119,7 @@ class DatePicker extends React.Component<any, any> {
                   padding: `${spacing[5]}px`,
                   "padding-bottom": `${spacing[7]}px`,
                 },
-                ".CalendarDay__selected_span": {
+                ".CalendarDay__selected_span, .CalendarDay__hovered_span, .CalendarDay__default:hover": {
                   background: colors.highlight,
                   color: colors.default,
                 },
@@ -149,7 +148,7 @@ class DatePicker extends React.Component<any, any> {
               verticalSpacing={5}
               verticalHeight={7}
               horizontalMonthPadding={0}
-              customArrowIcon={"-"}
+              customArrowIcon={<React.Fragment />}
               customCloseIcon={
                 this.state.endDate || this.state.startDate ? (
                   <ButtonMinimal
@@ -182,4 +181,4 @@ class DatePicker extends React.Component<any, any> {
   }
 }
 
-export default DatePicker;
+export default DateRange;
