@@ -95,6 +95,8 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
               size={size}
               color={selected ? colors.background : colors.default}
               data-testid="inputElement"
+              fontSize={2}
+              ellipsis={true}
               viewCss={{
                 backgroundColor: selected ? colors.accent : colors.background,
                 borderColor: selected ? colors.accent : colors.soft,
@@ -107,7 +109,6 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
                     borderRadius={10}
                     boxShadow="none"
                     size={size}
-                    height="1.05rem"
                     onClick={this.clear}
                     data-testid="close"
                     paddingX={1}
@@ -116,8 +117,7 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
                     iconColor={colors.background}
                     css={{
                       "&:hover": {
-                        backgroundColor: colors.background,
-                        color: colors.accent,
+                        backgroundColor: "transparent",
                       },
                     }}
                     backgroundColor={colors.accent}
