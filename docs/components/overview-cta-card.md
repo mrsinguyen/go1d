@@ -5,7 +5,7 @@ status: ready
 releaseVersion: 0.0.41
 ---
 
-### Overview CTA card with no props and no background image
+### Overview CTA card with no props
 ```.jsx
 <View css={{
   position: "relative",
@@ -15,8 +15,7 @@ releaseVersion: 0.0.41
 </View>
 ```
 
-### Overview CTA card with props and CTA button
-Different properties are displayed in different positions and shown/hidden based on screen width.
+### Overview CTA card with image and CTA button
 ```.jsx
 <View css={{
   position: "relative",
@@ -25,16 +24,38 @@ Different properties are displayed in different positions and shown/hidden based
   <OverviewCtaCard
     backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
     title="Cooking with charcoal"
-    subtitle={
-      <View flexDirection="row" alignItems="center">
-        <Icon
-          name="Course"
-          size={1}
-          marginRight={3}
-        />
-        <Text fontSize={1} color="subtle">COURSE</Text>
-      </View>
-    }
+    ctaButton={(
+      <ButtonFilled color="accent">Enquire to enrol</ButtonFilled>
+    )}
+  />
+</View>
+```
+
+### Overview CTA card with price and CTA button
+```.jsx
+<View css={{
+  position: "relative",
+  height: 200,
+}}>
+  <OverviewCtaCard
+    title="Cooking with charcoal"
+    price="49"
+    currency="SEK"
+    ctaButton={(
+      <ButtonFilled color="accent">Enquire to enrol</ButtonFilled>
+    )}
+  />
+</View>
+```
+
+### Overview CTA card with props and CTA button
+Different properties are displayed in different positions and shown/hidden based on screen width.
+```.jsx
+<View css={{
+  position: "relative",
+  height: 520,
+}}>
+  <OverviewCtaCard
     author={
       <View flexDirection="row" alignItems="center">
         <Avatar
@@ -46,15 +67,27 @@ Different properties are displayed in different positions and shown/hidden based
         By Leslie Knope
       </View>
     }
-    duration="90"
-    likes="10"
-    dislikes="2"
-    enrolled="3"
+    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
     ctaButton={(
       <ButtonFilled color="accent">Enrol</ButtonFilled>
     )}
-    price="99"
     currency="JPY"
+    dislikes="2"
+    duration="90"
+    enrolled="3"
+    likes="10"
+    price="99"
+    subtitle={
+      <View flexDirection="row" alignItems="center">
+        <Icon
+          name="Course"
+          size={1}
+          marginRight={3}
+        />
+        <Text fontSize={1} color="subtle">COURSE</Text>
+      </View>
+    }
+    title="Cooking with charcoal"
   />
 </View>
 ```
@@ -63,10 +96,12 @@ Different properties are displayed in different positions and shown/hidden based
 ```.jsx
 <View css={{
   position: "relative",
-  height: 365,
+  height: 320,
 }}>
-  <OverviewCtaCard 
-    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80">
+  <OverviewCtaCard
+    title="Cooking with charcoal" 
+    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
+    >
     <Text fontSize={1}>Part of your subscription</Text>
   </OverviewCtaCard>
 </View>

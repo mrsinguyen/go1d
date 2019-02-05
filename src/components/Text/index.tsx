@@ -15,7 +15,7 @@ export interface TextProps extends BaseProps {
   fontFamily?: string | string[];
   fontStyle?: string | string[];
   lineHeight?: Leading | Leading[];
-  fontSize?: number;
+  fontSize?: number | number[];
   color?: string | string[];
   textTransform?: TextTransformProperty | TextTransformProperty[];
   letterSpacing?: Tracking | Tracking[];
@@ -59,9 +59,9 @@ const Text: React.SFC<TextProps> = ({
             transition: applyArray(transition, transitions),
             letterSpacing: applyArray(letterSpacing, type.tracking),
             fontSize: [
-              type.scale.sm[fontSize],
-              type.scale.md[fontSize],
-              type.scale.lg[fontSize],
+              type.scale.sm[fontSize[0] || fontSize],
+              type.scale.md[fontSize[1] || fontSize],
+              type.scale.lg[fontSize[2] || fontSize],
             ],
             wordWrap: "break-word",
           },

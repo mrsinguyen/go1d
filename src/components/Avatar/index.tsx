@@ -6,7 +6,7 @@ import View, { ViewProps } from "../View";
 
 export interface AvatarProps extends ViewProps {
   fullName?: string;
-  size?: number;
+  size?: number | number[];
   scaleSize?: number;
   src?: string;
   iconName?: string;
@@ -27,13 +27,39 @@ const Avatar: React.SFC<AvatarProps> = ({
     names.length > 1 ? names[names.length - 1].charAt(0) : ""
   }`;
 
-  let constrainedSize = Math.abs(Math.trunc(size)) || 6;
+  const constrainSize = Size => {
+    let constrained = Math.abs(Math.trunc(Size)) || 6;
 
-  constrainedSize = constrainedSize;
-  if (constrainedSize > 6) {
-    constrainedSize = 6;
-  }
-  const logoSize = constrainedSize + 2;
+    if (constrained > 6) {
+      constrained = 6;
+    }
+
+    return constrained + 2;
+  };
+
+  const getBreakPointSizeStyles = (breakPoints, typeScale) =>
+    Object.keys(breakPoints).reduce((acc, bpKey, Index) => {
+      const SizeKey = size[Index]
+        ? constrainSize(size[Index])
+        : constrainSize(size);
+      const Size =
+        scaleSize *
+        (typeScale.scale[bpKey][SizeKey] || typeScale.scale[bpKey][1]);
+
+      return {
+        ...acc,
+        [breakPoints[bpKey]]: {
+          width: Size,
+          height: Size,
+        },
+      };
+    }, {});
+
+  const constrainText = fontSize =>
+    constrainSize(size) <= 3 ? 1 : fontSize - 2;
+
+  const constrainIcon = iconSize =>
+    constrainSize(iconSize) <= 2 ? 1 : constrainSize(iconSize) - 3;
 
   return (
     <Theme.Consumer>
@@ -44,20 +70,7 @@ const Avatar: React.SFC<AvatarProps> = ({
             borderRadius: "50%",
             textAlign: "center",
             position: "relative",
-            ...Object.keys(breakpoints).reduce(
-              (acc, bpKey) => ({
-                ...acc,
-                [breakpoints[bpKey]]: {
-                  width:
-                    scaleSize *
-                    (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
-                  height:
-                    scaleSize *
-                    (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
-                },
-              }),
-              {}
-            ),
+            ...getBreakPointSizeStyles(breakpoints, type),
           }}
           position="relative"
           justifyContent="center"
@@ -68,7 +81,11 @@ const Avatar: React.SFC<AvatarProps> = ({
             <Text
               color={props.color || "subtle"}
               css={{ textTransform: "uppercase" }}
-              fontSize={constrainedSize <= 3 ? 1 : constrainedSize - 2}
+              fontSize={
+                Array.isArray(size)
+                  ? size.map(constrainText)
+                  : constrainText(size)
+              }
             >
               {displayName}
             </Text>
@@ -76,7 +93,11 @@ const Avatar: React.SFC<AvatarProps> = ({
             <View alignItems="center">
               <Icon
                 name={iconName}
-                size={constrainedSize <= 2 ? 1 : constrainedSize - 1}
+                size={
+                  Array.isArray(size)
+                    ? size.map(constrainIcon)
+                    : constrainIcon(size)
+                }
                 color="subtle"
               />
             </View>
@@ -93,20 +114,7 @@ const Avatar: React.SFC<AvatarProps> = ({
                 backgroundImage: `url('${src}')`,
                 backgroundPosition: "center",
                 borderRadius: `${avatarType === "square" ? 3 : "50%"}`,
-                ...Object.keys(breakpoints).reduce(
-                  (acc, bpKey) => ({
-                    ...acc,
-                    [breakpoints[bpKey]]: {
-                      width:
-                        scaleSize *
-                        (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
-                      height:
-                        scaleSize *
-                        (type.scale[bpKey][logoSize] || type.scale[bpKey][1]),
-                    },
-                  }),
-                  {}
-                ),
+                ...getBreakPointSizeStyles(breakpoints, type),
               }}
             />
           )}
