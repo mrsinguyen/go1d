@@ -7,10 +7,14 @@ import * as Icons from "../Icons";
 export interface IconProps extends ViewProps {
   name: string;
   color?: string;
-  size?: number;
+  size?: number | number[];
 }
 
-const Icon: React.SFC<IconProps> = ({ name, size, ...props }: IconProps) => {
+const Icon: React.SFC<IconProps> = ({
+  name,
+  size = 2,
+  ...props
+}: IconProps) => {
   const IconComponent = Icons[name];
   if (!IconComponent) {
     return null;
@@ -25,11 +29,11 @@ const Icon: React.SFC<IconProps> = ({ name, size, ...props }: IconProps) => {
           css={[
             {
               ...Object.keys(breakpoints).reduce(
-                (acc, bpKey) => ({
+                (acc, bpKey, Index) => ({
                   ...acc,
                   [breakpoints[bpKey]]: {
-                    width: type.scale[bpKey][size] || "1em",
-                    height: type.scale[bpKey][size] || "1em",
+                    width: type.scale[bpKey][size[Index] || size] || "1em",
+                    height: type.scale[bpKey][size[Index] || size] || "1em",
                   },
                 }),
                 {}

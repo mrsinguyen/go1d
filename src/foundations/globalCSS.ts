@@ -8,7 +8,7 @@ const isServer =
 const globalCSS = () => {
   fontCSS();
   resetCSS();
-}
+};
 
 export default globalCSS;
 

@@ -47,7 +47,9 @@ const Prose: React.SFC<ProseProps> = ({
           a: {
             "&:hover:after, &:focus:after": {
               content: "''",
-              height: transformHeightFromFont(fontSize),
+              height: Array.isArray(fontSize)
+                ? fontSize.map(transformHeightFromFont)
+                : transformHeightFromFont(fontSize),
               background: colors.accent,
               display: "block",
               width: "100%",
@@ -55,7 +57,9 @@ const Prose: React.SFC<ProseProps> = ({
               bottom: 0,
               left: 0,
               right: 0,
-              marginBottom: transformMarginBottomFromFont(fontSize),
+              marginBottom: Array.isArray(fontSize)
+                ? fontSize.map(transformMarginBottomFromFont)
+                : transformMarginBottomFromFont(fontSize),
             },
             "&:active:after": {
               background: colors.contrast,
