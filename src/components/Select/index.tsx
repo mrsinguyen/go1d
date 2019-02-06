@@ -589,8 +589,6 @@ class Select extends React.Component<SelectProps, any> {
                   },
                   position: "absolute",
                   top: `calc(100% + ${spacing[2]}px)`,
-                  maxHeight: "300px",
-                  overflowY: "auto",
                   display: !isVisible ? "none" : "block",
                   minWidth: "220px",
                 }}
@@ -605,39 +603,46 @@ class Select extends React.Component<SelectProps, any> {
               >
                 {isVisible && (
                   <OutsideClickHandler onOutsideClick={this.handleOnBlur}>
-                    {searchable && (
-                      <View paddingX={4}>
-                        <SearchInput
-                          id={`SearchInput__${id}`}
-                          onSubmit={null}
-                          value={searchValue}
-                          clearable={false}
-                          size={size}
-                          data-testid="searchFilterInput"
-                          innerRef={this.inputRef}
-                          onChange={this.handleFilterChange}
-                        />
+                    <View
+                      css={{
+                        overflowY: "auto",
+                        maxHeight: "300px",
+                      }}
+                    >
+                      {searchable && (
+                        <View paddingX={4}>
+                          <SearchInput
+                            id={`SearchInput__${id}`}
+                            onSubmit={null}
+                            value={searchValue}
+                            clearable={false}
+                            size={size}
+                            data-testid="searchFilterInput"
+                            innerRef={this.inputRef}
+                            onChange={this.handleFilterChange}
+                          />
+                        </View>
+                      )}
+                      <View paddingTop={searchable ? 3 : 0}>
+                        {FilteredOptions.map((Option, OptIndex) => {
+                          if (Option.optgroup) {
+                            return this.renderOptGroup(
+                              FilteredOptions,
+                              Option,
+                              OptIndex,
+                              colors,
+                              size
+                            );
+                          } else {
+                            return this.renderOption({
+                              Option,
+                              Index: OptIndex,
+                              selectState: { activeOptions, size, colors },
+                              child: false,
+                            });
+                          }
+                        })}
                       </View>
-                    )}
-                    <View paddingTop={searchable ? 3 : 0}>
-                      {FilteredOptions.map((Option, OptIndex) => {
-                        if (Option.optgroup) {
-                          return this.renderOptGroup(
-                            FilteredOptions,
-                            Option,
-                            OptIndex,
-                            colors,
-                            size
-                          );
-                        } else {
-                          return this.renderOption({
-                            Option,
-                            Index: OptIndex,
-                            selectState: { activeOptions, size, colors },
-                            child: false,
-                          });
-                        }
-                      })}
                     </View>
                   </OutsideClickHandler>
                 )}

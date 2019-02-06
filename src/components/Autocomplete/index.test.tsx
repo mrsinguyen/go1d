@@ -13,14 +13,14 @@ const options = [
     },
   },
   {
-    label: "foo1",
+    label: "foo2",
     value: {
       lat: "1.23",
       lon: "4.56",
     },
   },
   {
-    label: "foo1",
+    label: "foo3",
     value: {
       lat: "1.23",
       lon: "4.56",
