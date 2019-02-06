@@ -3,11 +3,11 @@ import OutsideClickHandler from "react-outside-click-handler";
 
 import foundations from "../../foundations";
 import Checkbox from "../Checkbox";
-import Icon from "../Icon";
 import SearchInput from "../SearchInput";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
+import ButtonMinimal from "../ButtonMinimal";
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
 
@@ -28,6 +28,8 @@ export interface SelectProps extends ViewProps {
   closeOnSelect?: boolean;
   showCheckboxes?: boolean;
   size?: "sm" | "md";
+  clearable?: boolean;
+  onClear?: () => void;
 }
 
 const Sizes = {
@@ -147,6 +149,25 @@ class Select extends React.Component<SelectProps, any> {
       }
     );
   };
+
+  public handleSelectClear = event => {
+    event.stopPropagation();
+
+    if (this.props.onClear) {
+      this.props.onClear();
+    }
+
+    if (!this.props.value) {
+      this.setState({
+        closeOverride: false,
+        value: null,
+        label: null,
+        isFocused: false,
+        focusedOptionIndex: null,
+        searchValue: "",
+      });
+    }
+  }
 
   public unbindKeyboardListeners = () => {
     if (document) {
@@ -521,16 +542,39 @@ class Select extends React.Component<SelectProps, any> {
                     top: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    paddingRight: 0,
+                    pointerEvents: (this.state.value && this.props.clearable)
+                      ? "auto"
+                      : "none",
                   }}
                   height="calc(100% - 3px)"
                   paddingX={3}
                   backgroundColor={backgroundColor}
                 >
-                  <Icon
-                    name="ChevronDown"
-                    color={color === "default" ? "muted" : color}
-                    size={2}
-                  />
+                  {(this.state.value && this.props.clearable)
+                    ? (
+                      <ButtonMinimal
+                        iconName="Cross"
+                        css={{
+                          backgroundColor: "transparent",
+                        }}
+                        iconColor={color === "default" ? "muted" : color}
+                        size="sm"
+                        onClick={this.handleSelectClear}
+                      />
+                    )
+                    : (
+                      <ButtonMinimal
+                        iconName="ChevronDown"
+                        css={{
+                          backgroundColor: "transparent",
+                        }}
+                        iconColor={color === "default" ? "muted" : color}
+                        color={backgroundColor}
+                        size="sm"
+                      />
+                    )
+                  }
                 </View>
               </View>
               <View
