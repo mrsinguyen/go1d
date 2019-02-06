@@ -2,12 +2,12 @@ import * as React from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 
 import foundations from "../../foundations";
+import ButtonMinimal from "../ButtonMinimal";
 import Checkbox from "../Checkbox";
 import SearchInput from "../SearchInput";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
-import ButtonMinimal from "../ButtonMinimal";
 
 type FocusDirection = "up" | "down" | "first" | "last" | "open";
 
@@ -167,7 +167,7 @@ class Select extends React.Component<SelectProps, any> {
         searchValue: "",
       });
     }
-  }
+  };
 
   public unbindKeyboardListeners = () => {
     if (document) {
@@ -543,38 +543,36 @@ class Select extends React.Component<SelectProps, any> {
                     alignItems: "center",
                     justifyContent: "center",
                     paddingRight: 0,
-                    pointerEvents: (this.state.value && this.props.clearable)
-                      ? "auto"
-                      : "none",
+                    pointerEvents:
+                      this.state.value && this.props.clearable
+                        ? "auto"
+                        : "none",
                   }}
                   height="calc(100% - 3px)"
                   paddingX={3}
                   backgroundColor={backgroundColor}
                 >
-                  {(this.state.value && this.props.clearable)
-                    ? (
-                      <ButtonMinimal
-                        iconName="Cross"
-                        css={{
-                          backgroundColor: "transparent",
-                        }}
-                        iconColor={color === "default" ? "muted" : color}
-                        size="sm"
-                        onClick={this.handleSelectClear}
-                      />
-                    )
-                    : (
-                      <ButtonMinimal
-                        iconName="ChevronDown"
-                        css={{
-                          backgroundColor: "transparent",
-                        }}
-                        iconColor={color === "default" ? "muted" : color}
-                        color={backgroundColor}
-                        size="sm"
-                      />
-                    )
-                  }
+                  {this.state.value && this.props.clearable ? (
+                    <ButtonMinimal
+                      iconName="Cross"
+                      css={{
+                        backgroundColor: "transparent",
+                      }}
+                      iconColor={color === "default" ? "muted" : color}
+                      size="sm"
+                      onClick={this.handleSelectClear}
+                    />
+                  ) : (
+                    <ButtonMinimal
+                      iconName="ChevronDown"
+                      css={{
+                        backgroundColor: "transparent",
+                      }}
+                      iconColor={color === "default" ? "muted" : color}
+                      color={backgroundColor}
+                      size="sm"
+                    />
+                  )}
                 </View>
               </View>
               <View
