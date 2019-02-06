@@ -122,8 +122,6 @@ class Checkbox extends React.Component<
                 title={label}
                 paddingLeft={3}
                 ellipsis={true}
-                width={["100%", "100%", "90%"]}
-                maxWidth={["100%", "100%", "320px"]}
                 css={{
                   alignSelf: "center",
                 }}

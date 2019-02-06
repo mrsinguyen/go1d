@@ -58,10 +58,7 @@ class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
       <View {...props}>
         {options.map(({ value, ...Option }) => {
           return (
-            <View
-              paddingY={2}
-              key={`CheckboxInput__${Option.value}__${Option.label}`}
-            >
+            <View paddingY={2} key={`CheckboxInput__${value}__${Option.label}`}>
               <Checkbox
                 onChange={this.handleOnChange(value)}
                 name={name}

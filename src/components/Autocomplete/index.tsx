@@ -78,6 +78,8 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
       dropdownProps,
       size = "md",
       labelProps,
+      onSelectOption, // Do not pass down
+      lookupMethod, // Do not pass down
       ...props
     } = this.props;
 
