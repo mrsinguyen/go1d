@@ -23,6 +23,15 @@ Disabled Select Field
 ]} disabled={true} />
 ```
 
+Clearable Select Field
+```.tsx
+<Select options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "stawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} clearable={true} />
+```
+
 Searchable Select Field
 ```.tsx
 <Select options={[
