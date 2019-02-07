@@ -3,6 +3,7 @@ import * as SanitizeHTML from "sanitize-html";
 import Base from "../Base";
 import Text, { TextProps } from "../Text";
 import Theme from "../Theme";
+import { getStyles } from "./style";
 
 export interface ProseProps extends TextProps {
   HTML?: string;
@@ -41,7 +42,7 @@ const Prose: React.SFC<ProseProps> = ({
   ...props
 }: ProseProps) => (
   <Theme.Consumer>
-    {({ colors, animation }) => (
+    {foundations => (
       <Base
         css={{
           a: {
@@ -50,7 +51,7 @@ const Prose: React.SFC<ProseProps> = ({
               height: Array.isArray(fontSize)
                 ? fontSize.map(transformHeightFromFont)
                 : transformHeightFromFont(fontSize),
-              background: colors.accent,
+              background: foundations.colors.accent,
               width: "100%",
               position: "relative",
               bottom: 0,
@@ -61,7 +62,7 @@ const Prose: React.SFC<ProseProps> = ({
                 : transformMarginBottomFromFont(fontSize),
             },
             "&:active:after": {
-              background: colors.contrast,
+              background: foundations.colors.contrast,
             },
           },
         }}
@@ -69,16 +70,7 @@ const Prose: React.SFC<ProseProps> = ({
         <Text
           fontSize={fontSize}
           lineHeight={lineHeight}
-          css={{
-            a: {
-              display: "inline-block",
-              position: "relative",
-              color: colors.accent,
-              "&:hover, &:focus": {
-                color: colors.default,
-              },
-            },
-          }}
+          css={getStyles(foundations)}
           dangerouslySetInnerHTML={{
             __html: SanitizeHTML(HTML, {
               allowedTags: SanitizeHTML.defaults.allowedTags.concat([

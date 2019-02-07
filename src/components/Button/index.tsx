@@ -17,6 +17,7 @@ export interface ButtonProps extends ViewProps {
   fontWeight?: FontWeight;
   onClick?: ((evt: React.SyntheticEvent) => void);
   href?: any;
+  active?: boolean;
 }
 
 const sizeStyles = {
@@ -60,6 +61,7 @@ const Button: React.SFC<ButtonProps> = ({
   iconColor,
   type = "button",
   mode,
+  active,
   ...props
 }: ButtonProps) => {
   const {
