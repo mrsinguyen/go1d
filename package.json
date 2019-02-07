@@ -49,6 +49,7 @@
     "react-dates": "^18.2.2",
     "react-docgen": "^2.21.0",
     "react-dom": "^16.7.0",
+    "react-dropzone": "^8.0.4",
     "react-outside-click-handler": "^1.2.2",
     "react-popper": "^1.0.2",
     "react-pose": "^4.0.1",
