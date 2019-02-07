@@ -1,17 +1,17 @@
 import * as Immutable from "immutable";
-import { get } from "lodash";
+import { get, isEqual } from "lodash";
 import * as React from "react";
 import { Operation, Value } from "slate";
 import { Editor } from "slate-react";
 
-import { isEqual } from "lodash";
+import Plain from "slate-plain-serializer";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import { getStyles } from "../Prose/style";
 import Theme from "../Theme";
 import View from "../View";
 import FormatOptions from "./components/FormatOptions";
-import { DEFAULT_NODE, html } from "./serializer";
+import { serializerUtil } from "./serializer";
 
 interface State {
   value: Value;
@@ -20,7 +20,7 @@ interface State {
 
 export interface Props {
   placeholder?: string;
-  value?: string | Value;
+  value?: Value;
   onChange?: (
     change: { operations: Immutable.List<Operation>; value: Value }
   ) => any;
@@ -34,19 +34,16 @@ export interface Props {
 
 class RichTextInput extends React.Component<Props, State> {
   public static defaultProps = {
-    value: "<p></p>",
     size: "md",
+    value: Plain.deserialize(""),
   };
 
   public static getDerivedStateFromProps(props: Props, state: State) {
     const nextPropsValue = props.value;
-    const stateValue = html.serialize(state.value);
-    if (stateValue !== nextPropsValue) {
+    const stateValue = state.value;
+    if (!isEqual(stateValue, nextPropsValue)) {
       return {
-        value:
-          typeof props.value === "string"
-            ? html.deserialize(props.value)
-            : props.value,
+        value: props.value,
       };
     }
     return null;
@@ -58,23 +55,24 @@ class RichTextInput extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      value:
-        typeof props.value === "string"
-          ? html.deserialize(props.value)
-          : props.value,
+      value: props.value,
     };
   }
 
   @autobind
   public hasBlock(type: any) {
     const { value } = this.state;
-    return value.blocks.some((node: any) => node.type === type);
+    return value.blocks
+      ? value.blocks.some((node: any) => node.type === type)
+      : false;
   }
 
   @autobind
   public hasMark(type: any) {
     const { value } = this.state;
-    return value.activeMarks.some((mark: any) => mark.type === type);
+    return value.activeMarks
+      ? value.activeMarks.some((mark: any) => mark.type === type)
+      : false;
   }
 
   @autobind
@@ -120,7 +118,9 @@ class RichTextInput extends React.Component<Props, State> {
   @autobind
   public hasLinks() {
     const { value } = this.state;
-    return value.inlines.some((inline: any) => inline.type === "link");
+    return value.inlines
+      ? value.inlines.some((inline: any) => inline.type === "link")
+      : false;
   }
 
   @autobind
@@ -230,25 +230,27 @@ class RichTextInput extends React.Component<Props, State> {
 
       if (isList) {
         editor.current
-          .setBlocks(isActive ? DEFAULT_NODE : type)
+          .setBlocks(isActive ? serializerUtil.DEFAULT_NODE : type)
           .unwrapBlock("bulleted-list")
           .unwrapBlock("numbered-list");
       } else {
-        editor.current.setBlocks(isActive ? DEFAULT_NODE : type);
+        editor.current.setBlocks(isActive ? serializerUtil.DEFAULT_NODE : type);
       }
     } else {
       // Handle the extra wrapping required for list buttons.
       const isList = this.hasBlock("list-item");
-      const isType = value.blocks.some((block: any) => {
-        return !!document.getClosest(
-          block.key,
-          (parent: any) => parent.type === type
-        );
-      });
+      const isType = value.blocks
+        ? value.blocks.some((block: any) => {
+            return !!document.getClosest(
+              block.key,
+              (parent: any) => parent.type === type
+            );
+          })
+        : false;
 
       if (isList && isType) {
         editor.current
-          .setBlocks(DEFAULT_NODE)
+          .setBlocks(serializerUtil.DEFAULT_NODE)
           .unwrapBlock("bulleted-list")
           .unwrapBlock("numbered-list");
       } else if (isList) {
@@ -319,7 +321,7 @@ class RichTextInput extends React.Component<Props, State> {
                 autoFocus={true}
                 placeholder={this.props.placeholder}
                 ref={this.editor}
-                value={this.state.value}
+                value={this.state.value || Plain.deserialize("")}
                 onChange={this.onChange}
                 renderNode={this.renderNode}
                 renderMark={this.renderMark}
@@ -332,7 +334,6 @@ class RichTextInput extends React.Component<Props, State> {
               blockActive={this.hasBlockCheck}
               markActive={this.hasMark}
               linkActive={this.hasLinks}
-              value={this.state.value}
             />
           </View>
         )}
