@@ -21,6 +21,7 @@ export interface TextProps extends BaseProps {
   letterSpacing?: Tracking | Tracking[];
   ellipsis?: boolean;
   transition?: string | string[];
+  textDecoration?: string | string[];
 }
 
 const Text: React.SFC<TextProps> = ({
@@ -37,6 +38,7 @@ const Text: React.SFC<TextProps> = ({
   textTransform,
   transition = "subtle",
   ellipsis = false,
+  textDecoration,
   css,
   ...props
 }: TextProps) => (
@@ -64,6 +66,7 @@ const Text: React.SFC<TextProps> = ({
               type.scale.lg[fontSize[2] || fontSize],
             ],
             wordWrap: "break-word",
+            textDecoration,
           },
           ellipsis && {
             whiteSpace: "nowrap",

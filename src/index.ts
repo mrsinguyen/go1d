@@ -145,6 +145,11 @@ export {
 } from "./components/AuthorSelector";
 export { default as DateRange } from "./components/DateRange";
 export { SkeletonProps, default as Skeleton } from "./components/Skeleton";
+export {
+  Props as RichTextInputProps,
+  default as RichTextInput,
+} from "./components/RichTextInput";
+export { html as htmlSerializer } from "./components/RichTextInput/serializer";
 
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as Spinner } from "./components/Spinner";

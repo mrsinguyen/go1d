@@ -34,6 +34,9 @@
     "@types/events": "^1.2.0",
     "@types/fontfaceobserver": "^0.0.6",
     "@types/react-virtualized": "^9.18.7",
+    "@types/slate": "^0.43.8",
+    "@types/slate-html-serializer": "^0.6.3",
+    "@types/slate-react": "^0.20.3",
     "@types/webfontloader": "^1.6.29",
     "color": "^3.0.0",
     "downshift": "^3.1.8",
@@ -58,6 +61,9 @@
     "react-virtualized": "^9.20.1",
     "recompose": "^0.27.1",
     "sanitize-html": "1.19.2",
+    "slate": "^0.44.10",
+    "slate-html-serializer": "^0.7.34",
+    "slate-react": "^0.21.16",
     "smoothscroll-polyfill": "^0.4.3"
   },
   "devDependencies": {
