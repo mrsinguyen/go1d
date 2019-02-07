@@ -11,7 +11,6 @@ export interface Props {
   blockActive: (type: string) => boolean;
   markActive: (type: string) => boolean;
   linkActive: () => boolean;
-  value: any;
 }
 
 const FormatButton: React.SFC<any> = ({

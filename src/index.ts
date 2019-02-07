@@ -149,7 +149,7 @@ export {
   Props as RichTextInputProps,
   default as RichTextInput,
 } from "./components/RichTextInput";
-export { html as htmlSerializer } from "./components/RichTextInput/serializer";
+export { serializerUtil } from "./components/RichTextInput/serializer";
 
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as Spinner } from "./components/Spinner";

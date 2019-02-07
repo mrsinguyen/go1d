@@ -424,11 +424,10 @@
     "@types/glob" "*"
     "@types/node" "*"
 
-"@types/slate-html-serializer@^0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@types/slate-html-serializer/-/slate-html-serializer-0.6.3.tgz#f18da3c68ccc5b25b12eb4f709b2120b2d2d954e"
+"@types/slate-plain-serializer@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@types/slate-plain-serializer/-/slate-plain-serializer-0.6.1.tgz#c392ce51621f7c55df0976f161dcfca18bd559ee"
   dependencies:
-    "@types/react" "*"
     "@types/slate" "*"
 
 "@types/slate-react@^0.20.3":
@@ -8736,12 +8735,6 @@ slate-hotkeys@^0.2.8:
   dependencies:
     is-hotkey "0.1.4"
     slate-dev-environment "^0.2.1"
-
-slate-html-serializer@^0.7.34:
-  version "0.7.34"
-  resolved "https://registry.yarnpkg.com/slate-html-serializer/-/slate-html-serializer-0.7.34.tgz#4eaaac34de07aca64c473d2561baa70421788871"
-  dependencies:
-    type-of "^2.0.1"
 
 slate-plain-serializer@^0.6.34:
   version "0.6.34"

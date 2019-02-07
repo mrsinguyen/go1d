@@ -1,7 +1,6 @@
 import * as React from "react";
-import Html from "slate-html-serializer";
 
-export enum BLOCK_TAGS {
+enum BLOCK_TAGS {
   blockquote = "block-quote",
   p = "paragraph",
   h2 = "heading-two",
@@ -9,7 +8,7 @@ export enum BLOCK_TAGS {
 }
 
 // Add a dictionary of mark tags.
-export enum MARK_TAGS {
+enum MARK_TAGS {
   strong = "bold",
   em = "italic",
   u = "underline",
@@ -100,6 +99,11 @@ const rules = [
   },
 ];
 
-export const DEFAULT_NODE = "paragraph";
+const DEFAULT_NODE = "paragraph";
 
-export const html = new Html({ rules });
+export const serializerUtil = {
+  DEFAULT_NODE,
+  rules,
+  MARK_TAGS,
+  BLOCK_TAGS,
+};
