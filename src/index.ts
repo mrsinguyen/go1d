@@ -148,3 +148,7 @@ export { SkeletonProps, default as Skeleton } from "./components/Skeleton";
 
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as Spinner } from "./components/Spinner";
+export {
+  default as ImageUploader,
+  ImageUploaderProps,
+} from "./components/ImageUploader";

@@ -13,6 +13,7 @@ export interface IconProps extends ViewProps {
 const Icon: React.SFC<IconProps> = ({
   name,
   size = 2,
+  css,
   ...props
 }: IconProps) => {
   const IconComponent = Icons[name];
@@ -39,6 +40,7 @@ const Icon: React.SFC<IconProps> = ({
                 {}
               ),
             },
+            css,
           ]}
         />
       )}

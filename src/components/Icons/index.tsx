@@ -1,4 +1,5 @@
 export { default as Activity } from "./Activity";
+export { default as AddItem } from "./AddItem";
 export { default as AddUser } from "./AddUser";
 export { default as Amex } from "./Amex";
 export { default as Assignment } from "./Assignment";
