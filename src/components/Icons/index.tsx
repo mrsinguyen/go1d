@@ -2,6 +2,7 @@ export { default as Activity } from "./Activity";
 export { default as AddItem } from "./AddItem";
 export { default as AddUser } from "./AddUser";
 export { default as Amex } from "./Amex";
+export { default as ArrowUp } from "./ArrowUp";
 export { default as Assignment } from "./Assignment";
 export { default as Award } from "./Award";
 export { default as Billing } from "./Billing";
