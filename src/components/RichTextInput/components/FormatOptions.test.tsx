@@ -15,7 +15,6 @@ it("renders without crashing without any optional props", () => {
       blockActive={fn}
       markActive={fn}
       linkActive={fn}
-      value={{}}
     />
   );
 });
