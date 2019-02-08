@@ -11,7 +11,6 @@ enum BLOCK_TAGS {
 enum MARK_TAGS {
   strong = "bold",
   em = "italic",
-  u = "underline",
   s = "strikethrough",
 }
 
@@ -64,8 +63,6 @@ const rules = [
             return <strong>{children}</strong>;
           case "italic":
             return <em>{children}</em>;
-          case "underline":
-            return <u>{children}</u>;
           case "strikethrough":
             return <s>{children}</s>;
         }
