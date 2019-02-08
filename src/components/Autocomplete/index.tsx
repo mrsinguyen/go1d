@@ -143,20 +143,23 @@ class Autocomplete extends React.Component<AutocompleteProps, any> {
                     position="absolute"
                     zIndex={1001}
                     maxWidth={["none", "none", "320px"]}
+                    paddingY={3}
+                    marginTop={2}
                     {...dropdownProps}
                   >
                     {options.map(o => (
                       <Text
                         ellipsis={true}
                         onClick={this.selectOption(o)}
-                        paddingY={3}
+                        paddingY={4}
                         paddingX={4}
                         data-testid="locationElement"
                         key={`${o.label}_option`}
+                        color="default"
                         {...labelProps}
                         css={{
                           "&:hover, &:active": {
-                            backgroundColor: colors.soft,
+                            backgroundColor: colors.highlight,
                           },
                           cursor: "pointer",
                         }}
