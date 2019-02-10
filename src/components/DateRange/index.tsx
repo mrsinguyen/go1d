@@ -152,7 +152,7 @@ class DateRange extends React.Component<any, any> {
               customCloseIcon={
                 this.state.endDate || this.state.startDate ? (
                   <ButtonMinimal
-                    iconName="Close"
+                    iconName="Cross"
                     color="accent"
                     backgroundColor="transparent"
                     data-testid="clearButton"
