@@ -65,10 +65,16 @@ class DateRange extends React.Component<any, any> {
                   flexDirection: "row",
                   display: "flex",
                   fontSize: type.scale.md[2],
-                  color: colors.default,
+                  color:
+                    this.state.startDate && this.state.endDate
+                      ? colors.background
+                      : colors.default,
                   overflow: "hidden",
                   borderRadius: spacing[borderRadius],
-                  backgroundColor: colors.background,
+                  backgroundColor:
+                    this.state.startDate && this.state.endDate
+                      ? colors.accent
+                      : colors.background,
                   boxShadow:
                     this.state.focusedInput !== null
                       ? shadows.strong
@@ -80,7 +86,10 @@ class DateRange extends React.Component<any, any> {
                   flexShrink: 1,
                 },
                 ".DateInput_input": {
-                  color: colors.default,
+                  color:
+                    this.state.startDate && this.state.endDate
+                      ? colors.background
+                      : colors.default,
                   fontSize: type.scale.md[2],
                   padding: spacing[3],
                   paddingLeft: spacing[4],
@@ -114,6 +123,7 @@ class DateRange extends React.Component<any, any> {
                 ".CalendarDay": {
                   verticalAlign: "middle",
                   border: "none",
+                  cursor: "pointer",
                 },
                 ".DayPickerNavigation_button, .CalendarMonth_caption": {
                   padding: `${spacing[5]}px`,
@@ -123,15 +133,34 @@ class DateRange extends React.Component<any, any> {
                   background: colors.highlight,
                   color: colors.default,
                 },
+                ".CalendarDay__default:hover": {
+                  borderRadius:
+                    (this.state.startDate && !this.state.endDate) ||
+                    (!this.state.startDate && this.state.endDate) // XOR
+                      ? !this.state.startDate
+                        ? "50% 0 0 50%"
+                        : "0 50% 50% 0"
+                      : "50%",
+                },
+                ".CalendarDay__selected_span:hover": {
+                  borderRadius: "0 !important",
+                },
+                ".CalendarDay__blocked_out_of_range:hover": {
+                  background: "none",
+                },
                 ".CalendarDay__selected_start": {
-                  background: colors.accent,
-                  color: colors.background,
-                  borderRadius: "50% 0 0 50%",
+                  background: `${colors.accent} !important`,
+                  color: `${colors.background} !important`,
+                  borderRadius: "50% 0 0 50% !important",
                 },
                 ".CalendarDay__selected_end": {
                   background: colors.accent,
                   color: colors.background,
                   borderRadius: "0 50% 50% 0",
+                },
+                ".CalendarDay__blocked_out_of_range": {
+                  color: "#cacccd !important",
+                  background: "none !important",
                 },
               },
             ]}
@@ -153,10 +182,18 @@ class DateRange extends React.Component<any, any> {
                 this.state.endDate || this.state.startDate ? (
                   <ButtonMinimal
                     iconName="Cross"
-                    color="accent"
-                    backgroundColor="transparent"
+                    size="sm"
                     data-testid="clearButton"
                     aria-label="Clear Icon"
+                    css={{
+                      background: "transparent !important",
+                      svg: {
+                        color:
+                          this.state.startDate && this.state.endDate
+                            ? `${colors.background} !important`
+                            : `${colors.muted} !important`,
+                      },
+                    }}
                   />
                 ) : null
               }
