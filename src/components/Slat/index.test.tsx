@@ -1,67 +1,49 @@
 import * as React from "react";
 import { cleanup, render } from "react-testing-library";
-import CourseSlat from "./index";
+import Slat from "./index";
 
 afterEach(cleanup);
 
+const props = {
+  id: 123,
+  topMeta: ["one", "two"],
+  title: "This is test title",
+  description: "This is the test description",
+  currency: "AUD",
+  price: 100,
+  bottomMeta: [
+    {
+      icon: "Calendar",
+      text: "1.30pm - 2.30pm",
+    },
+    {
+      icon: "MapPin",
+      text: "Underwood, QLD, Australia",
+    },
+  ],
+  image:
+    "https://res.cloudinary.com/go1vn/image/upload/v1537851944/ckvawokvc4k70fd9t1oj.jpg",
+  type: "Event",
+  typeBackground: "background",
+  dropdownItems: [
+    {
+      icon: "Cross",
+      text: "fake item",
+      action: jest.fn(),
+    },
+    {
+      icon: "Cross",
+      text: "fake item2",
+      action: jest.fn(),
+    },
+  ],
+};
+
 it("renders without crashing without any optional props", () => {
-  render(<CourseSlat />);
+  render(<Slat />);
 });
 
 it("renders without crashing with all props", () => {
-  const testRenderer = () => <p>Hello</p>;
-  render(
-    <CourseSlat
-      courseImage="#"
-      title="Master sourdough in a week"
-      description="Despite general improvements in workplace health and safety"
-      author="Bob Bobberson"
-      authorAvatar="#"
-      duration={4}
-      actionRender={testRenderer}
-      contentRender={testRenderer}
-      type="Course"
-      typeIcon="Course"
-      passive={false}
-    />
-  );
-});
-
-it("renders passive course slats", () => {
-  const testRenderer = () => <p>Hello</p>;
-  render(
-    <CourseSlat
-      courseImage="#"
-      title="Master sourdough in a week"
-      description="Despite general improvements in workplace health and safety"
-      author="Bob Bobberson"
-      authorAvatar="#"
-      duration={4}
-      actionRender={testRenderer}
-      contentRender={testRenderer}
-      type="Course"
-      typeIcon="Course"
-      passive={true}
-    />
-  );
-});
-
-it("should render author as passed component", () => {
-  const testRenderer = () => <p>Hello</p>;
-  const author = () => <div>Foo</div>;
-  render(
-    <CourseSlat
-      courseImage="#"
-      title="Master sourdough in a week"
-      description="Despite general improvements in workplace health and safety"
-      author={author}
-      authorAvatar="#"
-      duration={4}
-      actionRender={testRenderer}
-      contentRender={testRenderer}
-      type="Course"
-      typeIcon="Course"
-      passive={true}
-    />
-  );
+  const testRenderer = jest.fn();
+  render(<Slat {...props} dropdownRenderFn={testRenderer} />);
 });

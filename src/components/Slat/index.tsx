@@ -1,28 +1,37 @@
 import * as React from "react";
 import foundations from "../../foundations";
-// import formatDuration from "../../utils/durationFormatter";
-// import formatPrice from "../../utils/priceFormatter";
-// import Avatar from "../Avatar";
+import formatPrice from "../../utils/priceFormatter";
+import ButtonMinimal from "../ButtonMinimal";
+import Dropdown from "../Dropdown";
 import Icon from "../Icon";
+import Skeleton from "../SlatSkeleton";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
-import Skeleton from "./Skeleton";
 
 export interface SlatProps extends ViewProps {
-  topMeta?: any[];
+  id?: number;
+  topMeta?: string[];
   title?: string;
   description?: string;
   currency?: string;
   price?: number;
-  bottomMeta?: any[];
+  bottomMeta?: Array<{
+    icon?: string;
+    text: string;
+  }>;
   image?: string;
   type?: string;
   typeBackground?: string;
+  dropdownItems?: Array<{
+    icon?: string;
+    text: string;
+    action?: () => void;
+  }>;
+  dropdownRenderFn?: (item, index, getItemProps) => void;
 }
 
 const styles = {
-  background: `${foundations.colors.background}`,
   "&:hover, &:focus": {
     boxShadow: foundations.shadows.strong,
     cursor: "pointer",
@@ -32,9 +41,40 @@ const styles = {
     boxShadow: foundations.shadows.crisp,
     transform: "translateY(1px)",
   },
-}
+};
+
+const defaultRenderFn = (item, index, getItemProps) => (
+  <View
+    key={index}
+    {...getItemProps({
+      key: index,
+      item,
+      index,
+    })}
+    onClick={item.action}
+    width={200}
+    paddingX={4}
+    paddingY={4}
+    flexDirection="row"
+    alignItems="center"
+    css={{
+      cursor: "pointer",
+      "&:hover, &:active": {
+        backgroundColor: foundations.colors.faint,
+      },
+    }}
+  >
+    {item.icon && (
+      <Icon name={item.icon} marginRight={foundations.spacing[2]} />
+    )}
+    {item.text && <Text>{item.text}</Text>}
+  </View>
+);
+
+const itemToString = item => (item ? item.title : "");
 
 const Slat: React.SFC<SlatProps> = ({
+  id,
   topMeta,
   title,
   description,
@@ -44,6 +84,8 @@ const Slat: React.SFC<SlatProps> = ({
   image,
   type,
   typeBackground = "background",
+  dropdownItems,
+  dropdownRenderFn = defaultRenderFn,
   skeleton = false,
   ...props
 }: SlatProps) => {
@@ -63,11 +105,9 @@ const Slat: React.SFC<SlatProps> = ({
       icon = "Course";
   }
 
-  console.log(bottomMeta);
-
   return (
     <Theme.Consumer>
-      {({ spacing, breakpoints, colors }) => {
+      {({ breakpoints, colors }) => {
         return (
           <View
             borderRadius={2}
@@ -77,10 +117,11 @@ const Slat: React.SFC<SlatProps> = ({
             color="default"
             css={[
               {
+                background: `${colors.background}`,
                 overflow: "hidden",
                 textDecoration: "none",
               },
-              styles,
+              !dropdownItems && styles,
             ]}
             {...props}
           >
@@ -91,9 +132,7 @@ const Slat: React.SFC<SlatProps> = ({
               backgroundOpacity={image ? "none" : "emptyBackground"}
               css={{
                 overflow: "hidden",
-                backgroundImage: image
-                  ? `url(${image})`
-                  : undefined,
+                backgroundImage: image ? `url(${image})` : undefined,
                 backgroundSize: "cover",
                 position: "relative",
                 height: 142,
@@ -120,7 +159,9 @@ const Slat: React.SFC<SlatProps> = ({
                   flexDirection="row"
                   padding={2}
                   borderRadius={1}
-                  color={typeBackground === "background" ? "contrast" : "background"}
+                  color={
+                    typeBackground === "background" ? "contrast" : "background"
+                  }
                   backgroundColor={typeBackground}
                   css={{
                     position: "absolute",
@@ -131,7 +172,14 @@ const Slat: React.SFC<SlatProps> = ({
                   <View paddingRight={2}>
                     <Icon name={icon} />
                   </View>
-                  <Text color={typeBackground === "background" ? "contrast" : "background"} fontSize={1}>
+                  <Text
+                    color={
+                      typeBackground === "background"
+                        ? "contrast"
+                        : "background"
+                    }
+                    fontSize={1}
+                  >
                     {type && type.toUpperCase()}
                   </Text>
                 </View>
@@ -146,23 +194,66 @@ const Slat: React.SFC<SlatProps> = ({
               flexDirection="column"
               justifyContent="space-between"
             >
-              {topMeta && (
-                <View flexDirection="row">
-                  {topMeta.map((meta, i) => (
-                    <Text display="flex" color="subtle" fontSize={1}>
-                      {meta} {i !== (topMeta.length - 1) && (<Text marginX={3}>/</Text>)}
-                    </Text>
-                  ))}
-                </View>
-              )}
+              <View
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {topMeta && (
+                  <View flexDirection="row">
+                    {topMeta.map((meta, i) => (
+                      <Text
+                        display="flex"
+                        color="subtle"
+                        fontSize={1}
+                        key={`${id}_top_meta_${i}`}
+                      >
+                        {meta}{" "}
+                        {i !== topMeta.length - 1 && (
+                          <Text marginX={3} fontSize={1}>
+                            /
+                          </Text>
+                        )}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+                {dropdownItems &&
+                  dropdownItems.length > 0 && (
+                    <View
+                      css={{
+                        marginRight: "-10px",
+                        marginBottom: "-5px",
+                      }}
+                    >
+                      <Dropdown
+                        placement="bottom"
+                        itemToString={itemToString}
+                        renderFunction={dropdownRenderFn}
+                        itemList={dropdownItems}
+                      >
+                        {({ ref, getToggleButtonProps }) => (
+                          <ButtonMinimal
+                            {...getToggleButtonProps()}
+                            innerRef={ref}
+                            color="subtle"
+                            size="sm"
+                            marginBottom="-5px"
+                          >
+                            <Icon name="Ellipsis" />
+                          </ButtonMinimal>
+                        )}
+                      </Dropdown>
+                    </View>
+                  )}
+              </View>
               {title && (
                 <Text
                   fontSize={3}
                   fontWeight="semibold"
                   ellipsis={true}
-                  marginY={1}
                   css={{
-                    [foundations.breakpoints.sm]: {
+                    [breakpoints.sm]: {
                       wordWrap: "break-word",
                       whiteSpace: "initial",
                       lineHeight: 1.2,
@@ -181,23 +272,44 @@ const Slat: React.SFC<SlatProps> = ({
                 <Text
                   fontSize={2}
                   ellipsis={true}
+                  marginBottom={4}
                   color="subtle"
                 >
                   {description}
                 </Text>
               )}
-              {bottomMeta && (
-                <View flexDirection="row" flexGrow={1} alignItems="flex-end">
-                  {bottomMeta.map((meta, i) => (
-                    <Text display="flex" marginRight={5} color="subtle" fontSize={1}>
-                      {meta.icon && (
-                        <Icon name={meta.icon} marginRight={3} />
-                      )}
-                      {meta.text}
-                    </Text>
-                  ))}
-                </View>
-              )}
+              <View flexDirection="row" justifyContent="space-between">
+                {bottomMeta && (
+                  <View flexDirection="row" flexGrow={1} alignItems="flex-end">
+                    {bottomMeta.map((meta, i) => (
+                      <Text
+                        display="flex"
+                        marginRight={5}
+                        color="subtle"
+                        fontSize={1}
+                        key={`${id}_bottom_meta_${i}`}
+                      >
+                        {meta.icon && (
+                          <Icon
+                            name={meta.icon}
+                            marginRight={3}
+                            color="muted"
+                          />
+                        )}
+                        {meta.text}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+                {currency &&
+                  price > 0 && (
+                    <View flexDirection="row">
+                      <Text color="accent" fontWeight="semibold">
+                        {formatPrice(currency, price)}
+                      </Text>
+                    </View>
+                  )}
+              </View>
             </View>
           </View>
         );
