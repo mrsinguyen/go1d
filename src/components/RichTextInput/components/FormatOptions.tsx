@@ -19,6 +19,7 @@ const FormatButton: React.SFC<any> = ({
   onClick,
   active,
   colors,
+  ...props
 }: {
   iconName: string;
   type: string;
@@ -59,6 +60,7 @@ const FormatButton: React.SFC<any> = ({
             }
           : {},
       ]}
+      {...props}
     />
   );
 };
@@ -75,6 +77,7 @@ const FormatOptions: React.SFC<Props> = ({
     {({ colors }) => (
       <View flexDirection="row">
         <FormatButton
+          data-testid="markBold"
           onClick={onClickMarked}
           type="bold"
           iconName="Bold"
@@ -82,6 +85,7 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="markItalic"
           onClick={onClickMarked}
           type="italic"
           iconName="Italic"
@@ -89,6 +93,7 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="markStrikethrough"
           onClick={onClickMarked}
           type="strikethrough"
           iconName="Strikethrough"
@@ -96,6 +101,7 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="blockHeadingTwo"
           onClick={onClickBlock}
           type="heading-two"
           iconName="HeadingTwo"
@@ -103,6 +109,7 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="blockHeadingThree"
           onClick={onClickBlock}
           type="heading-three"
           iconName="HeadingThree"
@@ -110,6 +117,7 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="blockBlockquote"
           onClick={onClickBlock}
           type="block-quote"
           iconName="BlockQuote"
@@ -117,10 +125,27 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="inlineLink"
           onClick={onClickLink}
           type="link"
           iconName="Link"
           active={linkActive()}
+          colors={colors}
+        />
+        <FormatButton
+          data-testid="blockNumberedList"
+          onClick={onClickBlock}
+          type="numbered-list"
+          iconName="OlList"
+          active={blockActive("numbered-list")}
+          colors={colors}
+        />
+        <FormatButton
+          data-testid="blockBulletedList"
+          onClick={onClickBlock}
+          type="bulleted-list"
+          iconName="UlList"
+          active={blockActive("bulleted-list")}
           colors={colors}
         />
       </View>
