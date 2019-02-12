@@ -6,3 +6,4 @@
 /coverage/
 .vscode/
 react-docs.json
+.jest.json

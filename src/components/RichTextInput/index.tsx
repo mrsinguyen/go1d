@@ -11,7 +11,6 @@ import { getStyles } from "../Prose/style";
 import Theme from "../Theme";
 import View from "../View";
 import FormatOptions from "./components/FormatOptions";
-import { serializerUtil } from "./serializer";
 
 interface State {
   value: Value;
@@ -31,6 +30,8 @@ export interface Props {
   borderColor?: string;
   size?: "lg" | "md" | "sm";
 }
+
+const DEFAULT_NODE = "paragraph";
 
 class RichTextInput extends React.Component<Props, State> {
   public static defaultProps = {
@@ -79,21 +80,19 @@ class RichTextInput extends React.Component<Props, State> {
   public onClickLink(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault();
 
-    const { editor } = this;
-    const { value } = editor.current;
     const hasLinks = this.hasLinks();
 
     if (hasLinks) {
-      editor.current.unwrapInline("link");
-    } else if (value.selection.isExpanded) {
+      this.editor.current.unwrapInline("link");
+    } else if (this.editor.current.value.selection.isExpanded) {
       const href = window.prompt("Enter the URL of the link:");
 
       if (href === null) {
         return;
       }
 
-      editor.current.wrapInline({ type: "link", data: { href } });
-      editor.current.moveToEnd();
+      this.editor.current.wrapInline({ type: "link", data: { href } });
+      this.editor.current.moveToEnd();
     } else {
       const href = window.prompt("Enter the URL of the link:");
 
@@ -107,7 +106,7 @@ class RichTextInput extends React.Component<Props, State> {
         return;
       }
 
-      editor.current
+      this.editor.current
         .insertText(text)
         .moveFocusBackward(text.length)
         .wrapInline({ type: "link", data: { href } })
@@ -132,7 +131,7 @@ class RichTextInput extends React.Component<Props, State> {
         value: { document, blocks },
       } = this.state;
 
-      if (blocks.size > 0) {
+      if (blocks && blocks.size > 0) {
         const parent = document.getParent(blocks.first().key) as any;
         isActive = this.hasBlock("list-item") && parent && parent.type === type;
       }
@@ -166,6 +165,12 @@ class RichTextInput extends React.Component<Props, State> {
             {children}
           </a>
         );
+      case "list-item":
+        return <li {...attributes}>{children}</li>;
+      case "numbered-list":
+        return <ol {...attributes}>{children}</ol>;
+      case "bulleted-list":
+        return <ul {...attributes}>{children}</ul>;
 
       default:
         return next();
@@ -228,11 +233,11 @@ class RichTextInput extends React.Component<Props, State> {
 
       if (isList) {
         editor.current
-          .setBlocks(isActive ? serializerUtil.DEFAULT_NODE : type)
+          .setBlocks(isActive ? DEFAULT_NODE : type)
           .unwrapBlock("bulleted-list")
           .unwrapBlock("numbered-list");
       } else {
-        editor.current.setBlocks(isActive ? serializerUtil.DEFAULT_NODE : type);
+        editor.current.setBlocks(isActive ? DEFAULT_NODE : type);
       }
     } else {
       // Handle the extra wrapping required for list buttons.
@@ -248,7 +253,7 @@ class RichTextInput extends React.Component<Props, State> {
 
       if (isList && isType) {
         editor.current
-          .setBlocks(serializerUtil.DEFAULT_NODE)
+          .setBlocks(DEFAULT_NODE)
           .unwrapBlock("bulleted-list")
           .unwrapBlock("numbered-list");
       } else if (isList) {
@@ -312,6 +317,7 @@ class RichTextInput extends React.Component<Props, State> {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             css={getStyles(foundations)}
+            data-testid="editorContainer"
           >
             <View paddingX={4} paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}>
               <Editor

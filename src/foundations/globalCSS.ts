@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { injectGlobal } from "emotion";
 import * as FontFaceObserver from "fontfaceobserver";
 import { type } from "./index";
