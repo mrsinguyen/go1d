@@ -66,13 +66,13 @@ class DateRange extends React.Component<any, any> {
                   display: "flex",
                   fontSize: type.scale.md[2],
                   color:
-                    this.state.startDate && this.state.endDate
+                    this.state.startDate || this.state.endDate
                       ? colors.background
                       : colors.default,
                   overflow: "hidden",
                   borderRadius: spacing[borderRadius],
                   backgroundColor:
-                    this.state.startDate && this.state.endDate
+                    this.state.startDate || this.state.endDate
                       ? colors.accent
                       : colors.background,
                   boxShadow:
@@ -87,7 +87,7 @@ class DateRange extends React.Component<any, any> {
                 },
                 ".DateInput_input": {
                   color:
-                    this.state.startDate && this.state.endDate
+                    this.state.startDate || this.state.endDate
                       ? colors.background
                       : colors.default,
                   fontSize: type.scale.md[2],
@@ -189,7 +189,7 @@ class DateRange extends React.Component<any, any> {
                       background: "transparent !important",
                       svg: {
                         color:
-                          this.state.startDate && this.state.endDate
+                          this.state.startDate || this.state.endDate
                             ? `${colors.background} !important`
                             : `${colors.muted} !important`,
                       },
