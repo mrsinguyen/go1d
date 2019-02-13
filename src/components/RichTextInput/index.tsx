@@ -29,6 +29,7 @@ export interface Props {
   error?: boolean;
   borderColor?: string;
   size?: "lg" | "md" | "sm";
+  autofocus?: boolean;
 }
 
 const DEFAULT_NODE = "paragraph";
@@ -302,7 +303,7 @@ class RichTextInput extends React.Component<Props, State> {
   }
 
   public render() {
-    const { id, disabled, size } = this.props;
+    const { id, disabled, size, autofocus } = this.props;
 
     return (
       <Theme.Consumer>
@@ -322,7 +323,7 @@ class RichTextInput extends React.Component<Props, State> {
             <View paddingX={4} paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}>
               <Editor
                 spellCheck={false}
-                autoFocus={true}
+                autoFocus={autofocus}
                 placeholder={this.props.placeholder}
                 ref={this.editor}
                 value={this.state.value || Plain.deserialize("")}
