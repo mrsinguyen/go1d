@@ -105,9 +105,15 @@ const Slat: React.SFC<SlatProps> = ({
       icon = "Course";
   }
 
+  const topText = topMeta && topMeta
+    .map((meta, i) => {
+      return `${meta} ${i + 1 !== topMeta.length && "/"} `;
+    })
+    .join("");
+
   return (
     <Theme.Consumer>
-      {({ breakpoints, colors }) => {
+      {({ breakpoints, colors, spacing }) => {
         return (
           <View
             borderRadius={2}
@@ -120,6 +126,9 @@ const Slat: React.SFC<SlatProps> = ({
                 background: `${colors.background}`,
                 overflow: "hidden",
                 textDecoration: "none",
+                [breakpoints.sm]: {
+                  flexDirection: "column",
+                },
               },
               !dropdownItems && styles,
             ]}
@@ -138,8 +147,8 @@ const Slat: React.SFC<SlatProps> = ({
                 height: 142,
                 width: 221,
                 [breakpoints.sm]: {
-                  height: 130,
-                  width: 130,
+                  height: 100,
+                  width: "100%",
                 },
               }}
             >
@@ -200,22 +209,23 @@ const Slat: React.SFC<SlatProps> = ({
                 alignItems="center"
               >
                 {topMeta && (
-                  <View flexDirection="row">
-                    {topMeta.map((meta, i) => (
-                      <Text
-                        display="flex"
-                        color="subtle"
-                        fontSize={1}
-                        key={`${id}_top_meta_${i}`}
-                      >
-                        {meta}{" "}
-                        {i !== topMeta.length - 1 && (
-                          <Text marginX={3} fontSize={1}>
-                            /
-                          </Text>
-                        )}
-                      </Text>
-                    ))}
+                  <View
+                    flexDirection="row"
+                    maxWidth={dropdownItems && "90%"}
+                    css={{
+                      [breakpoints.sm]: {
+                        marginBottom: spacing[2],
+                      },
+                    }}
+                  >
+                    <Text
+                      ellipsis={true}
+                      color="subtle"
+                      fontSize={1}
+                      maxWidth={dropdownItems && "90%"}
+                    >
+                      {topText}
+                    </Text>
                   </View>
                 )}
                 {dropdownItems &&
@@ -224,6 +234,10 @@ const Slat: React.SFC<SlatProps> = ({
                       css={{
                         marginRight: "-10px",
                         marginBottom: "-5px",
+                        [breakpoints.sm]: {
+                          marginRight: "-15px",
+                          marginTop: "-50px",
+                        },
                       }}
                     >
                       <Dropdown
@@ -262,6 +276,8 @@ const Slat: React.SFC<SlatProps> = ({
                       WebkitBoxOrient: "vertical",
                       display: "-webkit-box",
                       fontSize: foundations.type.scale.sm[2],
+                      marginBottom: spacing[1],
+                      order: -1,
                     },
                   }}
                 >
@@ -274,13 +290,32 @@ const Slat: React.SFC<SlatProps> = ({
                   ellipsis={true}
                   marginBottom={4}
                   color="subtle"
+                  css={{
+                    [breakpoints.sm]: {
+                      display: "none",
+                    },
+                  }}
                 >
                   {description}
                 </Text>
               )}
-              <View flexDirection="row" justifyContent="space-between">
+              <View
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="flex-end"
+              >
                 {bottomMeta && (
-                  <View flexDirection="row" flexGrow={1} alignItems="flex-end">
+                  <View
+                    flexDirection="row"
+                    flexGrow={1}
+                    alignItems="flex-end"
+                    css={{
+                      [breakpoints.sm]: {
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                      },
+                    }}
+                  >
                     {bottomMeta.map((meta, i) => (
                       <Text
                         display="flex"
@@ -288,6 +323,11 @@ const Slat: React.SFC<SlatProps> = ({
                         color="subtle"
                         fontSize={1}
                         key={`${id}_bottom_meta_${i}`}
+                        css={{
+                          [breakpoints.sm]: {
+                            marginTop: spacing[3],
+                          },
+                        }}
                       >
                         {meta.icon && (
                           <Icon
