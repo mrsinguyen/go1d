@@ -47,3 +47,34 @@ it("renders without crashing with items", () => {
     </Dropdown>
   );
 });
+
+it("renders with defaul render function", () => {
+  const { container } = render(
+    <Dropdown
+      itemList={[
+        {
+          title: "Add",
+          href: "#testing",
+          color: "accent",
+          iconName: "Plus",
+        },
+        {
+          title: "Delete",
+          href: "#testing",
+          color: "danger",
+          iconName: "Trash",
+        },
+      ]}
+      itemToString={jest.fn()}
+    >
+      {({ ref }) => (
+        <ButtonFilled innerRef={ref} marginLeft="auto">
+          Stuff
+        </ButtonFilled>
+      )}
+    </Dropdown>
+  );
+
+  // Can click button
+  container.querySelector("button")!.click();
+});
