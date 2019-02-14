@@ -3,11 +3,12 @@ import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import Portal from "../Portal";
 import View, { ViewProps } from "../View";
+import DropdownItem from "./DropdownItem";
 
 export interface DropdownProps extends ViewProps {
   children: ((params: any) => React.ReactNode);
   itemList: any;
-  renderFunction: ((
+  renderFunction?: ((
     item: any,
     index: number,
     getItemProps: (options: any) => any
@@ -32,10 +33,24 @@ export interface DropdownProps extends ViewProps {
   offset?: string | number;
 }
 
+function defaultRenderFunction(
+  item: {
+    title: string;
+    description: string;
+    iconName?: string;
+    href?: any;
+    onClick?: (evt: React.SyntheticEvent<any>) => void;
+  },
+  index: number,
+  getItemProps: (options: any) => any
+) {
+  return <DropdownItem item={item} getItemProps={getItemProps} index={index} />;
+}
+
 const Dropdown: React.SFC<DropdownProps> = ({
   children,
   itemList,
-  renderFunction,
+  renderFunction = defaultRenderFunction,
   css,
   itemToString,
   placement,
