@@ -4,10 +4,10 @@ import formatDuration from "../../utils/durationFormatter";
 import formatPrice from "../../utils/priceFormatter";
 import Avatar from "../Avatar";
 import Icon from "../Icon";
+import Skeleton from "../SlatSkeleton";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
-import Skeleton from "./Skeleton";
 
 export interface CourseSlatProps extends ViewProps {
   actionRender?: () => React.ReactChild;

@@ -1,6 +1,6 @@
 import * as React from "react";
-import Skeleton from "../../Skeleton";
-import View from "../../View";
+import Skeleton from "../Skeleton";
+import View from "../View";
 
 export default () => (
   <View
