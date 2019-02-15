@@ -20,7 +20,7 @@ export interface FieldProps extends ViewProps {
   statusColor?: string;
   statusIcon?: string;
   errorFormat?: (errorMessage: string) => React.ReactNode | string;
-
+  suppressError?: boolean;
   component?: string | React.ComponentType<any> | React.ComponentType<void>;
 }
 
@@ -44,6 +44,7 @@ const Field: React.SFC<FieldProps> = ({
   hideStatus,
   hideLabel,
   onChange,
+  suppressError,
   ...props
 }: FieldProps) => {
   const formikProps = {
@@ -60,7 +61,8 @@ const Field: React.SFC<FieldProps> = ({
         if (
           form.errors &&
           form.errors[field.name] &&
-          form.touched[field.name] // Only show error for touched fields //
+          form.touched[field.name] && // Only show error for touched fields //
+          !suppressError
         ) {
           message = form.errors[field.name];
         }
@@ -103,7 +105,8 @@ const Field: React.SFC<FieldProps> = ({
           if (
             (form.errors &&
               form.errors[field.name] &&
-              form.touched[field.name]) ||
+              form.touched[field.name] &&
+              !suppressError) ||
             errorMessage
           ) {
             statusIcon = statusIcon ? statusIcon : null;
