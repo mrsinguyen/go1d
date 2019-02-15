@@ -104,7 +104,7 @@ const View: React.SFC<ViewProps> = ({
   zIndex,
   boxShadow,
   textAlign = "inherit",
-  transition = "subtle",
+  transition,
   css,
   ...props
 }: ViewProps) => {

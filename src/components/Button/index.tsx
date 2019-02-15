@@ -62,6 +62,7 @@ const Button: React.SFC<ButtonProps> = ({
   type = "button",
   mode,
   active,
+  transition = "subtle",
   ...props
 }: ButtonProps) => {
   const {
@@ -88,25 +89,16 @@ const Button: React.SFC<ButtonProps> = ({
             paddingX={children && paddingX}
             backgroundColor={backgroundColor}
             borderRadius={round ? 8 : 2}
+            transition={transition}
             onClick={onClick}
             href={href}
             type={type}
             color={color}
             css={[
               {
-                cursor: "pointer",
                 "&:disabled": {
                   opacity: 0.5,
                   pointerEvents: "none",
-                },
-                svg: {
-                  color: iconColor ? colors[iconColor] : colors.subtle,
-                },
-                "&:hover, &:focus, &:active": {
-                  color: colors[color],
-                  svg: {
-                    color: iconColor ? colors[iconColor] : colors[color],
-                  },
                 },
               },
               css,
@@ -116,6 +108,7 @@ const Button: React.SFC<ButtonProps> = ({
             {iconName && (
               <Icon
                 name={iconName}
+                color={iconColor}
                 size={children ? typeScale : iconOnlyScale}
                 marginRight={children && iconMarginRight}
               />

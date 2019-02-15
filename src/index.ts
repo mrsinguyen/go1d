@@ -61,10 +61,7 @@ export {
   default as CourseSlat,
   CourseSlatProps,
 } from "./components/CourseSlat";
-export {
-  default as Slat,
-  SlatProps,
-} from "./components/Slat";
+export { default as Slat, SlatProps } from "./components/Slat";
 export { default as Banner, BannerProps } from "./components/Banner";
 export { default as Field, FieldProps } from "./components/Field";
 export { default as Form, FormProps } from "./components/Form";
@@ -160,3 +157,9 @@ export {
   default as ImageUploader,
   ImageUploaderProps,
 } from "./components/ImageUploader";
+export { default as InputGroup } from "./components/InputGroup";
+export { default as InputTextAffix } from "./components/InputTextAffix";
+export { default as SelectDropdown } from "./components/SelectDropdown";
+
+/* Utils */
+export { default as priceFormatterUtil } from "./utils/priceFormatter";

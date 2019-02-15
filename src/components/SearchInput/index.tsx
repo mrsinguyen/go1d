@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import safeInvoke from "../../utils/safeInvoke";
-import ButtonMinimal from "../ButtonMinimal";
+import Button from "../Button";
 import TextInput, { TextInputProps } from "../TextInput";
 
 export interface SearchInputProps extends TextInputProps {
@@ -117,22 +117,24 @@ class SearchInput extends React.Component<SearchInputProps, any> {
       defaultValue, // prevent it from being passed down to the child
       clearable = true,
       innerRef,
+      size,
       ...props
     } = this.props;
     return (
       <TextInput
         iconName="Search"
         value={this.state.value}
+        size={size}
         onChange={this.handleChange}
         onKeyDown={this.handleOnKeyDown}
         onBlur={this.handleBlur}
         aria-label="Search Field"
         innerRef={innerRef ? innerRef : this.ref}
         suffixNode={
-          <ButtonMinimal
+          <Button
             iconName="Close"
-            color="accent"
-            backgroundColor="transparent"
+            color="muted"
+            size={size}
             data-testid="clearButton"
             aria-label="Clear Icon"
             display={clearable && this.state.value ? "flex" : "none"}
