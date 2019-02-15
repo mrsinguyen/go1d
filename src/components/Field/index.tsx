@@ -135,6 +135,7 @@ const Field: React.SFC<FieldProps> = ({
                 statusText={hideStatus ? null : statusText}
                 statusColor={statusColor}
                 statusIcon={statusIcon}
+                css={{ whiteSpace: "pre-wrap" }}
               >
                 {label}
               </Label>
