@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import get = require("lodash/get");
-import Text from "../Text";
+import InputGroup from "../InputGroup";
 import TextInput, { TextInputProps } from "../TextInput";
 import View from "../View";
 
@@ -18,15 +18,14 @@ class InputSuffix extends React.Component<InputSuffixProps, any> {
     const { value, size = "md", suffixValue, ...props } = this.props;
 
     return (
-      <View flexDirection="row">
+      <InputGroup>
         <TextInput
           value={value}
           borderRadius={0}
           viewCss={{
-            borderTopLeftRadius: "4px",
-            borderBottomLeftRadius: "4px",
             borderRight: "0",
             flexGrow: 1,
+            flexShrink: 1,
           }}
           size={size}
           {...props}
@@ -40,16 +39,12 @@ class InputSuffix extends React.Component<InputSuffixProps, any> {
           borderColor="faded"
           marginRight={-1}
           css={{
-            borderTopRightRadius: "4px",
-            borderBottomRightRadius: "4px",
             fontWeight: 600,
           }}
         >
-          <View marginTop={1}>
-            <Text>{suffixValue}</Text>
-          </View>
+          <View marginTop={1}>{suffixValue}</View>
         </View>
-      </View>
+      </InputGroup>
     );
   }
 }

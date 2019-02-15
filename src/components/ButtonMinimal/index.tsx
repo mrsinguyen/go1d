@@ -15,14 +15,16 @@ const activeCss = (colors: Colors, color: string) =>
 const ButtonMinimal: React.SFC<ButtonMinimalProps> = ({
   color = "subtle",
   children,
-  active,
+  iconColor = children && color === "subtle" ? "muted" : color,
   css,
+  active,
   ...props
 }: ButtonMinimalProps) => (
   <Theme.Consumer>
     {({ colors }) => (
       <Button
         color={color}
+        iconColor={iconColor}
         css={[
           active ? { backgroundColor: activeCss(colors, color) } : {},
           {

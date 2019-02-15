@@ -1,4 +1,3 @@
-import get = require("lodash/get");
 import * as React from "react";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
@@ -32,6 +31,27 @@ export interface TextInputProps extends TextProps {
   viewCss?: any;
   borderColor?: string;
 }
+
+const sizeStyles = {
+  lg: {
+    height: 48,
+    paddingY: 3,
+    paddingX: 4,
+    typeScale: 3,
+  },
+  md: {
+    height: 40,
+    paddingY: 3,
+    paddingX: 3,
+    typeScale: 2,
+  },
+  sm: {
+    height: 32,
+    paddingY: 2,
+    paddingX: 3,
+    typeScale: 1,
+  },
+};
 
 class TextInput extends React.Component<TextInputProps, any> {
   public static displayName = "TextInput";
@@ -96,14 +116,16 @@ class TextInput extends React.Component<TextInputProps, any> {
       inputType,
       error, // do not pass
       borderColor, // do not pass
+      css,
       ...props
     } = this.props;
 
+    const { height, paddingY, paddingX, typeScale } = sizeStyles[size];
+
     return (
       <Theme.Consumer>
-        {({ spacing: s, colors }) => (
+        {({ colors }) => (
           <View
-            element="label"
             borderRadius={borderRadius}
             backgroundColor="background"
             border={1}
@@ -116,12 +138,15 @@ class TextInput extends React.Component<TextInputProps, any> {
             css={viewCss}
           >
             {iconName && (
-              <Icon
-                name={iconName}
-                marginLeft={4}
-                size={get({ lg: 3, md: 2, sm: 1 }, size)}
-                color="subtle"
-              />
+              <View
+                position="absolute"
+                height={height}
+                width={height}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Icon name={iconName} size={typeScale} color="subtle" />
+              </View>
             )}
             <Text
               id={id}
@@ -129,27 +154,31 @@ class TextInput extends React.Component<TextInputProps, any> {
               type={inputType}
               rows={multiline}
               lineHeight="ui"
-              fontSize={get({ lg: 4, md: 3, sm: 2 }, size)}
-              paddingX={4}
-              paddingY={get({ lg: 3, md: 3, sm: 2 }, size)}
+              fontSize={typeScale}
+              paddingX={paddingX}
+              paddingY={paddingY}
               color="inherit"
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
               disabled={disabled}
-              size="1"
               data-testid="inputElement"
               {...props}
-              css={{
-                // get rid of default styles
-                width: "100%",
-                background: 0,
-                border: 0,
-                flexGrow: 1,
-                "::placeholder": {
-                  color: colors.contrast,
-                  opacity: 0.5,
+              css={[
+                {
+                  // get rid of default styles
+                  width: "100%",
+                  minHeight: height,
+                  paddingLeft: iconName && height,
+                  background: 0,
+                  border: 0,
+                  flexGrow: 1,
+                  "::placeholder": {
+                    color: "inherit",
+                    opacity: 0.5,
+                  },
                 },
-              }}
+                css,
+              ]}
             />
             {suffixNode && (
               <View backgroundColor="transparent">{suffixNode}</View>

@@ -44,13 +44,19 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonMinimal>Minimal button</ButtonMinimal>
 ```
 
+### Minimal button subtle colour (Icon and label)
+
+```.jsx
+<ButtonMinimal iconName="Plus">Minimal button</ButtonMinimal>
+```
+
 ### Minimal button in accent colour (Icon only)
 
 ```.jsx
 <ButtonMinimal color='accent' iconName='Plus' />
 ```
 
-### Minimal button in danger colour (Icon and label)
+### Minimal button in accent colour (Icon and label)
 
 ```.jsx
 <ButtonMinimal color='accent' iconName='Plus'>Call to action</ButtonMinimal>
@@ -68,6 +74,13 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <SubmitButton>Create</SubmitButton>
 ```
 
+## Unstyled Buttons
+
+```.jsx
+<Button>Default</Button>
+<Button color="accent">Accent</Button>
+<Button color='danger'>Danger</Button>
+```
 
 ## Best practice
 
