@@ -1,6 +1,6 @@
 // tslint:disable:jsx-no-lambda
 import * as React from "react";
-import { cleanup, fireEvent, render } from "react-testing-library";
+import { cleanup, render } from "react-testing-library";
 import ButtonFilled from "../ButtonFilled";
 import View from "../View";
 import SelectDropdown from "./";

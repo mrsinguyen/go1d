@@ -105,12 +105,6 @@ const Slat: React.SFC<SlatProps> = ({
       icon = "Course";
   }
 
-  const topText = topMeta && topMeta
-    .map((meta, i) => {
-      return `${meta} ${i + 1 !== topMeta.length && "/"} `;
-    })
-    .join("");
-
   return (
     <Theme.Consumer>
       {({ breakpoints, colors, spacing }) => {
@@ -224,7 +218,7 @@ const Slat: React.SFC<SlatProps> = ({
                       fontSize={1}
                       maxWidth={dropdownItems && "90%"}
                     >
-                      {topText}
+                      {topMeta.join(" / ")}
                     </Text>
                   </View>
                 )}
