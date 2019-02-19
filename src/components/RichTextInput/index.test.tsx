@@ -30,6 +30,14 @@ const value: ValueJSON = {
                 ],
               },
               {
+                text: "underlined",
+                marks: [
+                  {
+                    type: "underline",
+                  },
+                ],
+              },
+              {
                 text: "striked",
                 marks: [
                   {
@@ -242,6 +250,12 @@ it("clicks bold", () => {
   const { getByTestId } = render(<RichTextInput />);
 
   fireEvent.click(getByTestId("markBold"));
+});
+
+it("clicks underline", () => {
+  const { getByTestId } = render(<RichTextInput />);
+
+  fireEvent.click(getByTestId("markUnderline"));
 });
 
 it("clicks link", () => {
