@@ -11,26 +11,31 @@ export interface Item extends ButtonMinimalProps {
   onClick?: ((evt: React.SyntheticEvent) => void);
 }
 
-const DropdownMenu = (item: Item, index: number, getItemProps) => (
-  <ButtonMinimal
-    key={index}
-    href={item.href}
-    {...getItemProps({
-      key: index,
-      item,
-      index,
-    })}
-    color={item.color || "default"}
-    justifyContent="flex-start"
-    paddingTop={3}
-    paddingRight={4}
-    paddingBottom={3}
-    paddingLeft={4}
-    borderRadius={0}
-    {...item}
-  >
-    <Text>{item.title}</Text>
-  </ButtonMinimal>
-);
+const DropdownMenu = (item: Item, index: number, getItemProps) => {
+  // destructuring so its not passed through
+  const { onClick, ...props } = item;
+
+  return (
+    <ButtonMinimal
+      key={index}
+      href={item.href}
+      {...getItemProps({
+        key: index,
+        item,
+        index,
+      })}
+      color={item.color || "default"}
+      justifyContent="flex-start"
+      paddingTop={3}
+      paddingRight={4}
+      paddingBottom={3}
+      paddingLeft={4}
+      borderRadius={0}
+      {...props}
+    >
+      <Text>{item.title}</Text>
+    </ButtonMinimal>
+  );
+};
 
 export default DropdownMenu;

@@ -197,6 +197,7 @@ class Modal extends React.Component<ModalProps, any> {
                   element="h1"
                   textAlign="center"
                   fontSize={3}
+                  paddingX={5}
                   css={{
                     wordWrap: "break-word",
                     maxWidth: onRequestClose

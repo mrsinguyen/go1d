@@ -1,4 +1,7 @@
+import { ControllerStateAndHelpers } from "downshift";
 import * as React from "react";
+import { autobind } from "../../utils/decorators";
+import safeInvoke from "../../utils/safeInvoke";
 import { ButtonProps } from "../Button";
 import ButtonFilled from "../ButtonFilled";
 import ButtonMinimal from "../ButtonMinimal";
@@ -30,6 +33,15 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
     this.state = { showMenu: false };
   }
 
+  @autobind
+  public onSelect(
+    selectedItem: any,
+    stateAndHelpers: ControllerStateAndHelpers<any>
+  ) {
+    safeInvoke(selectedItem.onClick, selectedItem);
+    safeInvoke(this.props.onSelect, selectedItem, stateAndHelpers);
+  }
+
   public render() {
     const {
       loading = false,
@@ -37,6 +49,7 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
       isButtonFilled,
       itemList,
       size,
+      onSelect,
       ...props
     } = this.props;
 
@@ -61,6 +74,7 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
             itemToString={itemToString}
             placement="bottom-end"
             offset={isButtonFilled && `0, ${spacing[2]}, 0, 0`}
+            onSelect={this.onSelect}
           >
             {({ ref, getToggleButtonProps }) =>
               isButtonFilled ? (

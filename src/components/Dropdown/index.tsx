@@ -55,9 +55,10 @@ const Dropdown: React.SFC<DropdownProps> = ({
   itemToString,
   placement,
   offset,
+  onSelect,
   ...props
 }: DropdownProps) => (
-  <Downshift itemToString={itemToString}>
+  <Downshift itemToString={itemToString} onSelect={onSelect}>
     {({
       getItemProps,
       getMenuProps,

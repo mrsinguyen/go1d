@@ -27,6 +27,7 @@ export default ({ item, index, getItemProps }: Props) => {
     iconName,
     css,
     hoverColor = "highlight",
+    onClick,
     ...itemProps
   } = item;
   return (
