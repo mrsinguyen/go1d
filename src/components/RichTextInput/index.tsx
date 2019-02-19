@@ -188,6 +188,8 @@ class RichTextInput extends React.Component<Props, State> {
         return <strong {...attributes}>{children}</strong>;
       case "italic":
         return <em {...attributes}>{children}</em>;
+      case "underline":
+        return <u {...attributes}>{children}</u>;
       case "strikethrough":
         return <s {...attributes}>{children}</s>;
       default:
