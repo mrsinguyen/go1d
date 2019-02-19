@@ -93,6 +93,14 @@ const FormatOptions: React.SFC<Props> = ({
           colors={colors}
         />
         <FormatButton
+          data-testid="markUnderline"
+          onClick={onClickMarked}
+          type="underline"
+          iconName="Underline"
+          active={markActive("underline")}
+          colors={colors}
+        />
+        <FormatButton
           data-testid="markStrikethrough"
           onClick={onClickMarked}
           type="strikethrough"
