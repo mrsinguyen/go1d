@@ -474,6 +474,8 @@ class Select extends React.Component<SelectProps, any> {
       defaultText = "Please Select",
       children,
       searchable,
+      clearable,
+      onClear,
       onKeyDown,
       onKeyUp,
       closeOnSelect,
@@ -544,7 +546,7 @@ class Select extends React.Component<SelectProps, any> {
                     justifyContent: "center",
                     paddingRight: 0,
                     pointerEvents:
-                      this.state.value && this.props.clearable
+                      this.state.value && clearable
                         ? "auto"
                         : "none",
                   }}
@@ -552,7 +554,7 @@ class Select extends React.Component<SelectProps, any> {
                   paddingX={3}
                   backgroundColor={backgroundColor}
                 >
-                  {this.state.value && this.props.clearable ? (
+                  {this.state.value && clearable ? (
                     <ButtonMinimal
                       iconName="Cross"
                       css={{
