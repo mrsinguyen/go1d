@@ -48,7 +48,7 @@
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.0",
     "react": "16.6.1",
-    "react-dates": "^18.2.2",
+    "react-dates": "^19.0.3",
     "react-docgen": "^2.21.0",
     "react-dom": "^16.7.0",
     "react-dropzone": "^8.0.4",
