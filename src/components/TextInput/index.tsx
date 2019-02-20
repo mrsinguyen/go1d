@@ -135,7 +135,10 @@ class TextInput extends React.Component<TextInputProps, any> {
             alignItems="center"
             htmlFor={id}
             opacity={disabled ? "disabled" : null}
-            css={viewCss}
+            css={{
+              position: "relative",
+              ...viewCss,
+            }}
           >
             {iconName && (
               <View
@@ -144,6 +147,10 @@ class TextInput extends React.Component<TextInputProps, any> {
                 width={height}
                 alignItems="center"
                 justifyContent="center"
+                css={{
+                  top: 0,
+                  left: 0,
+                }}
               >
                 <Icon name={iconName} size={typeScale} color="subtle" />
               </View>
