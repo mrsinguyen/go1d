@@ -1,8 +1,8 @@
 import { isEqual } from "lodash";
 import * as React from "react";
-import Dropzone from "react-dropzone";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
+import BaseUploader from "../BaseUploader";
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
 import Text from "../Text";
@@ -56,7 +56,7 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
     return null;
   }
 
-  constructor(props) {
+  constructor(props: ImageUploaderProps) {
     super(props);
     this.state = {};
   }
@@ -89,7 +89,7 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
   }
 
   @autobind
-  public onDrop(files: File[]) {
+  public onChange(files: File[]) {
     const { onChange, name } = this.props;
 
     if (files.length > 0) {
@@ -111,7 +111,6 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
   public render() {
     const { disabledClick } = this.state;
     const {
-      name,
       value,
       onChange,
       disabled,
@@ -129,14 +128,14 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
           position="relative"
           boxShadow="inner"
         >
-          <Dropzone
-            accept="image/*"
-            onDrop={this.onDrop}
-            disableClick={!!(disabled || value || disabledClick)}
+          <BaseUploader
+            fileType="image/*"
+            disabled={!!(disabled || value || disabledClick)}
             multiple={false}
             onBlur={this.props.onBlur}
+            onChange={this.onChange}
           >
-            {({ open, getRootProps, getInputProps, isDragActive }) => {
+            {({ open, getRootProps, isDragActive }) => {
               const { ref, ...rootProps } = getRootProps();
               return (
                 <Theme.Consumer>
@@ -156,13 +155,12 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
                       innerRef={ref}
                     >
                       {this.renderImage(open, isDragActive)}
-                      <input {...getInputProps()} name={name} />
                     </View>
                   )}
                 </Theme.Consumer>
               );
             }}
-          </Dropzone>
+          </BaseUploader>
         </View>
       </View>
     );
