@@ -160,6 +160,7 @@ export {
 export { default as InputGroup } from "./components/InputGroup";
 export { default as InputTextAffix } from "./components/InputTextAffix";
 export { default as SelectDropdown } from "./components/SelectDropdown";
+export { default as BaseUploader } from "./components/BaseUploader";
 
 /* Utils */
 export { default as priceFormatterUtil } from "./utils/priceFormatter";
