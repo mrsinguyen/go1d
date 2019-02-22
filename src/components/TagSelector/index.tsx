@@ -240,6 +240,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
                     round={true}
                     data-value={v}
                     onClick={this.removeItem}
+                    disabled={disabled}
                   />
                 </View>
               ))}
@@ -256,6 +257,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
                 onChange={this.inputChange}
                 borderColor="transparent"
                 boxShadow="none"
+                disabled={disabled}
                 viewCss={{
                   flexGrow: 1,
                   flexShrink: 1,

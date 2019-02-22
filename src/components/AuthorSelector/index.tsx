@@ -298,6 +298,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
                 placeholder="Type to select an Author"
                 value={this.state.search}
                 onChange={this.onInputChange}
+                disabled={disabled}
                 {...props}
               />
             </View>
