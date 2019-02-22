@@ -92,7 +92,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
       target: {
         value: [
           ...(this.props.value || this.state.value || []),
-          this.state.search,
+          this.state.search.toString(),
         ],
         name: this.props.name,
         id: this.props.id,
@@ -154,13 +154,16 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
     const formattedOptions = options
       .filter(
         option =>
-          !value.includes(option) &&
-          option.toLowerCase().includes(this.state.search.trim().toLowerCase())
+          !value.includes(option.toString()) &&
+          option
+            .toString()
+            .toLowerCase()
+            .includes(this.state.search.trim().toLowerCase())
       )
       .map(option => {
         return {
           label: option,
-          value: option,
+          value: option.toString(),
         };
       });
 
@@ -168,10 +171,12 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
       createable &&
       this.state.search &&
       !options.find(
-        v => v.toLowerCase() === this.state.search.trim().toLowerCase()
+        v =>
+          v.toString().toLowerCase() === this.state.search.trim().toLowerCase()
       ) &&
       !value.find(
-        v => v.toLowerCase() === this.state.search.trim().toLowerCase()
+        v =>
+          v.toString().toLowerCase() === this.state.search.trim().toLowerCase()
       );
 
     return (

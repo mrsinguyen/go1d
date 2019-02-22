@@ -284,7 +284,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
           selectedColor="highlight"
           disabled={disabled}
           isMulti={true}
-          renderCreateOption={this.renderCreate}
+          renderCreateOption={this.props.createable && this.renderCreate}
           searchTerm={this.state.search}
           container={this.inputRef}
         >
@@ -299,6 +299,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
                 value={this.state.search}
                 onChange={this.onInputChange}
                 disabled={disabled}
+                paddingX={4}
                 {...props}
               />
             </View>
