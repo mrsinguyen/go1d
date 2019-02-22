@@ -9,11 +9,7 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 
-enum enrollmentEnum {
-  enrolled = "enrolled",
-  in_progress = "in_progress",
-  completed = "completed",
-}
+type EnrollmentType = "enrolled" | "in_progress" | "completed";
 
 export interface CourseSlatProps extends ViewProps {
   actionRender?: () => React.ReactChild;
@@ -23,7 +19,7 @@ export interface CourseSlatProps extends ViewProps {
   courseImage?: string;
   currency?: string;
   description?: string;
-  enrollment?: enrollmentEnum;
+  enrollment?: EnrollmentType;
   duration?: number;
   passive?: boolean;
   price?: number;
@@ -237,25 +233,21 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                   <View flexDirection="row">
                     <Icon
                       name={
-                        enrollment === enrollmentEnum.enrolled
+                        enrollment === "enrolled"
                           ? "Enrolled"
-                          : enrollment === enrollmentEnum.in_progress
+                          : enrollment === "in_progress"
                             ? "InProgress"
                             : "Passed"
                       }
                       size={1}
-                      color={
-                        enrollment === enrollmentEnum.completed
-                          ? "success"
-                          : "accent"
-                      }
+                      color={enrollment === "completed" ? "success" : "accent"}
                       marginRight={2}
                       marginTop={1}
                     />
                     <Text color="default" fontSize={1} fontWeight="semibold">
-                      {enrollment === enrollmentEnum.enrolled
+                      {enrollment === "enrolled"
                         ? "Enrolled"
-                        : enrollment === enrollmentEnum.in_progress
+                        : enrollment === "in_progress"
                           ? "In progress"
                           : "Completed"}
                     </Text>
