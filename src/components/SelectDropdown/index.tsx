@@ -271,79 +271,80 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
                     })
                   }
                 </Reference>
-                {isOpen && (
-                  <Portal>
-                    <Popper placement={"bottom-start"}>
-                      {({ ref, style }) => (
-                        <View
-                          {...getMenuProps({
-                            refKey: "innerRef",
-                          })}
-                          overflow="hidden"
-                        >
+                {isOpen &&
+                  (createAvailable || options.length > 0) && (
+                    <Portal>
+                      <Popper placement={"bottom-start"}>
+                        {({ ref, style }) => (
                           <View
-                            backgroundColor="background"
-                            boxShadow="strong"
-                            borderRadius={3}
-                            maxHeight={350}
-                            innerRef={ref}
-                            transition="none"
-                            width={100}
-                            paddingY={3}
-                            marginTop={3}
-                            zIndex={dropdownZindex || "dropdown"}
-                            style={{
-                              ...style,
-                              width:
-                                container && container.current
-                                  ? container.current.offsetWidth
-                                  : "auto",
-                              overflowY: "auto",
-                            }}
+                            {...getMenuProps({
+                              refKey: "innerRef",
+                            })}
+                            overflow="hidden"
                           >
-                            <React.Fragment>
-                              {createAvailable &&
-                                this.renderCreateOption(
-                                  searchTerm.trim() || "create",
-                                  0,
-                                  {
-                                    ...getItemProps({
-                                      key: "create",
+                            <View
+                              backgroundColor="background"
+                              boxShadow="strong"
+                              borderRadius={3}
+                              maxHeight={350}
+                              innerRef={ref}
+                              transition="none"
+                              width={100}
+                              paddingY={3}
+                              marginTop={3}
+                              zIndex={dropdownZindex || "dropdown"}
+                              style={{
+                                ...style,
+                                width:
+                                  container && container.current
+                                    ? container.current.offsetWidth
+                                    : "auto",
+                                overflowY: "auto",
+                              }}
+                            >
+                              <React.Fragment>
+                                {createAvailable &&
+                                  this.renderCreateOption(
+                                    searchTerm.trim() || "create",
+                                    0,
+                                    {
+                                      ...getItemProps({
+                                        key: "create",
+                                        index: 0,
+                                        item: searchTerm.trim() || "create",
+                                      }),
+                                      highlightedIndex,
                                       index: 0,
-                                      item: searchTerm.trim() || "create",
+                                    }
+                                  )}
+                                {handleSearchChange &&
+                                  this.renderSearch({
+                                    ...getItemProps({
+                                      key: "search",
+                                      index: createAvailable ? 1 : 0,
+                                      item: searchTerm || "search",
+                                      disabled: true,
+                                    }),
+                                  })}
+
+                                {options.map((item: any, index: number) =>
+                                  this.optionRenderer(item, index, {
+                                    ...getItemProps({
+                                      key: index + firstSelectableOptionIndex,
+                                      item,
+                                      index: firstSelectableOptionIndex + index,
                                     }),
                                     highlightedIndex,
-                                    index: 0,
-                                  }
-                                )}
-                              {handleSearchChange &&
-                                this.renderSearch({
-                                  ...getItemProps({
-                                    key: "search",
-                                    index: createAvailable ? 1 : 0,
-                                    item: searchTerm || "search",
-                                    disabled: true,
-                                  }),
-                                })}
-
-                              {options.map((item: any, index: number) =>
-                                this.optionRenderer(item, index, {
-                                  ...getItemProps({
-                                    key: index + firstSelectableOptionIndex,
-                                    item,
                                     index: firstSelectableOptionIndex + index,
-                                  }),
-                                  highlightedIndex,
-                                  index: firstSelectableOptionIndex + index,
-                                })
-                              )}
-                            </React.Fragment>
+                                  })
+                                )}
+                              </React.Fragment>
+                            </View>
                           </View>
-                        </View>
-                      )}
-                    </Popper>
-                  </Portal>
-                )}
+                        )}
+                      </Popper>
+                    </Portal>
+                  )}
               </Manager>
             </View>
           </View>
