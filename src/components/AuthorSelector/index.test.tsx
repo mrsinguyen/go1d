@@ -28,26 +28,21 @@ it("handles change well", () => {
   const { current } = ref;
 
   if (current) {
-    const changeEvt = {
-      target: {
-        value: ["test@test.com"],
-      },
-    };
-    current.onChange(changeEvt);
+    current.onChange({ target: { value: ["test@test.com"] } });
 
     expect(current.state.value).toEqual(["test@test.com"]);
-    expect(fn).toBeCalledWith(changeEvt);
+    expect(fn).toBeCalledWith({ target: { value: ["test@test.com"] } });
   } else {
     fail("No ref could be set");
   }
 });
 
-it("handles inout change well", () => {
+it("handles input change well", () => {
   const ref: React.RefObject<AuthorSelector> = React.createRef();
   const fn = jest.fn();
   render(
     <AuthorSelector
-      options={[]}
+      options={["test"]}
       mapEmailToAuthor={email => ({
         firstName: "Hi",
         lastName: "Franc",
@@ -55,6 +50,7 @@ it("handles inout change well", () => {
       })}
       ref={ref}
       onInputChange={fn}
+      createable={true}
     />
   );
 
@@ -66,11 +62,15 @@ it("handles inout change well", () => {
       currentTarget: {
         value: "test@test.com",
       },
+      target: {
+        value: "test@test.com",
+      },
     };
     current.onInputChange(changeEvt as any);
 
     expect(current.state.search).toEqual("test@test.com");
     expect(fn).toBeCalledWith(changeEvt);
+    current.renderCreate();
   } else {
     fail("No ref could be set");
   }
@@ -96,8 +96,165 @@ it("renders options", () => {
 
   if (current) {
     current.handleFocus({} as any);
-    current.renderOption("test", {}, true);
+    current.renderOption({ value: "1", label: "1" });
+    current.handleBlur({} as any);
   } else {
     fail("No ref could be set");
   }
+});
+
+it("selects options", () => {
+  const ref: React.RefObject<AuthorSelector> = React.createRef();
+  const fn = jest.fn();
+  render(
+    <AuthorSelector
+      options={["test@test.test"]}
+      mapEmailToAuthor={email => ({
+        firstName: "Hi",
+        lastName: "Franc",
+        mail: email,
+      })}
+      name="test"
+      ref={ref}
+      onChange={fn}
+    />
+  );
+
+  const { current } = ref;
+
+  current!.selectValue({
+    currentTarget: { value: "test@test.test" },
+    target: { value: "test@test.test" },
+  } as any);
+  expect(fn).toBeCalledWith({
+    target: {
+      name: "test",
+      value: ["test@test.test"],
+    },
+  });
+});
+
+it("Deletes well", () => {
+  const ref: React.RefObject<AuthorSelector> = React.createRef();
+  const fn = jest.fn();
+  render(
+    <AuthorSelector
+      options={[]}
+      value={["TEST@TEST.test", "test@test.test", "test2@test.test"]}
+      mapEmailToAuthor={email => ({
+        firstName: "Hi",
+        lastName: "Franc",
+        mail: email,
+      })}
+      name="test"
+      ref={ref}
+      onChange={fn}
+    />
+  );
+
+  const { current } = ref;
+
+  current!.handleDelete({
+    currentTarget: { dataset: { value: "test@test.test" } },
+    target: { value: "test@test.test" },
+  } as any);
+  expect(fn).toBeCalledWith({
+    target: {
+      name: "test",
+      value: ["TEST@TEST.test", "test2@test.test"],
+    },
+  });
+});
+
+it("Creates well with no promise", () => {
+  const ref: React.RefObject<AuthorSelector> = React.createRef();
+  const fn = jest.fn();
+  render(
+    <AuthorSelector
+      options={[]}
+      value={["TEST@TEST.test", "test2@test.test"]}
+      mapEmailToAuthor={email => ({
+        firstName: "Hi",
+        lastName: "Franc",
+        mail: email,
+      })}
+      name="test"
+      ref={ref}
+      onChange={fn}
+    />
+  );
+
+  const { current } = ref;
+
+  current!.createNewValue({
+    currentTarget: { value: "test@test.test" },
+    target: { value: "test@test.test" },
+  } as any);
+  expect(fn).toBeCalledWith({
+    target: {
+      name: "test",
+      value: ["TEST@TEST.test", "test2@test.test", "test@test.test"],
+    },
+  });
+});
+
+it("Creates well with a promise", async () => {
+  const ref: React.RefObject<AuthorSelector> = React.createRef();
+  const fn = jest.fn();
+  render(
+    <AuthorSelector
+      options={[]}
+      value={["TEST@TEST.test", "test2@test.test"]}
+      mapEmailToAuthor={email => ({
+        firstName: "Hi",
+        lastName: "Franc",
+        mail: email,
+      })}
+      onCreate={jest.fn(() => new Promise(res => res("hifranc@test.com")))}
+      name="test"
+      ref={ref}
+      onChange={fn}
+    />
+  );
+
+  const { current } = ref;
+
+  await current!.createNewValue({
+    currentTarget: { value: "test@test.test" },
+    target: { value: "test@test.test" },
+  } as any);
+  expect(fn).toBeCalledWith({
+    target: {
+      name: "test",
+      value: ["TEST@TEST.test", "test2@test.test", "hifranc@test.com"],
+    },
+  });
+});
+
+it("Creates well with a rejected promise", async () => {
+  const ref: React.RefObject<AuthorSelector> = React.createRef();
+  const fn = jest.fn();
+  render(
+    <AuthorSelector
+      options={[]}
+      value={["TEST@TEST.test", "test2@test.test"]}
+      mapEmailToAuthor={email => ({
+        firstName: "Hi",
+        lastName: "Franc",
+        mail: email,
+      })}
+      onCreate={jest.fn(() => new Promise((res, rej) => rej(true)))}
+      name="test"
+      ref={ref}
+      onChange={fn}
+    />
+  );
+
+  const { current } = ref;
+
+  await current!.createNewValue({
+    currentTarget: { value: "test@test.test" },
+    target: { value: "test@test.test" },
+  } as any);
+  expect(fn).toBeCalledTimes(0);
 });

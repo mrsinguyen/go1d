@@ -92,6 +92,7 @@ it("handles single select changes well", () => {
     expect(fn).toBeCalledWith({
       target: { name: "select", value: "test1" },
     });
+    ref.current.handleClickOuter();
   } else {
     fail("ref could not be set");
   }
@@ -110,7 +111,7 @@ it("handles multi select changes well", () => {
         { value: "test1", label: "Test1" },
         { value: "test2", label: "Test2" },
       ]}
-      value={["test0"]}
+      value={"test0"}
       handleSearchChange={fn}
       searchTerm="Test"
       onChange={fn}
@@ -130,6 +131,126 @@ it("handles multi select changes well", () => {
     ref.current.handleOptionClick({ value: "test2", label: "test2" });
     expect(fn).toBeCalledWith({
       target: { name: "select", value: ["test0", "test2"] },
+    });
+  } else {
+    fail("ref could not be set");
+  }
+});
+
+it("handles multi select deletions well", () => {
+  const ref: React.RefObject<SelectDropdown> = React.createRef();
+  const fn = jest.fn();
+
+  render(
+    <SelectDropdown
+      ref={ref}
+      optionRenderer={option => <View>{option.label}</View>}
+      options={[
+        { value: "test0", label: "Test0" },
+        { value: "test1", label: "Test1" },
+        { value: "test2", label: "Test2" },
+      ]}
+      value={"test0"}
+      handleSearchChange={fn}
+      searchTerm="Test"
+      onChange={fn}
+      closeOnSelection={true}
+      isMulti={true}
+      name="select"
+    >
+      {({ ref: buttonRef, getToggleButtonProps }) => (
+        <ButtonFilled ref={buttonRef} {...getToggleButtonProps}>
+          Click me
+        </ButtonFilled>
+      )}
+    </SelectDropdown>
+  );
+
+  if (ref.current) {
+    ref.current.handleOptionClick({ value: "test0", label: "test2" });
+    expect(fn).toBeCalledWith({
+      target: { name: "select", value: [] },
+    });
+  } else {
+    fail("ref could not be set");
+  }
+});
+
+it("handles multi select creations well", () => {
+  const ref: React.RefObject<SelectDropdown> = React.createRef();
+  const fn = jest.fn();
+
+  render(
+    <SelectDropdown
+      ref={ref}
+      optionRenderer={option => <View>{option.label}</View>}
+      options={[
+        { value: "test0", label: "Test0" },
+        { value: "test1", label: "Test1" },
+        { value: "test2", label: "Test2" },
+      ]}
+      value={"test0"}
+      searchTerm="Test"
+      onCreate={fn}
+      closeOnSelection={true}
+      isMulti={true}
+      name="select"
+    >
+      {({ ref: buttonRef, getToggleButtonProps }) => (
+        <ButtonFilled ref={buttonRef} {...getToggleButtonProps}>
+          Click me
+        </ButtonFilled>
+      )}
+    </SelectDropdown>
+  );
+
+  if (ref.current) {
+    ref.current.handleOptionClick("test1");
+    expect(fn).toBeCalledWith({
+      target: { name: "select", value: "test1", id: undefined },
+      currentTarget: { name: "select", value: "test1", id: undefined },
+    });
+  } else {
+    fail("ref could not be set");
+  }
+});
+
+it("handles search change well", () => {
+  const ref: React.RefObject<SelectDropdown> = React.createRef();
+  const fn = jest.fn();
+
+  render(
+    <SelectDropdown
+      ref={ref}
+      optionRenderer={option => <View>{option.label}</View>}
+      options={[
+        { value: "test0", label: "Test0" },
+        { value: "test1", label: "Test1" },
+        { value: "test2", label: "Test2" },
+      ]}
+      value={"test0"}
+      handleSearchChange={fn}
+      searchTerm="Test"
+      closeOnSelection={true}
+      isMulti={true}
+      name="select"
+    >
+      {({ ref: buttonRef, getToggleButtonProps }) => (
+        <ButtonFilled ref={buttonRef} {...getToggleButtonProps}>
+          Click me
+        </ButtonFilled>
+      )}
+    </SelectDropdown>
+  );
+
+  if (ref.current) {
+    ref.current.handleSearchChange({
+      target: { name: "select", value: "test1", id: undefined },
+      currentTarget: { name: "select", value: "test1", id: undefined },
+    } as any);
+    expect(fn).toBeCalledWith("test1", {
+      target: { name: "select", value: "test1", id: undefined },
+      currentTarget: { name: "select", value: "test1", id: undefined },
     });
   } else {
     fail("ref could not be set");

@@ -546,9 +546,7 @@ class Select extends React.Component<SelectProps, any> {
                     justifyContent: "center",
                     paddingRight: 0,
                     pointerEvents:
-                      this.state.value && clearable
-                        ? "auto"
-                        : "none",
+                      this.state.value && clearable ? "auto" : "none",
                   }}
                   height="calc(100% - 3px)"
                   paddingX={3}
