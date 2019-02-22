@@ -132,9 +132,9 @@ export {
 } from "./components/EditFocusModeHeader";
 
 export {
-  BaseMultiselectProps,
-  default as BaseMultiselect,
-} from "./components/BaseMultiselect";
+  SelectDropdownProps,
+  default as SelectDropdown,
+} from "./components/SelectDropdown";
 
 export {
   default as TagSelector,
@@ -159,7 +159,6 @@ export {
 } from "./components/ImageUploader";
 export { default as InputGroup } from "./components/InputGroup";
 export { default as InputTextAffix } from "./components/InputTextAffix";
-export { default as SelectDropdown } from "./components/SelectDropdown";
 export { default as BaseUploader } from "./components/BaseUploader";
 
 /* Utils */

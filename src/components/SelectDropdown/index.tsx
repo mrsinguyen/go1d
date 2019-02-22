@@ -2,6 +2,7 @@ import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
+import { ZIndex } from "../../foundations/foundation-types";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import ButtonMinimal from "../ButtonMinimal";
@@ -60,6 +61,8 @@ export interface SelectDropdownProps extends ViewProps {
 
   selectedColor?: string;
   name?: string;
+  container?: React.RefObject<any>;
+  dropdownZindex?: ZIndex | number | "";
 }
 
 interface State {
@@ -109,7 +112,19 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
   }
 
   @autobind
-  public handleOptionClick(option: SelectDropdownItem) {
+  public handleOptionClick(option: SelectDropdownItem | string) {
+    if (typeof option === "string") {
+      this.create({
+        target: { value: option, name: this.props.name, id: this.props.id },
+        currentTarget: {
+          value: option,
+          name: this.props.name,
+          id: this.props.id,
+        },
+      } as any);
+
+      return;
+    }
     this.setState({
       forceClose: this.props.closeOnSelection,
     });
@@ -123,6 +138,14 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
     safeInvoke(this.props.onChange, {
       target: { name: this.props.name, value: returnValue },
     });
+  }
+
+  @autobind
+  public create(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    this.setState({
+      forceClose: this.props.closeOnSelection,
+    });
+    safeInvoke(this.props.onCreate, evt);
   }
 
   @autobind
@@ -176,6 +199,7 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
 
   @autobind
   public renderCreateOption(item: string, index: number, getItemProps: any) {
+    const { selectedColor = "faint" } = this.props;
     return (
       <ButtonMinimal
         width="100%"
@@ -183,13 +207,12 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
         minHeight="40px"
         backgroundColor={
           getItemProps.highlightedIndex === getItemProps.index
-            ? this.props.selectedColor
+            ? selectedColor
             : undefined
         }
         data-value={item}
         justifyContent="flex-start"
         {...getItemProps}
-        onClick={this.props.onCreate}
       >
         {this.props.renderCreateOption()}
       </ButtonMinimal>
@@ -203,6 +226,9 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
       handleSearchChange,
       searchTerm,
       renderCreateOption,
+      isOpen: dropdownOpen,
+      container,
+      dropdownZindex,
     } = this.props;
 
     const itemToString = (item: any) => item;
@@ -213,6 +239,11 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
 
     return (
       <Downshift
+        isOpen={
+          dropdownOpen !== undefined
+            ? dropdownOpen && !!(options.length || createAvailable)
+            : undefined
+        }
         defaultHighlightedIndex={0}
         itemToString={itemToString}
         onOuterClick={this.handleClickOuter}
@@ -260,23 +291,31 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
                             width={100}
                             paddingY={3}
                             marginTop={3}
+                            zIndex={dropdownZindex || "dropdown"}
                             style={{
                               ...style,
-                              width: "auto",
-                              overflowY: "scroll",
+                              width:
+                                container && container.current
+                                  ? container.current.offsetWidth
+                                  : "auto",
+                              overflowY: "auto",
                             }}
                           >
                             <React.Fragment>
                               {createAvailable &&
-                                this.renderCreateOption("create", 0, {
-                                  ...getItemProps({
-                                    key: "create",
+                                this.renderCreateOption(
+                                  searchTerm.trim() || "create",
+                                  0,
+                                  {
+                                    ...getItemProps({
+                                      key: "create",
+                                      index: 0,
+                                      item: searchTerm.trim() || "create",
+                                    }),
+                                    highlightedIndex,
                                     index: 0,
-                                    item: searchTerm.trim() || "create",
-                                  }),
-                                  highlightedIndex,
-                                  index: 0,
-                                })}
+                                  }
+                                )}
                               {handleSearchChange &&
                                 this.renderSearch({
                                   ...getItemProps({
@@ -290,7 +329,7 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
                               {options.map((item: any, index: number) =>
                                 this.optionRenderer(item, index, {
                                   ...getItemProps({
-                                    key: index,
+                                    key: index + firstSelectableOptionIndex,
                                     item,
                                     index: firstSelectableOptionIndex + index,
                                   }),

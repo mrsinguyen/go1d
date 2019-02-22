@@ -1,19 +1,16 @@
 import * as React from "react";
+import { TextInput } from "../..";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
 import Avatar from "../Avatar";
-import BaseMultiselect from "../BaseMultiselect";
 import ButtonMinimal from "../ButtonMinimal";
 import Icon from "../Icon";
+import SelectDropdown, { SelectDropdownItem } from "../SelectDropdown";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
 
 export interface AuthorSelectorProps extends ViewProps {
-  optionRenderer?: (
-    option: string,
-    downshiftProps: { [key: string]: any },
-    creating?: boolean
-  ) => React.ReactNode;
+  optionRenderer?: (item: SelectDropdownItem) => React.ReactNode;
 
   /**
    * The selected elements of the component. These will be the email addresses of the users.
@@ -29,7 +26,7 @@ export interface AuthorSelectorProps extends ViewProps {
    * Function to map an email address to it's corresponding user.
    */
   mapEmailToAuthor: (
-    email: string
+    author: string
   ) => {
     firstName: string;
     lastName: string;
@@ -40,7 +37,7 @@ export interface AuthorSelectorProps extends ViewProps {
 
   onInputChange?: (evt: React.SyntheticEvent<HTMLInputElement>) => void;
 
-  onChange?: (evt: any) => void;
+  onChange?: (value: string | string[]) => void;
 
   /**
    * Optional function to call when a new option is created. Returns a promise to allow for asynchronous actions to finish before continuing
@@ -67,13 +64,16 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
     isFocused: false,
     search: "",
   };
-  private target: React.RefObject<BaseMultiselect> = React.createRef();
+  private inputRef: React.RefObject<any> = React.createRef();
 
   @autobind
-  public onChange(evt) {
+  public onChange(evt: { target: { value } }) {
     this.setState({
       value: evt.target.value,
+      search: "",
     });
+
+    this.inputRef.current.blur();
 
     safeInvoke(this.props.onChange, evt);
   }
@@ -87,49 +87,6 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
   }
 
   @autobind
-  public getBorderColor() {
-    const { isFocused } = this.state;
-    const { error, borderColor } = this.props;
-
-    if (error) {
-      return "danger";
-    }
-    if (isFocused) {
-      return "accent";
-    }
-
-    return borderColor ? borderColor : "soft";
-  }
-
-  @autobind
-  public renderSelect(Select: React.ReactNode, labelProps: any) {
-    const { borderRadius = 2, id, disabled } = this.props;
-
-    return (
-      <View
-        element="label"
-        position="relative"
-        flexDirection="row"
-        flexWrap="wrap"
-        borderRadius={borderRadius}
-        backgroundColor="background"
-        paddingX={4}
-        minHeight={45}
-        paddingY={2}
-        border={1}
-        borderColor={this.getBorderColor()}
-        boxShadow="inner"
-        alignItems="center"
-        htmlFor={id}
-        opacity={disabled ? "disabled" : null}
-        {...labelProps}
-      >
-        {Select}
-      </View>
-    );
-  }
-
-  @autobind
   public handleFocus(evt: React.SyntheticEvent<HTMLInputElement>) {
     this.setState({ isFocused: true });
   }
@@ -140,34 +97,106 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
   }
 
   @autobind
-  public renderOption(option: string, downshiftProps, creating = false) {
-    const author = creating ? null : this.props.mapEmailToAuthor(option);
+  public createNewValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    const promise = safeInvoke(this.props.onCreate, evt.currentTarget.value);
+
+    const value = evt.currentTarget.value;
+
+    if (promise) {
+      promise.then(
+        (ret?: any) => {
+          this.onChange({
+            target: {
+              name: this.props.name,
+              value: [...(this.props.value || this.state.value), ret || value],
+            },
+          } as any);
+        },
+        (rej?: any) => {
+          if (rej === true) {
+            this.setState({
+              search: "",
+            });
+          }
+        }
+      );
+    } else {
+      this.onChange({
+        target: {
+          name: this.props.name,
+          value: [...(this.props.value || this.state.value), value],
+        },
+      } as any);
+    }
+  }
+
+  @autobind
+  public selectValue(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    const value = this.props.value || this.state.value;
+
+    this.setState({
+      value: [...value, evt.currentTarget.value.trim()],
+      search: "",
+    });
+
+    safeInvoke(this.props.onChange, {
+      target: {
+        name: this.props.name,
+        value: [...value, evt.currentTarget.value.trim()],
+      },
+    });
+  }
+
+  @autobind
+  public renderOption(item: SelectDropdownItem) {
+    const author = this.props.mapEmailToAuthor(String(item.value));
+
     return (
       <View flexDirection="row">
-        {creating ? (
-          <View flexDirection="row" width={31}>
-            <Icon name="PlusCircle" marginX="auto" size={3} />
-          </View>
-        ) : (
-          <Avatar
-            marginY="auto"
-            fullName={
-              author ? `${author.firstName} ${author.lastName}` : option
-            }
-            avatarType="circle"
-            src={author && author.avatar}
-            size={3}
-            color="background"
-            backgroundColor="muted"
-          />
-        )}
+        <Avatar
+          marginY="auto"
+          fullName={author ? `${author.label}` : "Full Name"}
+          avatarType="circle"
+          src={author && author.avatar}
+          size={3}
+          color="background"
+          backgroundColor="muted"
+        />
+
         <View marginLeft={4}>
-          <Text>
-            {creating
-              ? `Create "${option}"`
-              : author && `${author.firstName} ${author.lastName}`}
-          </Text>
+          <Text>{author && `${author.firstName} ${author.lastName}`}</Text>
           <Text fontSize={1}>{author && author.mail}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  @autobind
+  public handleDelete(evt: React.SyntheticEvent<HTMLButtonElement>) {
+    const value = this.props.value || this.state.value;
+    const valueToDelete = evt.currentTarget.dataset.value;
+
+    const newValue = value.filter(v => v !== valueToDelete);
+
+    this.setState({ value: newValue });
+
+    safeInvoke(this.props.onChange, {
+      target: {
+        name: this.props.name,
+        value: newValue,
+      },
+    });
+  }
+
+  @autobind
+  public renderCreate() {
+    return (
+      <View flexDirection="row">
+        <View flexDirection="row" width={31}>
+          <Icon name="PlusCircle" marginX="auto" size={3} />
+        </View>
+        <View marginLeft={4}>
+          <Text>{`Create "${this.state.search}"`}</Text>
         </View>
       </View>
     );
@@ -175,7 +204,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
 
   public render() {
     const {
-      value = this.state.value || [],
+      value = this.props.value || this.state.value || [],
       optionRenderer = this.renderOption,
       options = [],
       onInputChange,
@@ -187,13 +216,27 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
       ...props
     } = this.props;
 
+    const formattedOptions = options
+      .filter(
+        option =>
+          !value.includes(option) &&
+          option.includes(this.state.search.trim().toLowerCase())
+      )
+      .map(option => {
+        const author = mapEmailToAuthor(option);
+        return {
+          label: `${author.firstName} ${author.lastName}`,
+          value: author.mail,
+        };
+      });
+
     return (
       <React.Fragment>
         <View marginY={2}>
           {value.map(v => {
             const author = mapEmailToAuthor(v);
             return (
-              <View flexDirection="row" key={v} marginBottom={4}>
+              <View flexDirection="row" key={author.value} marginBottom={4}>
                 <Avatar
                   fullName={`${author.firstName} ${author.lastName}`}
                   avatarType="circle"
@@ -220,32 +263,46 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
                   paddingY={0}
                   round={true}
                   data-value={v}
-                  onClick={
-                    this.target.current
-                      ? this.target.current.handleDelete
-                      : null
-                  }
+                  onClick={this.handleDelete}
                 />
               </View>
             );
           })}
         </View>
-        <BaseMultiselect
+        <SelectDropdown
           {...props}
           onInputChange={this.onInputChange}
-          ref={this.target}
-          customRenderer={this.renderSelect}
           value={value}
           placeholder="Type to select an Author"
-          options={options}
+          options={formattedOptions}
           onChange={this.onChange}
+          onCreate={this.createNewValue}
           optionRenderer={optionRenderer}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           closeOnSelection={true}
           selectedColor="highlight"
           disabled={disabled}
-        />
+          isMulti={true}
+          renderCreateOption={this.renderCreate}
+          searchTerm={this.state.search}
+          container={this.inputRef}
+        >
+          {({ ref, openMenu, getInputProps }) => (
+            <View innerRef={ref}>
+              <TextInput
+                {...getInputProps({
+                  onFocus: openMenu,
+                })}
+                innerRef={this.inputRef}
+                placeholder="Type to select an Author"
+                value={this.state.search}
+                onChange={this.onInputChange}
+                {...props}
+              />
+            </View>
+          )}
+        </SelectDropdown>
       </React.Fragment>
     );
   }
