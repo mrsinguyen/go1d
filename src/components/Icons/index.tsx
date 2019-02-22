@@ -36,6 +36,7 @@ export { default as Drag } from "./Drag";
 export { default as Edit } from "./Edit";
 export { default as Ellipsis } from "./Ellipsis";
 export { default as Empty } from "./Empty";
+export { default as Enrolled } from "./Enrolled";
 export { default as Envelope } from "./Envelope";
 export { default as Expand } from "./Expand";
 export { default as Export } from "./Export";
