@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cleanup, render } from "react-testing-library";
-import CourseSlat from "./index";
+import CourseSlat, { dueDateFormatter } from "./index";
 
 afterEach(cleanup);
 
@@ -20,7 +20,7 @@ it("renders without crashing with all props", () => {
       duration={4}
       actionRender={testRenderer}
       contentRender={testRenderer}
-      enrollment="completed"
+      enrollment={{ status: "completed", dueDate: "" }}
       type="Course"
       typeIcon="Course"
       passive={false}
@@ -37,7 +37,7 @@ it("renders passive course slats", () => {
       description="Despite general improvements in workplace health and safety"
       author="Bob Bobberson"
       authorAvatar="#"
-      enrollment="in_progress"
+      enrollment={{ status: "in_progress", dueDate: "" }}
       duration={4}
       actionRender={testRenderer}
       contentRender={testRenderer}
@@ -66,4 +66,51 @@ it("should render author as passed component", () => {
       passive={true}
     />
   );
+});
+
+it("renders due text correctly", () => {
+  let date = new Date();
+  date.setHours(0, 0, 0);
+  let dueDateFormat = dueDateFormatter(date.toISOString());
+  expect(dueDateFormat.overDue).toBe(true);
+  expect(dueDateFormat.dueDateText).toBe("Due today");
+  date.setDate(date.getDate() - 1);
+  dueDateFormat = dueDateFormatter(date.toISOString());
+  expect(dueDateFormat.overDue).toBe(true);
+  expect(dueDateFormat.dueDateText).toBe("Due yesterday");
+  date = new Date();
+  date.setHours(0, 0, 0);
+  date.setDate(date.getDate() - 2);
+  dueDateFormat = dueDateFormatter(date.toISOString());
+  expect(dueDateFormat.overDue).toBe(true);
+  expect(dueDateFormat.dueDateText).toBe("Due 2 days ago");
+  date = new Date();
+  date.setHours(0, 0, 0);
+  date.setDate(date.getDate() + 1);
+  dueDateFormat = dueDateFormatter(date.toISOString());
+  expect(dueDateFormat.overDue).toBe(false);
+  expect(dueDateFormat.dueDateText).toBe("Due tomorrow");
+  date = new Date();
+  date.setHours(0, 0, 0);
+  date.setDate(date.getDate() + 2);
+  dueDateFormat = dueDateFormatter(date.toISOString());
+  expect(dueDateFormat.overDue).toBe(false);
+  expect(dueDateFormat.dueDateText).toBe("Due in 2 days");
+  date = new Date();
+  date.setHours(0, 0, 0);
+  date.setDate(date.getDate() + 20);
+  dueDateFormat = dueDateFormatter(date.toISOString());
+  expect(dueDateFormat.overDue).toBe(false);
+  const dateString = `${date.toLocaleDateString(
+    window
+      ? (window.navigator as any).userLanguage || window.navigator.language
+      : "en-us",
+    {
+      day: "numeric",
+      month: "short",
+    }
+  )} ${
+    new Date().getFullYear() !== date.getFullYear() ? date.getFullYear() : ""
+  }`;
+  expect(dueDateFormat.dueDateText).toBe("Due " + dateString);
 });
