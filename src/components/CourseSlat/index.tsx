@@ -9,10 +9,9 @@ import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 
-enum enrollmentEnum {
-  enrolled = "enrolled",
-  in_progress = "in_progress",
-  completed = "completed",
+interface EnrollmentProps {
+  status?: string;
+  dueDate?: string;
 }
 
 export interface CourseSlatProps extends ViewProps {
@@ -23,7 +22,7 @@ export interface CourseSlatProps extends ViewProps {
   courseImage?: string;
   currency?: string;
   description?: string;
-  enrollment?: enrollmentEnum;
+  enrollment?: EnrollmentProps;
   duration?: number;
   passive?: boolean;
   price?: number;
@@ -46,6 +45,84 @@ const interactiveStyle = (colors, passive) => {
     };
   }
   return styles;
+};
+
+export function dueDateFormatter(dueDateStr: string) {
+  let overDue = false;
+  let readingDay = "";
+  if (dueDateStr && !isNaN(Date.parse(dueDateStr))) {
+    const dueDate = new Date(dueDateStr);
+    const diff = dueDate.getTime() - new Date().getTime();
+    if (diff < 0) {
+      overDue = true;
+    }
+    let diffDays = Math.abs(diff) / 1000 / 3600 / 24;
+    diffDays = overDue ? Math.floor(diffDays) : Math.ceil(diffDays);
+    if (diffDays === 0) {
+      readingDay = "today";
+    } else if (diffDays === 1) {
+      readingDay = overDue ? "yesterday" : "tomorrow";
+    } else if (diffDays > 13) {
+      readingDay = `${dueDate.toLocaleDateString(
+        window
+          ? (window.navigator as any).userLanguage || window.navigator.language
+          : "en-us",
+        {
+          day: "numeric",
+          month: "short",
+        }
+      )} ${
+        new Date().getFullYear() !== dueDate.getFullYear()
+          ? dueDate.getFullYear()
+          : ""
+      }`;
+    } else {
+      readingDay = `${overDue ? "" : "in "}${diffDays} days${
+        overDue ? " ago" : ""
+      }`;
+    }
+    readingDay = `Due ${readingDay}`;
+  }
+  return { dueDateText: readingDay, overDue };
+}
+
+const enrollmentProgressRenderer = (enrolment: EnrollmentProps) => {
+  const { status, dueDate } = enrolment;
+  const { overDue, dueDateText } = dueDateFormatter(dueDate);
+  return (
+    <View flexDirection="row">
+      <Icon
+        name={
+          status === "enrolled"
+            ? "Enrolled"
+            : status === "in_progress"
+              ? "InProgress"
+              : "Passed"
+        }
+        size={1}
+        color={
+          status === "completed" ? "success" : overDue ? "danger" : "accent"
+        }
+        marginRight={2}
+        marginTop={1}
+      />
+      <Text
+        color={overDue ? "danger" : "default"}
+        fontSize={1}
+        fontWeight="semibold"
+      >
+        {status === "enrolled"
+          ? "Enrolled"
+          : status === "in_progress"
+            ? dueDateText
+              ? dueDateText
+              : "In progress"
+            : status === "completed"
+              ? "Completed"
+              : ""}
+      </Text>
+    </View>
+  );
 };
 
 const CourseSlat: React.SFC<CourseSlatProps> = ({
@@ -233,34 +310,7 @@ const CourseSlat: React.SFC<CourseSlatProps> = ({
                       </Text>
                     </View>
                   )}
-                {enrollment && (
-                  <View flexDirection="row">
-                    <Icon
-                      name={
-                        enrollment === enrollmentEnum.enrolled
-                          ? "Enrolled"
-                          : enrollment === enrollmentEnum.in_progress
-                            ? "InProgress"
-                            : "Passed"
-                      }
-                      size={1}
-                      color={
-                        enrollment === enrollmentEnum.completed
-                          ? "success"
-                          : "accent"
-                      }
-                      marginRight={2}
-                      marginTop={1}
-                    />
-                    <Text color="default" fontSize={1} fontWeight="semibold">
-                      {enrollment === enrollmentEnum.enrolled
-                        ? "Enrolled"
-                        : enrollment === enrollmentEnum.in_progress
-                          ? "In progress"
-                          : "Completed"}
-                    </Text>
-                  </View>
-                )}
+                {enrollment && enrollmentProgressRenderer(enrollment)}
                 {contentRender && contentRender()}
                 {description && (
                   <Text
