@@ -3,6 +3,7 @@ import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
 import Link from "../Link";
 import Provider from "../Provider";
+import Spinner from "../Spinner";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
@@ -105,14 +106,21 @@ const Button: React.SFC<ButtonProps> = ({
             ]}
             {...props}
           >
-            {iconName && (
-              <Icon
-                name={iconName}
-                color={iconColor}
-                size={children ? typeScale : iconOnlyScale}
-                marginRight={children && iconMarginRight}
-              />
-            )}
+            {iconName &&
+              (iconName === "Spinner" ? (
+                <Spinner
+                  borderColor={iconColor}
+                  size={children ? typeScale : iconOnlyScale}
+                  marginRight={children && iconMarginRight}
+                />
+              ) : (
+                <Icon
+                  name={iconName}
+                  color={iconColor}
+                  size={children ? typeScale : iconOnlyScale}
+                  marginRight={children && iconMarginRight}
+                />
+              ))}
             <Text
               lineHeight="ui"
               fontWeight={fontWeight}
