@@ -286,6 +286,7 @@ class Carousel extends React.Component<CarouselProps, any> {
             onClick={this.scrollToIndex(
               this.state.currentSlide - clickScrollAmount
             )}
+            aria-label="Navigate Carousel Left"
             data-testid="leftNavigationButton"
             iconName="ChevronLeft"
             position="absolute"
@@ -304,6 +305,7 @@ class Carousel extends React.Component<CarouselProps, any> {
               onClick={this.scrollToIndex(
                 this.state.currentSlide + clickScrollAmount
               )}
+              aria-label="Navigate Carousel Right"
               data-testid="rightNavigationButton"
               iconName="ChevronRight"
               position="absolute"
