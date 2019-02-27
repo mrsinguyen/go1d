@@ -39,11 +39,14 @@ export interface TagSelectorProps extends ViewProps {
   createable?: boolean;
 
   placeholder?: string;
+  createableText?: string;
 }
 
 class TagSelector extends React.Component<TagSelectorProps, State> {
   public static defaultProps = {
     createable: true,
+    placeholder: "Type to create a Tag",
+    createableText: "Create new tag",
   };
 
   public state: State = {
@@ -128,7 +131,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
 
   @autobind
   public renderCreate() {
-    return <Text>{`Create new tag "${this.state.search}"`}</Text>;
+    return <Text>{`${this.props.createableText} "${this.state.search}"`}</Text>;
   }
 
   @autobind
@@ -148,6 +151,8 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
       borderRadius = 2,
       onFocus,
       onBlur,
+      placeholder,
+      createableText,
       ...props
     } = this.props;
 
@@ -183,7 +188,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
       <SelectDropdown
         {...props}
         value={value}
-        placeholder={value && value.length ? "" : "Type to create a tag"}
+        placeholder={value && value.length ? "" : placeholder}
         options={formattedOptions}
         isMulti={true}
         onChange={this.onChange}
@@ -257,7 +262,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
                 onFocus={this.handleFocus}
                 onBlur={this.handleBlur}
                 width="100%"
-                placeholder={value.length ? "" : "Type to create a Tag"}
+                placeholder={value.length ? "" : placeholder}
                 value={this.state.search}
                 onChange={this.inputChange}
                 borderColor="transparent"
