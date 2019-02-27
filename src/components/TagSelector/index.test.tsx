@@ -157,3 +157,16 @@ it("can focus", () => {
     fail("ref could not be set");
   }
 });
+
+it("renders the provided placeholder", () => {
+  const { queryByPlaceholderText } = render(
+    <TagSelector options={["test"]} placeholder="A placeholder" />
+  );
+
+  const tagEl = queryByPlaceholderText("A placeholder");
+  if (tagEl instanceof HTMLInputElement) {
+    expect(tagEl.placeholder).toEqual("A placeholder");
+  } else {
+    fail("no placeholder");
+  }
+});

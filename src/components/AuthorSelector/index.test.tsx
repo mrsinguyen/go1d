@@ -258,3 +258,20 @@ it("Creates well with a rejected promise", async () => {
   } as any);
   expect(fn).toBeCalledTimes(0);
 });
+
+it("renders the provided placeholder", () => {
+  const { queryByPlaceholderText } = render(
+    <AuthorSelector
+      placeholder="A placeholder"
+      options={[]}
+      mapEmailToAuthor={jest.fn()}
+    />
+  );
+
+  const authEl = queryByPlaceholderText("A placeholder");
+  if (authEl instanceof HTMLInputElement) {
+    expect(authEl.placeholder).toEqual("A placeholder");
+  } else {
+    fail("no placeholder");
+  }
+});

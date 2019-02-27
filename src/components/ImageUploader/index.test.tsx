@@ -60,3 +60,14 @@ it("can delete an image", () => {
     fail("ref could not be set");
   }
 });
+
+it("renders the provided placeholder", () => {
+  const { queryByText } = render(<ImageUploader uploadText="A uploadText" />);
+
+  const uploadEl = queryByText("A uploadText");
+  if (uploadEl instanceof HTMLSpanElement) {
+    expect(uploadEl.textContent).toEqual("A uploadText");
+  } else {
+    fail("no placeholder");
+  }
+});

@@ -50,6 +50,7 @@ export interface AuthorSelectorProps extends ViewProps {
   createable?: boolean;
 
   placeholder?: string;
+  createableText?: string;
 }
 
 interface State {
@@ -59,6 +60,11 @@ interface State {
 }
 
 class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
+  public static defaultProps = {
+    placeholder: "Type to select an Author",
+    createableText: "Create",
+  };
+
   public state: State = {
     value: [],
     isFocused: false,
@@ -196,7 +202,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
           <Icon name="PlusCircle" marginX="auto" size={3} />
         </View>
         <View marginLeft={4}>
-          <Text>{`Create "${this.state.search}"`}</Text>
+          <Text>{`${this.props.createableText} "${this.state.search}"`}</Text>
         </View>
       </View>
     );
@@ -213,6 +219,8 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
       disabled,
       onChange,
       mapEmailToAuthor,
+      placeholder,
+      createableText,
       ...props
     } = this.props;
 
@@ -273,7 +281,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
           {...props}
           onInputChange={this.onInputChange}
           value={value}
-          placeholder="Type to select an Author"
+          placeholder={this.props.placeholder}
           options={formattedOptions}
           onChange={this.onChange}
           onCreate={this.createNewValue}
@@ -295,7 +303,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
                   onFocus: openMenu,
                 })}
                 innerRef={this.inputRef}
-                placeholder="Type to select an Author"
+                placeholder={this.props.placeholder}
                 value={this.state.search}
                 onChange={this.onInputChange}
                 disabled={disabled}

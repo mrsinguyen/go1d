@@ -13,6 +13,8 @@ export interface ImageUploaderProps extends ViewProps {
   onChange?: (evt: { target: { name: string; value: string | File } }) => void;
   value?: File | string;
   name?: string;
+  uploadText?: string;
+  supportedFormatText?: string;
 }
 
 interface State {
@@ -22,7 +24,11 @@ interface State {
 }
 
 class ImageUploader extends React.Component<ImageUploaderProps, State> {
-  public static defaultProps = { height: "200px" };
+  public static defaultProps = {
+    height: "200px",
+    uploadText: "Upload an image",
+    supportedFormatText: "jpg, png, and gif are supported",
+  };
 
   public static getDerivedStateFromProps(
     nextProps: ImageUploaderProps,
@@ -116,6 +122,8 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
       disabled,
       onBlur: propBlur,
       error,
+      uploadText,
+      supportedFormatText,
       ...props
     } = this.props;
 
@@ -187,7 +195,7 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
   @autobind
   public renderImage(open: () => void, isDragActive: boolean) {
     const { file, preview } = this.state;
-    const { disabled } = this.props;
+    const { disabled, uploadText, supportedFormatText } = this.props;
 
     return file || preview ? (
       <View height="100%">
@@ -256,10 +264,10 @@ class ImageUploader extends React.Component<ImageUploaderProps, State> {
         >
           <Icon name="Camera" color="muted" size={8} />
           <View marginBottom={2}>
-            <Text fontWeight="semibold">Upload an image</Text>
+            <Text fontWeight="semibold">{uploadText}</Text>
           </View>
           <Text color="subtle" fontSize={1}>
-            jpg, png, and gif are supported
+            {supportedFormatText}
           </Text>
         </View>
         <Icon
