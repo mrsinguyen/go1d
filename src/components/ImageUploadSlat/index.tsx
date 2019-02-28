@@ -326,7 +326,7 @@ class ImageUploadSlat extends React.Component<ImageUploadSlatProps, State> {
 
     let fileName = this.props.fileName;
 
-    if (value instanceof File) {
+    if (value && typeof value !== "string" && value.name) {
       fileName = value.name;
     } else if (typeof value === "string" && value.trim() !== "") {
       const nameArray = value.split("/");

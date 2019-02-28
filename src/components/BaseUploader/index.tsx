@@ -32,6 +32,7 @@ class BaseUpload extends React.Component<BaseUploadProps, any> {
       onBlur,
       disabled = false,
       value,
+      name,
       ...props
     } = this.props;
 
