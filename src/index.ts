@@ -160,6 +160,7 @@ export {
 export { default as InputGroup } from "./components/InputGroup";
 export { default as InputTextAffix } from "./components/InputTextAffix";
 export { default as BaseUploader } from "./components/BaseUploader";
+export { default as ImageUploadSlat } from "./components/ImageUploadSlat";
 
 /* Utils */
 export { default as priceFormatterUtil } from "./utils/priceFormatter";
