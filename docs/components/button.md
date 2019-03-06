@@ -77,18 +77,6 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonMinimal color='danger'>Really</ButtonMinimal>
 ```
 
-### Toggle buttons
-
-```.jsx
-<ButtonToggle isOn={false}>OFF</ButtonToggle>
-<br />
-<ButtonToggle isOn={false} iconName='Plus' color='accent'>OFF</ButtonToggle>
-<br />
-<ButtonToggle isOn={true}>ON</ButtonToggle>
-<br />
-<ButtonToggle isOn={true} fillColor='accent'>ON</ButtonToggle>
-```
-
 ### Submit Button used in a Form
 
 ```.jsx

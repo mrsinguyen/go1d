@@ -32,6 +32,8 @@ export type Shadows =
   | "text"
   | "none";
 
+export type Transitions = "quick" | "subtle" | "small" | "none";
+
 export type MenuTransition = "closedMenu" | "openedMenu";
 
 export type Statuses = "green" | "yellow" | "orange" | "red";
@@ -96,7 +98,7 @@ export interface Theme {
   type: ThemeType;
   spacing: number[];
   shadows: MappedKey<Shadows, string>;
-  transitions: MappedKey<"subtle", string>;
+  transitions: MappedKey<Transitions, string>;
   breakpoints: MappedKey<Scale, string>;
   mq: any;
   opacities: MappedKey<Opacities, number>;
