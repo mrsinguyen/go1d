@@ -1,3 +1,4 @@
+import memoize from "memoize-one";
 import * as React from "react";
 import { TextInput } from "../..";
 import { autobind } from "../../utils/decorators";
@@ -59,7 +60,21 @@ interface State {
   search: string;
 }
 
-class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
+const filterAndMap = memoize((options, search, value, mapEmailToAuthor) =>
+  options
+    .filter(
+      option =>
+        !value.includes(option) && option.includes(search.trim().toLowerCase())
+    )
+    .map(option => {
+      const author = mapEmailToAuthor(option);
+      return {
+        label: `${author.firstName} ${author.lastName}`,
+        value: author.mail,
+      };
+    })
+);
+class AuthorSelector extends React.PureComponent<AuthorSelectorProps, State> {
   public static defaultProps = {
     placeholder: "Type to select an Author",
     createableText: "Create",
@@ -224,19 +239,12 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
       ...props
     } = this.props;
 
-    const formattedOptions = options
-      .filter(
-        option =>
-          !value.includes(option) &&
-          option.includes(this.state.search.trim().toLowerCase())
-      )
-      .map(option => {
-        const author = mapEmailToAuthor(option);
-        return {
-          label: `${author.firstName} ${author.lastName}`,
-          value: author.mail,
-        };
-      });
+    const formattedOptions = filterAndMap(
+      options,
+      this.state.search,
+      value,
+      mapEmailToAuthor
+    );
 
     return (
       <React.Fragment>
