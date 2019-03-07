@@ -37,6 +37,15 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonFilled color='danger'>Danger zone</ButtonFilled>
 ```
 
+### Feature buttons (Icon and label in vertical alignment)
+
+```.jsx
+<View flexDirection="row">
+  <ButtonFeature iconName="TooEasy" iconSize={6} iconMarginBottom={0} padding={3} marginRight={3}>Too easy</ButtonFeature>
+  <ButtonFeature iconName="Suitable" iconSize={6} iconMarginBottom={0} padding={3} marginRight={3}>Suitable</ButtonFeature>
+  <ButtonFeature iconName="TooHard" iconSize={6} iconMarginBottom={0} padding={3}>Too hard</ButtonFeature>
+</View>
+```
 
 ### Minimal button subtle colour
 

@@ -15,6 +15,8 @@ export interface ButtonProps extends ViewProps {
   round?: boolean;
   backgroundColor?: string;
   iconName?: string;
+  iconSize?: number;
+  iconMarginBottom?: number;
   fontWeight?: FontWeight;
   onClick?: ((evt: React.SyntheticEvent) => void);
   href?: any;
@@ -29,6 +31,7 @@ const sizeStyles = {
     typeScale: 3,
     iconOnlyScale: 4,
     iconMarginRight: 4,
+    iconMarginBottom: 4,
   },
   md: {
     height: 40,
@@ -37,6 +40,7 @@ const sizeStyles = {
     typeScale: 2,
     iconOnlyScale: 3,
     iconMarginRight: 3,
+    iconMarginBottom: 3,
   },
   sm: {
     height: 32,
@@ -45,6 +49,7 @@ const sizeStyles = {
     typeScale: 1,
     iconOnlyScale: 2,
     iconMarginRight: 3,
+    iconMarginBottom: 3,
   },
 };
 
@@ -53,6 +58,7 @@ const Button: React.SFC<ButtonProps> = ({
   color = "subtle",
   backgroundColor = "background",
   iconName,
+  iconSize, // sometime we need to adjust the icon's size, like in <ButtonFeature />
   children,
   fontWeight = "semibold",
   css,
@@ -64,6 +70,8 @@ const Button: React.SFC<ButtonProps> = ({
   mode,
   active,
   transition = "subtle",
+  flexDirection = "row",
+  iconMarginBottom,
   ...props
 }: ButtonProps) => {
   const {
@@ -75,13 +83,31 @@ const Button: React.SFC<ButtonProps> = ({
     iconMarginRight,
   } = sizeStyles[size];
 
+  let iconMarginRightValue = 0;
+  let iconMarginBottomValue = 0;
+
+  const iconSizeValue = iconSize || (children ? typeScale : iconOnlyScale);
+
+  if (children) {
+    if (flexDirection === "row") {
+      iconMarginRightValue = iconMarginRight;
+    }
+
+    if (flexDirection === "column") {
+      iconMarginBottomValue =
+        iconMarginBottom !== undefined
+          ? iconMarginBottom
+          : sizeStyles[size].iconMarginBottom;
+    }
+  }
+
   return (
     <Provider mode={mode}>
       <Theme.Consumer>
         {({ colors }) => (
           <View
             element={href ? Link : "button"}
-            flexDirection="row"
+            flexDirection={flexDirection}
             alignItems="center"
             justifyContent="center"
             height={height}
@@ -110,15 +136,17 @@ const Button: React.SFC<ButtonProps> = ({
               (iconName === "Spinner" ? (
                 <Spinner
                   borderColor={iconColor}
-                  size={children ? typeScale : iconOnlyScale}
-                  marginRight={children && iconMarginRight}
+                  size={iconSizeValue}
+                  marginRight={iconMarginRightValue}
+                  marginBottom={iconMarginBottomValue}
                 />
               ) : (
                 <Icon
                   name={iconName}
                   color={iconColor}
-                  size={children ? typeScale : iconOnlyScale}
-                  marginRight={children && iconMarginRight}
+                  size={iconSizeValue}
+                  marginRight={iconMarginRightValue}
+                  marginBottom={iconMarginBottomValue}
                 />
               ))}
             <Text
