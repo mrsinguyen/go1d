@@ -2,12 +2,9 @@ import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import formatPrice from "../../utils/priceFormatter";
-import ButtonMinimal from "../ButtonMinimal";
-import Dropdown from "../Dropdown";
 import Icon from "../Icon";
-import DropdownMenuItem, {
-  Item as DropdownItem,
-} from "../MoreMenu/DropdownMenuItem";
+import MoreMenu from "../MoreMenu";
+import { Item as DropdownItem } from "../MoreMenu/DropdownMenuItem";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
@@ -41,8 +38,6 @@ const interactiveStyle = (colors, passive) => {
   }
   return styles;
 };
-
-const itemToString = (item: DropdownItem) => (item ? item.title : "");
 
 const CourseCard: React.SFC<CourseCardProps> = ({
   author,
@@ -156,35 +151,23 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                 )}
                 {itemList &&
                   itemList.length > 0 && (
-                    <Dropdown
-                      placement="bottom-end"
-                      renderFunction={DropdownMenuItem}
-                      itemToString={itemToString}
+                    <MoreMenu
                       itemList={itemList}
-                    >
-                      {({ ref, getToggleButtonProps }) => (
-                        <ButtonMinimal
-                          width={20}
-                          height={20}
-                          backgroundColor="transparent"
-                          css={{
-                            paddingTop: 0,
-                            paddingBottom: 0,
-                            ":hover, :focus": {
-                              background: "none",
-                              svg: {
-                                color: colors.subtle,
-                              },
-                            },
-                            paddingRight: 0,
-                          }}
-                          paddingX={0}
-                          innerRef={ref}
-                          iconName="Ellipsis"
-                          {...getToggleButtonProps()}
-                        />
-                      )}
-                    </Dropdown>
+                      isButtonFilled={false}
+                      width={20}
+                      height={20}
+                      paddingY={0}
+                      backgroundColor="transparent"
+                      css={{
+                        ":hover, :focus": {
+                          background: "none",
+                          svg: {
+                            color: colors.subtle,
+                          },
+                        },
+                        paddingRight: 0,
+                      }}
+                    />
                   )}
               </View>
               {author && (
