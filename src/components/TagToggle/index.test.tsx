@@ -31,20 +31,20 @@ it("renders without crashing with all props", () => {
   );
 });
 
-it("should set default state to unchecked", () => {
+it("should set default state to initialValue", () => {
   const ref: React.RefObject<TagToggle> = React.createRef();
   render(
-    <TagToggle onChange={mock} ref={ref}>
+    <TagToggle onChange={mock} ref={ref} initialValue={true} >
       Button text
     </TagToggle>
   );
-  expect(ref.current.state.checkedState).toBe(false);
+  expect(ref.current.state.checkedState).toBe(true);
 });
 
-it("should switch state and invoke onChange callback with old state when clicked", () => {
+it("should switch state and invoke onChange callback with last state when clicked", () => {
   const ref: React.RefObject<TagToggle> = React.createRef();
   render(
-    <TagToggle onChange={mock} ref={ref} name="name">
+    <TagToggle onChange={mock} ref={ref} name="name" value={false}>
       Button text
     </TagToggle>
   );

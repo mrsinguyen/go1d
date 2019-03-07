@@ -33,6 +33,7 @@ export interface TagToggleProps extends TextProps {
   name?: string;
   label?: string;
   value?: boolean | string;
+  initialValue?: boolean | string;
   disabled?: boolean;
   size?: "lg" | "md" | "sm";
 }
@@ -45,24 +46,24 @@ class TagToggle extends React.Component<
     super(props);
     this.state = {
       randomId: `TagToggle_${Math.random()}`,
-      checkedState: !!props.value,
+      checkedState: !!props.initialValue,
     };
   }
 
   public handleOnChange = () => {
     const { checkedState } = this.state;
     const { onChange, name, value } = this.props;
-    const newValue = isUndefined(value) ? checkedState : value;
+    const lastValue = isUndefined(value) ? checkedState : value;
 
     this.setState({
-      checkedState: !newValue,
+      checkedState: !lastValue,
     });
 
     safeInvoke(onChange, {
       target: {
         name,
-        value: newValue,
-        checked: newValue,
+        value: lastValue,
+        checked: lastValue,
         type: "checkbox",
       },
     });
