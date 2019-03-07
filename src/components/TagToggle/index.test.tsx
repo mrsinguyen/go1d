@@ -6,7 +6,7 @@ afterEach(cleanup);
 const mock = jest.fn();
 
 it("renders without crashing without any optional props", () => {
-  render(<TagToggle onClick={mock}>here</TagToggle>);
+  render(<TagToggle onChange={mock}>here</TagToggle>);
 });
 
 it("renders without crashing with all props", () => {
@@ -16,13 +16,46 @@ it("renders without crashing with all props", () => {
 
   render(
     <TagToggle
-      onClick={mock}
+      value={true}
+      onChange={mock}
       color="faint"
       css={styles}
-      isOn={true}
-      fillColor="accent"
+      id="id"
+      name="name"
+      label="label"
+      disabled={true}
+      size="lg"
     >
       Button text
     </TagToggle>
   );
+});
+
+it("should set default state to unchecked", () => {
+  const ref: React.RefObject<TagToggle> = React.createRef();
+  render(
+    <TagToggle onChange={mock} ref={ref}>
+      Button text
+    </TagToggle>
+  );
+  expect(ref.current.state.checkedState).toBe(false);
+});
+
+it("should switch state and invoke onChange callback with old state when clicked", () => {
+  const ref: React.RefObject<TagToggle> = React.createRef();
+  render(
+    <TagToggle onChange={mock} ref={ref} name="name">
+      Button text
+    </TagToggle>
+  );
+  ref.current.handleOnChange();
+  expect(ref.current.state.checkedState).toBe(true);
+  expect(mock).toHaveBeenCalledWith({
+    target: {
+      name: "name",
+      value: false,
+      checked: false,
+      type: "checkbox",
+    },
+  });
 });
