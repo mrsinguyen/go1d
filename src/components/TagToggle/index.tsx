@@ -1,4 +1,3 @@
-import isUndefined = require("lodash/isUndefined");
 import * as React from "react";
 import safeInvoke from "../../utils/safeInvoke";
 import Base from "../Base";
@@ -33,7 +32,7 @@ export interface TagToggleProps extends TextProps {
   name?: string;
   label?: string;
   value?: boolean | string;
-  initialValue?: boolean | string;
+  defaultValue?: boolean | string;
   disabled?: boolean;
   size?: "lg" | "md" | "sm";
 }
@@ -46,14 +45,14 @@ class TagToggle extends React.Component<
     super(props);
     this.state = {
       randomId: `TagToggle_${Math.random()}`,
-      checkedState: !!props.initialValue,
+      checkedState: !!props.defaultValue,
     };
   }
 
   public handleOnChange = () => {
     const { checkedState } = this.state;
     const { onChange, name, value } = this.props;
-    const lastValue = isUndefined(value) ? checkedState : value;
+    const lastValue = typeof value === "undefined" ? checkedState : value;
 
     this.setState({
       checkedState: !lastValue,
@@ -92,7 +91,7 @@ class TagToggle extends React.Component<
 
     const { height, paddingY, paddingX, typeScale } = sizeStyles[size];
 
-    const value = isUndefined(propValue) ? checkedState : propValue;
+    const value = typeof propValue === "undefined" ? checkedState : propValue;
 
     return (
       <Provider mode={value ? "dark" : "light"}>

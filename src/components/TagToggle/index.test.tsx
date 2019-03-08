@@ -31,10 +31,10 @@ it("renders without crashing with all props", () => {
   );
 });
 
-it("should set default state to initialValue", () => {
+it("should set default state to defaultValue", () => {
   const ref: React.RefObject<TagToggle> = React.createRef();
   render(
-    <TagToggle onChange={mock} ref={ref} initialValue={true} >
+    <TagToggle onChange={mock} ref={ref} defaultValue={true}>
       Button text
     </TagToggle>
   );
