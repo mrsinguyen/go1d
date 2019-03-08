@@ -110,6 +110,7 @@ export { default as Twitter } from "./Twitter";
 export { default as UlList } from "./UlList";
 export { default as Underline } from "./Underline";
 export { default as Unlock } from "./Unlock";
+export { default as Unpublish } from "./Unpublish";
 export { default as Upload } from "./Upload";
 export { default as User } from "./User";
 export { default as UserTick } from "./UserTick";
