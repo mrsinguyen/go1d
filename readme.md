@@ -1,5 +1,4 @@
-# GO1D [![build status](https://code.go1.com.au/apps/GO1D/badges/master/build.svg)](https://code.go1.com.au/apps/GO1D/commits/master) [![coverage report](https://code.go1.com.au/apps/GO1D/badges/master/coverage.svg)](https://code.go1.com.au/apps/GO1D/commits/master)
-
+# GO1D 
 ## Overview
 GO1 Design System
 
