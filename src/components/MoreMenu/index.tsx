@@ -76,12 +76,17 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
             offset={isButtonFilled && `0, ${spacing[2]}, 0, 0`}
             onSelect={this.onSelect}
           >
-            {({ ref, getToggleButtonProps }) =>
-              isButtonFilled ? (
+            {({ ref, getToggleButtonProps }) => {
+              const toggleButtonProps = getToggleButtonProps({
+                onClick: e => {
+                  e.stopPropagation();
+                },
+              });
+              return isButtonFilled ? (
                 <ButtonFilled
                   iconName="Ellipsis"
                   {...buttonProps}
-                  {...getToggleButtonProps()}
+                  {...toggleButtonProps}
                   innerRef={ref}
                   {...props}
                 />
@@ -91,11 +96,11 @@ class MoreMenu extends React.Component<MoreMenuProps, State> {
                   iconName="Ellipsis"
                   innerRef={ref}
                   {...buttonProps}
-                  {...getToggleButtonProps()}
+                  {...toggleButtonProps}
                   {...props}
                 />
-              )
-            }
+              );
+            }}
           </Dropdown>
         )}
       </Theme.Consumer>
