@@ -3,9 +3,6 @@ import { Theme as FoundationTheme } from "../../foundations/foundation-types";
 export function getStyles(foundations: FoundationTheme) {
   return {
     whiteSpace: "initial",
-    "*": {
-      whiteSpace: "initial",
-    },
     a: {
       color: foundations.colors.accent,
       ":hover": {
