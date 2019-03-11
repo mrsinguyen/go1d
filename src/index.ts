@@ -22,6 +22,7 @@ export {
   default as ButtonFeature,
   ButtonFeatureProps,
 } from "./components/ButtonFeature";
+export { default as TagToggle, TagToggleProps } from "./components/TagToggle";
 export { default as Pill, PillProps } from "./components/Pill";
 export { default as PageBody, PageBodyProps } from "./components/PageBody";
 export { default as Icon, IconProps } from "./components/Icon";

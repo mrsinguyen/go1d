@@ -242,6 +242,7 @@ const animation: MappedKey<Animation, number> = {
 
 const transitions = {
   none: "all 0ms ease 0ms",
+  quick: "all 150ms ease-in-out",
   subtle: `all ${animation.subtle}ms ease`,
   small: `all ${animation.small}ms ease`,
 };
