@@ -23,6 +23,9 @@ const DropdownMenu = (item: Item, index: number, getItemProps) => {
         key: index,
         item,
         index,
+        onClick: e => {
+          e.stopPropagation();
+        },
       })}
       color={item.color || "default"}
       justifyContent="flex-start"
