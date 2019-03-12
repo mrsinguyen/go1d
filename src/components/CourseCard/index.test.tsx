@@ -17,11 +17,8 @@ it("renders without crashing with all props", () => {
       author="Cian O'Leary"
       title="Test Title"
       courseImage="https://res.cloudinary.com/go1/image/fetch/w_1024,h_300,c_thumb,g_auto/https://udemy-images.udemy.com/course/750x422/435262_c617.jpg"
-      itemList={[
-        {
-          title: "Test",
-        },
-      ]}
+      itemList={[{ title: "Test" }]}
+      metaList={[{ icon: "Star", text: "Hello, world" }]}
       passive={false}
     >
       Hello World!
