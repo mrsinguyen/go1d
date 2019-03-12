@@ -126,7 +126,7 @@ class ImageUploadSlat extends React.Component<ImageUploadSlatProps, State> {
   }
 
   @autobind
-  public async onChange(files: File[]) {
+  public onChange(files: File[]) {
     const { onChange, name } = this.props;
 
     if (files.length > 0) {
@@ -136,7 +136,7 @@ class ImageUploadSlat extends React.Component<ImageUploadSlatProps, State> {
         preview: URL.createObjectURL(files[0]),
       });
 
-      await safeInvoke(onChange, {
+      safeInvoke(onChange, {
         target: {
           name,
           value: files[0],
