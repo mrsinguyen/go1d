@@ -13,14 +13,28 @@ jest.mock("react-dropzone", () => ({
 }));
 
 it("Renders without crashing", () => {
-  render(<ImageUploadSlat />);
+  render(
+    <ImageUploadSlat
+      uploadProgress={0}
+      onUploadProgress={jest.fn()}
+      showUploadCompleted={true}
+    />
+  );
 });
 
 it("Renders without crashing with an image", () => {
   const ref: React.RefObject<any> = React.createRef();
   // tslint:disable-next-line:no-string-literal
   global["URL"] = { revokeObjectURL: jest.fn() };
-  render(<ImageUploadSlat value="An image" ref={ref} />);
+  render(
+    <ImageUploadSlat
+      value="An image"
+      ref={ref}
+      uploadProgress={0}
+      onUploadProgress={jest.fn()}
+      showUploadCompleted={true}
+    />
+  );
 
   ref!.current!.removeImage();
 });
@@ -31,7 +45,15 @@ it("can add an image", () => {
   // tslint:disable-next-line:no-string-literal
   global["URL"] = { revokeObjectURL: fn, createObjectURL: fn };
   render(
-    <ImageUploadSlat onChange={fn} name="test" value="An image" ref={ref} />
+    <ImageUploadSlat
+      onChange={fn}
+      name="test"
+      value="An image"
+      ref={ref}
+      uploadProgress={0}
+      onUploadProgress={jest.fn()}
+      showUploadCompleted={true}
+    />
   );
 
   const newImage = new File([""], "newImage");
@@ -50,7 +72,15 @@ it("can delete an image", () => {
   // tslint:disable-next-line:no-string-literal
   global["URL"] = { revokeObjectURL: fn };
   render(
-    <ImageUploadSlat onChange={fn} name="test" value="An image" ref={ref} />
+    <ImageUploadSlat
+      onChange={fn}
+      name="test"
+      value="An image"
+      ref={ref}
+      uploadProgress={0}
+      onUploadProgress={jest.fn()}
+      showUploadCompleted={true}
+    />
   );
 
   if (ref.current) {
