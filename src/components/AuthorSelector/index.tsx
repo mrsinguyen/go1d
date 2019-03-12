@@ -289,7 +289,6 @@ class AuthorSelector extends React.PureComponent<AuthorSelectorProps, State> {
           {...props}
           onInputChange={this.onInputChange}
           value={value}
-          placeholder={this.props.placeholder}
           options={formattedOptions}
           onChange={this.onChange}
           onCreate={this.createNewValue}
@@ -311,7 +310,7 @@ class AuthorSelector extends React.PureComponent<AuthorSelectorProps, State> {
                   onFocus: openMenu,
                 })}
                 innerRef={this.inputRef}
-                placeholder={this.props.placeholder}
+                placeholder={placeholder}
                 value={this.state.search}
                 onChange={this.onInputChange}
                 disabled={disabled}

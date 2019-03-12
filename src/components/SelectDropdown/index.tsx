@@ -90,8 +90,6 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     forceClose: false,
   };
 
-  private target: React.RefObject<any> = React.createRef();
-
   @autobind
   public handleClickOuter(...args) {
     this.setState({
@@ -252,6 +250,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
       isOpen: dropdownOpen,
       container,
       dropdownZindex,
+      ...remainingProps
     } = this.props;
 
     const options = this.state.search
@@ -285,54 +284,52 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
           selectedItem,
           ...downshiftParams
         }) => (
-          <View {...getRootProps({ refKey: "innerRef" })}>
-            <View innerRef={this.target}>
-              <Manager>
-                <Reference>
-                  {({ ref }) =>
-                    children({
-                      ref,
-                      ...downshiftParams,
-                    })
-                  }
-                </Reference>
-                {isOpen &&
-                  (firstSelectableOptionIndex > 0 || options.length > 0) && (
-                    <Portal>
-                      <Popper placement={"bottom-start"}>
-                        {({ ref, style, scheduleUpdate }) => (
-                          <View
-                            {...getMenuProps({
-                              refKey: "innerRef",
-                            })}
-                            overflow="hidden"
-                          >
-                            <Options
-                              renderSearch={this.renderSearch}
-                              handleSearchChange={handleSearchChange}
-                              searchTerm={searchTerm}
-                              renderCreateOption={this.renderCreateOption}
-                              container={container}
-                              createAvailable={createAvailable}
-                              style={style}
-                              innerRef={ref}
-                              dropdownZindex={dropdownZindex}
-                              optionRenderer={this.optionRenderer}
-                              options={options}
-                              highlightedIndex={highlightedIndex}
-                              firstSelectableOptionIndex={
-                                firstSelectableOptionIndex
-                              }
-                              scheduleUpdate={scheduleUpdate}
-                              getItemProps={getItemProps}
-                            />
-                          </View>
-                        )}
-                      </Popper>
-                    </Portal>
-                  )}
-              </Manager>
-            </View>
+          <View {...remainingProps} {...getRootProps({ refKey: "innerRef" })}>
+            <Manager>
+              <Reference>
+                {({ ref }) =>
+                  children({
+                    ref,
+                    ...downshiftParams,
+                  })
+                }
+              </Reference>
+              {isOpen &&
+                (firstSelectableOptionIndex > 0 || options.length > 0) && (
+                  <Portal>
+                    <Popper placement={"bottom-start"}>
+                      {({ ref, style, scheduleUpdate }) => (
+                        <View
+                          {...getMenuProps({
+                            refKey: "innerRef",
+                          })}
+                          overflow="hidden"
+                        >
+                          <Options
+                            renderSearch={this.renderSearch}
+                            handleSearchChange={handleSearchChange}
+                            searchTerm={searchTerm}
+                            renderCreateOption={this.renderCreateOption}
+                            container={container}
+                            createAvailable={createAvailable}
+                            style={style}
+                            innerRef={ref}
+                            dropdownZindex={dropdownZindex}
+                            optionRenderer={this.optionRenderer}
+                            options={options}
+                            highlightedIndex={highlightedIndex}
+                            firstSelectableOptionIndex={
+                              firstSelectableOptionIndex
+                            }
+                            scheduleUpdate={scheduleUpdate}
+                            getItemProps={getItemProps}
+                          />
+                        </View>
+                      )}
+                    </Popper>
+                  </Portal>
+                )}
+            </Manager>
           </View>
         )}
       </Downshift>
