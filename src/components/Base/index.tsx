@@ -31,7 +31,7 @@ export interface BaseProps {
 }
 
 const Base: React.SFC<BaseProps> = ({
-  element: Element = "div",
+  element = "div",
   children,
   innerRef,
   padding,
@@ -51,32 +51,35 @@ const Base: React.SFC<BaseProps> = ({
   marginLeft = marginX,
   css = [],
   ...props
-}: BaseProps) => (
-  <Theme.Consumer>
-    {({ spacing: s, mq }) => (
-      <Element
-        className={emotion(
-          mq([
-            {
-              paddingTop: applySpacing(s, paddingTop),
-              paddingBottom: applySpacing(s, paddingBottom),
-              paddingRight: applySpacing(s, paddingRight),
-              paddingLeft: applySpacing(s, paddingLeft),
-              marginTop: applySpacing(s, marginTop),
-              marginBottom: applySpacing(s, marginBottom),
-              marginRight: applySpacing(s, marginRight),
-              marginLeft: applySpacing(s, marginLeft),
-            },
-            css,
-          ])
-        )}
-        children={children}
-        ref={innerRef}
-        {...props}
-      />
-    )}
-  </Theme.Consumer>
-);
+}: BaseProps) => {
+  const Element: any = element;
+  return (
+    <Theme.Consumer>
+      {({ spacing: s, mq }) => (
+        <Element
+          className={emotion(
+            mq([
+              {
+                paddingTop: applySpacing(s, paddingTop),
+                paddingBottom: applySpacing(s, paddingBottom),
+                paddingRight: applySpacing(s, paddingRight),
+                paddingLeft: applySpacing(s, paddingLeft),
+                marginTop: applySpacing(s, marginTop),
+                marginBottom: applySpacing(s, marginBottom),
+                marginRight: applySpacing(s, marginRight),
+                marginLeft: applySpacing(s, marginLeft),
+              },
+              css,
+            ])
+          )}
+          children={children}
+          ref={innerRef}
+          {...props}
+        />
+      )}
+    </Theme.Consumer>
+  );
+};
 
 Base.displayName = "Base";
 
