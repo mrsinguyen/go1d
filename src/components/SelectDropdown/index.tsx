@@ -1,5 +1,4 @@
 import Downshift from "downshift";
-import memoize from "memoize-one";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
@@ -73,9 +72,8 @@ interface State {
   search?: string;
 }
 
-const filter = memoize((list, filterText) =>
-  list.filter(item => item.value.includes(filterText))
-);
+const filter = (list, filterText) =>
+  list.filter(item => item.value.includes(filterText));
 
 class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   public static defaultProps = {
