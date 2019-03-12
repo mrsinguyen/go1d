@@ -440,10 +440,6 @@
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.4.2.tgz#64a89e53ea37f61cc0f3ee1732c555c2dbf6452f"
 
-"@types/memoize-one@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@types/memoize-one/-/memoize-one-4.1.0.tgz#62119f26055b3193ae43ca1882c5b29b88b71ece"
-
 "@types/minimatch@*", "@types/minimatch@3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -495,17 +491,19 @@
   dependencies:
     "@types/slate" "*"
 
-"@types/slate-react@^0.20.3":
-  version "0.20.3"
-  resolved "https://registry.yarnpkg.com/@types/slate-react/-/slate-react-0.20.3.tgz#a2a09c448954b03d518a6c651ac3b4f7b6e91e1a"
+"@types/slate-react@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@types/slate-react/-/slate-react-0.21.0.tgz#cf2526acd6cc650d64ff20e2bfcb8f306a234883"
+  integrity sha512-4j7ZsWUF8OuKHACcfoO69jeKxyyxof18uDVTGom8jNLDj81Ssm1VnbYL3O8TbrS8y1gGNbekA7YbjRWldchNOw==
   dependencies:
     "@types/react" "*"
     "@types/slate" "*"
     immutable "^3.8.2"
 
-"@types/slate@*", "@types/slate@^0.43.8":
-  version "0.43.8"
-  resolved "https://registry.yarnpkg.com/@types/slate/-/slate-0.43.8.tgz#add8f65c0bcb3a1682ccbc72a30efa0326a10991"
+"@types/slate@*", "@types/slate@^0.44.0":
+  version "0.44.0"
+  resolved "https://registry.yarnpkg.com/@types/slate/-/slate-0.44.0.tgz#099de36a16b1792884cd870fd9047e667d568c2f"
+  integrity sha512-KYIuG4/8N8V2/KIURJkALpkXtaj4xF7dzhiR5mjRcLjk9puh28+UewwErJn0lTOgle0lXMe047A2wIp80+bRPQ==
   dependencies:
     "@types/react" "*"
     immutable "^3.8.2"
