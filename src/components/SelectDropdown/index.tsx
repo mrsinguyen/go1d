@@ -2,6 +2,7 @@ import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
+import { Placement } from "popper.js";
 import { ZIndex } from "../../foundations/foundation-types";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
@@ -64,6 +65,7 @@ export interface SelectDropdownProps extends ViewProps {
   name?: string;
   container?: React.RefObject<any>;
   dropdownZindex?: ZIndex | number | "";
+  popperPlacement?: Placement;
 }
 
 interface State {
@@ -81,6 +83,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     closeOnSelection: false,
     searchTerm: "",
     options: [],
+    popperPlacement: "bottom-start",
   };
 
   public state: State = {
@@ -248,6 +251,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
       isOpen: dropdownOpen,
       container,
       dropdownZindex,
+      popperPlacement,
       ...remainingProps
     } = this.props;
 
@@ -295,7 +299,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
               {isOpen &&
                 (firstSelectableOptionIndex > 0 || options.length > 0) && (
                   <Portal>
-                    <Popper placement={"bottom-start"}>
+                    <Popper placement={popperPlacement}>
                       {({ ref, style, scheduleUpdate }) => (
                         <View
                           {...getMenuProps({
