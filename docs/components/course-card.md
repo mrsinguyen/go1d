@@ -62,7 +62,14 @@ Carousel with lots of combinations of Cards
       }
     ]}>
     </CourseCard>
-    <CourseCard type="Course" duration={156} passive={false}>
+    <CourseCard
+      type="Course"
+      duration={156}
+      passive={false}
+      metaList={[
+        { icon: "MapPin", text: "Lorem ipsum dolor sit amet" },
+      ]}
+    >
       Hello World!
     </CourseCard>
   </Carousel>

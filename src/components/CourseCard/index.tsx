@@ -10,6 +10,11 @@ import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 import Skeleton from "./Skeleton";
 
+interface MetaItem {
+  icon?: string;
+  text: string;
+}
+
 export interface CourseCardProps extends ViewProps {
   courseImage?: string;
   title?: string;
@@ -19,6 +24,7 @@ export interface CourseCardProps extends ViewProps {
   typeIcon?: string;
   passive?: boolean;
   itemList?: DropdownItem[];
+  metaList?: MetaItem[];
   price?: number;
   currency?: string;
 }
@@ -47,6 +53,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
   duration,
   passive = true,
   itemList,
+  metaList = [],
   title,
   type,
   typeIcon,
@@ -57,6 +64,11 @@ const CourseCard: React.SFC<CourseCardProps> = ({
 }: CourseCardProps) => {
   if (skeleton) {
     return <Skeleton />;
+  }
+
+  const lineList: MetaItem[] = [...metaList];
+  if (duration) {
+    lineList.unshift({ icon: "Clock", text: formatDuration(duration) });
   }
 
   return (
@@ -177,20 +189,22 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                   </Text>
                 </View>
               )}
-              {!!duration && (
-                <View flexDirection="row" paddingTop={3}>
-                  <Icon
-                    name="Clock"
-                    size={1}
-                    color="muted"
-                    marginRight={2}
-                    marginTop={1}
-                  />
+              {lineList.map((item, index) => (
+                <View flexDirection="row" marginTop={index === 0 ? 3 : 1} key={index}>
+                  {item.icon && (
+                    <Icon
+                      name={item.icon}
+                      size={1}
+                      color="muted"
+                      marginTop={1}
+                      marginRight={2}
+                    />
+                  )}
                   <Text color="subtle" fontSize={1}>
-                    {formatDuration(duration)}
+                    {item.text}
                   </Text>
                 </View>
-              )}
+              ))}
               {children && <Text>{children}</Text>}
               {currency &&
                 price > 0 && (
