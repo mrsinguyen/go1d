@@ -1,3 +1,5 @@
+import isUndefined = require("lodash/isUndefined");
+import merge = require("lodash/merge");
 import * as React from "react";
 import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
@@ -14,24 +16,23 @@ export interface ButtonProps extends ViewProps {
   iconColor?: string;
   round?: boolean;
   backgroundColor?: string;
+  sizeStyles?: any;
   iconName?: string;
-  iconSize?: number;
-  iconMarginBottom?: number;
+  iconMargin?: number;
   fontWeight?: FontWeight;
   onClick?: ((evt: React.SyntheticEvent) => void);
   href?: any;
   active?: boolean;
 }
 
-const sizeStyles = {
+const sizeStylesDefault = {
   lg: {
     height: 48,
     paddingY: 3,
     paddingX: 5,
     typeScale: 3,
     iconOnlyScale: 4,
-    iconMarginRight: 4,
-    iconMarginBottom: 4,
+    iconMargin: 4,
   },
   md: {
     height: 40,
@@ -39,8 +40,7 @@ const sizeStyles = {
     paddingX: 4,
     typeScale: 2,
     iconOnlyScale: 3,
-    iconMarginRight: 3,
-    iconMarginBottom: 3,
+    iconMargin: 3,
   },
   sm: {
     height: 32,
@@ -48,58 +48,61 @@ const sizeStyles = {
     paddingX: 4,
     typeScale: 1,
     iconOnlyScale: 2,
-    iconMarginRight: 3,
-    iconMarginBottom: 3,
+    iconMargin: 3,
   },
+};
+
+const getIconMargin = (flexDirection, iconMargin) => {
+  if (flexDirection === "row") {
+    return {
+      marginRight: iconMargin,
+    };
+  }
+  return {
+    marginBottom: iconMargin,
+  };
 };
 
 const Button: React.SFC<ButtonProps> = ({
   size = "md",
   color = "subtle",
   backgroundColor = "background",
+  sizeStyles,
   iconName,
-  iconSize, // sometime we need to adjust the icon's size, like in <ButtonFeature />
   children,
   fontWeight = "semibold",
   css,
   round,
   onClick,
   href,
-  iconColor,
+  iconColor = children && color === "subtle" ? "muted" : color,
   type = "button",
   mode,
   active,
   transition = "subtle",
   flexDirection = "row",
-  iconMarginBottom,
+  iconMargin: iconMarginProp,
   ...props
 }: ButtonProps) => {
+  const sizeStylesMerged = merge(sizeStylesDefault, sizeStyles);
   const {
     height,
-    paddingY,
-    paddingX,
+    padding,
+    paddingY = padding,
+    paddingX = padding,
     typeScale,
+    iconSize,
     iconOnlyScale,
-    iconMarginRight,
-  } = sizeStyles[size];
-
-  let iconMarginRightValue = 0;
-  let iconMarginBottomValue = 0;
+    iconMargin,
+  } = sizeStylesMerged[size];
 
   const iconSizeValue = iconSize || (children ? typeScale : iconOnlyScale);
-
-  if (children) {
-    if (flexDirection === "row") {
-      iconMarginRightValue = iconMarginRight;
-    }
-
-    if (flexDirection === "column") {
-      iconMarginBottomValue =
-        iconMarginBottom !== undefined
-          ? iconMarginBottom
-          : sizeStyles[size].iconMarginBottom;
-    }
-  }
+  const iconMarginStyle = children
+    ? getIconMargin(
+        flexDirection,
+        isUndefined(iconMarginProp) ? iconMargin : iconMarginProp
+      )
+    : {};
 
   return (
     <Provider mode={mode}>
@@ -137,16 +140,14 @@ const Button: React.SFC<ButtonProps> = ({
                 <Spinner
                   borderColor={iconColor}
                   size={iconSizeValue}
-                  marginRight={iconMarginRightValue}
-                  marginBottom={iconMarginBottomValue}
+                  {...iconMarginStyle}
                 />
               ) : (
                 <Icon
                   name={iconName}
                   color={iconColor}
                   size={iconSizeValue}
-                  marginRight={iconMarginRightValue}
-                  marginBottom={iconMarginBottomValue}
+                  {...iconMarginStyle}
                 />
               ))}
             <Text
