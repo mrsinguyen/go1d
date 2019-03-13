@@ -37,6 +37,7 @@ const Lesson: React.SFC<LessonProps> = ({
   type,
   duration,
   author,
+  children,
   ...props
 }: LessonProps) => (
   <View
@@ -66,6 +67,7 @@ const Lesson: React.SFC<LessonProps> = ({
           .filter(val => val)
           .join(" • ")}
       </Text>
+      {children}
     </View>
   </View>
 );
