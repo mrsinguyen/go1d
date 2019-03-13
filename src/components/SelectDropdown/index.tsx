@@ -16,6 +16,7 @@ import Options from "./Options";
 export interface SelectDropdownItem {
   value: string | number;
   label: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -162,7 +163,6 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     getItemProps: any
   ) {
     const { selectedColor = "faint" } = this.props;
-
     return (
       <ButtonMinimal
         width="100%"
@@ -176,6 +176,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
         }
         data-value={item.value}
         justifyContent="flex-start"
+        disabled={item.disabled}
         {...getItemProps}
       >
         {safeInvoke(this.props.optionRenderer, item) || (
