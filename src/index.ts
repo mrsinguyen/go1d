@@ -142,6 +142,11 @@ export {
 } from "./components/SelectDropdown";
 
 export {
+  SessionProps,
+  default as EventDate,
+} from "./components/EventDate";
+
+export {
   default as TagSelector,
   TagSelectorProps,
 } from "./components/TagSelector";
