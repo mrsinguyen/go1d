@@ -26,6 +26,7 @@ export interface MultiSelectProps extends SelectDropdownProps {
 interface State {
   selected: string[];
   closeOnSelect?: boolean;
+  searchValue: string;
 }
 
 class MultiSelect extends React.Component<MultiSelectProps, State> {
@@ -35,6 +36,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
     this.state = {
       selected: props.defaultValue || props.value || [],
       closeOnSelect: true,
+      searchValue: "",
     };
   }
 
@@ -66,10 +68,48 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
   }
 
   @autobind
+  public getFilteredOptions() {
+    const { searchValue } = this.state;
+    const { searchable, options } = this.props;
+
+    if (searchable) {
+      if (searchValue !== "") {
+        return options.reduce((sum, Option) => {
+          if (Option.optgroup) {
+            const subOptions = Option.values.filter(subOption =>
+              subOption.label.toLowerCase().includes(searchValue.toLowerCase())
+            );
+
+            if (subOptions.length > 0) {
+              return [
+                ...sum,
+                {
+                  ...Option,
+                  values: subOptions,
+                },
+              ];
+            }
+          } else {
+            if (
+              Option.label.toLowerCase().includes(searchValue.toLowerCase())
+            ) {
+              return [...sum, Option];
+            }
+          }
+          return sum;
+        }, []);
+      }
+    }
+
+    return options;
+  }
+
+  @autobind
   public renderOption(item: SelectDropdownItem) {
     return (
       <View
         width={"100%"}
+        minWidth="188px"
         paddingY={3}
         key={item.label + "_" + item.value}
         flexDirection="row"
@@ -86,6 +126,15 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
     );
   }
 
+  @autobind
+  public handleSearchChange(searchValue: string, evt: any) {
+    this.setState({
+      searchValue,
+    });
+
+    evt.stopPropagation();
+  }
+
   public render() {
     const {
       options,
@@ -94,6 +143,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
       defaultText = "Please Select",
       clearCSS,
       labelPaddingBottom = 3,
+      searchable,
     } = this.props;
 
     const { selected } = this.state;
@@ -108,6 +158,8 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
         .map((selectedItem: SelectDropdownItem) => selectedItem.label)
         .join(", ");
     }
+
+    const filteredOptions = this.getFilteredOptions();
 
     return (
       <React.Fragment>
@@ -176,7 +228,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
           </View>
         </View>
         <SelectDropdown
-          options={options}
+          options={filteredOptions}
           onChange={this.handleChange}
           searchPlaceholder="Search for ..."
           closeOnSelection={false}
@@ -185,6 +237,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
           value={this.state.selected}
           name={this.props.name}
           selectedColor="highlight"
+          handleSearchChange={searchable && this.handleSearchChange}
         >
           {({ ref, getToggleButtonProps }) => (
             <View>
@@ -196,7 +249,6 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
                 css={{
                   "> span": {
                     width: "100%",
-                    color: selected.length > 0 ? undefined : "default",
                   },
                 }}
                 color={selected.length > 0 ? "accent" : undefined}
@@ -208,7 +260,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Text fontSize={1} color="default" fontWeight="normal">
+                  <Text fontSize={1} fontWeight="normal">
                     {selectText}
                   </Text>
                   <Icon name="ChevronDown" />

@@ -171,6 +171,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
         height="auto"
         minHeight="40px"
         borderRadius={0}
+        paddingY={this.props.isMulti ? 0 : undefined}
         css={{
           ":hover,:focus": {
             backgroundColor: colors[selectedColor],
