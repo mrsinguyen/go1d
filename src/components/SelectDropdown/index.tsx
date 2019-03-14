@@ -3,6 +3,7 @@ import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
 import { Placement } from "popper.js";
+import { colors } from "../../foundations";
 import { ZIndex } from "../../foundations/foundation-types";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
@@ -163,12 +164,18 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     getItemProps: any
   ) {
     const { selectedColor = "faint" } = this.props;
+
     return (
       <ButtonMinimal
         width="100%"
         height="auto"
         minHeight="40px"
         borderRadius={0}
+        css={{
+          ":hover,:focus": {
+            backgroundColor: colors[selectedColor],
+          },
+        }}
         backgroundColor={
           getItemProps.highlightedIndex === getItemProps.index
             ? selectedColor

@@ -78,6 +78,8 @@ class Checkbox extends React.Component<
       marginTop,
       marginBottom,
       disabled = false,
+      color = "contrast",
+      fontWeight,
       ...props
     } = this.props;
 
@@ -117,7 +119,8 @@ class Checkbox extends React.Component<
                 {value && <Icon color="accent" name="Check" />}
               </View>
               <Text
-                color="contrast"
+                color={color}
+                fontWeight={fontWeight}
                 fontSize={fontSize}
                 title={label}
                 paddingLeft={3}
