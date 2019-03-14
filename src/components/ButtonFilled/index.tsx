@@ -32,7 +32,7 @@ const ButtonFilled: React.SFC<ButtonFilledProps> = ({
           mode={mode}
           backgroundColor={color}
           color={color === "background" ? "subtle" : "contrast"}
-          iconColor={color === "background" ? "subtle" : "contrast"}
+          iconColor={color === "background" ? "muted" : "contrast"}
           fontWeight="bold"
           css={[
             {
