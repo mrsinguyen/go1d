@@ -2,6 +2,7 @@ import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
+import { Placement } from "popper.js";
 import { ZIndex } from "../../foundations/foundation-types";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
@@ -10,10 +11,12 @@ import Portal from "../Portal";
 import SearchInput from "../SearchInput";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
+import Options from "./Options";
 
 export interface SelectDropdownItem {
   value: string | number;
   label: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -63,26 +66,31 @@ export interface SelectDropdownProps extends ViewProps {
   name?: string;
   container?: React.RefObject<any>;
   dropdownZindex?: ZIndex | number | "";
+  popperPlacement?: Placement;
 }
 
 interface State {
   focused: boolean;
   forceClose: boolean;
+  search?: string;
 }
 
-class SelectDropdown extends React.Component<SelectDropdownProps, State> {
+const filter = (list, filterText) =>
+  list.filter(item => item.value.includes(filterText));
+
+class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   public static defaultProps = {
     createable: true,
     closeOnSelection: false,
     searchTerm: "",
+    options: [],
+    popperPlacement: "bottom-start",
   };
 
   public state: State = {
     focused: false,
     forceClose: false,
   };
-
-  private target: React.RefObject<any> = React.createRef();
 
   @autobind
   public handleClickOuter(...args) {
@@ -155,7 +163,6 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
     getItemProps: any
   ) {
     const { selectedColor = "faint" } = this.props;
-
     return (
       <ButtonMinimal
         width="100%"
@@ -169,16 +176,27 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
         }
         data-value={item.value}
         justifyContent="flex-start"
+        disabled={item.disabled}
         {...getItemProps}
       >
-        {this.props.optionRenderer(item) || <Text>{item.label}</Text>}
+        {safeInvoke(this.props.optionRenderer, item) || (
+          <Text>{item.label}</Text>
+        )}
       </ButtonMinimal>
     );
   }
 
   @autobind
   public handleSearchChange(evt: any) {
-    this.props.handleSearchChange(evt.target.value, evt);
+    let value = "";
+    if (evt && evt !== "") {
+      value = evt.target.value;
+    }
+
+    this.setState({
+      search: value,
+    });
+    this.props.handleSearchChange(value, evt);
   }
 
   @autobind
@@ -192,6 +210,7 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
           placeholder={this.props.searchPlaceholder || "Search..."}
           onSubmit={this.props.handleSearchChange}
           onChange={this.handleSearchChange}
+          onClear={this.handleSearchChange}
         />
       </View>
     );
@@ -219,9 +238,13 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
     );
   }
 
+  public itemToString(item: any) {
+    return item;
+  }
+
   public render() {
     const {
-      options = [],
+      options: rawOptions,
       children,
       handleSearchChange,
       searchTerm,
@@ -229,9 +252,13 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
       isOpen: dropdownOpen,
       container,
       dropdownZindex,
+      popperPlacement,
+      ...remainingProps
     } = this.props;
 
-    const itemToString = (item: any) => item;
+    const options = this.state.search
+      ? filter(rawOptions, this.state.search)
+      : rawOptions;
 
     const createAvailable = renderCreateOption && searchTerm.trim() !== "";
     const firstSelectableOptionIndex =
@@ -245,7 +272,7 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
             : undefined
         }
         defaultHighlightedIndex={0}
-        itemToString={itemToString}
+        itemToString={this.itemToString}
         onOuterClick={this.handleClickOuter}
         onSelect={this.handleOptionClick}
         data-testid="select-dropdown"
@@ -260,93 +287,52 @@ class SelectDropdown extends React.Component<SelectDropdownProps, State> {
           selectedItem,
           ...downshiftParams
         }) => (
-          <View {...getRootProps({ refKey: "innerRef" })}>
-            <View innerRef={this.target}>
-              <Manager>
-                <Reference>
-                  {({ ref }) =>
-                    children({
-                      ref,
-                      ...downshiftParams,
-                    })
-                  }
-                </Reference>
-                {isOpen &&
-                  (createAvailable || options.length > 0) && (
-                    <Portal>
-                      <Popper placement={"bottom-start"}>
-                        {({ ref, style }) => (
-                          <View
-                            {...getMenuProps({
-                              refKey: "innerRef",
-                            })}
-                            overflow="hidden"
-                          >
-                            <View
-                              backgroundColor="background"
-                              boxShadow="strong"
-                              borderRadius={3}
-                              maxHeight={350}
-                              innerRef={ref}
-                              transition="none"
-                              width={100}
-                              paddingY={3}
-                              marginTop={3}
-                              zIndex={dropdownZindex || "dropdown"}
-                              style={{
-                                ...style,
-                                width:
-                                  container && container.current
-                                    ? container.current.offsetWidth
-                                    : "auto",
-                                overflowY: "auto",
-                              }}
-                            >
-                              <React.Fragment>
-                                {createAvailable &&
-                                  this.renderCreateOption(
-                                    searchTerm.trim() || "create",
-                                    0,
-                                    {
-                                      ...getItemProps({
-                                        key: "create",
-                                        index: 0,
-                                        item: searchTerm.trim() || "create",
-                                      }),
-                                      highlightedIndex,
-                                      index: 0,
-                                    }
-                                  )}
-                                {handleSearchChange &&
-                                  this.renderSearch({
-                                    ...getItemProps({
-                                      key: "search",
-                                      index: createAvailable ? 1 : 0,
-                                      item: searchTerm || "search",
-                                      disabled: true,
-                                    }),
-                                  })}
-
-                                {options.map((item: any, index: number) =>
-                                  this.optionRenderer(item, index, {
-                                    ...getItemProps({
-                                      key: index + firstSelectableOptionIndex,
-                                      item,
-                                      index: firstSelectableOptionIndex + index,
-                                    }),
-                                    highlightedIndex,
-                                    index: firstSelectableOptionIndex + index,
-                                  })
-                                )}
-                              </React.Fragment>
-                            </View>
-                          </View>
-                        )}
-                      </Popper>
-                    </Portal>
-                  )}
-              </Manager>
-            </View>
+          <View {...remainingProps} {...getRootProps({ refKey: "innerRef" })}>
+            <Manager>
+              <Reference>
+                {({ ref }) =>
+                  children({
+                    ref,
+                    ...downshiftParams,
+                  })
+                }
+              </Reference>
+              {isOpen &&
+                (firstSelectableOptionIndex > 0 || options.length > 0) && (
+                  <Portal>
+                    <Popper placement={popperPlacement}>
+                      {({ ref, style, scheduleUpdate }) => (
+                        <View
+                          {...getMenuProps({
+                            refKey: "innerRef",
+                          })}
+                          overflow="hidden"
+                        >
+                          <Options
+                            renderSearch={this.renderSearch}
+                            handleSearchChange={handleSearchChange}
+                            searchTerm={searchTerm}
+                            renderCreateOption={this.renderCreateOption}
+                            container={container}
+                            createAvailable={createAvailable}
+                            style={style}
+                            innerRef={ref}
+                            dropdownZindex={dropdownZindex}
+                            optionRenderer={this.optionRenderer}
+                            options={options}
+                            highlightedIndex={highlightedIndex}
+                            firstSelectableOptionIndex={
+                              firstSelectableOptionIndex
+                            }
+                            scheduleUpdate={scheduleUpdate}
+                            getItemProps={getItemProps}
+                          />
+                        </View>
+                      )}
+                    </Popper>
+                  </Portal>
+                )}
+            </Manager>
           </View>
         )}
       </Downshift>

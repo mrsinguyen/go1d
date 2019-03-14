@@ -59,7 +59,21 @@ interface State {
   search: string;
 }
 
-class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
+const filterAndMap = (options, search, value, mapEmailToAuthor) =>
+  options
+    .filter(
+      option =>
+        !value.includes(option) && option.includes(search.trim().toLowerCase())
+    )
+    .map(option => {
+      const author = mapEmailToAuthor(option);
+      return {
+        label: `${author.firstName} ${author.lastName}`,
+        value: author.mail,
+      };
+    });
+
+class AuthorSelector extends React.PureComponent<AuthorSelectorProps, State> {
   public static defaultProps = {
     placeholder: "Type to select an Author",
     createableText: "Create",
@@ -224,19 +238,12 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
       ...props
     } = this.props;
 
-    const formattedOptions = options
-      .filter(
-        option =>
-          !value.includes(option) &&
-          option.includes(this.state.search.trim().toLowerCase())
-      )
-      .map(option => {
-        const author = mapEmailToAuthor(option);
-        return {
-          label: `${author.firstName} ${author.lastName}`,
-          value: author.mail,
-        };
-      });
+    const formattedOptions = filterAndMap(
+      options,
+      this.state.search,
+      value,
+      mapEmailToAuthor
+    );
 
     return (
       <React.Fragment>
@@ -281,7 +288,6 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
           {...props}
           onInputChange={this.onInputChange}
           value={value}
-          placeholder={this.props.placeholder}
           options={formattedOptions}
           onChange={this.onChange}
           onCreate={this.createNewValue}
@@ -303,7 +309,7 @@ class AuthorSelector extends React.Component<AuthorSelectorProps, State> {
                   onFocus: openMenu,
                 })}
                 innerRef={this.inputRef}
-                placeholder={this.props.placeholder}
+                placeholder={placeholder}
                 value={this.state.search}
                 onChange={this.onInputChange}
                 disabled={disabled}

@@ -188,7 +188,6 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
       <SelectDropdown
         {...props}
         value={value}
-        placeholder={value && value.length ? "" : placeholder}
         options={formattedOptions}
         isMulti={true}
         onChange={this.onChange}

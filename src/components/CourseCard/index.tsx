@@ -2,16 +2,18 @@ import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import formatPrice from "../../utils/priceFormatter";
-import ButtonMinimal from "../ButtonMinimal";
-import Dropdown from "../Dropdown";
 import Icon from "../Icon";
-import DropdownMenuItem, {
-  Item as DropdownItem,
-} from "../MoreMenu/DropdownMenuItem";
+import MoreMenu from "../MoreMenu";
+import { Item as DropdownItem } from "../MoreMenu/DropdownMenuItem";
 import Text from "../Text";
 import Theme from "../Theme";
 import View, { ViewProps } from "../View";
 import Skeleton from "./Skeleton";
+
+interface MetaItem {
+  icon?: string;
+  text: string;
+}
 
 export interface CourseCardProps extends ViewProps {
   courseImage?: string;
@@ -22,6 +24,7 @@ export interface CourseCardProps extends ViewProps {
   typeIcon?: string;
   passive?: boolean;
   itemList?: DropdownItem[];
+  metaList?: MetaItem[];
   price?: number;
   currency?: string;
 }
@@ -42,8 +45,6 @@ const interactiveStyle = (colors, passive) => {
   return styles;
 };
 
-const itemToString = (item: DropdownItem) => (item ? item.title : "");
-
 const CourseCard: React.SFC<CourseCardProps> = ({
   author,
   courseImage,
@@ -52,6 +53,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
   duration,
   passive = true,
   itemList,
+  metaList = [],
   title,
   type,
   typeIcon,
@@ -62,6 +64,11 @@ const CourseCard: React.SFC<CourseCardProps> = ({
 }: CourseCardProps) => {
   if (skeleton) {
     return <Skeleton />;
+  }
+
+  const lineList: MetaItem[] = [...metaList];
+  if (duration) {
+    lineList.unshift({ icon: "Clock", text: formatDuration(duration) });
   }
 
   return (
@@ -156,35 +163,23 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                 )}
                 {itemList &&
                   itemList.length > 0 && (
-                    <Dropdown
-                      placement="bottom-end"
-                      renderFunction={DropdownMenuItem}
-                      itemToString={itemToString}
+                    <MoreMenu
                       itemList={itemList}
-                    >
-                      {({ ref, getToggleButtonProps }) => (
-                        <ButtonMinimal
-                          width={20}
-                          height={20}
-                          backgroundColor="transparent"
-                          css={{
-                            paddingTop: 0,
-                            paddingBottom: 0,
-                            ":hover, :focus": {
-                              background: "none",
-                              svg: {
-                                color: colors.subtle,
-                              },
-                            },
-                            paddingRight: 0,
-                          }}
-                          paddingX={0}
-                          innerRef={ref}
-                          iconName="Ellipsis"
-                          {...getToggleButtonProps()}
-                        />
-                      )}
-                    </Dropdown>
+                      isButtonFilled={false}
+                      width={20}
+                      height={20}
+                      paddingY={0}
+                      backgroundColor="transparent"
+                      css={{
+                        ":hover, :focus": {
+                          background: "none",
+                          svg: {
+                            color: colors.subtle,
+                          },
+                        },
+                        paddingRight: 0,
+                      }}
+                    />
                   )}
               </View>
               {author && (
@@ -194,20 +189,26 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                   </Text>
                 </View>
               )}
-              {!!duration && (
-                <View flexDirection="row" paddingTop={3}>
-                  <Icon
-                    name="Clock"
-                    size={1}
-                    color="muted"
-                    marginRight={2}
-                    marginTop={1}
-                  />
+              {lineList.map((item, index) => (
+                <View
+                  flexDirection="row"
+                  marginTop={index === 0 ? 3 : 1}
+                  key={index}
+                >
+                  {item.icon && (
+                    <Icon
+                      name={item.icon}
+                      size={1}
+                      color="muted"
+                      marginTop={1}
+                      marginRight={2}
+                    />
+                  )}
                   <Text color="subtle" fontSize={1}>
-                    {formatDuration(duration)}
+                    {item.text}
                   </Text>
                 </View>
-              )}
+              ))}
               {children && <Text>{children}</Text>}
               {currency &&
                 price > 0 && (

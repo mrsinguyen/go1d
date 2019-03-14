@@ -17,6 +17,8 @@ export interface FieldProps extends ViewProps {
   description?: React.ReactNode;
   inputRef?: (instance: any) => void;
   statusText?: string;
+  invalidText?: string;
+  requiredText?: string;
   statusColor?: string;
   statusIcon?: string;
   errorFormat?: (errorMessage: string) => React.ReactNode | string;
@@ -37,6 +39,8 @@ const Field: React.SFC<FieldProps> = ({
   inputRef,
   statusText = !required && "Optional",
   statusColor = "subtle",
+  invalidText = "Invalid",
+  requiredText = "Required",
   statusIcon,
   validate,
   errorMessage,
@@ -94,7 +98,7 @@ const Field: React.SFC<FieldProps> = ({
 
         // component can get into a recursive state where a previous error prevents the status from being updated, check for that here
         if (
-          (statusText === "Invalid" || statusText === "Required") &&
+          (statusText === invalidText || statusText === requiredText) &&
           !form.errors[field.name]
         ) {
           statusText = "";
@@ -115,8 +119,8 @@ const Field: React.SFC<FieldProps> = ({
             if (!statusText) {
               statusText =
                 required && (field.value === "" || field.value.length === 0) // we should show Required only if it is empty, otherwise show invalid //
-                  ? "Required"
-                  : "Invalid";
+                  ? requiredText
+                  : invalidText;
             }
           } else {
             // only remove if not declared upscope

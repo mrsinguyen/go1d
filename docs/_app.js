@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 import * as systemScope from "../src";
 import * as docsScope from "./_src/components";
+import * as docsVariables from './_src'
 import foundations from "../src/foundations";
 import globalCSS from "../src/foundations/globalCSS";
 import SidebarLayout from "./_src/components/SidebarLayout";
@@ -25,6 +26,7 @@ const scope = {
   Flipflop,
   ...systemScope,
   ...docsScope,
+  ...docsVariables,
 };
 
 const createNav = routes => {

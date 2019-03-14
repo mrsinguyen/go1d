@@ -1,3 +1,5 @@
+import isUndefined = require("lodash/isUndefined");
+import merge = require("lodash/merge");
 import * as React from "react";
 import { FontWeight } from "../../foundations/foundation-types";
 import Icon from "../Icon/index";
@@ -14,21 +16,23 @@ export interface ButtonProps extends ViewProps {
   iconColor?: string;
   round?: boolean;
   backgroundColor?: string;
+  sizeStyles?: any;
   iconName?: string;
+  iconMargin?: number;
   fontWeight?: FontWeight;
   onClick?: ((evt: React.SyntheticEvent) => void);
   href?: any;
   active?: boolean;
 }
 
-const sizeStyles = {
+const sizeStylesDefault = {
   lg: {
     height: 48,
     paddingY: 3,
     paddingX: 5,
     typeScale: 3,
     iconOnlyScale: 4,
-    iconMarginRight: 4,
+    iconMargin: 4,
   },
   md: {
     height: 40,
@@ -36,7 +40,7 @@ const sizeStyles = {
     paddingX: 4,
     typeScale: 2,
     iconOnlyScale: 3,
-    iconMarginRight: 3,
+    iconMargin: 3,
   },
   sm: {
     height: 32,
@@ -44,14 +48,26 @@ const sizeStyles = {
     paddingX: 4,
     typeScale: 1,
     iconOnlyScale: 2,
-    iconMarginRight: 3,
+    iconMargin: 3,
   },
+};
+
+const getIconMargin = (flexDirection, iconMargin) => {
+  if (flexDirection === "row") {
+    return {
+      marginRight: iconMargin,
+    };
+  }
+  return {
+    marginBottom: iconMargin,
+  };
 };
 
 const Button: React.SFC<ButtonProps> = ({
   size = "md",
   color = "subtle",
   backgroundColor = "background",
+  sizeStyles,
   iconName,
   children,
   fontWeight = "semibold",
@@ -59,21 +75,34 @@ const Button: React.SFC<ButtonProps> = ({
   round,
   onClick,
   href,
-  iconColor,
+  iconColor = children && color === "subtle" ? "muted" : color,
   type = "button",
   mode,
   active,
   transition = "subtle",
+  flexDirection = "row",
+  iconMargin: iconMarginProp,
   ...props
 }: ButtonProps) => {
+  const sizeStylesMerged = merge(sizeStylesDefault, sizeStyles);
   const {
     height,
-    paddingY,
-    paddingX,
+    padding,
+    paddingY = padding,
+    paddingX = padding,
     typeScale,
+    iconSize,
     iconOnlyScale,
-    iconMarginRight,
-  } = sizeStyles[size];
+    iconMargin,
+  } = sizeStylesMerged[size];
+
+  const iconSizeValue = iconSize || (children ? typeScale : iconOnlyScale);
+  const iconMarginStyle = children
+    ? getIconMargin(
+        flexDirection,
+        isUndefined(iconMarginProp) ? iconMargin : iconMarginProp
+      )
+    : {};
 
   return (
     <Provider mode={mode}>
@@ -81,7 +110,7 @@ const Button: React.SFC<ButtonProps> = ({
         {({ colors }) => (
           <View
             element={href ? Link : "button"}
-            flexDirection="row"
+            flexDirection={flexDirection}
             alignItems="center"
             justifyContent="center"
             height={height}
@@ -110,15 +139,15 @@ const Button: React.SFC<ButtonProps> = ({
               (iconName === "Spinner" ? (
                 <Spinner
                   borderColor={iconColor}
-                  size={children ? typeScale : iconOnlyScale}
-                  marginRight={children && iconMarginRight}
+                  size={iconSizeValue}
+                  {...iconMarginStyle}
                 />
               ) : (
                 <Icon
                   name={iconName}
                   color={iconColor}
-                  size={children ? typeScale : iconOnlyScale}
-                  marginRight={children && iconMarginRight}
+                  size={iconSizeValue}
+                  {...iconMarginStyle}
                 />
               ))}
             <Text

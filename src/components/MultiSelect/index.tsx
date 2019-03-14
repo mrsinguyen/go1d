@@ -22,7 +22,7 @@ class MultiSelect extends React.Component<MultiSelectProps, any> {
     super(props);
 
     this.state = {
-      Selected: props.defaultValue || [],
+      Selected: props.defaultValue || props.value || [],
       closeOnSelect: true,
     };
   }
