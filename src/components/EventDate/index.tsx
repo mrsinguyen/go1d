@@ -1,6 +1,7 @@
 import * as React from "react";
 import Icon from "../Icon";
 import Text from "../Text";
+import Link from "../Link";
 import View, { ViewProps } from "../View";
 
 export interface SessionProps extends ViewProps {
@@ -14,7 +15,14 @@ export interface SessionProps extends ViewProps {
     administrative_area?: string;
     locality?: string;
     country?: string;
+    latitude?: number;
+    longitude?: number;
   };
+  bigDate?: boolean;
+  showAttendees?: boolean;
+  availableSeats?: number;
+  limit?: number;
+  mapLink?: boolean;
 }
 
 const formatTime = (timestamp) => {
@@ -33,6 +41,11 @@ const EventDate: React.SFC<SessionProps> = ({
   location,
   onClick,
   active,
+  bigDate,
+  showAttendees,
+  availableSeats,
+  limit,
+  mapLink,
   ...props
 }: SessionProps) => {
   const locationString = `${location.thoroughfare && `${location.thoroughfare}, `} ${location.locality && `${location.locality}, `} ${location.administrative_area && `${location.administrative_area}, `} ${location.country && `${location.country}`}`;
@@ -44,69 +57,107 @@ const EventDate: React.SFC<SessionProps> = ({
   const startTime = formatTime(start);
   const endTime = formatTime(end);
   return (
-    <View
-      backgroundColor="background"
-      overflow="hidden"
-      borderRadius={2}
-      boxShadow="crisp"
-      color="default"
-      flexDirection="row"
-      marginX={1}
-      marginBottom={3}
-      flexGrow={1}
-      onClick={onClick}
-      borderColor={active ? "accent" : "transparent"}
-      border={1}
-      css={{
-        cursor: onClick && "pointer"
-      }}
-      {...props}
-    >
+    <React.Fragment>
+      {mapLink && location.latitude && (
+        <Link
+          target="_blank"
+          href={`https://www.google.com/maps/?q=${location.latitude},${location.longitude}`}
+          css={{
+            fontSize: "13px"
+          }}
+          textAlign="right"
+          color="accent"
+          marginBottom={3}
+        >View map</Link>
+      )}
       <View
-        flexDirection="column"
-        width="30%"
-        maxWidth={80}
-        alignItems="center"
-        justifyContent="center" 
-        padding={3}
-        >
-        <Text color="accent" fontSize={3}>
-          {day}
-        </Text>
-        <Text fontSize={3}>
-          {month.toUpperCase()}
-        </Text>
-      </View>
-      <View
+        backgroundColor="background"
+        overflow="hidden"
+        borderRadius={2}
+        boxShadow="crisp"
+        color="default"
+        flexDirection="row"
+        marginX={1}
+        marginBottom={3}
         flexGrow={1}
-        flexDirection="column"
-        paddingY={3}
-        width="70%">
-        <View flexDirection="row" paddingTop={1}>
-          <View width="15%" maxWidth={25} minWidth={20}>
-            <Icon name="MapPin" display="inline" color="faded" marginRight={3} />
-          </View>
-          <View width="85%">
-            <Text fontSize={1} ellipsis={true}>
-              {location.title}
+        onClick={onClick}
+        borderColor={active ? "accent" : "transparent"}
+        border={1}
+        css={{
+          cursor: onClick && "pointer"
+        }}
+        {...props}
+      >
+        {bigDate && (
+          <View
+            flexDirection="column"
+            width="30%"
+            maxWidth={80}
+            alignItems="center"
+            justifyContent="center" 
+            padding={3}
+            >
+            <Text color="accent" fontSize={3}>
+              {day}
             </Text>
-            <Text fontSize={1} color="subtle" ellipsis={true}>
-              {locationString}
+            <Text fontSize={3}>
+              {month.toUpperCase()}
             </Text>
           </View>
-        </View>
-        <View flexDirection="row" paddingTop={1}>
-          <View width="15%" maxWidth={25} minWidth={20}>
-            <Icon name="Clock" display="inline" color="faded" marginRight={3} />
+        )}
+        <View
+          flexGrow={1}
+          flexDirection="column"
+          paddingY={3}
+          width={bigDate ? "70%" : "100%" }
+          >
+          <View flexDirection="row" paddingTop={1} paddingLeft={bigDate ? 0 : 4 }>
+            <View width="15%" maxWidth={25} minWidth={20}>
+              <Icon name="MapPin" display="inline" color="faded" marginRight={3} />
+            </View>
+            <View width="85%">
+              <Text fontSize={1} ellipsis={true}>
+                {location.title}
+              </Text>
+              <Text fontSize={1} color="subtle" ellipsis={true}>
+                {locationString}
+              </Text>
+            </View>
           </View>
-          <View width="85%">
-            <Text fontSize={1} ellipsis={true}>
-              {day} {month} {year} {" • "} {startTime}{endTime && ` - ${endTime}`}
-            </Text>
+          <View flexDirection="row" paddingTop={1} paddingLeft={bigDate ? 0 : 4 }>
+            <View width="15%" maxWidth={25} minWidth={20}>
+              <Icon name="Clock" display="inline" color="faded" marginRight={3} />
+            </View>
+            <View width="85%">
+              <Text fontSize={1} ellipsis={true}>
+                {day} {month} {year} {" • "} {startTime}{endTime && ` - ${endTime}`}
+              </Text>
+            </View>
           </View>
+          {showAttendees && availableSeats !== null && (
+            <View
+              borderTop={1}
+              borderColor="soft"
+              marginTop={3}
+              paddingY={3}
+              paddingX={4}
+              flexDirection="row"
+              alignItems="center"
+              >
+              <View backgroundColor="soft" borderRadius={10} padding={2} marginRight={3}>
+                <Icon name="AddUser" color="muted" />
+              </View>
+              {availableSeats > 0 && limit && (
+                <Text fontSize={1} color="subtle">{limit - availableSeats} attendees</Text>
+              )}
+              {availableSeats === 0 && (
+                <Text>SOLD OUT</Text>
+              )}
+            </View>
+          )}
         </View>
       </View>
-    </View>
+    </React.Fragment>
   );
 }
 
