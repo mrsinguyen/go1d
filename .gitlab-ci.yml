@@ -20,11 +20,13 @@ build:
     - yarn install
     - yarn "npm:build"
     - yarn "docs:build"
+    - yarn "storybook:build"
   artifacts:
     paths:
       - node_modules
       - build
       - dist
+      - dist_storybook
     expire_in: 6h
   except:
     - "tags"
@@ -68,6 +70,20 @@ test:unit:
   except:
     - "tags"
 
+test:happo:
+  stage: test
+  tags: ["aws"]
+  allow_failure: true
+  before_script:
+    - export PREVIOUS_SHA=`git rev-parse origin/master`
+    - export CURRENT_SHA=$CI_COMMIT_SHA
+    - export CHANGE_URL=$CI_PAGES_URL
+  script:
+    - yarn install
+    - yarn run happo-ci
+  only:
+  - merge_requests
+
 pages: # NEVER rename this. I must apparently be exactly this to work
   stage: release
   tags: ["aws"]
@@ -77,6 +93,8 @@ pages: # NEVER rename this. I must apparently be exactly this to work
     - rm -rf public
     - mkdir public
     - cp -r dist/* public/
+    - cp -r dist_storybook/* public/storybook/
+
   artifacts:
     paths:
       - public # mandatory, other folder won't work
@@ -118,4 +136,3 @@ release:npm:
     - "tags"
   only:
     - master
-    
