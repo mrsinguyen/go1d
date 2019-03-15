@@ -3,7 +3,7 @@
 import { cloneElement } from 'react'
 import { action } from '@storybook/addon-actions'
 import { text, boolean, object, select } from '@storybook/addon-knobs/react'
-const pdMap = require('../../docs/react-docs-for-storybook.json');
+const pdMap = require('../react-docs-for-storybook.json');
 
 
 const withDefaultOption = (options) => ({ '': '--', ...options })
@@ -23,7 +23,7 @@ const createSelect = (propName, elements, defaultProps) => {
 
 const ensureType = (item) => item.flowType ? ({ ...item, type: item.flowType }) : item
 export const withSmartKnobs = (story, context) => {
-  const component = story(context)
+  let component = story(context);
 
   let target = component.props.components && component.props.propTables && component.props.propTablesExclude
     ? component.props.children
@@ -37,7 +37,7 @@ export const withSmartKnobs = (story, context) => {
   const defaultPropsKeys = Object.keys(defaultProps);
 
   const displayName = component.type.displayName;
-  const props = pdMap[displayName] ? pdMap[displayName].props : pdMap[`${displayName}Props`] ? pdMap[`${displayName}Props`].props : [];
+  const props = pdMap[`${displayName}Props`] ? pdMap[`${displayName}Props`].props : pdMap[displayName] ? pdMap[displayName].props : [];
   const finalProps = props ? Object.keys(props).reduce((acc, n) => {
     const item = ensureType(props[n]);
 
@@ -96,20 +96,19 @@ const resolveGo1dPropTypes = (name, propInfo, defaultValue) => {
     return object('css', defaultValue);
   }
 
-  if(name === "children") {
-    if (typeof defaultValue === 'string') return  text("Children", defaultValue);
-    return object('Children', defaultValue);
-  }
-
-
   if (type === "string") {
     return text(name, defaultValue)
   }
   if (type === "boolean") {
     return boolean(name, defaultValue ? true : false)
   }
-  if (type === "(evt: SyntheticEvent) => void") {
+  if (type === "(evt: SyntheticEvent) => void" || name.indexOf('on') === 0) {
     return action(name);
   }
+
+  if (typeof defaultValue === 'object') {
+    return object(name, defaultValue);
+  }
+
   return text(name, defaultValue)
 }

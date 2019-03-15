@@ -1,4 +1,4 @@
-const definition = require('../../docs/react-docs.json');
+const definition = require('../docs/react-docs.json');
 const fs = require('fs');
 
 const resultObj = {};
@@ -21,7 +21,7 @@ Object.keys(definition.typescript).forEach((index) => {
   }
 )
 
-fs.writeFile("./docs/react-docs-for-storybook.json", JSON.stringify(resultObj), function(err) {
+fs.writeFile("./.storybook/react-docs-for-storybook.json", JSON.stringify(resultObj), function(err) {
   if(err) {
     return console.log(err);
   }

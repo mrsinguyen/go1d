@@ -9,14 +9,16 @@ npm install @go1d/go1d
 
 ## Documentation
 Can be found at [https://go1d.pages.go1.co/GO1D/](https://go1d.pages.go1.co/GO1D/)
-
+(WIP) Developer documentation can be found at [https://go1d.pages.go1.co/GO1D/storybook](https://go1d.pages.go1.co/GO1D/storybook)
 
 ## Build / Run
 ```sh
 npm run docs:dev
+npm run storybook
 npm run npm:dev
 
 npm run docs:build
+npm run storybook:build
 npm run npm:build
 ```
 
@@ -24,6 +26,9 @@ npm run npm:build
 ```sh
 npm test --coverage
 ```
+
+##Happo.io cross-browser screenshot testing
+This feature currently is still experimental, please contact shangzhi.pan@go1.com for further information if you want to use it.
 
 ## Live Editing
 ### Setup

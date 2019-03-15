@@ -1,7 +1,7 @@
 import React from 'react';
 import PrettyPropType from '@storybook/addon-info/dist/components/types/PrettyPropType';
 import { multiLineText } from '@storybook/addon-info/dist/components/PropTable';
-const pdMap = require('../../docs/react-docs-for-storybook.json');
+const pdMap = require('../react-docs-for-storybook.json');
 
 const Table = props => <table style={{marginTop:10}} {...props} />;
 const Td = props => <td style={{ paddingRight: 10, verticalAlign: 'middle' }} height="30" {...props} />;
@@ -22,7 +22,7 @@ export default function PropTable(props) {
     return null;
   }
 
-  const propertiesDefinition = pdMap[type.displayName] ? pdMap[type.displayName].props : pdMap[`${type.displayName}Props`] ? pdMap[`${type.displayName}Props`].props : [];
+  const propertiesDefinition = pdMap[`${type.displayName}Props`] ? pdMap[`${type.displayName}Props`].props : pdMap[type.displayName] ? pdMap[type.displayName].props : [];
 
   if (!propertiesDefinition.length) {
     return <small>No propTypes defined!</small>;
