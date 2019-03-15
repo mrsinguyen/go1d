@@ -74,7 +74,7 @@ test:happo:
   stage: test
   tags: ["aws"]
   before_script:
-    - export PREVIOUS_SHA=$CI_COMMIT_BEFORE_SHA
+    - export PREVIOUS_SHA=`git rev-parse origin/master`
     - export CURRENT_SHA=$CI_COMMIT_SHA
     - export CHANGE_URL=$CI_PAGES_URL
   script:
