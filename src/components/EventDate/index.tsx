@@ -195,7 +195,7 @@ const EventDate: React.SFC<SessionProps> = ({
                 {availableSeats > 0 &&
                   limit && (
                     <Text fontSize={1} color="subtle">
-                      {limit - availableSeats} attendees
+                      {limit - availableSeats}{limit && `/${limit}`} attendees
                     </Text>
                   )}
                 {availableSeats === 0 && <Text>SOLD OUT</Text>}
