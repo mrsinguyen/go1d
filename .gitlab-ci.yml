@@ -70,6 +70,20 @@ test:unit:
   except:
     - "tags"
 
+test:happo:
+  stage: test
+  tags: ["aws"]
+  allow_failure: true
+  before_script:
+    - export PREVIOUS_SHA=`git rev-parse origin/master`
+    - export CURRENT_SHA=$CI_COMMIT_SHA
+    - export CHANGE_URL=$CI_PAGES_URL
+  script:
+    - yarn install
+    - yarn run happo-ci
+  only:
+  - merge_requests
+
 pages: # NEVER rename this. I must apparently be exactly this to work
   stage: release
   tags: ["aws"]
