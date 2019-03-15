@@ -73,6 +73,7 @@ test:unit:
 test:happo:
   stage: test
   tags: ["aws"]
+  allow_failure: true
   before_script:
     - export PREVIOUS_SHA=`git rev-parse origin/master`
     - export CURRENT_SHA=$CI_COMMIT_SHA
