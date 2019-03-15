@@ -121,7 +121,13 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   }
 
   @autobind
-  public handleOptionClick(option: SelectDropdownItem | string) {
+  public handleOptionClick(
+    option: SelectDropdownItem | string,
+    selectActions: any
+  ) {
+    if (!this.props.closeOnSelection) {
+      selectActions.openMenu();
+    }
     if (typeof option === "string") {
       this.create({
         target: { value: option, name: this.props.name, id: this.props.id },
@@ -301,6 +307,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
                 {({ ref }) =>
                   children({
                     ref,
+                    "data-testid": "select-dropdown-trigger",
                     ...downshiftParams,
                   })
                 }

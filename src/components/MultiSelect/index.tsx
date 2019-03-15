@@ -13,7 +13,22 @@ import SelectDropdown, {
 import Text from "../Text";
 import View from "../View";
 
-export interface MultiSelectProps extends SelectDropdownProps {
+const sizes = {
+  sm: {
+    fontSize: 1,
+  },
+  md: {
+    fontSize: 2,
+  },
+  lg: {
+    fontSize: 3,
+  },
+};
+export interface MultiSelectProps
+  extends Pick<
+      SelectDropdownProps,
+      Exclude<keyof SelectDropdownProps, "optionRenderer">
+    > {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
@@ -21,21 +36,24 @@ export interface MultiSelectProps extends SelectDropdownProps {
   label?: string | React.ReactChild;
   clearCSS?: object;
   labelPaddingBottom?: number;
+  closeOnSelect?: boolean;
 }
 
 interface State {
   selected: string[];
-  closeOnSelect?: boolean;
   searchValue: string;
 }
 
 class MultiSelect extends React.Component<MultiSelectProps, State> {
+  public static defaultProps = {
+    closeOnSelect: true,
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
       selected: props.defaultValue || props.value || [],
-      closeOnSelect: true,
       searchValue: "",
     };
   }
@@ -144,6 +162,8 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
       clearCSS,
       labelPaddingBottom = 3,
       searchable,
+      size = "sm",
+      closeOnSelect,
     } = this.props;
 
     const { selected } = this.state;
@@ -231,7 +251,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
           options={filteredOptions}
           onChange={this.handleChange}
           searchPlaceholder="Search for ..."
-          closeOnSelection={false}
+          closeOnSelection={closeOnSelect}
           optionRenderer={this.renderOption}
           isMulti={true}
           value={this.state.selected}
@@ -243,6 +263,8 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
             <View>
               <ButtonFilled
                 {...getToggleButtonProps()}
+                data-testid="select-dropdown-trigger"
+                size={size}
                 innerRef={ref}
                 width="100%"
                 justifyContent="stretch"
@@ -251,6 +273,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
                     width: "100%",
                   },
                 }}
+                disabled={this.props.disabled}
                 color={selected.length > 0 ? "accent" : undefined}
               >
                 <View
@@ -260,7 +283,12 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Text fontSize={1} fontWeight="normal">
+                  <Text
+                    fontSize={sizes[size].fontSize}
+                    color={selected.length > 0 ? "contrast" : "default"}
+                    fontWeight="normal"
+                    ellipsis={true}
+                  >
                     {selectText}
                   </Text>
                   <Icon name="ChevronDown" />
