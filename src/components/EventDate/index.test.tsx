@@ -8,8 +8,8 @@ const props = {
   start: "2019-06-28T00:25:00+00:00",
   location: {
     title: "Some place",
-  }
-}
+  },
+};
 
 const mock = jest.fn();
 

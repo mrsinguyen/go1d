@@ -46,12 +46,11 @@ const Lesson: React.SFC<LessonProps> = ({
     borderColor="soft"
     {...props}
   >
-    <View
-      flexDirection="row"
-      overflow="hidden"
-      >
+    <View flexDirection="row" overflow="hidden">
       <View paddingBottom={5} paddingTop={6} justifyContent="flex-start">
-        {type && <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />}
+        {type && (
+          <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />
+        )}
       </View>
       <View paddingY={5} paddingX={4} flexGrow={1}>
         {title && (

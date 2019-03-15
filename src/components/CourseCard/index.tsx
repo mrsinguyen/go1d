@@ -190,7 +190,11 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                 </View>
               )}
               {lineList.map((item, index) => (
-                <View flexDirection="row" marginTop={index === 0 ? 3 : 1} key={index}>
+                <View
+                  flexDirection="row"
+                  marginTop={index === 0 ? 3 : 1}
+                  key={index}
+                >
                   {item.icon && (
                     <Icon
                       name={item.icon}
