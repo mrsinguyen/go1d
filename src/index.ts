@@ -19,6 +19,10 @@ export {
   ButtonFilledProps,
 } from "./components/ButtonFilled";
 export { default as TagToggle, TagToggleProps } from "./components/TagToggle";
+export {
+  default as ToggleSwitch,
+  ToggleSwitchProps,
+} from "./components/ToggleSwitch";
 export { default as ButtonFeature } from "./components/ButtonFeature";
 export { default as Pill, PillProps } from "./components/Pill";
 export { default as PageBody, PageBodyProps } from "./components/PageBody";
