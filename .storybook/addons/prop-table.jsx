@@ -21,8 +21,7 @@ export default function PropTable(props) {
   if (!type) {
     return null;
   }
-console.log(type.name);
-  console.log(pdMap[`${type.name}Props`]);
+  
   const propertiesDefinition = pdMap[`${type.name}Props`] ? pdMap[`${type.name}Props`].props : pdMap[type.name] ? pdMap[type.name].props : [];
 
   if (!propertiesDefinition.length) {
