@@ -17,6 +17,7 @@ build:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
+    - yarn config set no-progress
     - yarn install --silent
     - yarn "npm:build"
     - yarn "docs:build"
@@ -40,6 +41,7 @@ build-dev:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
+    - yarn config set no-progress
     - yarn install --silent
     - yarn "npm:build"
   artifacts:
@@ -61,6 +63,7 @@ test:unit:
   stage: test
   tags: ["aws"]
   script:
+    - yarn config set no-progress
     - yarn install --silent
     - yarn test --coverage --runInBand
   artifacts:
@@ -79,6 +82,7 @@ test:happo:
     - export CURRENT_SHA=$CI_COMMIT_SHA
     - export CHANGE_URL=$CI_PAGES_URL
   script:
+    - yarn config set no-progress
     - yarn install --silent
     - yarn react:docs && node ./.storybook/generate-props-file.js
     - yarn run happo-ci
