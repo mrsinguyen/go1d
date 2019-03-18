@@ -1,6 +1,6 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import {NotificationManager,Button,Text,Link} from '../src';
+import {NotificationContainer, NotificationManager,Button,Text,Link} from '../src';
 storiesOf("Notification", module)
 .add('Base', () => <React.Fragment>
 
