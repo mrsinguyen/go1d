@@ -7,7 +7,9 @@ import { withA11y } from '@storybook/addon-a11y';
 import go1Theme from './addons/go1-theme.js';
 import {withSmartKnobs } from "./addons/smart-knobs-go1";
 import 'happo-plugin-storybook/register';
-import { isHappoRun } from 'happo-plugin-storybook/register';
+import { isHappoRun, setDefaultDelay } from 'happo-plugin-storybook/register';
+
+setDefaultDelay(600);
 
 //Customized PropTable
 import PropTable from "./addons/prop-table";
