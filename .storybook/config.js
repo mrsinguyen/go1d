@@ -44,11 +44,11 @@ if (!isHappoRun()) {
     header: false, // Global configuration for the info addon across all of your stories.
     inline: true,
   }));
-}
 
-//Wrapp the stories with margin
-const WrapperDecorator = storyFn => <View margin={6}>{storyFn()}</View>;
-addDecorator(WrapperDecorator);
+  //Wrapp the stories with margin
+  const WrapperDecorator = storyFn => <View margin={6}>{storyFn()}</View>;
+  addDecorator(WrapperDecorator);
+}
 
 // Call GO1D's globalCss
 globalCSS();
