@@ -16,7 +16,7 @@ A component that displays a datepicker.
 
 ### Date Supplied
 ```.jsx
-<DatePicker id="id2" date={new Date("2019-06-07")} />
+<DatePicker id="id2" defaultValue={new Date("2019-06-07")} />
 ```
 
 
