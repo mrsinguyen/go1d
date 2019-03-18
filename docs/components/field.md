@@ -4,7 +4,7 @@ lead:
 status: ready
 releaseVersion: 0.0.41
 ---
-
+### Base
 ```!jsx
 <Banner type="warning">
     This component is required to be wrapped in a Form component otherwise it will fail to render

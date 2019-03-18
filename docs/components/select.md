@@ -4,7 +4,7 @@ status: ready
 releaseVersion: 0.0.24
 ---
 
-A custom select component
+### A custom select component
 
 ```.tsx
 <Select options={[
@@ -14,7 +14,7 @@ A custom select component
 ]} />
 ```
 
-Disabled Select Field
+### Disabled Select Field
 ```.tsx
 <Select options={[
   { "value": "chocolate", label: "Chocolate" },
@@ -23,7 +23,7 @@ Disabled Select Field
 ]} disabled={true} />
 ```
 
-Clearable Select Field
+### Clearable Select Field
 ```.tsx
 <Select options={[
   { "value": "chocolate", label: "Chocolate" },
@@ -32,7 +32,7 @@ Clearable Select Field
 ]} clearable={true} />
 ```
 
-Searchable Select Field
+### Searchable Select Field
 ```.tsx
 <Select options={[
   { "value": "chocolate", label: "Chocolate" },
@@ -41,7 +41,7 @@ Searchable Select Field
 ]} searchable={true} />
 ```
 
-Select filled with optgroups
+### Select filled with optgroups
 ```.tsx
 <Select options={[
   {
@@ -65,7 +65,7 @@ Select filled with optgroups
 ]} />
 ```
 
-Select filled with label-less optgroups
+### Select filled with label-less optgroups
 ```.tsx
 <Select options={[
   {

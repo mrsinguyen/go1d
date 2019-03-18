@@ -6,6 +6,7 @@ releaseVersion: 0.0.26
 
 ## Examples
 
+### Base
 ```.jsx
 <EmptyState
   title="No Content"

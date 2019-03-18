@@ -4,6 +4,7 @@ status: ready
 releaseVersion: 0.0.11
 ---
 
+### Base
 ```.jsx
 <Icon name="Go1Logo" />
 ```
@@ -21,9 +22,11 @@ Supply a color by the color prop. The available colors can be found in the Color
 Define size with the size prop. This uses font sizing to determine the size, so the value is the index on the font size array that you require.
 
 ```.jsx
-<Icon name="Go1Logo" size={1}/> <br />
-<Icon name="Go1Logo" size={4}/> <br />
-<Icon name="Go1Logo" size={7}/> <br />
+<React.Fragment>
+    <Icon name="Go1Logo" size={1}/> <br />
+    <Icon name="Go1Logo" size={4}/> <br />
+    <Icon name="Go1Logo" size={7}/> <br />
+</React.Fragment>
 ```
 
 ```!jsx

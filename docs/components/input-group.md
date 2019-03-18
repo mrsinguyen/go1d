@@ -4,6 +4,7 @@ status: ready
 lead: A component that brings common styles to inline input groups
 ---
 
+### Base
 ```.jsx
   <InputGroup>
     <InputTextAffix text="www." />
@@ -18,6 +19,7 @@ lead: A component that brings common styles to inline input groups
   </InputGroup>
 ```
 
+### With SelectDropdown and TextInput
 ```.jsx
   <InputGroup>
     <SelectDropdown

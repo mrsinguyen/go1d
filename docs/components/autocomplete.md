@@ -7,6 +7,7 @@ releaseVersion: 0.5.8
 A generic autocomplete component.
 For a realistic implementation, see https://code.go1.com.au/apps/search-provider/blob/GO1P-21911/src/search-provider/components/LocationFilter/index.tsx
 
+### Base
 ```.tsx
 <Autocomplete
   lookupMethod={() => {
