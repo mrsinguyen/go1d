@@ -92,6 +92,8 @@ pages: # NEVER rename this. I must apparently be exactly this to work
   script:
     - rm -rf public
     - mkdir public
+    - rm -rf public/storybook
+    - mkdir public/storybook
     - cp -r dist/* public/
     - cp -r dist_storybook/* public/storybook/
 
