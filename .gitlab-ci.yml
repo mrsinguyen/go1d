@@ -17,7 +17,7 @@ build:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
-    - yarn install
+    - yarn install --silent
     - yarn "npm:build"
     - yarn "docs:build"
     - yarn "storybook:build"
@@ -40,7 +40,7 @@ build-dev:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
-    - yarn install
+    - yarn install --silent
     - yarn "npm:build"
   artifacts:
     paths:
@@ -61,7 +61,7 @@ test:unit:
   stage: test
   tags: ["aws"]
   script:
-    - yarn install
+    - yarn install --silent
     - yarn test --coverage --runInBand
   artifacts:
     paths:
@@ -79,9 +79,13 @@ test:happo:
     - export CURRENT_SHA=$CI_COMMIT_SHA
     - export CHANGE_URL=$CI_PAGES_URL
   script:
-    - yarn install
+    - yarn install --silent
     - yarn react:docs && node ./.storybook/generate-props-file.js
     - yarn run happo-ci
+    # Check for EXIT_CODE env
+    - NPM_BIN=$(yarn bin)
+    - 'SUMMARY=$("$NPM_BIN"/happo compare "$PREVIOUS_SHA" "$CURRENT_SHA")'
+    - 'if [ "$EXIT_CODE" = "113" ]; then exit 1; fi'
   only:
   - merge_requests
 
