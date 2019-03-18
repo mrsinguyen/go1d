@@ -30,11 +30,13 @@ A component that displays a datepicker.
 
 ### Sizes
 ```.jsx
-<DatePicker id="id4" size="sm"/>
-<br />
-<DatePicker id="id4" size="md"/>
-<br />
-<DatePicker id="id4" size="lg"/>
+<React.Fragment>
+    <DatePicker id="id4" size="sm"/>
+    <br />
+    <DatePicker id="id4" size="md"/>
+    <br />
+    <DatePicker id="id4" size="lg"/>
+</React.Fragment>
 ```
 
 ### Basic Datepicker with Time

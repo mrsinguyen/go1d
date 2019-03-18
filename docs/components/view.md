@@ -10,32 +10,35 @@ The most fundamental component for building a UI is the View Component. The View
 
 Try anything below
 
+### Basic Usage
 ```.jsx
 <View><Text>My View</Text></View>
 ```
 
-Responsive Examples
+### Responsive Examples
 ```.jsx
-<View flexDirection="row" flexWrap="wrap">
-    <View width={[1/3,1/6,1/12]}><Text>A</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>B</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>C</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>D</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>A</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>B</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>C</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>D</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>A</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>B</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>C</Text></View>
-    <View width={[1/3,1/6,1/12]}><Text>D</Text></View>
-</View>
-<View flexDirection="row" flexWrap="wrap">
-    <View width={[1,1/2,1/4]}><Text>A</Text></View>
-    <View width={[1,1/2,1/4]}><Text>B</Text></View>
-    <View width={[1,1/2,1/4]}><Text>C</Text></View>
-    <View width={[1,1/2,1/4]}><Text>D</Text></View>
-</View>
+<React.Fragment>
+    <View flexDirection="row" flexWrap="wrap">
+        <View width={[1/3,1/6,1/12]}><Text>A</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>B</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>C</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>D</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>A</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>B</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>C</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>D</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>A</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>B</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>C</Text></View>
+        <View width={[1/3,1/6,1/12]}><Text>D</Text></View>
+    </View>
+    <View flexDirection="row" flexWrap="wrap">
+        <View width={[1,1/2,1/4]}><Text>A</Text></View>
+        <View width={[1,1/2,1/4]}><Text>B</Text></View>
+        <View width={[1,1/2,1/4]}><Text>C</Text></View>
+        <View width={[1,1/2,1/4]}><Text>D</Text></View>
+    </View>
+</React.Fragment>
 ```
 
 ```!jsx

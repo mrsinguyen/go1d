@@ -6,6 +6,7 @@ releaseVersion: 0.0.36
 
 ## Examples
 
+## Type success
 ```.jsx
 <Banner
   type="success"
@@ -16,7 +17,9 @@ releaseVersion: 0.0.36
     This is a message <Link css={{ display: 'inline', fontWeight: '600', textDecoration: 'underline' }} href="https://foo.com">read more</Link>.
   </Text>
 </Banner>
-
+```
+## Type warning
+```.jsx
 <Banner
   type="warning"
   close={() => alert('close event')}
@@ -26,7 +29,9 @@ releaseVersion: 0.0.36
     This is a message <Link css={{ display: 'inline', fontWeight: '600', textDecoration: 'underline' }} href="https://foo.com">read more</Link>.
   </Text>
 </Banner>
-
+```
+## Type danger
+```.jsx
 <Banner
   type="danger"
   close={() => alert('close event')}

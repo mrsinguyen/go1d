@@ -80,6 +80,7 @@ test:happo:
     - export CHANGE_URL=$CI_PAGES_URL
   script:
     - yarn install
+    - yarn react:docs && node ./.storybook/generate-props-file.js
     - yarn run happo-ci
   only:
   - merge_requests

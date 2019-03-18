@@ -5,8 +5,9 @@ releaseVersion: 0.2.18
 ---
 
 ## Examples
-
+### With Price
 An example use case of the GO1 Price Packaging on the website
+
 ```.jsx
 <View padding={5} backgroundColor="soft">
   <CTACard
@@ -21,8 +22,9 @@ An example use case of the GO1 Price Packaging on the website
   />
 </View>
 ```
-
+### With content provider card
 An example use case is Content provider Card on the GO1 Website
+
 ```.jsx
 <View padding={5} backgroundColor="background">
   <CTACard 
