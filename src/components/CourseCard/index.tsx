@@ -15,6 +15,13 @@ interface MetaItem {
   text: string;
 }
 
+interface Status {
+  text?: string;
+  textColor?: string;
+  iconName?: string;
+  iconColor?: string;
+}
+
 export interface CourseCardProps extends ViewProps {
   courseImage?: string;
   title?: string;
@@ -27,6 +34,7 @@ export interface CourseCardProps extends ViewProps {
   metaList?: MetaItem[];
   price?: number;
   currency?: string;
+  status?: Status | null;
 }
 
 const interactiveStyle = (colors, passive) => {
@@ -59,6 +67,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
   typeIcon,
   price,
   currency,
+  status,
   skeleton = false,
   ...props
 }: CourseCardProps) => {
@@ -216,6 +225,28 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                     <Text color="accent">{formatPrice(currency, price)}</Text>
                   </View>
                 )}
+              {status && (
+                <View flexDirection="row" marginTop="auto" paddingTop={3}>
+                  {status.iconName && (
+                    <Icon
+                      name={status.iconName}
+                      size={1}
+                      color={status.iconColor}
+                      marginTop={1}
+                      marginRight={2}
+                    />
+                  )}
+                  {status.text && (
+                    <Text
+                      color={status.textColor}
+                      fontSize={1}
+                      fontWeight="semibold"
+                    >
+                      {status.text}
+                    </Text>
+                  )}
+                </View>
+              )}
             </View>
           </View>
         );

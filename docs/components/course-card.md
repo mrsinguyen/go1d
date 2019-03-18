@@ -11,7 +11,7 @@ releaseVersion: 0.2.15
 <CourseCard />
 ```
 
-### Almost all the Props
+### Almost all the Props (with Price)
 ```.jsx
 <CourseCard
   typeIcon="Course"
@@ -27,6 +27,31 @@ releaseVersion: 0.2.15
       title: "Test"
     }
   ]} 
+  passive={false}
+/>
+```
+
+### Almost all the Props (with Status)
+```.jsx
+<CourseCard
+  typeIcon="Course"
+  type="Course"
+  duration={74}
+  author="GO1"
+  title="Test Title"
+  courseImage="https://res.cloudinary.com/go1/image/fetch/w_1024,h_300,c_thumb,g_auto/https://udemy-images.udemy.com/course/750x422/435262_c617.jpg" 
+  itemList={[
+    {
+      title: "Test"
+    }
+  ]}
+  status={
+		{
+			iconName: "InProgress",
+			iconColor: "accent",
+			text: "In progress",
+		}
+	}
   passive={false}
 />
 ```
