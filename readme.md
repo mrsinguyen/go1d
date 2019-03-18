@@ -8,8 +8,8 @@ npm install @go1d/go1d
 ```
 
 ## Documentation
-Can be found at [https://go1d.pages.go1.co/GO1D/](https://go1d.pages.go1.co/GO1D/)
-(WIP) Developer documentation can be found at [https://go1d.pages.go1.co/GO1D/storybook](https://go1d.pages.go1.co/GO1D/storybook)
+- Can be found at [https://go1d.pages.go1.co/GO1D/](https://go1d.pages.go1.co/GO1D/)
+- (WIP) Developer documentation can be found at [https://go1d.pages.go1.co/GO1D/storybook](https://go1d.pages.go1.co/GO1D/storybook)
 
 ## Build / Run
 ```sh
@@ -52,6 +52,9 @@ Components should be documented in docs/components with at least:
 * A one or two line description of the component with it’s use case
 * Major use cases of the component
 * It’s current development status & release version
+
+Component should have at least one story with all props in the "stories" folder. You can find a tutorial on how to add stories for storybook [here](https://storybook.js.org/docs/guides/guide-react/). 
+
 
 
 ## Adding Icons
