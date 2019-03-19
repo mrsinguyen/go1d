@@ -258,6 +258,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
           name={this.props.name}
           selectedColor="highlight"
           handleSearchChange={searchable && this.handleSearchChange}
+          data-testid="multiselect-dropdown"
         >
           {({ ref, getToggleButtonProps }) => (
             <View>
