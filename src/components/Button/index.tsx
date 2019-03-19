@@ -25,33 +25,6 @@ export interface ButtonProps extends ViewProps {
   active?: boolean;
 }
 
-const sizeStylesDefault = {
-  lg: {
-    height: 48,
-    paddingY: 3,
-    paddingX: 5,
-    typeScale: 3,
-    iconOnlyScale: 4,
-    iconMargin: 4,
-  },
-  md: {
-    height: 40,
-    paddingY: 3,
-    paddingX: 4,
-    typeScale: 2,
-    iconOnlyScale: 3,
-    iconMargin: 3,
-  },
-  sm: {
-    height: 32,
-    paddingY: 2,
-    paddingX: 4,
-    typeScale: 1,
-    iconOnlyScale: 2,
-    iconMargin: 3,
-  },
-};
-
 const getIconMargin = (flexDirection, iconMargin) => {
   if (flexDirection === "row") {
     return {
@@ -84,6 +57,32 @@ const Button: React.SFC<ButtonProps> = ({
   iconMargin: iconMarginProp,
   ...props
 }: ButtonProps) => {
+  const sizeStylesDefault = {
+    lg: {
+      height: 48,
+      paddingY: 3,
+      paddingX: 5,
+      typeScale: 3,
+      iconOnlyScale: 4,
+      iconMargin: 4,
+    },
+    md: {
+      height: 40,
+      paddingY: 3,
+      paddingX: 4,
+      typeScale: 2,
+      iconOnlyScale: 3,
+      iconMargin: 3,
+    },
+    sm: {
+      height: 32,
+      paddingY: 2,
+      paddingX: 4,
+      typeScale: 1,
+      iconOnlyScale: 2,
+      iconMargin: 3,
+    },
+  };
   const sizeStylesMerged = merge(sizeStylesDefault, sizeStyles);
   const {
     height,
