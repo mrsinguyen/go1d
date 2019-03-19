@@ -37,35 +37,41 @@ const Lesson: React.SFC<LessonProps> = ({
   type,
   duration,
   author,
+  children,
   ...props
 }: LessonProps) => (
   <View
     backgroundColor="background"
-    flexDirection="row"
-    overflow="hidden"
     borderBottom={1}
     borderColor="soft"
     {...props}
   >
-    <View paddingY={5} justifyContent="center">
-      {type && <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />}
-    </View>
-    <View paddingY={5} paddingX={4}>
-      {title && (
-        <Text fontSize={2} marginBottom={1}>
-          {title}
+    <View flexDirection="row" overflow="hidden">
+      <View paddingBottom={5} paddingTop={6} justifyContent="flex-start">
+        {type && (
+          <Icon name={typeIconDic[type] ? typeIconDic[type] : "Course"} />
+        )}
+      </View>
+      <View paddingY={5} paddingX={4} flexGrow={1}>
+        {title && (
+          <Text fontSize={2} marginBottom={1}>
+            {title}
+          </Text>
+        )}
+        <Text
+          color="subtle"
+          fontSize={1}
+          fontWeight="semibold"
+          textTransform="uppercase"
+        >
+          {[type, author, !!duration && formatDuration(duration)]
+            .filter(val => val)
+            .join(" • ")}
         </Text>
-      )}
-      <Text
-        color="subtle"
-        fontSize={1}
-        fontWeight="semibold"
-        textTransform="uppercase"
-      >
-        {[type, author, !!duration && formatDuration(duration)]
-          .filter(val => val)
-          .join(" • ")}
-      </Text>
+      </View>
+    </View>
+    <View paddingY={3} flexDirection="row" overflow="hidden">
+      {children}
     </View>
   </View>
 );

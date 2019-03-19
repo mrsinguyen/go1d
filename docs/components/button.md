@@ -12,11 +12,13 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 ### Filled button in subtle colour
 
 ```.jsx
-<ButtonFilled>I'm a button</ButtonFilled>
-<br />
-<ButtonFilled size='sm'>I'm a button</ButtonFilled>
-<br />
-<ButtonFilled size='lg'>I'm a button</ButtonFilled>
+<React.Fragment>
+    <ButtonFilled>I'm a button</ButtonFilled>
+    <br />
+    <ButtonFilled size='sm'>I'm a button</ButtonFilled>
+    <br />
+    <ButtonFilled size='lg'>I'm a button</ButtonFilled>
+</React.Fragment>
 ```
 
 ### Filled button in accent colour
@@ -76,9 +78,11 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 ## Unstyled Buttons
 
 ```.jsx
-<Button>Default</Button>
-<Button color="accent">Accent</Button>
-<Button color='danger'>Danger</Button>
+<React.Fragment>
+    <Button>Default</Button>
+    <Button color="accent">Accent</Button>
+    <Button color='danger'>Danger</Button>
+</React.Fragment>
 ```
 
 ### Feature buttons

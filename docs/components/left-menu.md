@@ -6,7 +6,7 @@ releaseVersion: 0.0.13
 
 A collapsible menu for navigation
 
-### Collapsible Menu
+### Collapsible Expanded
 
 ```.jsx
 <LeftMenu title="Content" showMenuButton={true}>
@@ -15,6 +15,7 @@ A collapsible menu for navigation
 </LeftMenu>
 ```
 
+### Collapsible Collapsed
 ```.jsx
 <LeftMenu title="Content">
       <MenuItem iconName="Home" href="#testing">Overview</MenuItem>

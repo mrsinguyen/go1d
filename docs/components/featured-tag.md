@@ -6,6 +6,7 @@ releaseVersion: 0.2.18
 
 ## Examples
 
+### Base
 ```.jsx
 <View backgroundColor="faint" padding={5}>
   <FeaturedTag>
@@ -14,6 +15,8 @@ releaseVersion: 0.2.18
 </View>
 ```
 
+
+### With all props
 If you really want you can add all the props:
 ```.jsx
 <FeaturedTag
@@ -27,6 +30,8 @@ If you really want you can add all the props:
 </FeaturedTag>
 ```
 
+
+### With Cards
 Carousel with lots of combinations of Cards
 ```.jsx
 <View backgroundColor="faint" padding={5}>
@@ -42,6 +47,7 @@ Carousel with lots of combinations of Cards
 </View>
 ```
 
+### Interactive styles
 With interactive styles
 ```.jsx
 <FeaturedTag passive={false}>

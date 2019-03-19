@@ -9,16 +9,17 @@ All text in our apps should be wrapped in a Text component.
 
 Try out the props below.
 
+### Base
 ```.jsx
 <Prose HTML="<h2>Heading 2</h2><b>This is bold text</b><br /><img src='https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?h=100' alt='Here be image' title='Here be image' />" />
 ```
 
-Does not allow banned tags such as script
+### Does not allow banned tags such as script
 ```.jsx
 <Prose HTML="<script>document.write('Hello World!');</script> Script tags wont show up" />
 ```
 
-Does not allow banned attributes
+### Does not allow banned attributes
 ```.jsx
 <Prose HTML="Hello from the world of <a href='#Test' target='_blank' norel='badtag'>Hello World!</a>" />
 ```

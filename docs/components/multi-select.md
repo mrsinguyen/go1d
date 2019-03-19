@@ -4,7 +4,7 @@ status: ready
 releaseVersion: 0.0.27
 ---
 
-A custom Multi Select component
+### A custom Multi Select component
 
 ```.tsx
 <MultiSelect options={[
@@ -15,7 +15,7 @@ A custom Multi Select component
 ```
 
 
-Disabled Multi Select Field
+### Disabled Multi Select Field
 ```.tsx
 <MultiSelect label="Disabled" options={[
   { "value": "chocolate", label: "Chocolate" },
@@ -25,7 +25,7 @@ Disabled Multi Select Field
 ```
 
 
-Searchable Multi Select Field
+### Searchable Multi Select Field
 ```.tsx
 <MultiSelect label="Favourite" options={[
   { "value": "chocolate", label: "Chocolate" },
@@ -35,7 +35,7 @@ Searchable Multi Select Field
 ```
 
 
-Multi Select with extra style props 
+### Multi Select with extra style props 
 ```.tsx
 <MultiSelect 
   label="Favourite" 

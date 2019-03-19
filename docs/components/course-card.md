@@ -6,7 +6,12 @@ releaseVersion: 0.2.15
 
 ## Examples
 
-Almost all the Props
+### Base
+```.jsx
+<CourseCard />
+```
+
+### Almost all the Props
 ```.jsx
 <CourseCard
   typeIcon="Course"
@@ -26,12 +31,7 @@ Almost all the Props
 />
 ```
 
-None of the props
-```.jsx
-<CourseCard />
-```
-
-Carousel with lots of combinations of Cards
+### Carousel with lots of combinations of Cards
 ```.jsx
 <View padding={3}>
   <Carousel slidesToShow={3} slideAnimationDuration={150}>
