@@ -51,6 +51,12 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonMinimal iconName="Plus">Minimal button</ButtonMinimal>
 ```
 
+### Minimal button subtle colour (Icon and label, Icon to the right)
+
+```.jsx
+<ButtonMinimal iconName="Plus" flexDirection="row-reverse">Minimal button</ButtonMinimal>
+```
+
 ### Minimal button in accent colour (Icon only)
 
 ```.jsx
