@@ -20,6 +20,10 @@ it("renders without crashing with all props", () => {
       itemList={[{ title: "Test" }]}
       metaList={[{ icon: "Star", text: "Hello, world" }]}
       passive={false}
+      status={{
+        type: "inProgress",
+        text: "In progress",
+      }}
     >
       Hello World!
     </CourseCard>
