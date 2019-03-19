@@ -53,14 +53,27 @@ const sizeStylesDefault = {
 };
 
 const getIconMargin = (flexDirection, iconMargin) => {
-  if (flexDirection === "row") {
-    return {
-      marginRight: iconMargin,
-    };
-  }
-  return {
-    marginBottom: iconMargin,
+  const iconMarginStyle = {
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginTop: 0,
   };
+  switch (flexDirection) {
+    case "row":
+      iconMarginStyle.marginRight = iconMargin;
+      break;
+    case "row-reverse":
+      iconMarginStyle.marginLeft = iconMargin;
+      break;
+    case "column":
+      iconMarginStyle.marginBottom = iconMargin;
+      break;
+    case "column-reverse":
+      iconMarginStyle.marginTop = iconMargin;
+      break;
+  }
+  return iconMarginStyle;
 };
 
 const Button: React.SFC<ButtonProps> = ({
