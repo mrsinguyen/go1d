@@ -191,6 +191,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
         data-value={item.value}
         justifyContent="flex-start"
         disabled={item.disabled}
+        data-testid="select-option"
         {...getItemProps}
       >
         {safeInvoke(this.props.optionRenderer, item) || (
