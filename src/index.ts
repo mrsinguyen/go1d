@@ -142,10 +142,7 @@ export {
   default as SelectDropdown,
 } from "./components/SelectDropdown";
 
-export {
-  SessionProps,
-  default as EventDate,
-} from "./components/EventDate";
+export { SessionProps, default as EventDate } from "./components/EventDate";
 
 export {
   default as TagSelector,
