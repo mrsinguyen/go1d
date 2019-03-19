@@ -47,8 +47,7 @@ releaseVersion: 0.2.15
   ]}
   status={
 		{
-			iconName: "InProgress",
-			iconColor: "accent",
+			type: "inProgress",
 			text: "In progress",
 		}
 	}

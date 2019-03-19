@@ -2,6 +2,7 @@ import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import formatPrice from "../../utils/priceFormatter";
+import EnrolmentStatus, { EnrolmentStatusProps } from "../EnrolmentStatus";
 import Icon from "../Icon";
 import MoreMenu from "../MoreMenu";
 import { Item as DropdownItem } from "../MoreMenu/DropdownMenuItem";
@@ -13,13 +14,6 @@ import Skeleton from "./Skeleton";
 interface MetaItem {
   icon?: string;
   text: string;
-}
-
-interface Status {
-  text?: string;
-  textColor?: string;
-  iconName?: string;
-  iconColor?: string;
 }
 
 export interface CourseCardProps extends ViewProps {
@@ -34,7 +28,7 @@ export interface CourseCardProps extends ViewProps {
   metaList?: MetaItem[];
   price?: number;
   currency?: string;
-  status?: Status | null;
+  status?: EnrolmentStatusProps | null;
 }
 
 const interactiveStyle = (colors, passive) => {
@@ -225,28 +219,11 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                     <Text color="accent">{formatPrice(currency, price)}</Text>
                   </View>
                 )}
-              {status && (
-                <View flexDirection="row" marginTop="auto" paddingTop={3}>
-                  {status.iconName && (
-                    <Icon
-                      name={status.iconName}
-                      size={1}
-                      color={status.iconColor}
-                      marginTop={1}
-                      marginRight={2}
-                    />
-                  )}
-                  {status.text && (
-                    <Text
-                      color={status.textColor}
-                      fontSize={1}
-                      fontWeight="semibold"
-                    >
-                      {status.text}
-                    </Text>
-                  )}
-                </View>
-              )}
+              <EnrolmentStatus
+                status={status}
+                marginTop="auto"
+                paddingTop={3}
+              />
             </View>
           </View>
         );

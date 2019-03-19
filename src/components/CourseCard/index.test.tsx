@@ -21,8 +21,7 @@ it("renders without crashing with all props", () => {
       metaList={[{ icon: "Star", text: "Hello, world" }]}
       passive={false}
       status={{
-        iconName: "InProgress",
-        iconColor: "accent",
+        type: "inProgress",
         text: "In progress",
       }}
     >
