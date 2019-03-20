@@ -1,6 +1,6 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import {Button,ButtonFilled,ButtonMinimal,SubmitButton,View,ButtonFeature} from '../src';
+import {Button,ButtonFilled,ButtonMinimal,SubmitButton} from '../src';
 storiesOf("Button", module)
 .add('Filled button in subtle colour', () => <React.Fragment>
     <ButtonFilled>I'm a button</ButtonFilled>
@@ -23,13 +23,3 @@ storiesOf("Button", module)
     <Button color="accent">Accent</Button>
     <Button color='danger'>Danger</Button>
 </React.Fragment>)
-.add('Feature buttons', () => <View flexDirection="row">
-  <ButtonFeature color="danger" iconName="Danger" marginRight={3}>Oh</ButtonFeature>
-  <ButtonFeature iconName="Eye" marginRight={3}>Hi</ButtonFeature>
-  <ButtonFeature color="accent" iconName="User">Mark</ButtonFeature>
-</View>)
-.add('Feature buttons in sizes', () => <View flexDirection="row" alignItems="center">
-  <ButtonFeature size="sm" iconName="Star" marginRight={3}>Star</ButtonFeature>
-  <ButtonFeature size="md" iconName="User" marginRight={3}>User</ButtonFeature>
-  <ButtonFeature size="lg" iconName="Video">Video</ButtonFeature>
-</View>)
