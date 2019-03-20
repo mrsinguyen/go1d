@@ -118,10 +118,15 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
         }, []);
       }
     }
-    return options.map(item => {
-      item.value = item.value.toString();
-      return item;
-    });
+
+    return options
+      .map(item => {
+        item.value = item.value.toString();
+        return item;
+      })
+      .filter((thing, index, self) => {
+        return index === self.findIndex(t => t.value === thing.value);
+      });
   }
 
   @autobind
@@ -157,7 +162,6 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
 
   public render() {
     const {
-      options,
       label,
       id = `MultiSelect_${Math.random()}`,
       defaultText = "Please Select",
@@ -172,16 +176,18 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
 
     let selectText = defaultText;
 
+    const filteredOptions = this.getFilteredOptions();
     if (this.state.selected.length > 0) {
-      selectText = options
+      selectText = filteredOptions
+        .filter((thing, index, self) => {
+          return index === self.findIndex(t => t.value === thing.value);
+        })
         .filter((option: SelectDropdownItem) =>
           selected.includes(`${option.value}`)
         )
         .map((selectedItem: SelectDropdownItem) => selectedItem.label)
         .join(", ");
     }
-
-    const filteredOptions = this.getFilteredOptions();
 
     return (
       <React.Fragment>

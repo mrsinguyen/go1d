@@ -271,7 +271,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     } = this.props;
 
     const options = this.state.search
-      ? filter(rawOptions, this.state.search)
+      ? filter(rawOptions, this.state.search.toLowerCase())
       : rawOptions;
 
     const createAvailable = renderCreateOption && searchTerm.trim() !== "";
