@@ -118,8 +118,10 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
         }, []);
       }
     }
-
-    return options;
+    return options.map(item => {
+      item.value = item.value.toString();
+      return item;
+    });
   }
 
   @autobind

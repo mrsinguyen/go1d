@@ -87,7 +87,6 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     options: [],
     popperPlacement: "bottom-start",
   };
-
   public state: State = {
     focused: false,
     forceClose: false,
@@ -218,7 +217,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   public renderSearch(getItemProps: any) {
     const { value, onMouseDown, disabled, ...props } = getItemProps;
     return (
-      <View {...props} marginX={3}>
+      <View {...props} marginX={3} marginBottom={3}>
         <SearchInput
           id="search"
           name="search"
