@@ -3,7 +3,7 @@ import * as React from "react";
 import { ButtonFilledProps } from "../ButtonFilled";
 import ButtonFilled from "../ButtonFilled";
 
-const ButtonFeature: React.SFC<ButtonFilledProps> = ({
+const ToggleButtonFeature: React.SFC<ButtonFilledProps> = ({
   size = "md",
   sizeStyles,
   children,
@@ -48,6 +48,6 @@ const ButtonFeature: React.SFC<ButtonFilledProps> = ({
   );
 };
 
-ButtonFeature.displayName = "ButtonFeature";
+ToggleButtonFeature.displayName = "ToggleButtonFeature";
 
-export default ButtonFeature;
+export default ToggleButtonFeature;
