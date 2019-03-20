@@ -142,10 +142,7 @@ export {
   default as SelectDropdown,
 } from "./components/SelectDropdown";
 
-export {
-  SessionProps,
-  default as EventDate,
-} from "./components/EventDate";
+export { SessionProps, default as EventDate } from "./components/EventDate";
 
 export {
   default as TagSelector,
@@ -172,6 +169,10 @@ export { default as InputGroup } from "./components/InputGroup";
 export { default as InputTextAffix } from "./components/InputTextAffix";
 export { default as BaseUploader } from "./components/BaseUploader";
 export { default as ImageUploadSlat } from "./components/ImageUploadSlat";
+export {
+  default as TagToggleGroup,
+  TagTogggleGroupProps,
+} from "./components/TagToggleGroup";
 
 /* Utils */
 export { default as priceFormatterUtil } from "./utils/priceFormatter";

@@ -320,6 +320,19 @@ class ImageUploadSlat extends React.Component<ImageUploadSlatProps, State> {
       disabled,
       onBlur: propBlur,
       error,
+      // All props below here are being removed to prevent react errors
+      fileName: removingFileName,
+      chooseAFileText,
+      acceptedFileTypesText,
+      sizeLimitText,
+      uploadedText,
+      replaceImageText,
+      uploadingText,
+      deleteText,
+      dropImageText,
+      dragDropText,
+      uploadProgress,
+      showUploadCompleted,
       ...props
     } = this.props;
     const { disabledClick } = this.state;
