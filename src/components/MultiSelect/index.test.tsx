@@ -88,35 +88,3 @@ it("handles default values", () => {
     />
   );
 });
-
-it("handles onChange", () => {
-  const ref: React.RefObject<MultiSelect> = React.createRef();
-  const onChangeMock = jest.fn();
-  render(
-    <MultiSelect
-      options={Options}
-      label="Test"
-      disabled={false}
-      onChange={onChangeMock}
-      name="Test"
-      searchable={true}
-      defaultValue={["test 1", "test"]}
-    />
-  );
-});
-
-it("handles clear selection", () => {
-  const ref: React.RefObject<MultiSelect> = React.createRef();
-  const onChangeMock = jest.fn();
-  render(
-    <MultiSelect
-      options={Options}
-      label="Test"
-      disabled={false}
-      onChange={onChangeMock}
-      name="Test"
-      searchable={true}
-      defaultValue={["test 1", "test"]}
-    />
-  );
-});
