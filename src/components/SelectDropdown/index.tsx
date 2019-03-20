@@ -77,7 +77,21 @@ interface State {
 }
 
 const filter = (list, filterText) =>
-  list.filter(item => item.value.includes(filterText));
+  list
+    .filter(
+      item =>
+        item.value
+          .toString()
+          .toLowerCase()
+          .includes(filterText) ||
+        item.label
+          .toString()
+          .toLowerCase()
+          .includes(filterText)
+    )
+    .filter((thing, index, self) => {
+      return index === self.findIndex(t => t.value === thing.value);
+    });
 
 class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   public static defaultProps = {
@@ -97,6 +111,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     this.setState({
       focused: false,
     });
+    this.handleSearchChange("");
   }
 
   @autobind
@@ -148,7 +163,6 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     if (this.props.isMulti) {
       returnValue = this.handleMultiValueChange(option.value);
     }
-
     safeInvoke(this.props.onChange, {
       target: { name: this.props.name, value: returnValue },
     });
@@ -206,11 +220,10 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     if (evt && evt !== "") {
       value = evt.target.value;
     }
-
     this.setState({
       search: value,
     });
-    this.props.handleSearchChange(value, evt);
+    safeInvoke(this.props.handleSearchChange, value, evt);
   }
 
   @autobind
@@ -225,6 +238,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
           onSubmit={this.props.handleSearchChange}
           onChange={this.handleSearchChange}
           onClear={this.handleSearchChange}
+          value={this.state.search}
         />
       </View>
     );
@@ -272,12 +286,18 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
 
     const options = this.state.search
       ? filter(rawOptions, this.state.search.toLowerCase())
-      : rawOptions;
+      : rawOptions
+          .map(item => {
+            item.value = item.value.toString();
+            return item;
+          })
+          .filter((thing, index, self) => {
+            return index === self.findIndex(t => t.value === thing.value);
+          });
 
     const createAvailable = renderCreateOption && searchTerm.trim() !== "";
     const firstSelectableOptionIndex =
       0 + (handleSearchChange ? 1 : 0) + (createAvailable ? 1 : 0);
-
     return (
       <Downshift
         isOpen={

@@ -86,50 +86,6 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
   }
 
   @autobind
-  public getFilteredOptions() {
-    const { searchValue } = this.state;
-    const { searchable, options } = this.props;
-
-    if (searchable) {
-      if (searchValue !== "") {
-        return options.reduce((sum, Option) => {
-          if (Option.optgroup) {
-            const subOptions = Option.values.filter(subOption =>
-              subOption.label.toLowerCase().includes(searchValue.toLowerCase())
-            );
-
-            if (subOptions.length > 0) {
-              return [
-                ...sum,
-                {
-                  ...Option,
-                  values: subOptions,
-                },
-              ];
-            }
-          } else {
-            if (
-              Option.label.toLowerCase().includes(searchValue.toLowerCase())
-            ) {
-              return [...sum, Option];
-            }
-          }
-          return sum;
-        }, []);
-      }
-    }
-
-    return options
-      .map(item => {
-        item.value = item.value.toString();
-        return item;
-      })
-      .filter((thing, index, self) => {
-        return index === self.findIndex(t => t.value === thing.value);
-      });
-  }
-
-  @autobind
   public renderOption(item: SelectDropdownItem) {
     return (
       <View
@@ -140,7 +96,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
         flexDirection="row"
       >
         <Checkbox
-          value={this.state.selected.includes(`${item.value}`)}
+          value={this.state.selected.includes(item.value.toString())}
           id={`check_${item.label}`}
           label={item.label}
           fontSize={1}
@@ -156,12 +112,14 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
     this.setState({
       searchValue,
     });
-
-    evt.stopPropagation();
+    if (evt.stopPropagation) {
+      evt.stopPropagation();
+    }
   }
 
   public render() {
     const {
+      options,
       label,
       id = `MultiSelect_${Math.random()}`,
       defaultText = "Please Select",
@@ -176,15 +134,12 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
 
     let selectText = defaultText;
 
-    const filteredOptions = this.getFilteredOptions();
     if (this.state.selected.length > 0) {
-      selectText = filteredOptions
+      selectText = options
         .filter((thing, index, self) => {
           return index === self.findIndex(t => t.value === thing.value);
         })
-        .filter((option: SelectDropdownItem) =>
-          selected.includes(`${option.value}`)
-        )
+        .filter(item => selected.includes(item.value.toString()))
         .map((selectedItem: SelectDropdownItem) => selectedItem.label)
         .join(", ");
     }
@@ -256,7 +211,7 @@ class MultiSelect extends React.Component<MultiSelectProps, State> {
           </View>
         </View>
         <SelectDropdown
-          options={filteredOptions}
+          options={options}
           onChange={this.handleChange}
           searchPlaceholder="Search for ..."
           closeOnSelection={closeOnSelect}
