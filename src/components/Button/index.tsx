@@ -157,6 +157,7 @@ const Button: React.SFC<ButtonProps> = ({
               ) : (
                 <Icon
                   name={iconName}
+                  transition={transition}
                   color={iconColor}
                   size={iconSizeValue}
                   {...iconMarginStyle}
@@ -164,6 +165,7 @@ const Button: React.SFC<ButtonProps> = ({
               ))}
             <Text
               lineHeight="ui"
+              transition={transition}
               fontWeight={fontWeight}
               fontSize={typeScale}
               color="inherit"

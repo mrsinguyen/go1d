@@ -41,6 +41,7 @@ const ToggleButtonFeature: React.SFC<ButtonFilledProps> = ({
       minWidth={height}
       sizeStyles={sizeStylesMerged}
       flexDirection="column"
+      css={css}
       {...props}
     >
       {children}
