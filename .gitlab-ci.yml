@@ -82,7 +82,7 @@ test:happo:
     - export CURRENT_SHA=$CI_COMMIT_SHA
     - export CHANGE_URL=$CI_PAGES_URL
   script:
-    - DIFF_REVIEW=$(node ./script/check-screenshot-result.js)
+    - DIFF_REVIEW=$(node ./scripts/check-screenshot-result.js)
     - if ["$DIFF_REVIEW" != "accept" ]; then yarn config set no-progress; fi
     - if ["$DIFF_REVIEW" != "accept" ]; then yarn install --silent; fi
     - if ["$DIFF_REVIEW" != "accept" ]; then yarn react:docs && node ./.storybook/generate-props-file.js; fi
