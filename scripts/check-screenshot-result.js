@@ -27,8 +27,9 @@ const post_req = https.request(options, (resp) => {
       } else {
         console.log("reject");
       }
+    } else {
+      console.log("run_compare");
     }
-    console.log("run_compare");
   });
 
 }).on("error", (err) => {
