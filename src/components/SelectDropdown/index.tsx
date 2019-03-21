@@ -285,6 +285,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
       isMulti,
       selectedColor,
       optionRenderer,
+      onChange,
       ...remainingProps
     } = this.props;
 
