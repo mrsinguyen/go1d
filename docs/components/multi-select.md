@@ -8,9 +8,11 @@ releaseVersion: 0.0.27
 
 ```.tsx
 <MultiSelect options={[
-  { "value": "chocolate", label: "Chocolate" },
-  { "value": "stawberry", label: "Strawberry" },
-  { "value": "vanilla", label: "Vanilla" }
+  { "value": 1, label: "Chocolate" },
+  { "value": 2, label: "Strawberry" },
+  { "value": 2, label: "Strawberry" },
+  { "value": 2, label: "Strawberry" },
+  { "value": 3, label: "Vanilla" }
 ]} />
 ```
 
@@ -19,7 +21,7 @@ releaseVersion: 0.0.27
 ```.tsx
 <MultiSelect label="Disabled" options={[
   { "value": "chocolate", label: "Chocolate" },
-  { "value": "stawberry", label: "Strawberry" },
+  { "value": "strawberry", label: "Strawberry" },
   { "value": "vanilla", label: "Vanilla" }
 ]} disabled={true} />
 ```
@@ -29,7 +31,7 @@ releaseVersion: 0.0.27
 ```.tsx
 <MultiSelect label="Favourite" options={[
   { "value": "chocolate", label: "Chocolate" },
-  { "value": "stawberry", label: "Strawberry" },
+  { "value": "strawberry", label: "Strawberry" },
   { "value": "vanilla", label: "Vanilla" }
 ]} searchable={true} />
 ```
@@ -47,7 +49,7 @@ releaseVersion: 0.0.27
   }}
   options={[
     { "value": "chocolate", label: "Chocolate" },
-    { "value": "stawberry", label: "Strawberry" },
+    { "value": "strawberry", label: "Strawberry" },
     { "value": "vanilla", label: "Vanilla" }
   ]}  
 />
