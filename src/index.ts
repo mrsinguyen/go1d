@@ -23,7 +23,9 @@ export {
   default as ToggleSwitch,
   ToggleSwitchProps,
 } from "./components/ToggleSwitch";
-export { default as ButtonFeature } from "./components/ButtonFeature";
+export {
+  default as ToggleButtonFeature,
+} from "./components/ToggleButtonFeature";
 export { default as Pill, PillProps } from "./components/Pill";
 export { default as PageBody, PageBodyProps } from "./components/PageBody";
 export { default as Icon, IconProps } from "./components/Icon";
@@ -142,6 +144,8 @@ export {
   default as SelectDropdown,
 } from "./components/SelectDropdown";
 
+export { SessionProps, default as EventDate } from "./components/EventDate";
+
 export {
   default as TagSelector,
   TagSelectorProps,
@@ -167,6 +171,10 @@ export { default as InputGroup } from "./components/InputGroup";
 export { default as InputTextAffix } from "./components/InputTextAffix";
 export { default as BaseUploader } from "./components/BaseUploader";
 export { default as ImageUploadSlat } from "./components/ImageUploadSlat";
+export {
+  default as TagToggleGroup,
+  TagTogggleGroupProps,
+} from "./components/TagToggleGroup";
 
 /* Utils */
 export { default as priceFormatterUtil } from "./utils/priceFormatter";

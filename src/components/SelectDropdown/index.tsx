@@ -3,6 +3,7 @@ import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 
 import { Placement } from "popper.js";
+import { colors } from "../../foundations";
 import { ZIndex } from "../../foundations/foundation-types";
 import { autobind } from "../../utils/decorators";
 import safeInvoke from "../../utils/safeInvoke";
@@ -76,7 +77,21 @@ interface State {
 }
 
 const filter = (list, filterText) =>
-  list.filter(item => item.value.includes(filterText));
+  list
+    .filter(
+      item =>
+        item.value
+          .toString()
+          .toLowerCase()
+          .includes(filterText) ||
+        item.label
+          .toString()
+          .toLowerCase()
+          .includes(filterText)
+    )
+    .filter((thing, index, self) => {
+      return index === self.findIndex(t => t.value === thing.value);
+    });
 
 class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   public static defaultProps = {
@@ -86,7 +101,6 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     options: [],
     popperPlacement: "bottom-start",
   };
-
   public state: State = {
     focused: false,
     forceClose: false,
@@ -97,6 +111,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     this.setState({
       focused: false,
     });
+    this.handleSearchChange("");
   }
 
   @autobind
@@ -120,7 +135,13 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
   }
 
   @autobind
-  public handleOptionClick(option: SelectDropdownItem | string) {
+  public handleOptionClick(
+    option: SelectDropdownItem | string,
+    selectActions: any
+  ) {
+    if (!this.props.closeOnSelection) {
+      selectActions.openMenu();
+    }
     if (typeof option === "string") {
       this.create({
         target: { value: option, name: this.props.name, id: this.props.id },
@@ -142,7 +163,6 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     if (this.props.isMulti) {
       returnValue = this.handleMultiValueChange(option.value);
     }
-
     safeInvoke(this.props.onChange, {
       target: { name: this.props.name, value: returnValue },
     });
@@ -163,12 +183,19 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     getItemProps: any
   ) {
     const { selectedColor = "faint" } = this.props;
+
     return (
       <ButtonMinimal
         width="100%"
         height="auto"
         minHeight="40px"
         borderRadius={0}
+        paddingY={this.props.isMulti ? 0 : undefined}
+        css={{
+          ":hover,:focus": {
+            backgroundColor: colors[selectedColor],
+          },
+        }}
         backgroundColor={
           getItemProps.highlightedIndex === getItemProps.index
             ? selectedColor
@@ -177,6 +204,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
         data-value={item.value}
         justifyContent="flex-start"
         disabled={item.disabled}
+        data-testid="select-option"
         {...getItemProps}
       >
         {safeInvoke(this.props.optionRenderer, item) || (
@@ -192,18 +220,17 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     if (evt && evt !== "") {
       value = evt.target.value;
     }
-
     this.setState({
       search: value,
     });
-    this.props.handleSearchChange(value, evt);
+    safeInvoke(this.props.handleSearchChange, value, evt);
   }
 
   @autobind
   public renderSearch(getItemProps: any) {
     const { value, onMouseDown, disabled, ...props } = getItemProps;
     return (
-      <View {...props} marginX={3}>
+      <View {...props} marginX={3} marginBottom={3}>
         <SearchInput
           id="search"
           name="search"
@@ -211,6 +238,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
           onSubmit={this.props.handleSearchChange}
           onChange={this.handleSearchChange}
           onClear={this.handleSearchChange}
+          value={this.state.search}
         />
       </View>
     );
@@ -253,17 +281,27 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
       container,
       dropdownZindex,
       popperPlacement,
+      createableText,
+      isMulti,
+      selectedColor,
+      optionRenderer,
       ...remainingProps
     } = this.props;
 
     const options = this.state.search
-      ? filter(rawOptions, this.state.search)
-      : rawOptions;
+      ? filter(rawOptions, this.state.search.toLowerCase())
+      : rawOptions
+          .map(item => {
+            item.value = item.value.toString();
+            return item;
+          })
+          .filter((thing, index, self) => {
+            return index === self.findIndex(t => t.value === thing.value);
+          });
 
     const createAvailable = renderCreateOption && searchTerm.trim() !== "";
     const firstSelectableOptionIndex =
       0 + (handleSearchChange ? 1 : 0) + (createAvailable ? 1 : 0);
-
     return (
       <Downshift
         isOpen={
@@ -293,6 +331,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
                 {({ ref }) =>
                   children({
                     ref,
+                    "data-testid": "select-dropdown-trigger",
                     ...downshiftParams,
                   })
                 }

@@ -1,12 +1,12 @@
 import { css } from "emotion";
 import * as React from "react";
 import { render } from "react-testing-library";
-import ButtonFeature from "./index";
+import ToggleButtonFeature from "./index";
 
 const mock = jest.fn();
 
 it("renders without crashing without any optional props", () => {
-  render(<ButtonFeature onClick={mock}>Button text</ButtonFeature>);
+  render(<ToggleButtonFeature onClick={mock}>Button text</ToggleButtonFeature>);
 });
 
 it("renders without crashing with all props", () => {
@@ -15,7 +15,7 @@ it("renders without crashing with all props", () => {
   `;
 
   render(
-    <ButtonFeature
+    <ToggleButtonFeature
       backgroundColor="lightest"
       iconMarginBottom={0}
       color="subtle"
@@ -24,6 +24,6 @@ it("renders without crashing with all props", () => {
       onClick={mock}
     >
       Button text
-    </ButtonFeature>
+    </ToggleButtonFeature>
   );
 });

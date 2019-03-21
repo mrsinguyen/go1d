@@ -51,6 +51,12 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
 <ButtonMinimal iconName="Plus">Minimal button</ButtonMinimal>
 ```
 
+### Minimal button subtle colour (Icon and label, Icon to the right)
+
+```.jsx
+<ButtonMinimal iconName="Plus" flexDirection="row-reverse">Minimal button</ButtonMinimal>
+```
+
 ### Minimal button in accent colour (Icon only)
 
 ```.jsx
@@ -83,52 +89,6 @@ Buttons usually simulate a 3D-appearance but may also have a minimal appearance.
     <Button color="accent">Accent</Button>
     <Button color='danger'>Danger</Button>
 </React.Fragment>
-```
-
-### Feature buttons
-
-```.jsx
-<View flexDirection="row">
-  <ButtonFeature color="danger" iconName="Danger" marginRight={3}>Oh</ButtonFeature>
-  <ButtonFeature iconName="Eye" marginRight={3}>Hi</ButtonFeature>
-  <ButtonFeature color="accent" iconName="User">Mark</ButtonFeature>
-</View>
-```
-
-### Feature buttons in sizes
-```.jsx
-<View flexDirection="row" alignItems="center">
-  <ButtonFeature size="sm" iconName="Star" marginRight={3}>Star</ButtonFeature>
-  <ButtonFeature size="md" iconName="User" marginRight={3}>User</ButtonFeature>
-  <ButtonFeature size="lg" iconName="Video">Video</ButtonFeature>
-</View>
-```
-
-### Feature buttons adjusted
-
-```js
-const customSizeStyles = {
-  sm: {
-    iconSize: 5,
-    iconMargin: 0,
-  },
-  md: {
-    iconSize: 6,
-    iconMargin: 0,
-  },
-  lg: {
-    iconSize: 7,
-    iconMargin: 0,
-  }
-};
-```
-
-```.jsx
-<View flexDirection="row">
-  <ButtonFeature sizeStyles={customSizeStyles} iconName="TooEasy" marginRight={3}>Too easy</ButtonFeature>
-  <ButtonFeature sizeStyles={customSizeStyles} iconName="Suitable" marginRight={3}>Suitable</ButtonFeature>
-  <ButtonFeature sizeStyles={customSizeStyles} iconName="TooHard">Too hard</ButtonFeature>
-</View>
 ```
 
 ## Best practice

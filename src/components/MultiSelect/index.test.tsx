@@ -1,5 +1,7 @@
 import * as React from "react";
 import { cleanup, fireEvent, render } from "react-testing-library";
+import { debug } from "util";
+import Text from "../Text/index";
 import MultiSelect from "./index";
 
 afterEach(cleanup);
@@ -35,120 +37,54 @@ it("renders without crashing with optional props", () => {
     />
   );
 });
-
-it("Can select an item in the dropdown with keyboard - Enter", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <MultiSelect options={Options} onChange={ChangeMock} />
+it("renders label as React Node without crashing", () => {
+  const onChangeMock = () => null;
+  render(
+    <MultiSelect
+      options={Options}
+      label={<Text>Hello</Text>}
+      disabled={false}
+      onChange={onChangeMock}
+      name="Test"
+    />
+  );
+});
+it("search filters options", () => {
+  const onChangeMock = jest.fn();
+  const { getByTestId, getAllByTestId } = render(
+    <MultiSelect
+      options={Options}
+      label="Test"
+      disabled={false}
+      onChange={onChangeMock}
+      name="Test"
+      searchable={true}
+    />
   );
 
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
+  const trigger = getByTestId("select-dropdown-trigger");
+  trigger.click();
 
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value[0]).toBe("test");
+  const inputNode = getByTestId("inputElement");
+  fireEvent.change(inputNode, { target: { value: Options[1].label } });
+  expect(getByTestId("inputElement").getAttribute("value")).toBe(
+    Options[1].label
+  );
+
+  expect(getAllByTestId("select-option").length).toBe(1);
 });
 
-it("Can select multiple items in the dropdown", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <MultiSelect options={Options} onChange={ChangeMock} />
+it("handles default values", () => {
+  const onChangeMock = jest.fn();
+  render(
+    <MultiSelect
+      options={Options}
+      label="Test"
+      disabled={false}
+      onChange={onChangeMock}
+      name="Test"
+      searchable={true}
+      defaultValue={["test 1", "test"]}
+    />
   );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowUp",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(2);
-  expect(ChangeMock.mock.calls[1][0].target.value.length).toBe(2);
-  expect(ChangeMock.mock.calls[1][0].target.value[0]).toBe("test");
-  expect(ChangeMock.mock.calls[1][0].target.value[1]).toBe("test 1");
-});
-
-it("Can deselect items in the dropdown", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <MultiSelect options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(3);
-  expect(ChangeMock.mock.calls[2][0].target.value.length).toBe(1);
-  expect(ChangeMock.mock.calls[2][0].target.value[0]).toBe("test 1");
-});
-
-it("Can clear selection", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <MultiSelect options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  fireEvent.click(getByTestId("clearSelectionButton"));
-
-  expect(ChangeMock.mock.calls.length).toBe(4);
-  expect(ChangeMock.mock.calls[3][0].target.value.length).toBe(0);
 });

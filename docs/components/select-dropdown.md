@@ -7,7 +7,7 @@ status: ready
   <SelectDropdown
   options={[
     { "value": "chocolate", label: "Chocolate" },
-    { "value": "stawberry", label: "Strawberry" },
+    { "value": "strawberry", label: "Strawberry" },
     { "value": "vanilla", label: "Vanilla" }
   ]}
   onChange={(selection) => window.alert(`You selected ${selection.label}`)}

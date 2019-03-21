@@ -83,7 +83,7 @@ class TagToggle extends React.Component<
       marginX,
       marginY,
       marginTop,
-      marginBottom,
+      marginBottom = 0,
       disabled = false,
       size = "md",
       ...props
@@ -110,6 +110,10 @@ class TagToggle extends React.Component<
                 css={{
                   position: "absolute",
                   opacity: 0,
+                  ":disabled": {
+                    // This gets overwritten by a global style unless we do this
+                    opacity: "0 !important",
+                  },
                   ":disabled + label": {
                     opacity: 0.5,
                     pointerEvents: "none",
@@ -127,7 +131,7 @@ class TagToggle extends React.Component<
               />
               <View
                 element="label"
-                for={id}
+                htmlFor={id}
                 display="inline-flex"
                 flexDirection="row"
                 alignItems="center"
@@ -135,6 +139,7 @@ class TagToggle extends React.Component<
                 height={height}
                 paddingY={paddingY}
                 paddingX={paddingX}
+                marginBottom={marginBottom}
                 transition="quick"
                 color={value ? "contrast" : "subtle"}
                 backgroundColor={value ? "faint" : "background"}
