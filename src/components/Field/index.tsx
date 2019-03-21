@@ -1,6 +1,7 @@
 import { Field as FormikField } from "formik";
 import * as React from "react";
 
+import { get } from "lodash";
 import firstDefined from "../../utils/firstDefined";
 import safeInvoke from "../../utils/safeInvoke";
 import Label from "../Label";
@@ -64,11 +65,11 @@ const Field: React.SFC<FieldProps> = ({
 
         if (
           form.errors &&
-          form.errors[field.name] &&
-          form.touched[field.name] && // Only show error for touched fields //
+          get(form.errors, field.name) &&
+          get(form.touched, field.name) && // Only show error for touched fields //
           !suppressError
         ) {
-          message = form.errors[field.name];
+          message = get(form.errors, field.name);
         }
         if (errorMessage) {
           message = errorMessage;
@@ -99,17 +100,17 @@ const Field: React.SFC<FieldProps> = ({
         // component can get into a recursive state where a previous error prevents the status from being updated, check for that here
         if (
           (statusText === invalidText || statusText === requiredText) &&
-          !form.errors[field.name]
+          !get(form.errors, field.name)
         ) {
           statusText = "";
         }
 
         // this is not an unnecessary check of touched. Otherwise the status text won't get updated. //
-        if (!statusText || form.touched[field.name]) {
+        if (!statusText || get(form.touched, field.name)) {
           if (
             (form.errors &&
-              form.errors[field.name] &&
-              form.touched[field.name] &&
+              get(form.errors, field.name) &&
+              get(form.touched, field.name) &&
               !suppressError) ||
             errorMessage
           ) {
