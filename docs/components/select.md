@@ -10,7 +10,24 @@ A custom select component
 <Select options={[
   { "value": "chocolate", label: "Chocolate" },
   { "value": "stawberry", label: "Strawberry" },
-  { "value": "vanilla", label: "Vanilla" }
+  { "value": "vanilla", label: "Vanilla" },
+  { "value": "caramel", label: "Caramel" },
+  { "value": "maple", label: "Maple" },
+  { "value": "birch", label: "Birch" },
+  { "value": "soda", label: "Soda" },
+  { "value": "feta", label: "Feta" },
+  { "value": "brie", label: "Brie" },
+  { "value": "camembert", label: "Camembert" },
+  { "value": "cheddar", label: "Cheddar" },
+  { "value": "ricotta", label: "Ricotta" },
+  { "value": "mimolette", label: "Mimolette" },
+  { "value": "coulommiers", label: "Coulommiers" },
+  { "value": "feta", label: "Feta" },
+  { "value": "gorgonzola", label: "Gorgonzola" },
+  { "value": "gouda", label: "Gouda" },
+  { "value": "havarti", label: "Havarti" },
+  { "value": "mascarpone", label: "Mascarpone" },
+  { "value": "mozzarella", label: "Mozzarella" },
 ]} />
 ```
 

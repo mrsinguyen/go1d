@@ -17,7 +17,7 @@ export interface MultiSelectProps extends SelectProps {
   labelPaddingBottom?: number;
 }
 
-class MultiSelect extends React.Component<MultiSelectProps, any> {
+class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
   constructor(props) {
     super(props);
 
