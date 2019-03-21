@@ -1,25 +1,25 @@
-import React from 'react'; 
-import {storiesOf} from '@storybook/react'; 
-import {OverviewCtaCard,View,ButtonFilled,Avatar,Icon,Text} from '../src'; 
-storiesOf("OverviewCtaCard", module) 
+import React from 'react';
+import {storiesOf} from '@storybook/react';
+import {OverviewCtaCard,View,ButtonFilled,Avatar,Icon,Text} from '../src';
+storiesOf("OverviewCtaCard", module)
 .add('Overview CTA card with no props', () => <View css={{
   position: "relative",
   height: 60,
 }}>
   <OverviewCtaCard />
-</View>) 
+</View>)
 .add('Overview CTA card with image and CTA button', () => <View css={{
   position: "relative",
   height: 480,
 }}>
   <OverviewCtaCard
-    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
+    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?fit=crop&w=589"
     title="Cooking with charcoal"
     ctaButton={(
       <ButtonFilled color="accent">Enquire to enrol</ButtonFilled>
     )}
   />
-</View>) 
+</View>)
 .add('Overview CTA card with price and CTA button', () => <View css={{
   position: "relative",
   height: 200,
@@ -32,7 +32,7 @@ storiesOf("OverviewCtaCard", module)
       <ButtonFilled color="accent">Enquire to enrol</ButtonFilled>
     )}
   />
-</View>) 
+</View>)
 .add('Overview CTA card with props and CTA button', () => <View css={{
   position: "relative",
   height: 520,
@@ -49,7 +49,7 @@ storiesOf("OverviewCtaCard", module)
         By Leslie Knope
       </View>
     }
-    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
+    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?fit=crop&w=589"
     ctaButton={(
       <ButtonFilled color="accent">Enrol</ButtonFilled>
     )}
@@ -71,15 +71,15 @@ storiesOf("OverviewCtaCard", module)
     }
     title="Cooking with charcoal"
   />
-</View>) 
+</View>)
 .add('Overview CTA card with custom children', () => <View css={{
   position: "relative",
   height: 320,
 }}>
   <OverviewCtaCard
-    title="Cooking with charcoal" 
-    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=10cd46d36ba78d30891de50e25907fe6&auto=format&fit=crop&w=2089&q=80"
+    title="Cooking with charcoal"
+    backgroundImage="https://images.unsplash.com/photo-1539512110726-6d89c892f117?fit=crop&w=589"
     >
     <Text fontSize={1}>Part of your subscription</Text>
   </OverviewCtaCard>
-</View>) 
+</View>)
