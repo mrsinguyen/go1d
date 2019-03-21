@@ -83,14 +83,15 @@ test:happo:
     - export CHANGE_URL=$CI_PAGES_URL
   script:
     - DIFF_REVIEW=$(node ./scripts/check-screenshot-result.js)
-    - if [ "$DIFF_REVIEW" != "accept" ]; then yarn config set no-progress; fi
-    - if [ "$DIFF_REVIEW" != "accept" ]; then yarn install --silent; fi
-    - if [ "$DIFF_REVIEW" != "accept" ]; then yarn react:docs && node ./.storybook/generate-props-file.js; fi
-    - if [ "$DIFF_REVIEW" != "accept" ]; then yarn run happo-ci; fi
+    - if [ "$DIFF_REVIEW" != "accept" ]; then
+    - yarn config set no-progress
+    - yarn install --silent
+    - yarn react:docs && node ./.storybook/generate-props-file.js
+    - yarn run happo-ci
     # Check for EXIT_CODE env
     - NPM_BIN=$(yarn bin)
-    - if [ "$DIFF_REVIEW" != "accept" ]; then SUMMARY=$("$NPM_BIN"/happo compare "$PREVIOUS_SHA" "$CURRENT_SHA"); fi
-    - if [[ "$DIFF_REVIEW" != "accept" &&  "$EXIT_CODE" == "113" ]]; then exit 1; fi
+    - SUMMARY=$("$NPM_BIN"/happo compare "$PREVIOUS_SHA" "$CURRENT_SHA");
+    - if [ "$EXIT_CODE" == "113" ]; then exit 1; fi; fi
   only:
   - merge_requests
 
