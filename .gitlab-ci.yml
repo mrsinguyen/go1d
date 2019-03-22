@@ -78,7 +78,7 @@ test:happo:
   tags: ["aws"]
   allow_failure: true
   before_script:
-    - export PREVIOUS_SHA=`git rev-parse origin/master`
+    - export PREVIOUS_SHA=origin-master
     - export CURRENT_SHA=$CI_COMMIT_SHA
     - export CHANGE_URL=$CI_PAGES_URL
   script:
@@ -145,6 +145,7 @@ release:npm:
     - rm readme.md
     - mv npm-readme.md readme.md
     - npm publish --access public
+    - yarn happo run origin-master
   except:
     - "tags"
   only:

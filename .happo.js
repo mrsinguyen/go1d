@@ -1,6 +1,7 @@
 const { RemoteBrowserTarget } = require('happo.io');
 const happoPluginTypescript = require('happo-plugin-typescript');
 const happoPluginStorybook = require('happo-plugin-storybook');
+const path = require('path');
 
 
 module.exports = {
@@ -12,6 +13,7 @@ module.exports = {
     happoPluginTypescript(),
     happoPluginStorybook(),
   ],
+  stylesheets: [path.resolve(__dirname,'.storybook')+'/happo.css'],
   include: '**/*.story.js',
   targets: {
     'chrome-desktop': new RemoteBrowserTarget('chrome', {
