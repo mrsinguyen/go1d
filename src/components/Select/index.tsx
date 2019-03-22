@@ -2,7 +2,12 @@ import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import { AutoSizer, List } from "react-virtualized";
+import safeInvoke from "../../utils/safeInvoke";
+import ButtonMinimal from "../ButtonMinimal";
 import Portal from "../Portal";
+import SearchInput from "../SearchInput";
+import Text from "../Text";
+import Theme from "../Theme";
 
 import View, { ViewProps } from "../View";
 
@@ -27,12 +32,26 @@ export interface SelectProps extends ViewProps {
   onClear?: () => void;
 }
 
+const Sizes = {
+  sm: {
+    fontSize: 1,
+  },
+  md: {
+    fontSize: 2,
+  },
+  lg: {
+    fontSize: 3,
+  },
+};
+
 class Select extends React.PureComponent<SelectProps, any> {
+  public static defaultProps = {
+    size: "md",
+  };
+
   public OptionToString(Option) {
     if (Option) {
       return Option.value;
-    } else {
-      console.log(Option, "toString");
     }
   }
 
@@ -41,14 +60,26 @@ class Select extends React.PureComponent<SelectProps, any> {
     getItemProps,
     highlightedIndex,
     selectedItem,
+    colors,
   }) {
     return ({ key, index, style: virtualisedStyles }) => {
       const Option = options[index];
 
       if (Option.optgroup) {
+        if (Option.label.trim() === "") {
+          return (
+            <View key={key} css={virtualisedStyles} backgroundColor="soft" />
+          );
+        }
+
         return (
-          <View key={key} css={virtualisedStyles} backgroundColor="faint">
-            {Option.label}
+          <View
+            key={key}
+            css={virtualisedStyles}
+            backgroundColor="faint"
+            padding={4}
+          >
+            <Text color="subtle">{Option.label}</Text>
           </View>
         );
       }
@@ -56,20 +87,33 @@ class Select extends React.PureComponent<SelectProps, any> {
       return (
         <View key={key} css={virtualisedStyles}>
           <View
-            height={30}
+            height={50}
+            width="100%"
+            paddingY={4}
+            paddingX={Option.childOption ? 6 : 4}
             {...getItemProps({
               index: Option.selectableIndex,
               item: Option,
               style: {
+                cursor: "pointer",
                 backgroundColor:
-                  highlightedIndex === Option.selectableIndex
-                    ? "lightgray"
-                    : "white",
-                fontWeight: selectedItem === Option ? "bold" : "normal",
+                  selectedItem === Option
+                    ? colors.accent
+                    : highlightedIndex === Option.selectableIndex
+                      ? colors.highlight
+                      : colors.background,
               },
             })}
           >
-            {Option.label}
+            <Text
+              fontSize={Sizes[this.props.size].fontSize}
+              css={{
+                transition: "none",
+              }}
+              color={selectedItem === Option ? "background" : "default"}
+            >
+              {Option.label}
+            </Text>
           </View>
         </View>
       );
@@ -77,87 +121,223 @@ class Select extends React.PureComponent<SelectProps, any> {
   }
 
   public render() {
-    const { options } = this.props;
+    const {
+      clearable,
+      options,
+      disabled,
+      size,
+      defaultText = "Please Select",
+      searchable,
+      id,
+    } = this.props;
 
     const { flattenedOptions, selectableCount } = this.flattenOptions(options);
 
     return (
-      <Downshift
-        onChange={x => console.log(x)}
-        itemToString={this.OptionToString}
-        itemCount={selectableCount}
-      >
-        {({
-          getToggleButtonProps,
-          getItemProps,
-          getRootProps,
-          getMenuProps,
-          isOpen,
-          selectedItem,
-          highlightedIndex,
-        }) => (
-          <View {...getRootProps({ refKey: "innerRef" })}>
-            <Manager>
-              <Reference>
-                {({ ref }) => (
-                  <button ref={ref} type="button" {...getToggleButtonProps()}>
-                    <div data-isopen={isOpen}>
-                      {JSON.stringify(selectedItem)}
-                    </div>
-                  </button>
-                )}
-              </Reference>
-              {isOpen && (
-                <Portal>
-                  <Popper placement="auto-start">
-                    {({ ref, style }) => (
-                      <View
-                        {...getMenuProps({
-                          refKey: "innerRef",
-                        })}
-                      >
-                        <View
-                          backgroundColor="background"
-                          boxShadow="strong"
-                          borderRadius={3}
-                          style={style}
-                          innerRef={ref}
-                          transition="none"
-                          paddingY={3}
-                          zIndex="dropdown"
-                          height={300}
-                          width={250}
+      <Theme.Consumer>
+        {({ colors }) => (
+          <Downshift
+            stateReducer={this.stateReducer}
+            onChange={this.handleOnChange}
+            itemToString={this.OptionToString}
+            itemCount={selectableCount}
+          >
+            {({
+              getToggleButtonProps,
+              getItemProps,
+              getRootProps,
+              getMenuProps,
+              getInputProps,
+              isOpen,
+              inputValue,
+              selectedItem,
+              highlightedIndex,
+              clearSelection,
+            }) => {
+              const filteredOptions = searchable
+                ? this.filterOptions(flattenedOptions, inputValue)
+                : flattenedOptions;
+              return (
+                <View {...getRootProps({ refKey: "innerRef" })}>
+                  <Manager>
+                    <Reference>
+                      {({ ref }) => (
+                        <button
+                          ref={ref}
+                          type="button"
+                          {...getToggleButtonProps({
+                            disabled,
+                          })}
+                          style={{
+                            cursor: disabled ? "initial" : "pointer",
+                          }}
                         >
-                          <AutoSizer>
-                            {({ width, height }) => (
-                              <List
-                                width={width}
-                                height={height}
-                                rowCount={flattenedOptions.length}
-                                rowHeight={this.calculateOptionHeight(
-                                  flattenedOptions
+                          <View
+                            borderRadius={2}
+                            paddingX={4}
+                            border={1}
+                            data-testid="primarySection"
+                            opacity={disabled && "disabled"}
+                            borderColor={isOpen ? "accent" : "soft"}
+                            position="relative"
+                            boxShadow={isOpen ? "strong" : "soft"}
+                          >
+                            <View
+                              paddingY={3}
+                              css={{
+                                overflow: "hidden",
+                              }}
+                            >
+                              <Text
+                                fontSize={Sizes[size].fontSize}
+                                css={{
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {selectedItem
+                                  ? selectedItem.label
+                                  : defaultText}
+                              </Text>
+                            </View>
+                            <View
+                              css={{
+                                position: "absolute",
+                                right: 8,
+                                top: 1,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                paddingRight: 0,
+                                pointerEvents:
+                                  selectedItem && clearable ? "auto" : "none",
+                              }}
+                              height="calc(100% - 3px)"
+                              paddingX={3}
+                            >
+                              {selectedItem && clearable ? (
+                                <ButtonMinimal
+                                  iconName="Cross"
+                                  css={{
+                                    backgroundColor: "transparent",
+                                  }}
+                                  iconColor="muted"
+                                  onClick={this.handleSelectionClear(
+                                    clearSelection
+                                  )}
+                                  size="sm"
+                                />
+                              ) : (
+                                <ButtonMinimal
+                                  iconName="ChevronDown"
+                                  css={{
+                                    backgroundColor: "transparent",
+                                  }}
+                                  iconColor="muted"
+                                  size="sm"
+                                />
+                              )}
+                            </View>
+                          </View>
+                        </button>
+                      )}
+                    </Reference>
+                    {isOpen && (
+                      <Portal>
+                        <Popper placement="auto-start">
+                          {({ ref, style }) => (
+                            <View
+                              {...getMenuProps({
+                                refKey: "innerRef",
+                              })}
+                            >
+                              <View
+                                backgroundColor="background"
+                                boxShadow="strong"
+                                borderRadius={3}
+                                style={style}
+                                innerRef={ref}
+                                transition="none"
+                                zIndex="dropdown"
+                                width={250}
+                              >
+                                {searchable && (
+                                  <View paddingX={4} paddingY={3}>
+                                    <SearchInput
+                                      id={`SearchInput__${id}`}
+                                      onSubmit={null}
+                                      clearable={false}
+                                      size={size}
+                                      data-testid="searchFilterInput"
+                                      {...getInputProps()}
+                                    />
+                                  </View>
                                 )}
-                                rowRenderer={this.renderSelectRow({
-                                  options: flattenedOptions,
-                                  getItemProps,
-                                  highlightedIndex,
-                                  selectedItem,
-                                })}
-                              />
-                            )}
-                          </AutoSizer>
-                        </View>
-                      </View>
+                                <AutoSizer disableHeight={true}>
+                                  {({ width }) => (
+                                    <List
+                                      width={width}
+                                      height={this.calculateDropDownHeight(
+                                        filteredOptions
+                                      )}
+                                      rowCount={filteredOptions.length}
+                                      rowHeight={this.calculateOptionHeight(
+                                        filteredOptions
+                                      )}
+                                      rowRenderer={this.renderSelectRow({
+                                        options: filteredOptions,
+                                        colors,
+                                        getItemProps,
+                                        highlightedIndex,
+                                        selectedItem,
+                                      })}
+                                    />
+                                  )}
+                                </AutoSizer>
+                              </View>
+                            </View>
+                          )}
+                        </Popper>
+                      </Portal>
                     )}
-                  </Popper>
-                </Portal>
-              )}
-            </Manager>
-          </View>
+                  </Manager>
+                </View>
+              );
+            }}
+          </Downshift>
         )}
-      </Downshift>
+      </Theme.Consumer>
     );
   }
+
+  private handleOnChange = event => {
+    const { onChange } = this.props;
+
+    if (onChange) {
+      safeInvoke(onChange, {
+        target: event,
+      });
+    }
+  };
+
+  private handleSelectionClear(clearFunction) {
+    return e => {
+      e.stopPropogation();
+      clearFunction();
+    };
+  }
+
+  private stateReducer = (state, changes) => {
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.keyDownEnter:
+      case Downshift.stateChangeTypes.clickItem:
+        return {
+          ...changes,
+          highlightedIndex: state.highlightedIndex,
+          inputValue: "",
+        };
+      default:
+        return changes;
+    }
+  };
 
   private flattenOptions(Options = []) {
     return Options.reduce((sum, Option) => {
@@ -172,6 +352,7 @@ class Select extends React.PureComponent<SelectProps, any> {
             },
             ...(Option.values.map((SubOption, index) => ({
               ...SubOption,
+              childOption: true,
               selectableIndex: (sum.selectableCount || 0) + index,
             })) || []),
           ],
@@ -191,11 +372,32 @@ class Select extends React.PureComponent<SelectProps, any> {
     }, {});
   }
 
+  private filterOptions(Options, searchValue) {
+    if (typeof searchValue === "string" && searchValue.trim() !== "") {
+      return Options.filter(Entry => {
+        return (
+          !Entry.optgroup &&
+          Entry.label &&
+          Entry.label.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      });
+    }
+    return Options;
+  }
+
+  private calculateDropDownHeight(Options) {
+    const Height = Options.reduce((sum, Entry, index) => {
+      return sum + this.calculateOptionHeight(Options)({ index });
+    }, 0);
+
+    return Height < 300 ? Height : 300;
+  }
+
   private calculateOptionHeight(Options) {
     // Calculate the options for VirtualisedList
     return ({ index: OptionIndex }) => {
       const Option = Options[OptionIndex];
-      const baseOptionHeight = 30;
+      const baseOptionHeight = 50;
 
       if (typeof Option === "undefined") {
         return 0;
