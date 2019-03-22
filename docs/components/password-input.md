@@ -16,11 +16,13 @@ releaseVersion: 0.0.72
 ### Password Input Sizes
 
 ```.jsx
-<PasswordInput id="Small" size="sm" value="Small" />
-<br />
-<PasswordInput id="Medium" size="md" value="Medium" />
-<br />
-<PasswordInput id="Large" size="lg" value="Large" />
+<React.Fragment>
+    <PasswordInput id="Small" size="sm" value="Small" />
+    <br />
+    <PasswordInput id="Medium" size="md" value="Medium" />
+    <br />
+    <PasswordInput id="Large" size="lg" value="Large" />
+</React.Fragment>
 ```
 
 ### Password Input with no toggle

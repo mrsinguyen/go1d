@@ -22,7 +22,8 @@ const ComponentList = () => (
         .filter(
           route =>
             route.props.status !== "ready" &&
-            route.props.status !== "in-development"
+            route.props.status !== "in-development" &&
+            route.props.status
         )
         .sort((a, b) => (a.name > b.name ? 1 : -1));
 

@@ -140,6 +140,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
             aria-label="Clear Icon"
             display={clearable && this.state.value ? "flex" : "none"}
             onClick={this.handleClear}
+            backgroundColor="transparent"
           />
         }
         {...props}

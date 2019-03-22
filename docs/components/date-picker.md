@@ -16,7 +16,7 @@ A component that displays a datepicker.
 
 ### Date Supplied
 ```.jsx
-<DatePicker id="id2" date={new Date("2019-06-07")} />
+<DatePicker id="id2" defaultValue={new Date("2019-06-07")} />
 ```
 
 
@@ -30,11 +30,13 @@ A component that displays a datepicker.
 
 ### Sizes
 ```.jsx
-<DatePicker id="id4" size="sm"/>
-<br />
-<DatePicker id="id4" size="md"/>
-<br />
-<DatePicker id="id4" size="lg"/>
+<React.Fragment>
+    <DatePicker id="id4" size="sm"/>
+    <br />
+    <DatePicker id="id4" size="md"/>
+    <br />
+    <DatePicker id="id4" size="lg"/>
+</React.Fragment>
 ```
 
 ### Basic Datepicker with Time

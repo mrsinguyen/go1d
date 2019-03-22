@@ -9,6 +9,8 @@ All text in our apps should be wrapped in a Text component.
 
 Try out the props below.
 
+
+### Base
 ```.jsx
 <Text
   color='subtle'

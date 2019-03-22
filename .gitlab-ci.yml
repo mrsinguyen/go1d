@@ -17,14 +17,17 @@ build:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
-    - yarn install
+    - yarn config set no-progress
+    - yarn install --silent
     - yarn "npm:build"
     - yarn "docs:build"
+    - yarn "storybook:build"
   artifacts:
     paths:
       - node_modules
       - build
       - dist
+      - dist_storybook
     expire_in: 6h
   except:
     - "tags"
@@ -38,7 +41,8 @@ build-dev:
     paths: [node_modules]
     key: "$CI_PROJECT_ID"
   script:
-    - yarn install
+    - yarn config set no-progress
+    - yarn install --silent
     - yarn "npm:build"
   artifacts:
     paths:
@@ -59,7 +63,8 @@ test:unit:
   stage: test
   tags: ["aws"]
   script:
-    - yarn install
+    - yarn config set no-progress
+    - yarn install --silent
     - yarn test --coverage --runInBand
   artifacts:
     paths:
@@ -67,6 +72,28 @@ test:unit:
     expire_in: 1h
   except:
     - "tags"
+
+test:happo:
+  stage: test
+  tags: ["aws"]
+  allow_failure: true
+  before_script:
+    - export PREVIOUS_SHA=`git rev-parse origin/master`
+    - export CURRENT_SHA=$CI_COMMIT_SHA
+    - export CHANGE_URL=$CI_PAGES_URL
+  script:
+    - DIFF_REVIEW=$(node ./scripts/check-screenshot-result.js)
+    - if [ "$DIFF_REVIEW" != "accept" ]; then
+    - yarn config set no-progress
+    - yarn install --silent
+    - yarn react:docs && node ./.storybook/generate-props-file.js
+    - yarn run happo-ci
+    # Check for EXIT_CODE env
+    - NPM_BIN=$(yarn bin)
+    - SUMMARY=$("$NPM_BIN"/happo compare "$PREVIOUS_SHA" "$CURRENT_SHA");
+    - if [ "$EXIT_CODE" == "113" ]; then exit 1; fi; fi
+  only:
+  - merge_requests
 
 pages: # NEVER rename this. I must apparently be exactly this to work
   stage: release
@@ -76,7 +103,11 @@ pages: # NEVER rename this. I must apparently be exactly this to work
   script:
     - rm -rf public
     - mkdir public
+    - rm -rf public/storybook
+    - mkdir public/storybook
     - cp -r dist/* public/
+    - cp -r dist_storybook/* public/storybook/
+
   artifacts:
     paths:
       - public # mandatory, other folder won't work
@@ -118,4 +149,3 @@ release:npm:
     - "tags"
   only:
     - master
-    

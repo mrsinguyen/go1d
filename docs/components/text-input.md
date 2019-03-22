@@ -13,13 +13,17 @@ releaseVersion: 0.0.32
 <TextInput id="blank" placeholder="Blank" />
 ```
 
-### TextInput Sizes
+### TextInput Small Size
 
 ```.jsx
 <TextInput id="Small" size="sm" value="Small" />
-<br />
+```
+### TextInput Medium Size
+```.jsx
 <TextInput id="Medium" size="md" value="Medium" />
-<br />
+```
+### TextInput Large Size
+```.jsx
 <TextInput id="Large" size="lg" value="Large" />
 ```
 

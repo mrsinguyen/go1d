@@ -25,42 +25,28 @@ export interface ButtonProps extends ViewProps {
   active?: boolean;
 }
 
-const sizeStylesDefault = {
-  lg: {
-    height: 48,
-    paddingY: 3,
-    paddingX: 5,
-    typeScale: 3,
-    iconOnlyScale: 4,
-    iconMargin: 4,
-  },
-  md: {
-    height: 40,
-    paddingY: 3,
-    paddingX: 4,
-    typeScale: 2,
-    iconOnlyScale: 3,
-    iconMargin: 3,
-  },
-  sm: {
-    height: 32,
-    paddingY: 2,
-    paddingX: 4,
-    typeScale: 1,
-    iconOnlyScale: 2,
-    iconMargin: 3,
-  },
-};
-
 const getIconMargin = (flexDirection, iconMargin) => {
-  if (flexDirection === "row") {
-    return {
-      marginRight: iconMargin,
-    };
-  }
-  return {
-    marginBottom: iconMargin,
+  const iconMarginStyle = {
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginTop: 0,
   };
+  switch (flexDirection) {
+    case "row":
+      iconMarginStyle.marginRight = iconMargin;
+      break;
+    case "row-reverse":
+      iconMarginStyle.marginLeft = iconMargin;
+      break;
+    case "column":
+      iconMarginStyle.marginBottom = iconMargin;
+      break;
+    case "column-reverse":
+      iconMarginStyle.marginTop = iconMargin;
+      break;
+  }
+  return iconMarginStyle;
 };
 
 const Button: React.SFC<ButtonProps> = ({
@@ -84,6 +70,32 @@ const Button: React.SFC<ButtonProps> = ({
   iconMargin: iconMarginProp,
   ...props
 }: ButtonProps) => {
+  const sizeStylesDefault = {
+    lg: {
+      height: 48,
+      paddingY: 3,
+      paddingX: 5,
+      typeScale: 3,
+      iconOnlyScale: 4,
+      iconMargin: 4,
+    },
+    md: {
+      height: 40,
+      paddingY: 3,
+      paddingX: 4,
+      typeScale: 2,
+      iconOnlyScale: 3,
+      iconMargin: 3,
+    },
+    sm: {
+      height: 32,
+      paddingY: 2,
+      paddingX: 4,
+      typeScale: 1,
+      iconOnlyScale: 2,
+      iconMargin: 3,
+    },
+  };
   const sizeStylesMerged = merge(sizeStylesDefault, sizeStyles);
   const {
     height,
@@ -145,6 +157,7 @@ const Button: React.SFC<ButtonProps> = ({
               ) : (
                 <Icon
                   name={iconName}
+                  transition={transition}
                   color={iconColor}
                   size={iconSizeValue}
                   {...iconMarginStyle}
@@ -152,6 +165,7 @@ const Button: React.SFC<ButtonProps> = ({
               ))}
             <Text
               lineHeight="ui"
+              transition={transition}
               fontWeight={fontWeight}
               fontSize={typeScale}
               color="inherit"

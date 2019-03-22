@@ -2,6 +2,7 @@ import * as React from "react";
 import foundations from "../../foundations";
 import formatDuration from "../../utils/durationFormatter";
 import formatPrice from "../../utils/priceFormatter";
+import EnrolmentStatus, { EnrolmentStatusProps } from "../EnrolmentStatus";
 import Icon from "../Icon";
 import MoreMenu from "../MoreMenu";
 import { Item as DropdownItem } from "../MoreMenu/DropdownMenuItem";
@@ -27,6 +28,7 @@ export interface CourseCardProps extends ViewProps {
   metaList?: MetaItem[];
   price?: number;
   currency?: string;
+  status?: EnrolmentStatusProps | null;
 }
 
 const interactiveStyle = (colors, passive) => {
@@ -59,6 +61,7 @@ const CourseCard: React.SFC<CourseCardProps> = ({
   typeIcon,
   price,
   currency,
+  status,
   skeleton = false,
   ...props
 }: CourseCardProps) => {
@@ -216,6 +219,11 @@ const CourseCard: React.SFC<CourseCardProps> = ({
                     <Text color="accent">{formatPrice(currency, price)}</Text>
                   </View>
                 )}
+              <EnrolmentStatus
+                status={status}
+                marginTop="auto"
+                paddingTop={3}
+              />
             </View>
           </View>
         );

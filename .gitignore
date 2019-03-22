@@ -1,9 +1,13 @@
 /node_modules/
 /dist/
+/dist_storybook/
+/.out/
 /build/
 .DS_Store
 .idea/
 /coverage/
 .vscode/
 react-docs.json
+react-docs-for-storybook.json
 .jest.json
+package-lock.json

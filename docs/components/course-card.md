@@ -6,7 +6,12 @@ releaseVersion: 0.2.15
 
 ## Examples
 
-Almost all the Props
+### Base
+```.jsx
+<CourseCard />
+```
+
+### Almost all the Props (with Price)
 ```.jsx
 <CourseCard
   typeIcon="Course"
@@ -26,12 +31,31 @@ Almost all the Props
 />
 ```
 
-None of the props
+### Almost all the Props (with Status)
 ```.jsx
-<CourseCard />
+<CourseCard
+  typeIcon="Course"
+  type="Course"
+  duration={74}
+  author="GO1"
+  title="Test Title"
+  courseImage="https://res.cloudinary.com/go1/image/fetch/w_1024,h_300,c_thumb,g_auto/https://udemy-images.udemy.com/course/750x422/435262_c617.jpg" 
+  itemList={[
+    {
+      title: "Test"
+    }
+  ]}
+  status={
+		{
+			type: "inProgress",
+			text: "In progress",
+		}
+	}
+  passive={false}
+/>
 ```
 
-Carousel with lots of combinations of Cards
+### Carousel with lots of combinations of Cards
 ```.jsx
 <View padding={3}>
   <Carousel slidesToShow={3} slideAnimationDuration={150}>

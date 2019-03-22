@@ -1,13 +1,34 @@
-import { isEqual } from "lodash";
 import * as React from "react";
 
 import { colors } from "../../foundations";
+import { autobind } from "../../utils/decorators";
 import Button from "../Button";
-import Select, { SelectProps } from "../Select";
+import ButtonFilled from "../ButtonFilled";
+import Checkbox from "../Checkbox";
+import Icon from "../Icon";
+import SelectDropdown, {
+  SelectDropdownItem,
+  SelectDropdownProps,
+} from "../SelectDropdown";
 import Text from "../Text";
 import View from "../View";
 
-export interface MultiSelectProps extends SelectProps {
+const sizes = {
+  sm: {
+    fontSize: 1,
+  },
+  md: {
+    fontSize: 2,
+  },
+  lg: {
+    fontSize: 3,
+  },
+};
+export interface MultiSelectProps
+  extends Pick<
+      SelectDropdownProps,
+      Exclude<keyof SelectDropdownProps, "optionRenderer">
+    > {
   defaultText?: string;
   onChange?: ({ target: HTMLElement }) => void;
   name?: string;
@@ -15,128 +36,113 @@ export interface MultiSelectProps extends SelectProps {
   label?: string | React.ReactChild;
   clearCSS?: object;
   labelPaddingBottom?: number;
+  closeOnSelect?: boolean;
 }
 
-class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
+interface State {
+  selected: string[];
+  searchValue: string;
+}
+
+class MultiSelect extends React.Component<MultiSelectProps, State> {
+  public static defaultProps = {
+    closeOnSelect: true,
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
-      Selected: props.defaultValue || props.value || [],
-      closeOnSelect: true,
+      selected: props.defaultValue || props.value || [],
+      searchValue: "",
     };
   }
 
-  public componentDidUpdate(prevProps, prevState) {
-    if (isEqual(this.state.Selected.sort(), prevState.Selected.sort())) {
-      const { value } = this.props;
+  @autobind
+  public handleChange(evt: { target: { name: string; value: string[] } }) {
+    this.setState({
+      selected: evt.target.value,
+    });
 
-      if (!isEqual(value, prevProps.value)) {
-        this.setState({
-          Selected: value,
-        });
-      }
+    if (this.props.onChange) {
+      this.props.onChange(evt);
     }
   }
 
-  public handleChange = event => {
-    const { onChange } = this.props;
-
-    const NewArray = this.toggleEntry(event.target.value)();
-
-    if (onChange) {
-      onChange({
-        target: {
-          value: NewArray,
-          name: this.props.name,
-        },
-      });
-    }
-  };
-
-  public clearSelection = () => {
-    const { onChange } = this.props;
-
+  @autobind
+  public clearSelection() {
     this.setState({
-      Selected: [],
+      selected: [],
     });
 
-    if (onChange) {
-      onChange({
+    if (this.props.onChange) {
+      this.props.onChange({
         target: {
+          name: this.props.name,
           value: [],
         },
       });
     }
-  };
+  }
 
-  public handleKeyDown = event => {
-    const Key = event.key;
+  @autobind
+  public renderOption(item: SelectDropdownItem) {
+    return (
+      <View
+        width={"100%"}
+        minWidth="188px"
+        paddingY={3}
+        key={item.label + "_" + item.value}
+        flexDirection="row"
+      >
+        <Checkbox
+          value={this.state.selected.includes(item.value.toString())}
+          id={`check_${item.label}`}
+          label={item.label}
+          fontSize={1}
+          fontWeight="normal"
+          color="default"
+        />
+      </View>
+    );
+  }
 
-    switch (Key) {
-      case "Shift":
-        this.setState({
-          closeOnSelect: false,
-        });
-        break;
-      default:
-        return;
+  @autobind
+  public handleSearchChange(searchValue: string, evt: any) {
+    this.setState({
+      searchValue,
+    });
+    if (evt.stopPropagation) {
+      evt.stopPropagation();
     }
-  };
-
-  public handleKeyUp = event => {
-    const Key = event.key;
-
-    switch (Key) {
-      case "Shift":
-        this.setState({
-          closeOnSelect: true,
-        });
-        break;
-      default:
-        return;
-    }
-  };
+  }
 
   public render() {
     const {
-      onChange,
       options,
       label,
       id = `MultiSelect_${Math.random()}`,
       defaultText = "Please Select",
       clearCSS,
       labelPaddingBottom = 3,
-      ...props
+      searchable,
+      size = "sm",
+      closeOnSelect,
     } = this.props;
-    const { closeOnSelect } = this.state;
 
-    const LabelMap = options.reduce(
-      // Map of Values -> Labels
-      (Sum, Entry) => ({
-        ...Sum,
-        [Entry.value]: Entry.label,
-      }),
-      {}
-    );
+    const { selected } = this.state;
 
-    const SelectActiveProps =
-      this.state.Selected.length > 0
-        ? {
-            backgroundColor: "accent",
-            color: "background",
-          }
-        : {};
+    let selectText = defaultText;
 
-    const getTextOverride = () => {
-      if (this.state.Selected.length > 0) {
-        return this.state.Selected.map(ValueKey => LabelMap[ValueKey]).join(
-          ", "
-        );
-      }
-
-      return defaultText;
-    };
+    if (this.state.selected.length > 0) {
+      selectText = options
+        .filter((thing, index, self) => {
+          return index === self.findIndex(t => t.value === thing.value);
+        })
+        .filter(item => selected.includes(item.value.toString()))
+        .map((selectedItem: SelectDropdownItem) => selectedItem.label)
+        .join(", ");
+    }
 
     return (
       <React.Fragment>
@@ -160,7 +166,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
               flexShrink: "initial",
             }}
           >
-            {this.state.Selected.length > 0 && (
+            {this.state.selected.length > 0 && (
               <View
                 display="inline-flex"
                 backgroundColor="accent"
@@ -178,7 +184,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                   justifyContent="center"
                 >
                   <Text color="background" fontSize={1}>
-                    {this.state.Selected.length}
+                    {this.state.selected.length}
                   </Text>
                 </View>
                 <Button
@@ -204,37 +210,60 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
             )}
           </View>
         </View>
-        <Select
-          {...SelectActiveProps}
-          activeOptions={this.state.Selected}
-          textOverride={getTextOverride()}
-          onChange={this.handleChange}
+        <SelectDropdown
           options={options}
-          onKeyDown={this.handleKeyDown}
-          onKeyUp={this.handleKeyUp}
-          closeOnSelect={closeOnSelect}
-          showCheckboxes={true}
-          id={id}
-          {...props}
-        />
+          onChange={this.handleChange}
+          searchPlaceholder="Search for ..."
+          closeOnSelection={closeOnSelect}
+          optionRenderer={this.renderOption}
+          isMulti={true}
+          value={this.state.selected}
+          name={this.props.name}
+          selectedColor="highlight"
+          handleSearchChange={searchable && this.handleSearchChange}
+          data-testid="multiselect-dropdown"
+        >
+          {({ ref, getToggleButtonProps }) => (
+            <View>
+              <ButtonFilled
+                {...getToggleButtonProps()}
+                data-testid="select-dropdown-trigger"
+                size={size}
+                innerRef={ref}
+                width="100%"
+                justifyContent="stretch"
+                css={{
+                  "> span": {
+                    width: "100%",
+                  },
+                }}
+                disabled={this.props.disabled}
+                color={selected.length > 0 ? "accent" : undefined}
+              >
+                <View
+                  width="100%"
+                  flexDirection="row"
+                  flexGrow={1}
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Text
+                    fontSize={sizes[size].fontSize}
+                    color={selected.length > 0 ? "contrast" : "default"}
+                    fontWeight="normal"
+                    ellipsis={true}
+                  >
+                    {selectText}
+                  </Text>
+                  <Icon name="ChevronDown" />
+                </View>
+              </ButtonFilled>
+            </View>
+          )}
+        </SelectDropdown>
       </React.Fragment>
     );
   }
-
-  protected toggleEntry = Entry => () => {
-    let NewSelection = [];
-    if (this.state.Selected.indexOf(Entry) >= 0) {
-      NewSelection = this.state.Selected.filter(Key => Key !== Entry);
-    } else {
-      NewSelection = [...this.state.Selected, Entry];
-    }
-
-    this.setState({
-      Selected: NewSelection,
-    });
-
-    return NewSelection;
-  };
 }
 
 export default MultiSelect;
