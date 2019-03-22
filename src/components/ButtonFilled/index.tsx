@@ -16,7 +16,6 @@ const customModes = {
 
 const ButtonFilled: React.SFC<ButtonFilledProps> = ({
   color = "background",
-  transition,
   children,
   css,
   ...props
@@ -31,7 +30,6 @@ const ButtonFilled: React.SFC<ButtonFilledProps> = ({
       return (
         <Button
           mode={mode}
-          transition={transition}
           backgroundColor={color}
           color={color === "background" ? "subtle" : "contrast"}
           iconColor={color === "background" ? "muted" : "contrast"}
