@@ -148,6 +148,9 @@ release:npm:
     - NPM_BIN=$(yarn bin)
     - MASTER_SHA=$(git rev-parse origin/master`)
     - if ! "$NPM_BIN"/happo has-report "$MASTER_SHA"; then
+    - yarn config set no-progress
+    - yarn install --silent
+    - yarn react:docs && node ./.storybook/generate-props-file.js
     - yarn happo run $MASTER_SHA; fi
   except:
     - "tags"
