@@ -8,8 +8,9 @@ import go1Theme from './addons/go1-theme.js';
 import {withSmartKnobs } from "./addons/smart-knobs-go1";
 import 'happo-plugin-storybook/register';
 import { isHappoRun, setDefaultDelay } from 'happo-plugin-storybook/register';
+import { foundations } from '../src/';
 
-setDefaultDelay(600);
+setDefaultDelay(900);
 
 //Customized PropTable
 import PropTable from "./addons/prop-table";
@@ -29,7 +30,7 @@ addParameters({
     theme: go1Theme,
   },
   backgrounds: [
-    { name: 'Faint', value: '#F8FBFB', default: true },
+    { name: 'Faint', value: foundations.colors.faint, default: true },
   ],
 });
 
