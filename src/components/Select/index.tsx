@@ -168,6 +168,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                           {...getToggleButtonProps({
                             disabled,
                           })}
+                          data-testid="primarySection"
                           style={{
                             cursor: disabled ? "initial" : "pointer",
                           }}
@@ -176,7 +177,6 @@ class Select extends React.PureComponent<SelectProps, any> {
                             borderRadius={2}
                             paddingX={4}
                             border={1}
-                            data-testid="primarySection"
                             opacity={disabled && "disabled"}
                             borderColor={isOpen ? "accent" : "soft"}
                             position="relative"
@@ -274,6 +274,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                                 <AutoSizer disableHeight={true}>
                                   {({ width }) => (
                                     <List
+                                      data-testid="resultsList"
                                       width={width}
                                       height={this.calculateDropDownHeight(
                                         filteredOptions

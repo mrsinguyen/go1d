@@ -1,6 +1,5 @@
 import * as React from "react";
 import { cleanup, fireEvent, render } from "react-testing-library";
-import { debug } from "util";
 import Text from "../Text/index";
 import MultiSelect from "./index";
 

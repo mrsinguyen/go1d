@@ -1,5 +1,10 @@
 import * as React from "react";
-import { cleanup, fireEvent, render } from "react-testing-library";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  waitForElement,
+} from "react-testing-library";
 import Select from "./index";
 
 afterEach(cleanup);
@@ -39,7 +44,7 @@ const Optgroups = [
     ],
   },
   {
-    label: "Opt group other",
+    label: "",
     optgroup: true,
     values: [
       {
@@ -54,6 +59,19 @@ it("renders without crashing without any optional props", () => {
   render(<Select options={Options} />);
 });
 
+it("renders without crashing without any with a large list of options", () => {
+  render(
+    <Select
+      options={Array(120)
+        .fill(null)
+        .map((x, index) => ({
+          label: String(index),
+          value: String(index),
+        }))}
+    />
+  );
+});
+
 it("renders without crashing with optgroups and default value", () => {
   render(<Select options={Optgroups} searchable={true} defaultValue="test" />);
 });
@@ -66,319 +84,34 @@ it("renders without crashing some optional props", () => {
   render(<Select options={Options} activeOptions={["test 2"]} />);
 });
 
-it("Can select an item in the dropdown with keyboard - Enter", () => {
+it("Clicking opens the dropdown", async () => {
   const ChangeMock = jest.fn();
   const { getByTestId } = render(
-    <Select showCheckboxes={true} options={Options} onChange={ChangeMock} />
+    <Select
+      showCheckboxes={true}
+      searchable={true}
+      options={Options}
+      onChange={ChangeMock}
+    />
   );
 
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
+  fireEvent.click(getByTestId("primarySection"));
 
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
+  await waitForElement(() => getByTestId("searchFilterInput"));
 });
 
-it("Can select an item in the dropdown with keyboard - Tab", () => {
+it("Clicking opens the dropdown - optgroup", async () => {
   const ChangeMock = jest.fn();
   const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
+    <Select
+      showCheckboxes={true}
+      searchable={true}
+      options={Optgroups}
+      onChange={ChangeMock}
+    />
   );
 
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Tab",
-  });
+  fireEvent.click(getByTestId("primarySection"));
 
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 2");
-});
-
-it("Home selects the first entry - Space", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Home",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test");
-});
-
-it("End selects the first entry - Space", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "End",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 2");
-});
-
-it("Can blur with escape key", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Escape",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(0);
-});
-
-it("if you go all the way down it should overflow to the top", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "End",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test");
-});
-
-it("if you go all the way up it should overflow to the botton", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Home",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowUp",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 2");
-});
-
-it("can't interact with disabled", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select disabled={true} options={Options} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Home",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(0);
-});
-
-it("can't select without options", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(<Select options={[]} onChange={ChangeMock} />);
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Home",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(0);
-});
-
-it("Can select a filtered option", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} searchable={true} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "2",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 2");
-});
-
-it("Can select a filtered option with optgroups", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Optgroups} searchable={true} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "2",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 2");
-});
-
-it("Clear search filter", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} searchable={true} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "ii",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Clear",
-  });
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "1",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
-});
-
-it("Backspace in search filter", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} searchable={true} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "i",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Backspace",
-  });
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "1",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
-});
-
-it("Delete in search filter", () => {
-  const ChangeMock = jest.fn();
-  const { getByTestId } = render(
-    <Select options={Options} searchable={true} onChange={ChangeMock} />
-  );
-
-  fireEvent.mouseDown(getByTestId("primarySection"));
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "i",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Delete",
-  });
-  fireEvent.change(getByTestId("searchFilterInput"), {
-    target: {
-      value: "1",
-    },
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "ArrowDown",
-  });
-  fireEvent.keyDown(getByTestId("primarySection"), {
-    key: "Enter",
-  });
-
-  expect(ChangeMock.mock.calls.length).toBe(1);
-  expect(ChangeMock.mock.calls[0][0].target.value).toBe("test 1");
+  await waitForElement(() => getByTestId("searchFilterInput"));
 });

@@ -10,4 +10,4 @@
 react-docs.json
 react-docs-for-storybook.json
 .jest.json
-package-lock.json
+yarn.lock
