@@ -77,25 +77,6 @@ releaseVersion: 0.0.27
 ]} searchable={true} />
 ```
 
-
-### Multi Select with extra style props 
-```.tsx
-<MultiSelect 
-  label="Favourite" 
-  searchable={true} 
-  defaultValue={["chocolate"]}
-  labelPaddingBottom={5}
-  clearCSS={{
-    height: "50%"
-  }}
-  options={[
-    { "value": "chocolate", label: "Chocolate" },
-    { "value": "strawberry", label: "Strawberry" },
-    { "value": "vanilla", label: "Vanilla" }
-  ]}  
-/>
-```
-
 ### MultiSelect filled with optgroups
 ```.tsx
 <MultiSelect options={[
