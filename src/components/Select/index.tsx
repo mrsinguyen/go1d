@@ -19,7 +19,7 @@ export interface SelectProps extends ViewProps {
     values?: Array<{ value: string; label: string }>;
   }>;
   disabled?: boolean;
-  defaultText?: string;
+  placeholder?: string;
   defaultValue?: any;
   value?: any;
   onChange?: ({ target }) => void;
@@ -123,7 +123,8 @@ class Select extends React.PureComponent<SelectProps, any> {
       options,
       disabled,
       size,
-      defaultText = "Please Select",
+      defaultText = "Please Select", // Deprecated
+      placeholder = "Please Select",
       defaultValue,
       value,
       searchable,
@@ -205,7 +206,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                               >
                                 {selectedItem
                                   ? selectedItem.label
-                                  : defaultText}
+                                  : placeholder || defaultText}
                               </Text>
                             </View>
                             <View

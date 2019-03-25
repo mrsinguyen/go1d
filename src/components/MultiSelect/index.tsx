@@ -23,7 +23,7 @@ export interface MultiSelectProps extends ViewProps {
   }>;
   closeOnSelect?: boolean;
   disabled?: boolean;
-  defaultText?: string;
+  placeholder?: string;
   defaultValue?: any;
   value?: any;
   onChange?: ({ target }) => void;
@@ -133,7 +133,8 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       defaultValue,
       value,
       label = "",
-      defaultText = "Please Select",
+      defaultText = "Please Select", // Deprecated - use placeholder
+      placeholder = "Please Select",
       searchable,
       id,
       closeOnSelect,
@@ -298,7 +299,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                 >
                                   {selectedItems.length > 0
                                     ? selectedItems.map(x => x.label).join(", ")
-                                    : defaultText}
+                                    : placeholder || defaultText}
                                 </Text>
                               </View>
                               <View
