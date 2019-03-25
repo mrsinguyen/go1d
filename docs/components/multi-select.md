@@ -41,6 +41,32 @@ releaseVersion: 0.0.27
 ]} disabled={true} />
 ```
 
+### Don't close on select
+```.tsx
+<MultiSelect label="Dont close" options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "strawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} closeOnSelect={false} />
+```
+
+### Default Value
+```.tsx
+<MultiSelect label="Label" options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "strawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} defaultValue={["strawberry"]} />
+```
+
+### Controlled 
+```.tsx
+<MultiSelect label="Label" options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "strawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} value={["strawberry"]} />
+```
 
 ### Searchable Multi Select Field
 ```.tsx
@@ -68,6 +94,54 @@ releaseVersion: 0.0.27
     { "value": "vanilla", label: "Vanilla" }
   ]}  
 />
+```
+
+### MultiSelect filled with optgroups
+```.tsx
+<MultiSelect options={[
+  {
+    label: "Icecream",
+    optgroup: true,
+    values: [
+      { "value": "chocolate", label: "Chocolate" },
+      { "value": "stawberry", label: "Strawberry" },
+      { "value": "vanilla", label: "Vanilla" }
+    ]
+  },
+  {
+    label: "Cheese",
+    optgroup: true,
+    values: [
+      { "value": "brie", label: "Brie" },
+      { "value": "cheddar", label: "Cheddar" },
+      { "value": "gorgonzola", label: "Gorgonzola" }
+    ]
+  }
+]} />
+```
+
+### MultiSelect filled with label-less optgroups
+```.tsx
+<MultiSelect options={[
+  {
+    label: "",
+    optgroup: true,
+    values: [
+      { "value": "chocolate", label: "Chocolate" },
+      { "value": "stawberry", label: "Strawberry" },
+      { "value": "vanilla", label: "Vanilla" }
+    ]
+  },
+  {
+    label: "",
+    optgroup: true,
+    values: [
+      { "value": "brie", label: "Brie" },
+      { "value": "cheddar", label: "Cheddar" },
+      { "value": "gorgonzola", label: "Gorgonzola" }
+    ]
+  }
+]} />
 ```
 
 

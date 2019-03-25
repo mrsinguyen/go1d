@@ -19,14 +19,11 @@ export interface SelectProps extends ViewProps {
     values?: Array<{ value: string; label: string }>;
   }>;
   disabled?: boolean;
-  backgroundColor?: string;
-  color?: string;
-  activeOptions?: string[];
-  textOverride?: string;
+  defaultText?: string;
+  defaultValue?: any;
+  value?: any;
   onChange?: ({ target }) => void;
   name?: string;
-  closeOnSelect?: boolean;
-  showCheckboxes?: boolean;
   size?: "sm" | "md";
   clearable?: boolean;
   onClear?: () => void;
@@ -127,11 +124,21 @@ class Select extends React.PureComponent<SelectProps, any> {
       disabled,
       size,
       defaultText = "Please Select",
+      defaultValue,
+      value,
       searchable,
       id,
     } = this.props;
 
     const { flattenedOptions, selectableCount } = this.flattenOptions(options);
+
+    const DefaultOption = defaultValue
+      ? flattenedOptions.find(x => x.value === defaultValue)
+      : null;
+
+    const selectedOption = value
+      ? flattenedOptions.find(x => x.value === value)
+      : undefined;
 
     return (
       <Theme.Consumer>
@@ -141,6 +148,8 @@ class Select extends React.PureComponent<SelectProps, any> {
             onChange={this.handleOnChange}
             itemToString={this.OptionToString}
             itemCount={selectableCount}
+            initialSelectedItem={DefaultOption}
+            selectedItem={selectedOption}
           >
             {({
               getToggleButtonProps,
@@ -253,11 +262,13 @@ class Select extends React.PureComponent<SelectProps, any> {
                                 backgroundColor="background"
                                 boxShadow="strong"
                                 borderRadius={3}
+                                overflow="hidden"
                                 style={style}
                                 innerRef={ref}
                                 transition="none"
                                 zIndex="dropdown"
                                 width={250}
+                                marginTop={2}
                               >
                                 {searchable && (
                                   <View paddingX={4} paddingY={3}>
@@ -320,9 +331,12 @@ class Select extends React.PureComponent<SelectProps, any> {
   };
 
   private handleSelectionClear(clearFunction) {
-    return e => {
-      e.stopPropogation();
+    const { onClear } = this.props;
+    return () => {
       clearFunction();
+      if (onClear) {
+        safeInvoke(onClear);
+      }
     };
   }
 

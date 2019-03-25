@@ -49,6 +49,24 @@ releaseVersion: 0.0.24
 ]} clearable={true} />
 ```
 
+### Default Value
+```.tsx
+<Select options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "stawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} defaultValue="vanilla" />
+```
+
+### Controlled Value
+```.tsx
+<Select options={[
+  { "value": "chocolate", label: "Chocolate" },
+  { "value": "stawberry", label: "Strawberry" },
+  { "value": "vanilla", label: "Vanilla" }
+]} value="vanilla" />
+```
+
 ### Searchable Select Field
 ```.tsx
 <Select options={[
