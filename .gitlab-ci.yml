@@ -146,7 +146,7 @@ release:npm:
     - mv npm-readme.md readme.md
     - npm publish --access public
     - NPM_BIN=$(yarn bin)
-    - MASTER_SHA=$(git rev-parse origin/master`)
+    - MASTER_SHA=$(git rev-parse origin/master)
     - if ! "$NPM_BIN"/happo has-report "$MASTER_SHA"; then
     - yarn config set no-progress
     - yarn install --silent
