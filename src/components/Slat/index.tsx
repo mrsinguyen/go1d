@@ -23,6 +23,7 @@ export interface SlatProps extends ViewProps {
   image?: string;
   type?: string;
   typeBackground?: string;
+  actionRender?: () => React.ReactChild;
   dropdownItems?: Array<{
     icon?: string;
     text: string;
@@ -84,6 +85,7 @@ const Slat: React.SFC<SlatProps> = ({
   image,
   type,
   typeBackground = "background",
+  actionRender,
   dropdownItems,
   dropdownRenderFn = defaultRenderFn,
   skeleton = false,
@@ -124,7 +126,7 @@ const Slat: React.SFC<SlatProps> = ({
                   flexDirection: "column",
                 },
               },
-              !dropdownItems && styles,
+              !dropdownItems && !actionRender && styles,
             ]}
             {...props}
           >
@@ -222,38 +224,41 @@ const Slat: React.SFC<SlatProps> = ({
                     </Text>
                   </View>
                 )}
-                {dropdownItems &&
-                  dropdownItems.length > 0 && (
-                    <View
-                      css={{
-                        marginRight: "-10px",
-                        marginBottom: "-5px",
-                        [breakpoints.sm]: {
-                          marginRight: "-15px",
-                          marginTop: "-50px",
-                        },
-                      }}
-                    >
-                      <Dropdown
-                        placement="bottom"
-                        itemToString={itemToString}
-                        renderFunction={dropdownRenderFn}
-                        itemList={dropdownItems}
-                      >
-                        {({ ref, getToggleButtonProps }) => (
-                          <ButtonMinimal
-                            {...getToggleButtonProps()}
-                            innerRef={ref}
-                            color="subtle"
-                            size="sm"
-                            marginBottom="-5px"
-                          >
-                            <Icon name="Ellipsis" />
-                          </ButtonMinimal>
-                        )}
-                      </Dropdown>
-                    </View>
-                  )}
+                {(actionRender || dropdownItems) && (
+                  <View
+                    flexDirection="row"
+                    marginTop={[-7, -1]}
+                    css={{
+                      marginRight: "-10px",
+                      [breakpoints.sm]: {
+                        marginRight: "-15px",
+                      },
+                    }}
+                  >
+                    {actionRender && actionRender()}
+                    {dropdownItems &&
+                      dropdownItems.length > 0 && (
+                        <Dropdown
+                          placement="bottom"
+                          itemToString={itemToString}
+                          renderFunction={dropdownRenderFn}
+                          itemList={dropdownItems}
+                        >
+                          {({ ref, getToggleButtonProps }) => (
+                            <ButtonMinimal
+                              {...getToggleButtonProps()}
+                              innerRef={ref}
+                              color="subtle"
+                              size="sm"
+                              marginBottom="-5px"
+                            >
+                              <Icon name="Ellipsis" />
+                            </ButtonMinimal>
+                          )}
+                        </Dropdown>
+                      )}
+                  </View>
+                )}
               </View>
               {title && (
                 <Text

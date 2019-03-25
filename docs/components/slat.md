@@ -42,6 +42,37 @@ A generic slat component
 />
 ```
 
+### With actionRender
+```.jsx
+<Slat 
+  id={123}
+  topMeta={["one", "two"]}
+  title="This is test title"
+  description="This is the test description"
+  currency="AUD"
+  price={100}
+  bottomMeta={[
+    {
+      icon: "Calendar",
+      text: "1.30pm - 2.30pm",
+    },
+    {
+      icon: "MapPin",
+      text: "Underwood, QLD, Australia",
+    },
+  ]}
+  image="https://res.cloudinary.com/go1vn/image/upload/v1537851944/ckvawokvc4k70fd9t1oj.jpg"
+  type="Event"
+  typeBackground="background"  
+  actionRender={() => (
+      <View flexDirection="row">
+      <Icon name="Import" marginRight={3} color="accent" />
+      <Text color="accent">Import</Text>
+      </View>
+  )}
+/>
+```
+
 ## Examples
 ### With implied link wrapper and active/hover states
 ```.jsx
