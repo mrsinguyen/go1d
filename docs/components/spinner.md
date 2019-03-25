@@ -17,5 +17,5 @@ A component that shows a spinner for pending actions
 ## Props
 
 ```!jsx
-<ComponentDoc component="AuthorSelectorProps" />
+<ComponentDoc component="Spinner" />
 ```
