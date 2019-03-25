@@ -1,19 +1,38 @@
 import * as React from "react";
-
-import { colors } from "../../foundations";
-import { autobind } from "../../utils/decorators";
+import { Manager, Popper, Reference } from "react-popper";
+import { AutoSizer, List } from "react-virtualized";
+import safeInvoke from "../../utils/safeInvoke";
 import Button from "../Button";
-import ButtonFilled from "../ButtonFilled";
+import ButtonMinimal from "../ButtonMinimal";
 import Checkbox from "../Checkbox";
-import Icon from "../Icon";
-import SelectDropdown, {
-  SelectDropdownItem,
-  SelectDropdownProps,
-} from "../SelectDropdown";
+import Portal from "../Portal";
+import SearchInput from "../SearchInput";
 import Text from "../Text";
-import View from "../View";
+import Theme from "../Theme";
 
-const sizes = {
+import MultiSelectDownshift from "./components/MultiSelectDownshift";
+
+import View, { ViewProps } from "../View";
+
+export interface MultiSelectProps extends ViewProps {
+  options?: Array<{
+    value?: string;
+    label: string;
+    optgroup?: boolean;
+    values?: Array<{ value: string; label: string }>;
+  }>;
+  closeOnSelect?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  defaultValue?: any;
+  value?: any;
+  onChange?: ({ target }) => void;
+  name?: string;
+  size?: "sm" | "md";
+  onClear?: () => void;
+}
+
+const Sizes = {
   sm: {
     fontSize: 1,
   },
@@ -24,245 +43,471 @@ const sizes = {
     fontSize: 3,
   },
 };
-export interface MultiSelectProps
-  extends Pick<
-      SelectDropdownProps,
-      Exclude<keyof SelectDropdownProps, "optionRenderer">
-    > {
-  defaultText?: string;
-  onChange?: ({ target: HTMLElement }) => void;
-  name?: string;
-  defaultValue?: string[];
-  label?: string | React.ReactChild;
-  clearCSS?: object;
-  labelPaddingBottom?: number;
-  closeOnSelect?: boolean;
-}
 
-interface State {
-  selected: string[];
-  searchValue: string;
-}
-
-class MultiSelect extends React.Component<MultiSelectProps, State> {
+class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
   public static defaultProps = {
-    closeOnSelect: true,
+    size: "md",
   };
 
-  constructor(props) {
-    super(props);
+  public state = {
+    selectedItems: [],
+  };
 
-    this.state = {
-      selected: props.defaultValue || props.value || [],
-      searchValue: "",
+  public OptionToString(Option) {
+    if (Option) {
+      return Option.value;
+    }
+  }
+
+  public renderSelectRow({
+    options,
+    getItemProps,
+    highlightedIndex,
+    selectedOptions,
+    colors,
+  }) {
+    return ({ key, index, style: virtualisedStyles }) => {
+      const Option = options[index];
+
+      if (Option.optgroup) {
+        if (Option.label.trim() === "") {
+          return (
+            <View key={key} css={virtualisedStyles} backgroundColor="soft" />
+          );
+        }
+
+        return (
+          <View
+            key={key}
+            css={virtualisedStyles}
+            backgroundColor="faint"
+            padding={4}
+          >
+            <Text color="subtle">{Option.label}</Text>
+          </View>
+        );
+      }
+
+      return (
+        <View key={key} css={virtualisedStyles}>
+          <View
+            height={55}
+            width="100%"
+            paddingY={4}
+            paddingX={4}
+            flexDirection="row"
+            data-testid="select-option"
+            {...getItemProps({
+              index: Option.selectableIndex,
+              item: Option,
+              style: {
+                cursor: "pointer",
+                backgroundColor:
+                  highlightedIndex === Option.selectableIndex
+                    ? colors.highlight
+                    : colors.background,
+              },
+            })}
+          >
+            <Checkbox value={selectedOptions[Option.value] === true} />
+            <Text
+              fontSize={Sizes[this.props.size].fontSize}
+              css={{
+                transition: "none",
+              }}
+              color={"default"}
+            >
+              {Option.label}
+            </Text>
+          </View>
+        </View>
+      );
     };
-  }
-
-  @autobind
-  public handleChange(evt: { target: { name: string; value: string[] } }) {
-    this.setState({
-      selected: evt.target.value,
-    });
-
-    if (this.props.onChange) {
-      this.props.onChange(evt);
-    }
-  }
-
-  @autobind
-  public clearSelection() {
-    this.setState({
-      selected: [],
-    });
-
-    if (this.props.onChange) {
-      this.props.onChange({
-        target: {
-          name: this.props.name,
-          value: [],
-        },
-      });
-    }
-  }
-
-  @autobind
-  public renderOption(item: SelectDropdownItem) {
-    return (
-      <View
-        width={"100%"}
-        minWidth="188px"
-        paddingY={3}
-        key={item.label + "_" + item.value}
-        flexDirection="row"
-      >
-        <Checkbox
-          value={this.state.selected.includes(item.value.toString())}
-          id={`check_${item.label}`}
-          label={item.label}
-          fontSize={1}
-          fontWeight="normal"
-          color="default"
-        />
-      </View>
-    );
-  }
-
-  @autobind
-  public handleSearchChange(searchValue: string, evt: any) {
-    this.setState({
-      searchValue,
-    });
-    if (evt.stopPropagation) {
-      evt.stopPropagation();
-    }
   }
 
   public render() {
     const {
       options,
-      label,
-      id = `MultiSelect_${Math.random()}`,
-      defaultText = "Please Select",
-      clearCSS,
-      labelPaddingBottom = 3,
+      disabled,
+      size,
+      defaultValue,
+      value,
+      label = "",
+      defaultText = "Please Select", // Deprecated - use placeholder
+      placeholder = "Please Select",
       searchable,
-      size = "sm",
+      id,
       closeOnSelect,
     } = this.props;
 
-    const { selected } = this.state;
+    const { flattenedOptions, selectableCount } = this.flattenOptions(options);
 
-    let selectText = defaultText;
+    const DefaultOption = defaultValue
+      ? defaultValue.map(Entry => flattenedOptions.find(x => x.value === Entry))
+      : null;
 
-    if (this.state.selected.length > 0) {
-      selectText = options
-        .filter((thing, index, self) => {
-          return index === self.findIndex(t => t.value === thing.value);
-        })
-        .filter(item => selected.includes(item.value.toString()))
-        .map((selectedItem: SelectDropdownItem) => selectedItem.label)
-        .join(", ");
-    }
+    const selectedOption = value
+      ? value.map(Entry => flattenedOptions.find(x => x.value === Entry))
+      : undefined;
 
     return (
-      <React.Fragment>
-        <View flexDirection="row">
-          {label && (
-            <View paddingRight={4} paddingBottom={labelPaddingBottom}>
-              {typeof label === "string" ? (
-                <Text element="label" htmlFor={id}>
-                  {label}
-                </Text>
-              ) : (
-                label
-              )}
-            </View>
-          )}
-          <View
-            flexDirection="row-reverse"
-            flexGrow={2}
-            flexWrap="wrap"
-            css={{
-              flexShrink: "initial",
-            }}
+      <Theme.Consumer>
+        {({ colors }) => (
+          <MultiSelectDownshift
+            onChange={this.handleOnChange}
+            itemToString={this.OptionToString}
+            itemCount={selectableCount}
+            closeOnSelect={closeOnSelect}
+            initialSelectedItems={DefaultOption}
+            selectedItems={selectedOption}
           >
-            {this.state.selected.length > 0 && (
-              <View
-                display="inline-flex"
-                backgroundColor="accent"
-                backgroundOpacity="pill"
-                borderRadius={2}
-                flexDirection="row"
-                css={{ overflow: "hidden" }}
-                marginLeft={3}
-                marginBottom={3}
-                {...clearCSS}
-              >
-                <View
-                  backgroundColor="accent"
-                  paddingX={3}
-                  justifyContent="center"
-                >
-                  <Text color="background" fontSize={1}>
-                    {this.state.selected.length}
-                  </Text>
+            {({
+              getToggleButtonProps,
+              getItemProps,
+              getRootProps,
+              getMenuProps,
+              getInputProps,
+              isOpen,
+              inputValue,
+              selectedItems,
+              highlightedIndex,
+              clearSelection,
+            }) => {
+              const filteredOptions = searchable
+                ? this.filterOptions(flattenedOptions, inputValue)
+                : flattenedOptions;
+
+              const selectedOptions = selectedItems.reduce(
+                (sum, entry) => ({
+                  ...sum,
+                  [entry.value]: true,
+                }),
+                {}
+              );
+
+              return (
+                <View {...getRootProps({ refKey: "innerRef" })}>
+                  <View flexDirection="row">
+                    {label && (
+                      <View paddingRight={4} paddingBottom={3}>
+                        {typeof label === "string" ? (
+                          <Text element="label" htmlFor={id}>
+                            {label}
+                          </Text>
+                        ) : (
+                          label
+                        )}
+                      </View>
+                    )}
+                    <View
+                      flexDirection="row-reverse"
+                      flexGrow={2}
+                      flexWrap="wrap"
+                      css={{
+                        flexShrink: "initial",
+                      }}
+                    >
+                      {selectedItems.length > 0 && (
+                        <View
+                          display="inline-flex"
+                          backgroundColor="accent"
+                          backgroundOpacity="pill"
+                          borderRadius={2}
+                          flexDirection="row"
+                          css={{ overflow: "hidden" }}
+                          marginLeft={3}
+                          marginBottom={3}
+                        >
+                          <View
+                            backgroundColor="accent"
+                            paddingX={3}
+                            paddingY={1}
+                            justifyContent="center"
+                          >
+                            <Text color="background" fontSize={1}>
+                              {selectedItems.length}
+                            </Text>
+                          </View>
+                          <Button
+                            padding={0}
+                            color="subtle"
+                            justifyContent="center"
+                            height="100%"
+                            onClick={this.handleSelectionClear(clearSelection)}
+                            data-testid="clearSelectionButton"
+                            borderRadius={3}
+                            iconName="Cross"
+                            size="sm"
+                            width={20}
+                            css={{
+                              backgroundColor: "transparent",
+                              "&:hover": {
+                                color: colors.default,
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                  <View>
+                    <Manager>
+                      <Reference>
+                        {({ ref }) => (
+                          <button
+                            ref={ref}
+                            type="button"
+                            {...getToggleButtonProps({
+                              disabled,
+                            })}
+                            data-testid="select-dropdown-trigger"
+                            style={{
+                              cursor: disabled ? "initial" : "pointer",
+                            }}
+                          >
+                            <View
+                              borderRadius={2}
+                              paddingX={4}
+                              border={1}
+                              opacity={disabled && "disabled"}
+                              borderColor={isOpen ? "accent" : "soft"}
+                              position="relative"
+                              boxShadow={isOpen ? "strong" : "soft"}
+                              backgroundColor={
+                                selectedItems.length > 0
+                                  ? "accent"
+                                  : "background"
+                              }
+                            >
+                              <View
+                                paddingY={3}
+                                css={{
+                                  overflow: "hidden",
+                                }}
+                              >
+                                <Text
+                                  fontSize={Sizes[size].fontSize}
+                                  css={{
+                                    whiteSpace: "nowrap",
+                                  }}
+                                  color={
+                                    selectedItems.length > 0
+                                      ? "background"
+                                      : "default"
+                                  }
+                                >
+                                  {selectedItems.length > 0
+                                    ? selectedItems.map(x => x.label).join(", ")
+                                    : placeholder || defaultText}
+                                </Text>
+                              </View>
+                              <View
+                                css={{
+                                  position: "absolute",
+                                  right: 8,
+                                  top: 1,
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  paddingRight: 0,
+                                  backgroundColor:
+                                    selectedItems.length > 0
+                                      ? colors.accent
+                                      : colors.background,
+                                }}
+                                height="calc(100% - 3px)"
+                                paddingX={3}
+                              >
+                                <ButtonMinimal
+                                  iconName="ChevronDown"
+                                  css={{
+                                    backgroundColor: "transparent",
+                                  }}
+                                  size="sm"
+                                  iconColor={
+                                    selectedItems.length > 0
+                                      ? "background"
+                                      : "muted"
+                                  }
+                                />
+                              </View>
+                            </View>
+                          </button>
+                        )}
+                      </Reference>
+                      {isOpen && (
+                        <Portal>
+                          <Popper placement="auto-start">
+                            {({ ref, style }) => (
+                              <View
+                                {...getMenuProps({
+                                  refKey: "innerRef",
+                                })}
+                              >
+                                <View
+                                  backgroundColor="background"
+                                  boxShadow="strong"
+                                  borderRadius={3}
+                                  overflow="hidden"
+                                  style={style}
+                                  innerRef={ref}
+                                  transition="none"
+                                  zIndex="dropdown"
+                                  width={250}
+                                  marginY={2}
+                                >
+                                  {searchable && (
+                                    <View paddingX={4} paddingY={3}>
+                                      <SearchInput
+                                        id={`SearchInput__${id}`}
+                                        onSubmit={null}
+                                        clearable={false}
+                                        size={size}
+                                        data-testid="inputElement"
+                                        {...getInputProps()}
+                                      />
+                                    </View>
+                                  )}
+                                  <AutoSizer
+                                    disableHeight={true}
+                                    defaultWidth={200}
+                                  >
+                                    {({ width }) => (
+                                      <List
+                                        data-testid="resultsList"
+                                        width={width}
+                                        height={this.calculateDropDownHeight(
+                                          filteredOptions
+                                        )}
+                                        rowCount={filteredOptions.length}
+                                        rowHeight={this.calculateOptionHeight(
+                                          filteredOptions
+                                        )}
+                                        rowRenderer={this.renderSelectRow({
+                                          options: filteredOptions,
+                                          colors,
+                                          getItemProps,
+                                          highlightedIndex,
+                                          selectedOptions,
+                                        })}
+                                      />
+                                    )}
+                                  </AutoSizer>
+                                </View>
+                              </View>
+                            )}
+                          </Popper>
+                        </Portal>
+                      )}
+                    </Manager>
+                  </View>
                 </View>
-                <Button
-                  paddingX={2}
-                  paddingY={0}
-                  color="subtle"
-                  justifyContent="center"
-                  height="100%"
-                  onClick={this.clearSelection}
-                  data-testid="clearSelectionButton"
-                  borderRadius={3}
-                  iconName="Cross"
-                  size="sm"
-                  css={{
-                    backgroundColor: "transparent",
-                    "&:hover": {
-                      color: colors.default,
-                      cursor: "pointer",
-                    },
-                  }}
-                />
-              </View>
-            )}
-          </View>
-        </View>
-        <SelectDropdown
-          options={options}
-          onChange={this.handleChange}
-          searchPlaceholder="Search for ..."
-          closeOnSelection={closeOnSelect}
-          optionRenderer={this.renderOption}
-          isMulti={true}
-          value={this.state.selected}
-          name={this.props.name}
-          selectedColor="highlight"
-          handleSearchChange={searchable && this.handleSearchChange}
-          data-testid="multiselect-dropdown"
-        >
-          {({ ref, getToggleButtonProps }) => (
-            <View>
-              <ButtonFilled
-                {...getToggleButtonProps()}
-                data-testid="select-dropdown-trigger"
-                size={size}
-                innerRef={ref}
-                width="100%"
-                justifyContent="stretch"
-                css={{
-                  "> span": {
-                    width: "100%",
-                  },
-                }}
-                disabled={this.props.disabled}
-                color={selected.length > 0 ? "accent" : undefined}
-              >
-                <View
-                  width="100%"
-                  flexDirection="row"
-                  flexGrow={1}
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Text
-                    fontSize={sizes[size].fontSize}
-                    color={selected.length > 0 ? "contrast" : "default"}
-                    fontWeight="normal"
-                    ellipsis={true}
-                  >
-                    {selectText}
-                  </Text>
-                  <Icon name="ChevronDown" />
-                </View>
-              </ButtonFilled>
-            </View>
-          )}
-        </SelectDropdown>
-      </React.Fragment>
+              );
+            }}
+          </MultiSelectDownshift>
+        )}
+      </Theme.Consumer>
     );
+  }
+
+  private handleOnChange = event => {
+    const { onChange } = this.props;
+
+    if (onChange) {
+      safeInvoke(onChange, {
+        target: event,
+      });
+    }
+  };
+
+  private handleSelectionClear = clearFunction => {
+    const { onChange } = this.props;
+
+    return () => {
+      clearFunction();
+      if (onChange) {
+        safeInvoke(onChange, {
+          target: {},
+        });
+      }
+    };
+  };
+
+  private flattenOptions(Options = []) {
+    return Options.reduce((sum, Option) => {
+      if (Option.optgroup) {
+        return {
+          selectableCount: (sum.selectableCount || 0) + Option.values.length,
+          flattenedOptions: [
+            ...(sum.flattenedOptions || []),
+            {
+              label: Option.label || "",
+              optgroup: true,
+            },
+            ...(Option.values.map((SubOption, index) => ({
+              ...SubOption,
+              childOption: true,
+              selectableIndex: (sum.selectableCount || 0) + index,
+            })) || []),
+          ],
+        };
+      }
+
+      return {
+        selectableCount: (sum.selectableCount || 0) + 1,
+        flattenedOptions: [
+          ...(sum.flattenedOptions || []),
+          {
+            ...Option,
+            selectableIndex: sum.selectableCount || 0,
+          },
+        ],
+      };
+    }, {});
+  }
+
+  private filterOptions(Options, searchValue) {
+    if (typeof searchValue === "string" && searchValue.trim() !== "") {
+      return Options.filter(Entry => {
+        return (
+          !Entry.optgroup &&
+          Entry.label &&
+          Entry.label.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      });
+    }
+    return Options;
+  }
+
+  private calculateDropDownHeight(Options) {
+    const Height = Options.reduce((sum, Entry, index) => {
+      return sum + this.calculateOptionHeight(Options)({ index });
+    }, 0);
+
+    return Height < 300 ? Height : 300;
+  }
+
+  private calculateOptionHeight(Options) {
+    // Calculate the options for VirtualisedList
+    return ({ index: OptionIndex }) => {
+      const Option = Options[OptionIndex];
+      const baseOptionHeight = 55;
+
+      if (typeof Option === "undefined") {
+        return 0;
+      }
+
+      if (Option.optgroup) {
+        if (Option.label.trim() === "") {
+          // If it is just a line break optGroup
+          return 1;
+        }
+
+        return 50;
+      }
+
+      return baseOptionHeight;
+    };
   }
 }
 
