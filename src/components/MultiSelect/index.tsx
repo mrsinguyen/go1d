@@ -91,7 +91,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       return (
         <View key={key} css={virtualisedStyles}>
           <View
-            height={50}
+            height={55}
             width="100%"
             paddingY={4}
             paddingX={4}
@@ -228,8 +228,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                             </Text>
                           </View>
                           <Button
-                            paddingX={2}
-                            paddingY={0}
+                            padding={0}
                             color="subtle"
                             justifyContent="center"
                             height="100%"
@@ -238,6 +237,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                             borderRadius={3}
                             iconName="Cross"
                             size="sm"
+                            width={20}
                             css={{
                               backgroundColor: "transparent",
                               "&:hover": {
@@ -309,6 +309,10 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                   alignItems: "center",
                                   justifyContent: "center",
                                   paddingRight: 0,
+                                  backgroundColor:
+                                    selectedItems.length > 0
+                                      ? colors.accent
+                                      : colors.background,
                                 }}
                                 height="calc(100% - 3px)"
                                 paddingX={3}
@@ -318,12 +322,12 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                   css={{
                                     backgroundColor: "transparent",
                                   }}
+                                  size="sm"
                                   iconColor={
                                     selectedItems.length > 0
                                       ? "background"
                                       : "muted"
                                   }
-                                  size="sm"
                                 />
                               </View>
                             </View>
@@ -349,7 +353,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                   transition="none"
                                   zIndex="dropdown"
                                   width={250}
-                                  marginTop={2}
+                                  marginY={2}
                                 >
                                   {searchable && (
                                     <View paddingX={4} paddingY={3}>
@@ -427,20 +431,6 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       }
     };
   };
-
-  // private stateReducer = (state, changes) => {
-  //   switch (changes.type) {
-  //     case Downshift.stateChangeTypes.keyDownEnter:
-  //     case Downshift.stateChangeTypes.clickItem:
-  //       return {
-  //         ...changes,
-  //         highlightedIndex: state.highlightedIndex,
-  //         inputValue: "",
-  //       };
-  //     default:
-  //       return changes;
-  //   }
-  // };
 
   private flattenOptions(Options = []) {
     return Options.reduce((sum, Option) => {

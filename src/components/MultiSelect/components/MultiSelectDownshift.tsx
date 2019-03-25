@@ -1,6 +1,5 @@
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import * as React from "react";
-import Options from "../../SelectDropdown/Options";
 
 interface Option {
   value?: string;
@@ -15,11 +14,12 @@ interface MultiSelectDownshiftState {
 
 interface ChildProps extends ControllerStateAndHelpers<Option> {
   selectedItems: Option[];
+  handleSelection: (option: Option, downshift: any) => void;
 }
 
 interface MultiSelectDownshiftProps {
   selectedItems?: Option[];
-  initialSelectedItems?: Options[];
+  initialSelectedItems?: Option[];
   onSelect?: (Selected: Option[], Props: ChildProps) => void;
   onChange?: (Selected: Option[], Props: ChildProps) => void;
   itemCount?: number;
@@ -86,17 +86,33 @@ class MultiSelectDownshift extends React.PureComponent<
     this.setState(
       ({ selectedItems }) => ({
         selectedItems: (propsSelectedItems || selectedItems).filter(
-          i => i !== item
+          i => i.value !== item.value
         ),
       }),
       cb
     );
   };
 
-  public clearSelection = () =>
-    this.setState({
-      selectedItems: [],
-    });
+  public clearSelection = () => {
+    const callOnChange = () => {
+      const { onSelect, onChange } = this.props;
+      const { selectedItems } = this.state;
+
+      if (onSelect) {
+        onSelect(selectedItems, this.getStateAndHelpers({}));
+      }
+      if (onChange) {
+        onChange(selectedItems, this.getStateAndHelpers({}));
+      }
+    };
+
+    this.setState(
+      {
+        selectedItems: [],
+      },
+      callOnChange
+    );
+  };
 
   public addSelectedItem(item, cb) {
     const { selectedItems: propsSelectedItems } = this.props;
@@ -112,12 +128,13 @@ class MultiSelectDownshift extends React.PureComponent<
   public getStateAndHelpers(downshift): ChildProps {
     const { selectedItems } = this.state;
     const { selectedItems: propsSelectedItems } = this.props;
-    const { clearSelection } = this;
+    const { clearSelection, handleSelection } = this;
 
     return {
       ...downshift,
       selectedItems: propsSelectedItems || selectedItems,
       clearSelection,
+      handleSelection,
     };
   }
 
