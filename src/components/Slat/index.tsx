@@ -1,9 +1,9 @@
 import * as React from "react";
 import foundations from "../../foundations";
 import formatPrice from "../../utils/priceFormatter";
-import ButtonMinimal from "../ButtonMinimal";
-import Dropdown from "../Dropdown";
 import Icon from "../Icon";
+import MoreMenu from "../MoreMenu";
+import { Item as DropdownItem } from "../MoreMenu/DropdownMenuItem";
 import Skeleton from "../SlatSkeleton";
 import Text from "../Text";
 import Theme from "../Theme";
@@ -24,55 +24,8 @@ export interface SlatProps extends ViewProps {
   type?: string;
   typeBackground?: string;
   actionRender?: () => React.ReactChild;
-  dropdownItems?: Array<{
-    icon?: string;
-    text: string;
-    action?: () => void;
-  }>;
-  dropdownRenderFn?: (item, index, getItemProps) => void;
+  dropdownItems?: DropdownItem[];
 }
-
-const styles = {
-  "&:hover, &:focus": {
-    boxShadow: foundations.shadows.strong,
-    cursor: "pointer",
-    transform: "translateY(-1px)",
-  },
-  "&:active": {
-    boxShadow: foundations.shadows.crisp,
-    transform: "translateY(1px)",
-  },
-};
-
-const defaultRenderFn = (item, index, getItemProps) => (
-  <View
-    key={index}
-    {...getItemProps({
-      key: index,
-      item,
-      index,
-    })}
-    onClick={item.action}
-    width={200}
-    paddingX={4}
-    paddingY={4}
-    flexDirection="row"
-    alignItems="center"
-    css={{
-      cursor: "pointer",
-      "&:hover, &:active": {
-        backgroundColor: foundations.colors.faint,
-      },
-    }}
-  >
-    {item.icon && (
-      <Icon name={item.icon} marginRight={foundations.spacing[2]} />
-    )}
-    {item.text && <Text>{item.text}</Text>}
-  </View>
-);
-
-const itemToString = item => (item ? item.title : "");
 
 const Slat: React.SFC<SlatProps> = ({
   id,
@@ -87,7 +40,6 @@ const Slat: React.SFC<SlatProps> = ({
   typeBackground = "background",
   actionRender,
   dropdownItems,
-  dropdownRenderFn = defaultRenderFn,
   skeleton = false,
   ...props
 }: SlatProps) => {
@@ -109,7 +61,7 @@ const Slat: React.SFC<SlatProps> = ({
 
   return (
     <Theme.Consumer>
-      {({ breakpoints, colors, spacing }) => {
+      {({ breakpoints, colors, spacing, hoverStyle }) => {
         return (
           <View
             borderRadius={2}
@@ -126,7 +78,7 @@ const Slat: React.SFC<SlatProps> = ({
                   flexDirection: "column",
                 },
               },
-              !dropdownItems && !actionRender && styles,
+              !dropdownItems && !actionRender && hoverStyle,
             ]}
             {...props}
           >
@@ -238,24 +190,13 @@ const Slat: React.SFC<SlatProps> = ({
                     {actionRender && actionRender()}
                     {dropdownItems &&
                       dropdownItems.length > 0 && (
-                        <Dropdown
-                          placement="bottom"
-                          itemToString={itemToString}
-                          renderFunction={dropdownRenderFn}
+                        <MoreMenu
                           itemList={dropdownItems}
-                        >
-                          {({ ref, getToggleButtonProps }) => (
-                            <ButtonMinimal
-                              {...getToggleButtonProps()}
-                              innerRef={ref}
-                              color="subtle"
-                              size="sm"
-                              marginBottom="-5px"
-                            >
-                              <Icon name="Ellipsis" />
-                            </ButtonMinimal>
-                          )}
-                        </Dropdown>
+                          isButtonFilled={false}
+                          height="30px"
+                          marginTop={-2}
+                          paddingY={2}
+                        />
                       )}
                   </View>
                 )}
