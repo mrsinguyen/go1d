@@ -3,6 +3,7 @@ import Icon from "../Icon";
 import Link from "../Link";
 import Text from "../Text";
 import View, { ViewProps } from "../View";
+import foundations from "../../foundations";
 
 export interface SessionProps extends ViewProps {
   start: Date | string;
@@ -84,9 +85,12 @@ const EventDate: React.SFC<SessionProps> = ({
             }`}
             css={{
               fontSize: "13px",
+              textAlign: "right",
+              color: foundations.colors.accent,
+              "&:hover, &:active": {
+                textDecoration: "underline"
+              }
             }}
-            textAlign="right"
-            color="accent"
             marginBottom={3}
           >
             View map
