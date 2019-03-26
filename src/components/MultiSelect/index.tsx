@@ -337,7 +337,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                       </Reference>
                       {isOpen && (
                         <Portal>
-                          <Popper placement="auto-start">
+                          <Popper placement="bottom-start">
                             {({ ref, style }) => (
                               <View
                                 {...getMenuProps({

@@ -190,6 +190,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                             opacity={disabled && "disabled"}
                             borderColor={isOpen ? "accent" : "soft"}
                             position="relative"
+                            backgroundColor="background"
                             boxShadow={isOpen ? "strong" : "soft"}
                           >
                             <View
@@ -252,7 +253,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                     </Reference>
                     {isOpen && (
                       <Portal>
-                        <Popper placement="auto-start">
+                        <Popper placement="bottom-start">
                           {({ ref, style }) => (
                             <View
                               {...getMenuProps({
