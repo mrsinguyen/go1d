@@ -124,7 +124,7 @@ class Select extends React.PureComponent<SelectProps, any> {
       disabled,
       size,
       defaultText = "Please Select", // Deprecated
-      placeholder = "Please Select",
+      placeholder,
       defaultValue,
       value,
       searchable,
