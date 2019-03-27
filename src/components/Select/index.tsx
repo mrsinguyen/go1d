@@ -322,7 +322,9 @@ class Select extends React.PureComponent<SelectProps, any> {
 
     if (onChange) {
       safeInvoke(onChange, {
-        target: event,
+        target: {
+          value: event,
+        },
       });
     }
   };
