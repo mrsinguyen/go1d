@@ -120,6 +120,7 @@ class SearchInput extends React.Component<SearchInputProps, any> {
       size,
       ...props
     } = this.props;
+
     return (
       <TextInput
         iconName="Search"
