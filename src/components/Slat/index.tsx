@@ -23,7 +23,7 @@ export interface SlatProps extends ViewProps {
   image?: string;
   type?: string;
   typeBackground?: string;
-  actionRender?: () => React.ReactChild;
+  actionRenderer?: () => React.ReactChild;
   dropdownItems?: DropdownItem[];
 }
 
@@ -38,7 +38,7 @@ const Slat: React.SFC<SlatProps> = ({
   image,
   type,
   typeBackground = "background",
-  actionRender,
+  actionRenderer,
   dropdownItems,
   skeleton = false,
   ...props
@@ -78,7 +78,7 @@ const Slat: React.SFC<SlatProps> = ({
                   flexDirection: "column",
                 },
               },
-              !dropdownItems && !actionRender && hoverStyle,
+              !dropdownItems && !actionRenderer && hoverStyle,
             ]}
             {...props}
           >
@@ -176,7 +176,7 @@ const Slat: React.SFC<SlatProps> = ({
                     </Text>
                   </View>
                 )}
-                {(actionRender || dropdownItems) && (
+                {(actionRenderer || dropdownItems) && (
                   <View
                     flexDirection="row"
                     marginTop={[-7, -1]}
@@ -187,7 +187,7 @@ const Slat: React.SFC<SlatProps> = ({
                       },
                     }}
                   >
-                    {actionRender && actionRender()}
+                    {actionRenderer && actionRenderer()}
                     {dropdownItems &&
                       dropdownItems.length > 0 && (
                         <MoreMenu
