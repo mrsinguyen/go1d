@@ -133,7 +133,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       defaultValue,
       value,
       label = "",
-      defaultText = "Test", // Deprecated - use placeholder
+      defaultText = "Please Select", // Deprecated - use placeholder
       placeholder,
       searchable,
       id,
