@@ -1,7 +1,7 @@
 import Downshift from "downshift";
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
-import { AutoSizer, List } from "react-virtualized";
+import { List } from "react-virtualized";
 import safeInvoke from "../../utils/safeInvoke";
 import Icon from "../Icon";
 import Portal from "../Portal";
@@ -278,28 +278,26 @@ class Select extends React.PureComponent<SelectProps, any> {
                                     />
                                   </View>
                                 )}
-                                <AutoSizer disableHeight={true}>
-                                  {({ width }) => (
-                                    <List
-                                      data-testid="resultsList"
-                                      width={width}
-                                      height={this.calculateDropDownHeight(
-                                        filteredOptions
-                                      )}
-                                      rowCount={filteredOptions.length}
-                                      rowHeight={this.calculateOptionHeight(
-                                        filteredOptions
-                                      )}
-                                      rowRenderer={this.renderSelectRow({
-                                        options: filteredOptions,
-                                        colors,
-                                        getItemProps,
-                                        highlightedIndex,
-                                        selectedItem,
-                                      })}
-                                    />
+                                <List
+                                  data-testid="resultsList"
+                                  width={this.calculateListWidth(
+                                    filteredOptions
                                   )}
-                                </AutoSizer>
+                                  height={this.calculateDropDownHeight(
+                                    filteredOptions
+                                  )}
+                                  rowCount={filteredOptions.length}
+                                  rowHeight={this.calculateOptionHeight(
+                                    filteredOptions
+                                  )}
+                                  rowRenderer={this.renderSelectRow({
+                                    options: filteredOptions,
+                                    colors,
+                                    getItemProps,
+                                    highlightedIndex,
+                                    selectedItem,
+                                  })}
+                                />
                               </View>
                             </View>
                           )}
@@ -394,6 +392,27 @@ class Select extends React.PureComponent<SelectProps, any> {
       });
     }
     return Options;
+  }
+
+  private calculateListWidth(Options) {
+    const averageCharacterPX = 10;
+    const longestString = Options.reduce((largest, Entry) => {
+      if (Entry.label.length > largest) {
+        return Entry.label.length;
+      }
+
+      return largest;
+    }, 0);
+
+    if (longestString * averageCharacterPX > 350) {
+      return 350;
+    }
+
+    if (longestString * averageCharacterPX < 200) {
+      return 200;
+    }
+
+    return longestString * averageCharacterPX;
   }
 
   private calculateDropDownHeight(Options) {

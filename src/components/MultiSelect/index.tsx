@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
-import { AutoSizer, List } from "react-virtualized";
+import { List } from "react-virtualized";
 import safeInvoke from "../../utils/safeInvoke";
 import Button from "../Button";
 import Checkbox from "../Checkbox";
@@ -350,7 +350,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                   innerRef={ref}
                                   transition="none"
                                   zIndex="dropdown"
-                                  width={250}
+                                  minWidth={250}
                                   marginY={2}
                                 >
                                   {searchable && (
@@ -365,31 +365,26 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                       />
                                     </View>
                                   )}
-                                  <AutoSizer
-                                    disableHeight={true}
-                                    defaultWidth={200}
-                                  >
-                                    {({ width }) => (
-                                      <List
-                                        data-testid="resultsList"
-                                        width={width}
-                                        height={this.calculateDropDownHeight(
-                                          filteredOptions
-                                        )}
-                                        rowCount={filteredOptions.length}
-                                        rowHeight={this.calculateOptionHeight(
-                                          filteredOptions
-                                        )}
-                                        rowRenderer={this.renderSelectRow({
-                                          options: filteredOptions,
-                                          colors,
-                                          getItemProps,
-                                          highlightedIndex,
-                                          selectedOptions,
-                                        })}
-                                      />
+                                  <List
+                                    data-testid="resultsList"
+                                    width={this.calculateListWidth(
+                                      filteredOptions
                                     )}
-                                  </AutoSizer>
+                                    height={this.calculateDropDownHeight(
+                                      filteredOptions
+                                    )}
+                                    rowCount={filteredOptions.length}
+                                    rowHeight={this.calculateOptionHeight(
+                                      filteredOptions
+                                    )}
+                                    rowRenderer={this.renderSelectRow({
+                                      options: filteredOptions,
+                                      colors,
+                                      getItemProps,
+                                      highlightedIndex,
+                                      selectedOptions,
+                                    })}
+                                  />
                                 </View>
                               </View>
                             )}
@@ -474,6 +469,27 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       });
     }
     return Options;
+  }
+
+  private calculateListWidth(Options) {
+    const averageCharacterPX = 10;
+    const longestString = Options.reduce((largest, Entry) => {
+      if (Entry.label.length > largest) {
+        return Entry.label.length;
+      }
+
+      return largest;
+    }, 0);
+
+    if (longestString * averageCharacterPX > 350) {
+      return 350;
+    }
+
+    if (longestString * averageCharacterPX < 200) {
+      return 200;
+    }
+
+    return longestString * averageCharacterPX;
   }
 
   private calculateDropDownHeight(Options) {
