@@ -138,6 +138,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       searchable,
       id,
       closeOnSelect,
+      ...remainingProps
     } = this.props;
 
     const { flattenedOptions, selectableCount } = this.flattenOptions(options);
@@ -186,7 +187,10 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
               );
 
               return (
-                <View {...getRootProps({ refKey: "innerRef" })}>
+                <View
+                  {...remainingProps}
+                  {...getRootProps({ refKey: "innerRef" })}
+                >
                   <View flexDirection="row">
                     {label && (
                       <View paddingRight={4} paddingBottom={3}>

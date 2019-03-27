@@ -129,6 +129,7 @@ class Select extends React.PureComponent<SelectProps, any> {
       value,
       searchable,
       id,
+      ...remainingProps
     } = this.props;
 
     const { flattenedOptions, selectableCount } = this.flattenOptions(options);
@@ -168,7 +169,10 @@ class Select extends React.PureComponent<SelectProps, any> {
                 ? this.filterOptions(flattenedOptions, inputValue)
                 : flattenedOptions;
               return (
-                <View {...getRootProps({ refKey: "innerRef" })}>
+                <View
+                  {...remainingProps}
+                  {...getRootProps({ refKey: "innerRef" })}
+                >
                   <Manager>
                     <Reference>
                       {({ ref }) => (
@@ -263,7 +267,6 @@ class Select extends React.PureComponent<SelectProps, any> {
                                 innerRef={ref}
                                 transition="none"
                                 zIndex="dropdown"
-                                width={250}
                                 marginTop={2}
                               >
                                 {searchable && (
