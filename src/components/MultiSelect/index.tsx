@@ -3,8 +3,8 @@ import { Manager, Popper, Reference } from "react-popper";
 import { AutoSizer, List } from "react-virtualized";
 import safeInvoke from "../../utils/safeInvoke";
 import Button from "../Button";
-import ButtonMinimal from "../ButtonMinimal";
 import Checkbox from "../Checkbox";
+import Icon from "../Icon";
 import Portal from "../Portal";
 import SearchInput from "../SearchInput";
 import Text from "../Text";
@@ -305,8 +305,8 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                               <View
                                 css={{
                                   position: "absolute",
-                                  right: 8,
-                                  top: 1,
+                                  right: 12,
+                                  top: 3,
                                   alignItems: "center",
                                   justifyContent: "center",
                                   paddingRight: 0,
@@ -316,15 +316,12 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                       : colors.background,
                                 }}
                                 height="calc(100% - 3px)"
-                                paddingX={3}
+                                paddingLeft={3}
                               >
-                                <ButtonMinimal
-                                  iconName="ChevronDown"
-                                  css={{
-                                    backgroundColor: "transparent",
-                                  }}
-                                  size="sm"
-                                  iconColor={
+                                <Icon
+                                  name="ChevronDown"
+                                  size={2}
+                                  color={
                                     selectedItems.length > 0
                                       ? "background"
                                       : "muted"
