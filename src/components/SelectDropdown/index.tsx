@@ -59,6 +59,15 @@ export interface SelectDropdownProps extends ViewProps {
    * Prompt that is displayed to show that a new option can be created
    */
   renderCreateOption?: () => React.ReactNode;
+  /**
+   * Whether showing status message defined by the statusRenderer. Defaults to false
+   */
+  showStatus?: boolean;
+
+  /**
+   * Used to render status like loading or not found
+   */
+  statusRenderer?: () => React.ReactNode;
   handleCreate?: (option: string) => Promise<any> | void;
 
   children: ((params: any) => React.ReactNode);
@@ -183,7 +192,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
     getItemProps: any
   ) {
     const { selectedColor = "faint" } = this.props;
-
+    const { highlightedIndex, ...restGetItemProps } = getItemProps; // Do not pass highlightedIndex down
     return (
       <ButtonMinimal
         width="100%"
@@ -205,7 +214,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
         justifyContent="flex-start"
         disabled={item.disabled}
         data-testid="select-option"
-        {...getItemProps}
+        {...restGetItemProps}
       >
         {safeInvoke(this.props.optionRenderer, item) || (
           <Text>{item.label}</Text>
@@ -272,7 +281,7 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
 
   public render() {
     const {
-      options: rawOptions,
+      options: rawOptions = [],
       children,
       handleSearchChange,
       searchTerm,
@@ -281,11 +290,16 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
       container,
       dropdownZindex,
       popperPlacement,
+      createable,
       createableText,
       isMulti,
       selectedColor,
       optionRenderer,
       onChange,
+      onCreate,
+      closeOnSelection,
+      showStatus,
+      statusRenderer,
       ...remainingProps
     } = this.props;
 
@@ -302,12 +316,12 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
 
     const createAvailable = renderCreateOption && searchTerm.trim() !== "";
     const firstSelectableOptionIndex =
-      0 + (handleSearchChange ? 1 : 0) + (createAvailable ? 1 : 0);
+      0 + (handleSearchChange ? 1 : 0) + (createAvailable ? 1 : 0) + (showStatus ? 1 :0);
     return (
       <Downshift
         isOpen={
           dropdownOpen !== undefined
-            ? dropdownOpen && !!(options.length || createAvailable)
+            ? dropdownOpen && !!(options.length || createAvailable || showStatus)
             : undefined
         }
         defaultHighlightedIndex={0}
@@ -359,6 +373,8 @@ class SelectDropdown extends React.PureComponent<SelectDropdownProps, State> {
                             innerRef={ref}
                             dropdownZindex={dropdownZindex}
                             optionRenderer={this.optionRenderer}
+                            showStatus={showStatus}
+                            statusRenderer={statusRenderer}
                             options={options}
                             highlightedIndex={highlightedIndex}
                             firstSelectableOptionIndex={

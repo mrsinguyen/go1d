@@ -22,7 +22,11 @@ export interface TagSelectorProps extends ViewProps {
    * The selected elements of the component.
    */
   value?: string[];
-  options: string[];
+  options: string[] | object[];
+  /**
+   * Options could be an array of string or objects, provide a formatter to bring them into a uniform structure
+   */
+  optionFormatter?: (option: any) => { label: string, value: string};
 
   onInputChange?: (evt: React.SyntheticEvent<HTMLInputElement>) => void;
 
@@ -38,6 +42,15 @@ export interface TagSelectorProps extends ViewProps {
    */
   createable?: boolean;
 
+  /**
+   * Whether showing status message defined by the statusRenderer. Defaults to false
+   */
+  showStatus?: boolean;
+
+  /**
+   * Used to render status like loading or not found
+   */
+  statusRenderer?: () => React.ReactNode;
   placeholder?: string;
   createableText?: string;
 }
@@ -60,8 +73,12 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
 
   @autobind
   public inputChange(evt: React.SyntheticEvent<HTMLInputElement>) {
+    const { onInputChange } = this.props;
     this.setState({
       search: evt.currentTarget.value || "",
+    });
+    safeInvoke(onInputChange, {
+      target: { value: evt.currentTarget.value || "" },
     });
   }
 
@@ -131,7 +148,8 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
 
   @autobind
   public renderCreate() {
-    return <Text>{`${this.props.createableText} "${this.state.search}"`}</Text>;
+    const { createableText } = this.props;
+    return <Text>{`${createableText} "${this.state.search}"`}</Text>;
   }
 
   @autobind
@@ -143,6 +161,9 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
     const {
       value = this.props.value || this.state.value || [],
       optionRenderer = this.renderOption,
+      showStatus,
+      statusRenderer,
+      optionFormatter,
       options = [],
       id,
       disabled,
@@ -151,26 +172,31 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
       borderRadius = 2,
       onFocus,
       onBlur,
+      onInputChange,
       placeholder,
       createableText,
       ...props
     } = this.props;
 
     const formattedOptions = options
-      .filter(
-        option =>
-          !value.includes(option.toString()) &&
-          option
-            .toString()
-            .toLowerCase()
-            .includes(this.state.search.trim().toLowerCase())
-      )
       .map(option => {
+        if (optionFormatter) {
+          return optionFormatter(option);
+        }
         return {
           label: option,
           value: option.toString(),
         };
-      });
+      })
+      // run option format first, options could be an array of string or objects, so filter will get uniform data structure
+      .filter(
+        option =>
+          !value.includes(option.value.toString()) &&
+          option.value
+            .toString()
+            .toLowerCase()
+            .includes(this.state.search.trim().toLowerCase())
+      );
 
     const renderCreate =
       createable &&
@@ -199,6 +225,8 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
         searchTerm={this.state.search}
         onCreate={this.onCreate}
         isOpen={this.state.isFocused === true}
+        showStatus={showStatus}
+        statusRenderer={statusRenderer}
       >
         {({ ref, openMenu, getInputProps }) => (
           <View innerRef={this.inputRef}>
@@ -222,7 +250,7 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
               innerRef={ref}
               opacity={disabled ? "disabled" : null}
             >
-              {value.map((v, i) => (
+              {Array.isArray(value) && value.map((v, i) => (
                 <View
                   key={i}
                   flexDirection="row"
@@ -265,7 +293,6 @@ class TagSelector extends React.Component<TagSelectorProps, State> {
                 value={this.state.search}
                 onChange={this.inputChange}
                 borderColor="transparent"
-                boxShadow="none"
                 disabled={disabled}
                 viewCss={{
                   flexGrow: 1,
