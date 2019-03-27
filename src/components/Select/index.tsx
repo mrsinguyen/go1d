@@ -3,7 +3,7 @@ import * as React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import { AutoSizer, List } from "react-virtualized";
 import safeInvoke from "../../utils/safeInvoke";
-import ButtonMinimal from "../ButtonMinimal";
+import Icon from "../Icon";
 import Portal from "../Portal";
 import SearchInput from "../SearchInput";
 import Text from "../Text";
@@ -213,8 +213,8 @@ class Select extends React.PureComponent<SelectProps, any> {
                             <View
                               css={{
                                 position: "absolute",
-                                right: 8,
-                                top: 1,
+                                right: 12,
+                                top: 3,
                                 alignItems: "center",
                                 justifyContent: "center",
                                 paddingRight: 0,
@@ -222,28 +222,22 @@ class Select extends React.PureComponent<SelectProps, any> {
                                   selectedItem && clearable ? "auto" : "none",
                               }}
                               height="calc(100% - 3px)"
-                              paddingX={3}
+                              paddingLeft={3}
                             >
                               {selectedItem && clearable ? (
-                                <ButtonMinimal
-                                  iconName="Cross"
-                                  css={{
-                                    backgroundColor: "transparent",
-                                  }}
-                                  iconColor="muted"
+                                <Icon
+                                  name="Cross"
+                                  color="muted"
+                                  size={2}
                                   onClick={this.handleSelectionClear(
                                     clearSelection
                                   )}
-                                  size="sm"
                                 />
                               ) : (
-                                <ButtonMinimal
-                                  iconName="ChevronDown"
-                                  css={{
-                                    backgroundColor: "transparent",
-                                  }}
-                                  iconColor="muted"
-                                  size="sm"
+                                <Icon
+                                  name="ChevronDown"
+                                  color="muted"
+                                  size={2}
                                 />
                               )}
                             </View>
