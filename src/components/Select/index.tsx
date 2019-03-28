@@ -169,10 +169,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                 ? this.filterOptions(flattenedOptions, inputValue)
                 : flattenedOptions;
               return (
-                <View
-                  {...remainingProps}
-                  {...getRootProps({ refKey: "innerRef" })}
-                >
+                <View flexGrow={1} {...getRootProps({ refKey: "innerRef" })}>
                   <Manager>
                     <Reference>
                       {({ ref }) => (
@@ -196,6 +193,7 @@ class Select extends React.PureComponent<SelectProps, any> {
                             position="relative"
                             backgroundColor="background"
                             boxShadow={isOpen ? "strong" : "soft"}
+                            {...remainingProps}
                           >
                             <View
                               paddingY={3}
@@ -322,9 +320,7 @@ class Select extends React.PureComponent<SelectProps, any> {
 
     if (onChange) {
       safeInvoke(onChange, {
-        target: {
-          value: event,
-        },
+        target: event,
       });
     }
   };
