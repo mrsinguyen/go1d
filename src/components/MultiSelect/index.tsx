@@ -59,6 +59,7 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
     }
   }
 
+  /* istanbul ignore next */
   public renderSelectRow({
     options,
     getItemProps,
@@ -147,9 +148,17 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       ? defaultValue.map(Entry => flattenedOptions.find(x => x.value === Entry))
       : null;
 
-    const selectedOption = value
-      ? value.map(Entry => flattenedOptions.find(x => x.value === Entry))
-      : undefined;
+    const selectedOption = Array.isArray(value)
+      ? value.map(Entry =>
+          flattenedOptions.find(x => {
+            if (typeof Entry !== "object") {
+              return x.value === Entry;
+            }
+
+            return x.value === Entry.value;
+          })
+        )
+      : value;
 
     return (
       <Theme.Consumer>
@@ -354,7 +363,6 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
                                   innerRef={ref}
                                   transition="none"
                                   zIndex="dropdown"
-                                  minWidth={250}
                                   marginY={2}
                                 >
                                   {searchable && (
@@ -425,7 +433,9 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
       clearFunction();
       if (onChange) {
         safeInvoke(onChange, {
-          target: {},
+          target: {
+            value: [],
+          },
         });
       }
     };
@@ -478,6 +488,8 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
   }
 
   private calculateListWidth(Options) {
+    const { searchable } = this.props;
+
     const averageCharacterPX = 10;
     const longestString = Options.reduce((largest, Entry) => {
       if (Entry.label.length > largest) {
@@ -489,6 +501,12 @@ class MultiSelect extends React.PureComponent<MultiSelectProps, any> {
 
     if (longestString * averageCharacterPX > 350) {
       return 350;
+    }
+
+    if (searchable) {
+      if (longestString * averageCharacterPX < 275) {
+        return 275;
+      }
     }
 
     if (longestString * averageCharacterPX < 200) {
